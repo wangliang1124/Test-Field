@@ -32,6 +32,3 @@ detachEvent()删除事件
 (3)、cancelBubble=true阻止事件冒泡
 (4)、returnValue=false阻止事件的默认行为
 
-
-
-测试测试github
