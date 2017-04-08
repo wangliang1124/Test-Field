@@ -1,0 +1,35 @@
+*{margin:0;padding: 0;}
+.title{
+	width:200px;
+	height:80px;
+	border:1px dashed #666;
+	margin:0 auto;
+	margin-top: 50px;
+	text-align:center;
+	line-height: 80px;
+	font-size: 24px;
+	font-weight:bold;
+}
+
+.btn{
+	width:80px;
+	height:30px;
+	margin:0 auto;
+	padding-top: 50px;
+}
+
+.btn span{
+	display: block;
+	width:80px;
+	height: 30px;
+	background-color: #036;
+	border:1px solid #eee;
+	border-radius:7px;
+	line-height: 30px;
+	text-align: center;
+	font-size: 14px;
+	font-family:"微软雅黑";
+	color:#fff;
+	cursor:pointer;
+
+}
