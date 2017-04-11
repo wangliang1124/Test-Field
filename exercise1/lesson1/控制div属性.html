@@ -12,8 +12,8 @@
 			text-align: center;
 		}
 		#div1{
-			width:300px;
-			height: 300px;
+			width:200px;
+			height: 200px;
 			margin:0 auto;
 			background-color: #000;
 		}
@@ -22,9 +22,24 @@
 	window.onload=function(){
 		var div1=document.getElementById('div1');
 		var btns=document.getElementsByTagName('button');
-		console.log(typeof btns);
+		//console.log(typeof btns);
 		btns[0].onclick=function(){
-			div1.style.width='400px';
+			div1.style.width='300px';
+		}
+		btns[1].onclick=function(){
+			div1.style.height='300px';
+		}
+		btns[2].onclick=function(){
+			div1.style.backgroundColor='red';
+		}
+		btns[3].onclick=function(){
+			div1.style.display='none';
+		}
+		btns[4].onclick=function(){
+			div1.style.display='block';
+			div1.style.height='200px';
+			div1.style.width='200px';
+			div1.style.backgroundColor='black';
 		}
 	}
 	</script>
