@@ -23,7 +23,7 @@
 		#nav li.last{width:83px;border-right-width:0;}
 		#nav li a{color:#fff;}
 		body{
-			background:#A3C5A8;	
+			background:#ccc;	
 		}
 		#nav{
 			background:green;
@@ -37,13 +37,25 @@
 	window.onload=function(){
 		var nav=document.getElementById('nav'),
 		    skin=document.getElementById('skin'),
-		    color=skin.childNodes;
+		    color=skin.getElementsByTagName('li');
 
 		    for(var i=0;i<color.length;i++){
 			    color[i].onclick=function(){
-				this.style.backgroundColor='#fff';
-				document.body.style.backgroundColor='pink'
-				nav.style.backgroundColor='red';
+				    for(var j=0;j<color.length;j++){
+				    	//color[j].className="";
+				    	console.log(color[j].nodeName);
+				    	color[j].className='';
+				    }	
+					this.className='current';
+					if(this.id=="green"){
+						document.body.style.backgroundColor="#ccc";
+					}
+					if(this.id=="red"){
+						document.body.style.backgroundColor="#456";
+					}
+					if(this.id=="black"){
+						document.body.style.backgroundColor="#789";
+					}
 		    }
 		}
 	}
