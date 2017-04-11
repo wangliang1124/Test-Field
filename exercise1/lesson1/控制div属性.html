@@ -19,12 +19,14 @@
 		}
 	</style>
 	<script type="text/javascript">
+	window.onload=function(){
 		var div1=document.getElementById('div1');
-		var buttons=document.getElementsByTagName('button');
-		console.log(buttons.length);
-		buttons[0].onclick=function(){
+		var btns=document.getElementsByTagName('button');
+		console.log(typeof btns);
+		btns[0].onclick=function(){
 			div1.style.width='400px';
 		}
+	}
 	</script>
 </head>
 <body>
@@ -36,5 +38,6 @@
 		<button>重置</button>
 	</div>
 	<div id="div1"></div>
+
 </body>
 </html>
