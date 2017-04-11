@@ -69,7 +69,6 @@ function drag(){
 				event.cancelBubble=true;
 			}
 			statePanel.style.display='block';
-
 		}
 
 		for(var i=0;i<stateLists.length;i++){
