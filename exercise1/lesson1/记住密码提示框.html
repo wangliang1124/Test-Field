@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>记住密码提示框</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		body,input{padding: 0;margin:0;}
+		#outer{
+			width:200px;
+			margin:10px auto;
+			
+		}
+		#tips{
+			padding:5px;
+			margin-top:5px;
+			background:#ffefa4;
+			border:1px solid #f90;
+			font-size: 10px;
+			line-height: 20px;
+			display:none;
+		}
+
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var input=document.getElementsByTagName('input')[0],
+				tips=document.getElementById('tips');
+			input.onmouseover=function(){
+				tips.style.display='block';
+			}
+			input.onmouseout=function(){
+				tips.style.display='none';
+			}
+		}
+	</script>
+</head>
+<body>
+	<div id='outer'>
+		<label><input type="checkbox" name="">两周内自动登录</label>
+		<div id='tips'>为了您的信息安全，请不要在网吧或公用电脑上使用此功能！</div>
+	</div>
+	
+</body>
+</html>
