@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>鼠标移入/移出改变图片透明度</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		div,ul,li,img{margin: 0;padding: 0;}
+		ul{border:1px solid #333;float: left;padding: 10px;margin: 0 15%;}
+		li{list-style-type: none;display:inline-block;width: 130px;height: 130px;border: 1px solid #ccc;margin-left: 10px;cursor:crosshair;}
+		img{opacity:0.5;filter:alpha(opacity=30);}
+		li.current img{opacity:1;filter:alpha(opacity=100); }
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var li=document.getElementsByTagName('li'),
+				img=document.getElementsByTagName('img');
+			for(var i=0;i<li.length;i++){
+				li[i].onmouseover=function(i){
+					this.className="current";
+				};
+				li[i].onmouseout=function(){
+					this.className='';
+				}
+			}
+		}
+	</script>
+</head>
+<body>
+<div>
+	<ul>
+		<li><img src="img/1.jpg"></li>
+		<li><img src="img/2.jpg"></li>
+		<li><img src="img/3.jpg"></li>
+		<li><img src="img/4.jpg"></li>
+		<li><img src="img/5.jpg"></li>
+	</ul>
+</div>
+</body>
+</html>
