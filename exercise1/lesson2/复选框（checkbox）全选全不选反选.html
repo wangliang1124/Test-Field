@@ -17,21 +17,48 @@
 	</style>
 	<script type="text/javascript">
 		window.onload=function(){
-			var oA=document.getElementsByTagName('a'),
-				oCheckbox=document.getElementsByTagName('input');
-			if(!oCheckbox[0].checked){
-				oCheckbox[0].onclick=function(){
-					for(var i=1;i<oCheckbox.length;i++){
-						oCheckbox[i].checked= 'checked';
+			var oA=document.getElementsByTagName('a')[0],
+				oCheckbox=document.getElementsByTagName('input'),
+				oLabel = document.getElementsByTagName("label")[0];
+				//全选
+				oCheckbox[0].onclick=function(){					
+					if(this.checked){
+						for(var i=1;i<oCheckbox.length;i++){
+							oCheckbox[i].checked= true;
+							oLabel.innerHTML='全不选'
+						}
+					}else{
+						for(var i=1;i<oCheckbox.length;i++){
+							oCheckbox[i].checked=false;
+							oLabel.innerHTML='全选';
+						}
 					}
 				}
-			}else{
-				oCheckbox[0].onclick=function(){
+				//反选
+				oA.onclick=function(){
 					for(var i=1;i<oCheckbox.length;i++){
-						alert(oCheckbox[i].removeAttribute('checked'));
+						oCheckbox[i].checked=!oCheckbox[i].checked;
 					}
+					isCheckAll();
+
 				}
-			}
+				//根据复选个数更新全选框状态
+				for (var i = 1; i < oCheckbox.length; i++)
+				{
+					oCheckbox[i].onclick = function ()
+					{
+						isCheckAll()
+					}	
+				}
+				//
+				var isCheckAll=function(){
+					for (var i = 1, n = 0; i < oCheckbox.length; i++)
+						{
+							oCheckbox[i].checked && n++	;
+						}
+					oCheckbox[0].checked = n == oCheckbox.length - 1;
+					oLabel.innerHTML = oCheckbox[0].checked ? "全不选" : "全选"
+				}
 
 		}
 	</script>
