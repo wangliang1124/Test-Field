@@ -3,8 +3,91 @@
 <head>
 	<meta charset="utf-8">
 	<title>网页计算器</title>
+	<style>
+		body,div,p,ul,li,input{margin:0;padding:0;}
+		ul{list-style-type:none;}
+		a{color:#fff;outline:none;text-decoration:none;}
+		body{font:700 24px/1.5 Arial;}
+		#calc{position:relative;width:300px;background:#000;margin:10px auto;}
+		#calc p{color:#fff;text-align:right;font:12px/20px Arial;padding:0 5px;}
+		#calc .f-text{border:0;width:290px;height:84px;text-align:right;font:700 50px/84px Arial;background:url(img/inputBg.jpg) repeat-x;padding:0 5px;}
+		#calc ul{position:relative;overflow:hidden;zoom:1;background:url(img/bg.jpg);padding:0 0 17px 8px;}
+		#calc ul li{float:left;width:63px;height:41px;margin:17px 10px 0 0;}
+		#calc ul li a{display:block;width:63px;height:41px;line-height:41px;text-align:center;background:url(img/btn.png) no-repeat;}
+		#calc ul li a:hover{background-position:-63px 0;}
+		#calc ul li.btn-1 a{background-position:0 -41px;}
+		#calc ul li.btn-1 a:hover{background-position:-63px -41px;}
+		#calc ul li.btn-2{position:absolute;top:174px;right:0;height:99px;}
+		#calc ul li.btn-2 a{height:99px;line-height:99px;background-position:0 -164px;}
+		#calc ul li.btn-2 a:hover{background-position:-63px -164px;}
+		#calc ul li.btn-3{width:136px;}
+		#calc ul li.btn-3 a{width:136px;background-position:0 -82px;}
+		#calc ul li.btn-3 a:hover{background-position:0 -123px;}
+		#formula{position:absolute;top:20px;background:none;border:0;font:700 12px/1.5 Arial;width:280px;padding:3px 15px 0 5px;text-align:right;}
+	</style>
+	<script>
+		window.onload=function(){
+			var oCalc=document.getElementById('calc'),
+				oA=calc.getElementsByTagName('a'),
+				oInput=calc.getElementsByTagName('input')[0],
+				oFormula=document.getElementById('formula');
+
+				for(var i=0;i<oA.length;i++){
+					oA[i].onclick=function(){
+						switch(this.innerHTML){
+							case 'c':
+								oInput.value=0;
+								oFormula.value='';
+								break;
+							case '%':
+								oInput.value=this.innerHTML;break;
+							case '/':
+								;break;
+							case '*':
+								;break;
+							case '-':
+								;break;
+							case '+':
+								;break;
+							case '=':
+
+							case '.':
+
+							default:
+
+							 oInput.value=this.innerHTML;
+						}
+					}	
+				}
+		}
+	</script>
+<title>网页计算器</title>
 </head>
 <body>
-
+<div id="calc">
+    <p>简易计算器</p>
+    <input class="f-text" type="text" readonly="readonly" maxlength="9" value="0" />
+    <ul>
+        <li class="btn-1"><a href="javascript:void(0)">c</a></li>
+        <li class="btn-1"><a href="javascript:void(0)">%</a></li>
+        <li class="btn-1"><a href="javascript:void(0)">÷</a></li>
+        <li class="btn-1"><a href="javascript:void(0)">×</a></li>
+        <li><a href="javascript:void(0)">7</a></li>
+        <li><a href="javascript:void(0)">8</a></li>
+        <li><a href="javascript:void(0)">9</a></li>
+        <li class="btn-1"><a href="javascript:void(0)">-</a></li>
+        <li><a href="javascript:void(0)">4</a></li>
+        <li><a href="javascript:void(0)">5</a></li>
+        <li><a href="javascript:void(0)">6</a></li>
+        <li class="btn-1"><a href="javascript:void(0)">+</a></li>
+        <li><a href="javascript:void(0)">1</a></li>
+        <li><a href="javascript:void(0)">2</a></li>
+        <li><a href="javascript:void(0)">3</a></li>
+        <li class="btn-2"><a href="javascript:void(0)">=</a></li>
+        <li class="btn-3"><a href="javascript:void(0)">0</a></li>
+        <li><a href="javascript:void(0)">.</a></li>
+    </ul>
+    <input id="formula" type="text" readonly="readonly" value="" />
+</div>
 </body>
 </html>
