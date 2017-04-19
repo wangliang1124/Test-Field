@@ -40,24 +40,29 @@
 								oFormula.value='';
 								break;
 							case '%':
-								oInput.value=this.innerHTML;break;
-							case '/':
-								;break;
-							case '*':
-								;break;
+								count('%');break;
+							case '÷':
+								count('/');break;
+							case '×':
+								count('*');break;
 							case '-':
-								;break;
+								count('-');break;
 							case '+':
-								;break;
+								count('+');break;
 							case '=':
-
+								oInput.value=eval(oFormula.value);break;
+								//count(this.innerHTML);break;
 							case '.':
-
+								count('.');break;
 							default:
-
-							 oInput.value=this.innerHTML;
+							 count(this.innerHTML);break;
 						}
 					}	
+				}
+				//
+				function count(a){
+					oInput.value+=a;
+					oFormula.value+=a;
 				}
 		}
 	</script>
