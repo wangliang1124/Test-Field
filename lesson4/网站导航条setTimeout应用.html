@@ -13,29 +13,40 @@
 		#nav ul li{float:left;width:110px;margin-left:-2px;background-position:0 -108px;}
 		#nav ul li a{font-size:14px;color:#fff;width:102px;display:block;text-align:center;text-decoration:none;margin:0 2px 0 4px;}
 		#nav ul li a:hover{font-weight:700;background-position:-3px -144px;}
-		#nav .subnav{display:block;position:absolute;top:41px;width:auto!important;min-width:110px;height:27px;line-height:27px;white-space:nowrap;background-position:0px -180px;}
+		#nav .subnav{display:none;position:absolute;top:41px;width:auto!important;min-width:110px;height:27px;line-height:27px;white-space:nowrap;background-position:0px -180px;}
 		#nav .subnav p{margin-left:10px;padding-right:10px;background-position:right -234px;}
 		#nav .subnav p span{display:block;color:#235e99;background-repeat:repeat-x;background-position:0 -207px;}
 		#nav .subnav p a{font-size:12px;display:inline;color:#235e99;text-decoration:none;margin:0 5px;padding:0 2px;}
 		#nav .subnav p a:hover{font-weight:400;background-image:none;border-bottom:2px solid;}
-		#nav .subnav .arrow{position:absolute;top:-4px;display:block;width:11px;height:5px;background-position:0 -261px;}
+		#nav .subnav .arrow{position:absolute;top:-4px;left:20px;display:block;width:11px;height:5px;background-position:0px -261px;}
 	</style>
 	<script type="text/javascript">
 		window.onload=function(){
             var oNav=document.getElementById('nav');
             var oLi=oNav.getElementsByTagName('li');
-            var oSubnav= oNav.getElementsByTagName('div')[0];
+            var timer=null;
                 for(var i=0;i<oLi.length;i++){
-                    oLi[i].onmouseover=function(){
+                    oLi[i].onmouseover=function(){clearTimeout(timer);
+                    	var oSubnav= this.getElementsByTagName('div')[0];
+                    	var oEm=this.getElementsByTagName('em')[0];
                         if(oSubnav){
-                            oSubnav.style.display='block';
+                        	oSubnav.style.display='block';
+                        	oNav.offsetWidth-this.offsetLeft>oSubnav.offsetWidth ?
+                        	oSubnav.style.left= this.offsetLeft+'px' :
+                            oSubnav.style.right=0;
+                            oEm.style.left=this.offsetLeft-oSubnav.offsetLeft+50+'px';
+                            
+
                         }
                     }
                     oLi[i].onmouseout=function(){
-                         
-                        if(oSubnav){
-                            oSubnav.style.display='none';
-                        }
+                    	//alert();
+                    	var oSubnav= this.getElementsByTagName('div')[0];
+                    	timer=setTimeout(function(){
+	                        if(oSubnav){
+	                            oSubnav.style.display='none';
+	                        }
+                    	},300)
                     }
                 }
 
