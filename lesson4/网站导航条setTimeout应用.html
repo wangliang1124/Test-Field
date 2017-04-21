@@ -21,23 +21,45 @@
 		#nav .subnav .arrow{position:absolute;top:-4px;left:20px;display:block;width:11px;height:5px;background-position:0px -261px;}
 	</style>
 	<script type="text/javascript">
+        function getByClass(classname,parentID){
+            var oParent=parentID?document.getElementById(parentID):document;
+            var elem=[];
+            var elements=oParent.getElementsByTagName('*');
+            for(var i=0;i<elements.length;i++){
+                if(elements[i].className==classname){
+                    elem.push(elements[i]);
+                }
+            }
+            return elem;
+        } 
+
 		window.onload=function(){
             var oNav=document.getElementById('nav');
             var oLi=oNav.getElementsByTagName('li');
+            var aSubnav=getByClass('subnav','nav');
             var timer=null;
                 for(var i=0;i<oLi.length;i++){
-                    oLi[i].onmouseover=function(){clearTimeout(timer);
-                    	var oSubnav= this.getElementsByTagName('div')[0];
-                    	var oEm=this.getElementsByTagName('em')[0];
+                    oLi[i].onmouseover=function(){
+                        for(var i in aSubnav){aSubnav[i].style.display='none';}
+                        var oSubnav= this.getElementsByTagName('div')[0];
+                        var oEm=this.getElementsByTagName('em')[0];
                         if(oSubnav){
                         	oSubnav.style.display='block';
                         	oNav.offsetWidth-this.offsetLeft>oSubnav.offsetWidth ?
                         	oSubnav.style.left= this.offsetLeft+'px' :
                             oSubnav.style.right=0;
                             oEm.style.left=this.offsetLeft-oSubnav.offsetLeft+50+'px';
-                            
-
+                             //阻止事件冒泡
+                            oSubnav.onmouseover = function (event)
+                            {
+                                (event || window.event).cancelBubble = true;
+                                clearTimeout(timer)
+                            }
                         }
+                       // clearTimeout(timer);
+
+
+
                     }
                     oLi[i].onmouseout=function(){
                     	//alert();
@@ -46,7 +68,7 @@
 	                        if(oSubnav){
 	                            oSubnav.style.display='none';
 	                        }
-                    	},300)
+                    	},300);
                     }
                 }
 
