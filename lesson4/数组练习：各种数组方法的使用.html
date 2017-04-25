@@ -10,10 +10,42 @@
 		window.onload=function(){
 			var oDiv=document.getElementsByTagName('div');
 			var oInput=document.getElementsByTagName('input');
-
+			var bS1=true;
 			oInput[0].onclick=function(){
-				
+				var month=oDiv[0].innerHTML.split(',');
+				bS1 ?
+				(month.shift(),	this.value=this.value.replace("删除",'添加'),bS1=false):
+				(month.unshift('January(1)'),this.value=this.value.replace('添加','删除'),bS1=true);
+				oDiv[0].innerHTML=month.join();
 			}
+
+			oInput[1].onclick=function(){
+				var month=oDiv[0].innerHTML.split(',');
+				bS1 ?
+				(month.pop(),	this.value=this.value.replace("删除",'添加'),bS1=false):
+				(month.push('DEC(12)'),this.value=this.value.replace('添加','删除'),bS1=true);
+			    oDiv[0].innerHTML=month.toString();
+			}
+			oInput[2].onclick=function(){
+				var num=oDiv[1].innerHTML.split(',');
+				oDiv[1].innerHTML=num.concat(num).toString();
+			}
+			oInput[3].onclick=function(){
+				var num=oDiv[1].innerHTML.split(',');
+				num.length=10;
+				oDiv[1].innerHTML=num.toString();
+			}
+
+			oInput[4].onclick=function(){
+				var aTmp=["red","green","blue","white","yellow","black","brown",'还原'];
+				oDiv[2].innerHTML=aTmp.join();
+			}
+			oInput[5].onclick=function(){
+				var aTmp=oDiv[2].innerHTML.split(',');
+				aTmp.splice(0,3);
+				oDiv[2].innerHTML=aTmp.toString();
+			}
+
 		}
 	</script>
 </head>
