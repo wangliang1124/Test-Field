@@ -35,14 +35,22 @@
 				oLi[i].index=i;
 				oLi[i].onmouseover=function(){
 					for(var j=0;j<=this.index;j++){
-						oLi[j].className='on';
-						oP.innerHTML=aMsg[this.index];
-						oP.style.display='block';
+						oLi[j].className='on';	
 					}
+					oP.innerHTML=aMsg[this.index];
+					oP.style.display='block';
+
 				}
 				oLi[i].onmouseout=function(){
 					for(var j=0;j<=this.index;j++){
 						oLi[j].className='';
+					}
+					oP.style.display='none';
+				}
+				oLi[i].onclick=function(){
+					oSpan.innerHTML=aMsg[this.index];	
+					for(var j=0;j<=this.index;j++){
+						oLi[j].className='on';						
 					}
 				}
 			}
