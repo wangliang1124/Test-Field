@@ -18,11 +18,12 @@
 	</style>
 	<script type="text/javascript">
 		window.onload=function(){
-			var oStar=document.getElementById('star')
+			var oStar=document.getElementById('star');
+			var oUl = oStar.getElementsByTagName("ul")[0];
 			var oLi=oStar.getElementsByTagName('li');
 			var oSpan = oStar.getElementsByTagName("span")[1];
 			var oP = oStar.getElementsByTagName("p")[0];
-
+			var score=star=0;
 			var aMsg = [
 				"很不满意|差得太离谱，与卖家描述的严重不符，非常不满",
 				"不满意|部分有破损，与卖家描述的不符，不满意",
@@ -31,29 +32,41 @@
 				"非常满意|质量非常好，与卖家描述的完全一致，非常满意"
 				];
 
-			for(var i=0;i<oLi.length;i++){
-				oLi[i].index=i;
-				oLi[i].onmouseover=function(){
-					for(var j=0;j<=this.index;j++){
-						oLi[j].className='on';	
-					}
-					oP.innerHTML=aMsg[this.index];
+			for(var i=1;i<=oLi.length;i++){
+				oLi[i-1].index=i;
+				oLi[i-1].onmouseover=function(){
+					fnPoint(this.index);
+					oP.style.left = oUl.offsetLeft + this.index * this.offsetWidth - 104 + "px";
 					oP.style.display='block';
-
 				}
-				oLi[i].onmouseout=function(){
-					for(var j=0;j<=this.index;j++){
-						oLi[j].className='';
-					}
-					oP.style.display='none';
+				oLi[i-1].onmouseout=function(){
+					fnPoint();
 				}
-				oLi[i].onclick=function(){
-					oSpan.innerHTML=aMsg[this.index];	
-					for(var j=0;j<=this.index;j++){
-						oLi[j].className='on';						
-					}
+				oLi[i-1].onclick=function(){
+					star=this.index;
+					oP.style.display = "none";
+					oSpan.innerHTML=aMsg[this.index-1];	
 				}
 			}
+			//
+			function fnPoint(clicked){
+				score= clicked || star;
+				//alert(score);
+				if(score==0 ){
+					for(var j=0;j<oLi.length;j++){
+						oLi[j].className='';	
+					}
+					oP.style.display='none';
+
+				}else{
+					for(var j=0;j<oLi.length;j++){
+							oLi[j].className= j<score?'on':'';
+					}
+
+					oP.innerHTML=aMsg[score-1]
+				}
+			}
+
 		}	
 	</script>
 </head>
