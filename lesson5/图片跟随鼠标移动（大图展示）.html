@@ -20,11 +20,27 @@
 			var oLoading = oBig.getElementsByTagName("div")[0];
 
 			for(var i=0;i<aLi.length;i++){
+
 				aLi[i].onmouseover=function(){
 					var oImg=document.createElement('img');
-					oImg.src="img/shirt_1_big.jpg";
-					oBig.style.display='block'
+					var img = new Image();	
+					img.src=oImg.src=this.getElementsByTagName('img')[0].src.replace('.jpg','_big.jpg')
+					this.className='active';
+					oBig.style.display = oLoading.style.display = "block";
 					oBig.appendChild(oImg);
+					img.complete?oLoading.style.display='none':(oImg.onload=function(){oLoading.style.display='none';})
+				}
+				aLi[i].onmousemove=function(event){
+					var event=event||window.event;
+					var w=document.documentElement.offsetWidth-event.clientX;
+					oBig.style.left=(w<oBig.offsetWidth+10?event.clientX-oBig.offsetWidth-10:event.clientX+10)+'px';
+					oBig.style.top=event.clientY+20+'px';
+				}
+				aLi[i].onmouseout=function(){
+					this.className='';
+					oBig.style.display='none';
+					oBig.removeChild(oBig.lastChild);
+
 				}
 			}
 		}
