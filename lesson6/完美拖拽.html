@@ -68,7 +68,7 @@
 				if (aPos.length == 1) return;
 				var timer=setInterval(function(){
 					var oPos=aPos.pop();
-					oPos ? (oBox.style.left=oPos.x+'px',oBox.style.top=oPos.y+'px',status(),console.log(aPos.length)):clearInterval('timer');
+					oPos ? (oBox.style.left=oPos.x+'px',oBox.style.top=oPos.y+'px',status(),console.log(aPos.length)):clearInterval(timer)
 				},30);
 
 				return false;
