@@ -26,7 +26,7 @@
 				var disX=event.clientX - oBox.offsetLeft;
 				var disY=event.clientY - oBox.offsetTop;
 
-				//this.setCapture && this.setCapture();
+				this.setCapture && this.setCapture();
 				aPos.push({x:oBox.offsetLeft, y:oBox.offsetTop})
 
 				document.onmousemove=function(event){
@@ -49,6 +49,7 @@
 					oBox.style.left=l+'px';
 					oBox.style.top= t+'px';
 					aPos.push({x:l,y:t});
+					//console.log(l);
 					status();
 				}
 
@@ -58,17 +59,28 @@
 				//alert();
 				document.onmousemove=null;
 				document.onmouseup=null;
-				//this.releaseCapture && this.releaseCapture();
+				this.releaseCapture && this.releaseCapture();
 				status();
 			}
 			//回放
 			oA.onclick=function(){
 				console.log(aPos.length);
+				if (aPos.length == 1) return;
 				var timer=setInterval(function(){
 					var oPos=aPos.pop();
-					oPos ? (oBox.style.left=oPos.x+'px',oBox.style.top=oPos.y+'px',status()):clearInterval('timer');
-					status();
+					oPos ? (oBox.style.left=oPos.x+'px',oBox.style.top=oPos.y+'px',status(),console.log(aPos.length)):clearInterval('timer');
 				},30);
+
+				return false;
+			}
+			//阻止冒泡
+			oA.onmousedown=function(e){
+				e=e || window.event;
+				if(e.stopProgation){
+					e.stopProgation();
+				}else{
+					e.cancelBubble=true;
+				}
 			}
 			//状态
 			function status(){
