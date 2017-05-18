@@ -20,14 +20,14 @@ function drag(){
 	oTittle.onmousedown=function(){
 		var oPanel=document.getElementById("loginPanel");
 		var disX=event.clientX-oPanel.offsetLeft;
-		var dixY=event.clientY-oPanel.offsetTop;
+		var disY=event.clientY-oPanel.offsetTop;
 
 		//拖动鼠标，整个面板跟随鼠标移动
 		document.onmousemove=function(event){
 			event =event || window.event;
 			//document.title=event.clientX+","+event.clientY+","+event.screenX;
 			var l=event.clientX-disX,
-			    t=event.clientY-dixY,
+			    t=event.clientY-disY,
 			    W=document.documentElement.clientWidth || document.body.clientWidth,
 			    H=document.documentElement.clientHeight || document.body.clientHeight,
 			    maxL=W-oPanel.offsetWidth-10,
