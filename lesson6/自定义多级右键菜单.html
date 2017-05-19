@@ -18,6 +18,33 @@
 	<script type="text/javascript">
 		window.onload=function(){
 			var oMenu=document.getElementById('rightMenu');
+			var aLi=oMenu.getElementsByTagName('li');
+			var aUl=oMenu.getElementsByTagName('ul');
+
+			for(var i=0;i<aLi.length;i++){
+				if(aLi[i].getElementsByTagName('ul')[0]){
+					aLi[i].className='sub';
+				}
+
+				aLi[i].onmouseover=function(){
+					this.className+=' active';
+					var oThis=this;
+					var oUl=this.getElementsByTagName('ul');
+					if(oUl[0]){
+						for(var j=0;j<oThis.parentNode.children.length;j++){
+							oThis.parentNode.children[j].getElementsByTagName("ul")[0] &&
+							(oThis.parentNode.children[j].getElementsByTagName("ul")[0].style.display = "none");
+						}
+						oUl[0].style.display = "block";
+						oUl[0].style.top = this.offsetTop + "px";
+						oUl[0].style.left = this.offsetWidth + "px";
+
+					}
+				}
+
+			}
+
+			//右键显示菜单
 			document.oncontextmenu =function(event){
 				oMenu.style.display = "block";
 			
