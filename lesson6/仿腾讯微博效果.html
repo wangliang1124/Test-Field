@@ -95,9 +95,15 @@
 			eventUtil.addHandler(oSendBtn,'click',fnSend);
 
 			function fnSend(){
-				var li=document.createElement('li');
-				li.innerHTML='oUserName.innerHTML';
-				oUl.insertBefore(li,aLi[0])
+				var oLi=document.createElement('li');
+				var oDate=new Date();
+				oLi.innerHTML=' <div class=\"userPic\"><img src=\"' +getByClass('current','face')[0].src+ '\"></div>\
+				                <div class=\"content\">\
+				                    <div class=\"userName\"><a href=\"javascript:;\">'+oUserName.value+'</a>:</div>\
+				                    <div class=\"msgInfo\">'+ oConBox.value +'</div>\
+				                    <div class=\"times\"><span>'+(oDate.getMonth()+1)+'月'+oDate.getDate()+'日'+'</span><a class=\"del\" href="javascript:;">删除</a></div>\
+				                </div>';
+				oUl.insertBefore(oLi,aLi[0]);
 			}
 
 		});
