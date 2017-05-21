@@ -20,41 +20,48 @@
 			var oMenu=document.getElementById('rightMenu');
 			var aLi=oMenu.getElementsByTagName('li');
 			var aUl=oMenu.getElementsByTagName('ul');
-			var Timer=null;
-			console.log(aLi.length);
+			var Timer=showTimer=null;
 			for(var i=0;i<aLi.length;i++){
 				if(aLi[i].getElementsByTagName('ul')[0]){
 					aLi[i].className='sub';
 				}
 
 				aLi[i].onmouseover=function(event){
-					event=event || window.event;
-					event.stopPropagation();
 					var oThis=this;
 					var oUl=oThis.getElementsByTagName('ul');
 					oThis.className+=' active';
-
+					//clearTimeout(Timer);
+					//this.parentNode.style.display='block';
+					console.log(this);
 					if(oUl[0]){
-						clearTimeout(Timer);console.log(oUl[0]);
-						for(var j=0;j<oThis.parentNode.children.length;j++){
-							oThis.parentNode.children[j].getElementsByTagName("ul")[0] &&
-							(oThis.parentNode.children[j].getElementsByTagName("ul")[0].style.display = "none");
+						clearTimeout(Timer);
+						//console.log(oUl[0]);
+						showTimer = setTimeout(function (){
+							for(var j=0;j<oThis.parentNode.children.length;j++){
+								oThis.parentNode.children[j].getElementsByTagName("ul")[0] &&
+								(oThis.parentNode.children[j].getElementsByTagName("ul")[0].style.display = "none");
+							}
+							oUl[0].style.display = "block";
+							oUl[0].style.top = oThis.offsetTop + "px";
+							oUl[0].style.left = oThis.offsetWidth + "px";
+							console.log(oUl[0]);
+							setWidth(oUl[0]);
+						},300);
 
-						}
-						oUl[0].style.display = "block";
-						oUl[0].style.top = oThis.offsetTop + "px";
-						oUl[0].style.left = oThis.offsetWidth + "px";
-						setWidth(oUl[0]);
+							
 
 					}
+					
 				}
 				aLi[i].onmouseout=function(){		
+					//console.log(aLi[i]);
 					var oThis=this;
 					oThis.className = oThis.className.replace(/\s?active/,"");
 
-					Timer=setTimeout(function(){
+					//clearTimeout(showTimer);
+					Timer=setTimeout(function(){console.log('测试');//console.log(oThis);
 							for(var j=0;j<oThis.parentNode.children.length;j++){
-								console.log('测试');
+
 							oThis.parentNode.children[j].getElementsByTagName("ul")[0] &&
 							(oThis.parentNode.children[j].getElementsByTagName("ul")[0].style.display = "none");
 						}	
@@ -72,11 +79,14 @@
 				setWidth(aUl[0]);
 				return false;
 			}
-
+			//
+			document.onclick=function(){
+				oMenu.style.display='none';
+			}
 			//取li中最大的宽度, 并赋给同级所有li	
 			function setWidth(obj)
 			{
-				maxWidth = 0;
+				var maxWidth = 0;
 				for (i = 0; i < obj.children.length; i++)
 				{
 					var oLi = obj.children[i];			
