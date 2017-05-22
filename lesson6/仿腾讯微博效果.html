@@ -91,6 +91,9 @@
 			var oList=getByClass('list')[0];
 			var oUl=oList.getElementsByTagName('ul')[0];
 			var aLi=oList.getElementsByTagName('li');
+			var oMaxNum=getByClass('maxNum')[0];
+			var oCountTxt=getByClass('countTxt')[0];
+			var maxNum=140;
 
 			eventUtil.addHandler(oSendBtn,'click',fnSend);
 
@@ -121,8 +124,27 @@
 					                    <div class=\"times\"><span>'+(oDate.getMonth()+1)+'月'+oDate.getDate()+'日'+'</span><a class=\"del\" href="javascript:;">删除</a></div>\
 					                </div>';
 					oUl.insertBefore(oLi,aLi[0]);
+					for (i = 0; i < aImg.length; i++) aImg[i].className = "";
+					aImg[0].className='current';
+					document.getElementById('msgBox').getElementsByTagName('form')[0].reset();
 				}
 			}
+			//
+			eventUtil.addHandler(oConBox, "change", confine);
+			function confine(){
+				var iLen = 0;		
+				for (i = 0; i < oConBox.value.length; i++) iLen += /[^\x00-\xff]/g.test(oConBox.value.charAt(i)) ? 1 : 0.5;
+				oMaxNum.innerHTML = Math.abs(maxNum - Math.floor(iLen));	
+				maxNum - Math.floor(iLen) >= 0 ? (oCountTxt.innerHTML = "\u8fd8\u80fd\u8f93\u5165", bSend = true) : ( oCountTxt.innerHTML = "\u5df2\u8d85\u51fa", bSend = false)
+
+			}
+			confine();
+			//广播按钮鼠标划过样式
+			eventUtil.addHandler(oSendBtn, "mouseover", function () {this.className = "hover"});
+
+			//广播按钮鼠标离开样式
+			eventUtil.addHandler(oSendBtn, "mouseout", function () {this.className = ""});
+
 
 			//选择头像
 			for(var i=0;i<aImg.length;i++){
@@ -132,8 +154,14 @@
 					}
 					this.className='current';
 				});
+				eventUtil.addHandler(aImg[i],'mouseover',function(){
+					this.className+=' hover';
+				});
+				eventUtil.addHandler(aImg[i],'mouseout',function(){
+					this.className=this.className.replace(/\s?hover/,'');
+				});
 			}
-
+			//
 
 		});
 
