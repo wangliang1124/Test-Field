@@ -95,16 +95,45 @@
 			eventUtil.addHandler(oSendBtn,'click',fnSend);
 
 			function fnSend(){
-				var oLi=document.createElement('li');
-				var oDate=new Date();
-				oLi.innerHTML=' <div class=\"userPic\"><img src=\"' +getByClass('current','face')[0].src+ '\"></div>\
-				                <div class=\"content\">\
-				                    <div class=\"userName\"><a href=\"javascript:;\">'+oUserName.value+'</a>:</div>\
-				                    <div class=\"msgInfo\">'+ oConBox.value +'</div>\
-				                    <div class=\"times\"><span>'+(oDate.getMonth()+1)+'月'+oDate.getDate()+'日'+'</span><a class=\"del\" href="javascript:;">删除</a></div>\
-				                </div>';
-				oUl.insertBefore(oLi,aLi[0]);
+				var reg = /^\s*$/g;
+				if(reg.test(oUserName.value))
+				{
+					alert("请输入用户名");
+					oUserName.focus()
+				}
+				else if(!/^[\u4e00-\u9fa5\w]{2,8}$/g.test(oUserName.value))
+				{
+					alert("输入2-8字母数字下划线汉字");
+					oUserName.focus()
+				}
+				else if(reg.test(oConBox.value))
+				{
+					alert("内容");
+					oConBox.focus()
+				}
+				else{
+					var oLi=document.createElement('li');
+					var oDate=new Date();
+					oLi.innerHTML=' <div class=\"userPic\"><img src=\"' +getByClass('current','face')[0].src+ '\"></div>\
+					                <div class=\"content\">\
+					                    <div class=\"userName\"><a href=\"javascript:;\">'+oUserName.value+'</a>:</div>\
+					                    <div class=\"msgInfo\">'+ oConBox.value +'</div>\
+					                    <div class=\"times\"><span>'+(oDate.getMonth()+1)+'月'+oDate.getDate()+'日'+'</span><a class=\"del\" href="javascript:;">删除</a></div>\
+					                </div>';
+					oUl.insertBefore(oLi,aLi[0]);
+				}
 			}
+
+			//选择头像
+			for(var i=0;i<aImg.length;i++){
+				eventUtil.addHandler(aImg[i],'click',function(){
+					for (var j in aImg) {
+						aImg[j].className='';
+					}
+					this.className='current';
+				});
+			}
+
 
 		});
 
