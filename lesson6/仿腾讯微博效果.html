@@ -44,8 +44,8 @@
 	</style>
 	<script type="text/javascript">
 		//通过class获取元素
-		function getByClass(clsName,parentId){
-			var oParent = parentId?document.getElementById(parentId):document,
+		function getByClass(clsName,oParent){
+			var oParent = oParent?oParent:document,
 				elems=[],
 				elements=oParent.getElementsByTagName("*");
 
@@ -117,7 +117,7 @@
 				else{
 					var oLi=document.createElement('li');
 					var oDate=new Date();
-					oLi.innerHTML=' <div class=\"userPic\"><img src=\"' +getByClass('current','face')[0].src+ '\"></div>\
+					oLi.innerHTML=' <div class=\"userPic\"><img src=\"' +getByClass('current',oFace)[0].src+ '\"></div>\
 					                <div class=\"content\">\
 					                    <div class=\"userName\"><a href=\"javascript:;\">'+oUserName.value+'</a>:</div>\
 					                    <div class=\"msgInfo\">'+ oConBox.value +'</div>\
@@ -127,6 +127,8 @@
 					for (i = 0; i < aImg.length; i++) aImg[i].className = "";
 					aImg[0].className='current';
 					document.getElementById('msgBox').getElementsByTagName('form')[0].reset();
+					liHover();
+					delLi();
 				}
 			}
 			//字数限制
@@ -138,7 +140,7 @@
 				for (i = 0; i < oConBox.value.length; i++) {
 					iLen+= /[^\x00-\xff]/g.test(oConBox.value.charAt(i))?1:0.5;//判断双字节字符
 					oMaxNum.innerHTML=Math.abs(maxNum-Math.floor(iLen));
-					if(maxNum-Math.floor(iLen)>0){
+					if(maxNum-Math.floor(iLen)>=0){
 						oCountTxt.innerHTML="还能输入";
 					}else{
 						oCountTxt.innerHTML="超过";
@@ -171,7 +173,44 @@
 					this.className=this.className.replace(/\s?hover/,'');
 				});
 			}
-			//
+			//鼠标滑过广播列表
+			function liHover(){
+				for(var i=0;i<aLi.length;i++){
+					eventUtil.addHandler(aLi[i],'mouseover',function(e){
+						this.className='hover';
+						var oTmp=getByClass('times',this)[0];
+						var aA=oTmp.getElementsByTagName('a');
+						if(!aA.length){
+							var oA=document.createElement('a');
+							oA.innerHTML='删除';
+							oA.className='del';
+							oA.href='javascript:;';
+							oTmp.appendChild(oA);
+						}else{
+							aA[0].style.display='block';
+						}
+
+					});
+					eventUtil.addHandler(aLi[i],'mouseout',function(){
+						this.className='';
+						var oA=getByClass('times',this)[0].getElementsByTagName('a')[0];
+						oA.style.display='none';
+					});
+				}
+			}
+			//执行函数
+			liHover();
+			//删除
+			function delLi(){
+				var aA=getByClass('del',oUl);
+				for(var i=0;i<aA.length;i++){
+					aA[i].onclick=function(){
+						var oParent=this.parentNode.parentNode.parentNode;
+						oUl.removeChild(oParent);
+					}
+				}
+			}
+			delLi();
 
 		});
 
