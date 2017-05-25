@@ -40,7 +40,7 @@
 				aBtn[i].onmouseover=function(){
 					index=this.index;
 					cutover();
-					startMove();
+					startMove(-(index*aImg[0].offsetHeight));
 				}
 			}
 			function cutover(){
@@ -59,11 +59,19 @@
 					bOrder=false;
 				}
 				cutover();
-				startMove();
+				startMove(-(index*aImg[0].offsetHeight));
 
 			}
-			function startMove(){
-
+			function startMove(iTarget){
+				clearInterval(timer);
+				timer=setInterval(function(){
+					doMove(iTarget);
+				},30);
+			}
+			function doMove(iTarget){
+				var iSpeed=(iTarget- oUl.offsetTop)/10;
+				iSpeed=iSpeed>0?Math.ceil(iSpeed):Math.floor(iSpeed);
+				oUl.offsetTop==iTarget?clearInterval(timer):oUl.style.top=oUl.offsetTop+iSpeed+'px';
 			}
 			//自动切换
 			playTimer=setInterval(play,3000);

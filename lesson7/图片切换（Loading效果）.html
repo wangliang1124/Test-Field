@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>图片切换（Loading效果）</title>
+	<style type="text/css">
+		body,div,ul,li{margin:0;padding:0;}
+		li{list-style:none;}
+		body{font:12px/1.5 \5fae\8f6f\96c5\9ed1;background:#000;}
+		#big{position:relative;width:800px;height:auto!important;height:400px;min-height:400px;margin:20px auto;text-align:center;}
+		#title{position:absolute;top:0;left:0;width:100%;background:#000;color:#fff;opacity:0.7;filter:alpha(opacity=70);font-size:20px;height:50px;}
+		#title span{padding:0 5px;line-height:50px;display:block;}
+		#big.loading{background:url(img/loading.gif) 50% 50% no-repeat;}
+		#masks_L,#masks_R{position:absolute;top:0;width:400px;height:100%;cursor:pointer;background:#f0f0f0;opacity:0;filter:alpha(opacity=0);}
+		#masks_L{left:0;}
+		#masks_R{right:0;}
+		#btn_L,#btn_R{position:absolute;top:50%;margin-top:-40px;width:39px;height:80px;overflow:hidden;cursor:pointer;text-indent:-9999px;background:url(img/btn.png) no-repeat;opacity:0;filter:alpha(opacity=0);}
+		#btn_L{left:10px;background-position:0 0;}
+		#btn_R{right:10px;background-position:-39px 0;}
+	</style>
+	<script type="text/javascript">
+		
+	</script>
+</head>
+<body>
+	<div id="big">
+    	<div id="masks_L"></div>
+    	<div id="masks_R"></div>
+        <div id="btn_L">左</div>
+        <div id="btn_R">右</div>
+        <div id="title"><span></span></div>
+    </div>
+</body>
+</html>
