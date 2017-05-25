@@ -19,7 +19,35 @@
 		#btn_R{right:10px;background-position:-39px 0;}
 	</style>
 	<script type="text/javascript">
-		
+		window.onload=function(){
+			var aData = [
+				{"imgSrc" : "http://img1.gtimg.com/news/pics/hv1/106/238/825/53706421.jpg", "title" : "7月26日，吊车将事故现场的车头残片吊至大型运输车辆上。"},
+				{"imgSrc" : "http://img1.gtimg.com/news/pics/hv1/105/238/825/53706420.jpg", "title" : "7月26日，一辆大卡车准备驶离事故现场。"},
+				{"imgSrc" : "http://img1.gtimg.com/news/pics/hv1/101/238/825/53706416.jpg", "title" : "7月26日，工人在给最后一节车厢盖上彩条布，准备运离现场。"},
+				{"imgSrc" : "http://img1.gtimg.com/news/pics/hv1/99/238/825/53706414.jpg", "title" : "7月26日，一名工人在事故现场最后一节车厢上作业。"},
+				{"imgSrc" : "http://img1.gtimg.com/news/pics/hv1/100/238/825/53706415.jpg", "title" : "7月26日，工人在给最后一节车厢盖上彩条布，准备运离现场。"}
+			];
+
+			var oMasks_L=document.getElementById('masks_L');
+			var oMasks_R=document.getElementById('masks_R');
+			var oBtn_L=document.getElementById('btn_L');
+			var oBtn_R=document.getElementById('btn_R');
+			var oTitle=document.getElementById('title');
+			var oSpan = oTitle.getElementsByTagName("span")[0];
+			var oBig=document.getElementById('big');
+			oMasks_L.onmouseover=function(){
+				oBtn_L.style.opacity=1;
+			}
+			oMasks_R.onmouseover=function(){
+				oBtn_R.style.opacity=1;
+			}
+			oBtn_L.onclick=function(){
+				var oImg=document.createElement('img');
+				oImg.src=aData[0].imgSrc;
+				oBig.appendChild(oImg);
+			}
+
+		}
 	</script>
 </head>
 <body>
