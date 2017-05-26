@@ -35,6 +35,7 @@
 			var oTitle=document.getElementById('title');
 			var oSpan = oTitle.getElementsByTagName("span")[0];
 			var oBig=document.getElementById('big');
+			var iNow=0;
 			oMasks_L.onmouseover=function(){
 				oBtn_L.style.opacity=1;
 			}
@@ -42,9 +43,37 @@
 				oBtn_R.style.opacity=1;
 			}
 			oBtn_L.onclick=function(){
-				var oImg=document.createElement('img');
-				oImg.src=aData[0].imgSrc;
-				oBig.appendChild(oImg);
+				if(iNow<=0){
+					alert('这是第一张图片');
+					return;
+				}
+				iNow--;
+				loadImg();
+			}
+			oBtn_R.onclick=function(){
+				if(iNow >= aData.length - 1){
+						alert("这是最后一张图片了！")
+						return;
+				}
+				iNow++;
+				loadImg();
+			}
+			loadImg();
+			function loadImg(){
+				oBig.className='loading';
+				var oImg=oBig.getElementsByTagName('img')[0];
+				oImg&&oBig.removeChild(oImg);
+				var oTemp=document.createElement('img');
+				var oNewImg=new Image();
+				oNewImg.onload=function(){
+					oBig.className='';
+					oTemp.src=this.src;
+					oBig.appendChild(oTemp);
+					oSpan.innerHTML = aData[iNow].title;
+					oTemp.style.width=(oTemp.offsetWidth>800?800:oTemp.offsetWidth)+'px';
+
+				}
+				oNewImg.src=aData[iNow].imgSrc;
 			}
 
 		}
