@@ -19,6 +19,9 @@
 		#btn_R{right:10px;background-position:-39px 0;}
 	</style>
 	<script type="text/javascript">
+		function getStyle(obj,attr){
+			return obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj,null)[attr];
+		}
 		window.onload=function(){
 			var aData = [
 				{"imgSrc" : "http://img1.gtimg.com/news/pics/hv1/106/238/825/53706421.jpg", "title" : "7月26日，吊车将事故现场的车头残片吊至大型运输车辆上。"},
@@ -71,9 +74,39 @@
 					oBig.appendChild(oTemp);
 					oSpan.innerHTML = aData[iNow].title;
 					oTemp.style.width=(oTemp.offsetWidth>800?800:oTemp.offsetWidth)+'px';
+					startMove(oTitle, "height", 50, function (){
+						startMove(oTitle.childNodes[0], "opacity", 100)	
+					});
 
 				}
 				oNewImg.src=aData[iNow].imgSrc;
+			}
+			//startMove
+			function startMove(obj,attr,iTarget,fnEnd){
+				clearInterval(obj.timer);
+				obj.timer=setInterval(function(){
+					doMove(obj,attr,iTarget,fnEnd);
+				},30);
+			}
+			function doMove(obj,attr,iTarget,fnEnd){
+				var iCur=parseFloat(getStyle(obj,attr));
+				if(attr=='opacity'){
+					iCur=parseInt(iCur*100);
+				}
+				var iSpeed=(iTarget-iCur)/5;
+				iSpeed=iSpeed>0?Math.ceil(iSpeed):Math.floor(iSpeed);
+				if(iTarget==iCur){
+					clearInterval(obj.timer);
+					fnEnd&&fnEnd();
+				}else{
+					if(attr=='opacity'){
+						alert();
+						obj.style.opacity=(iCur+iSpeed)/100;
+						obj.style.filter='alpha(opacity='+(iCur+iSpeed)+')';
+					}else{
+						obj.style[attr]=iCur+iSpeed+'px';
+					}
+				}
 			}
 
 		}
