@@ -39,8 +39,12 @@
 			var oSpan = oTitle.getElementsByTagName("span")[0];
 			var oBig=document.getElementById('big');
 			var iNow=0;
-			oMasks_L.onmouseover=function(){
-				oBtn_L.style.opacity=1;
+			oMasks_L.onmouseover=oBtn_L.onmouseover=function(){
+				startMove(oBtn_L, "opacity", 100)
+
+			}
+			oMasks_L.onmouseout=function(){
+				startMove(oBtn_L, "opacity", 0)
 			}
 			oMasks_R.onmouseover=function(){
 				oBtn_R.style.opacity=1;
@@ -64,6 +68,8 @@
 			loadImg();
 			function loadImg(){
 				oBig.className='loading';
+				oSpan.style.opacity = oTitle.style.height = 0;
+				oSpan.style.filter = "alpha(opacity=0)";
 				var oImg=oBig.getElementsByTagName('img')[0];
 				oImg&&oBig.removeChild(oImg);
 				var oTemp=document.createElement('img');
@@ -90,6 +96,7 @@
 			}
 			function doMove(obj,attr,iTarget,fnEnd){
 				var iCur=parseFloat(getStyle(obj,attr));
+				console.log(iCur)
 				if(attr=='opacity'){
 					iCur=parseInt(iCur*100);
 				}
@@ -100,7 +107,6 @@
 					fnEnd&&fnEnd();
 				}else{
 					if(attr=='opacity'){
-						alert();
 						obj.style.opacity=(iCur+iSpeed)/100;
 						obj.style.filter='alpha(opacity='+(iCur+iSpeed)+')';
 					}else{
