@@ -9,18 +9,28 @@
 		p,input{margin:10px;}
 	</style>
 	<script type="text/javascript">
-		window.load=function(){
+		window.onload=function(){
 			var oDiv = document.getElementsByTagName("div")[0];
 			var aInput = document.getElementsByTagName("input");
 			var oP = document.getElementsByTagName("p")[0];
 			
-
+			aInput[0].onclick=function(event){
+				(event || window.event).cancelBubble=true;
+				console.log('xxx');
+				this.value+='（已激活）';
+				document.onclick=function(event){
+					var event=event||window.event;
+					oDiv.style.background='url(img/2.gif) no-repeat';
+					startMove(oDiv);
+					return false;
+				}
+			}
 		}
 	</script>
 </head>
 <body>
-<input type="button" value="根据鼠标点击位置移动" /><input type="button" value="根据标鼠标轨迹移动" />
-<p>请点击按钮激活功能！</p>
-<div></div>
+	<input type="button" value="根据鼠标点击位置移动" /><input type="button" value="根据标鼠标轨迹移动" />
+	<p>请点击按钮激活功能！</p>
+	<div></div>
 </body>
 </html>
