@@ -16,85 +16,35 @@
 			
 			aInput[0].onclick=function(event){
 				(event || window.event).cancelBubble=true;
-				clearEvent();
+				console.log('xxx');
 				this.value+='（已激活）';
 				document.onclick=function(event){
 					var event=event||window.event;
 					oDiv.style.background='url(img/2.gif) no-repeat';
-					startMove(oDiv,{x:event.clientX,y:event.clientY},function(){oDiv.style.background='url(img/1.gif) no-repeat'});
+					startMove(oDiv,{x:event.clientX,y:event.clientY},function(){oDiv.style.background='url(img/1.gif) no-repeat';});
 					return false;
-				}
-			}
-
-			aInput[1].onclick=function(event){
-				(event || window.event).cancelBubble = true;
-				clearEvent();			
-				this.value+="（已激活）";
-				oP.innerHTML='按住鼠标左键在页面上拖动，人物将按照轨迹移动';
-				var aPos=[{x:oDiv.offsetLeft,y:oDiv.offsetTop}];
-				
-				document.onmousedown=function(){
-					var event=event||window.event;
-					aPos.push({x:event.clientX,y:event.clientY});
-					document.onmousemove=function(){
-						var event=event||window.event;
-						aPos.push({x:event.clientX,y:event.clientY});
-						return false;
-						//console.log(event.clientX,event.clientY);
-					}
-					return false;
-					
-				}
-				document.onmouseup=function(){
-					document.onmousemove=null;
-					oDiv.style.background='url(img/2.gif) no-repeat';
-					var timer=setInterval(function(){
-						if(aPos.length==0){
-							oDiv.style.background='url(img/1.gif) no-repeat';
-							clearInterval(timer);
-							return;	
-						}
-						oDiv.style.left=aPos[0].x+'px';
-						console.log(aPos[0].x,aPos[0].y);
-						oDiv.style.top=aPos[0].y+'px';
-						aPos.shift();
-					},30);
 				}
 			}
 
 			function startMove(obj,oTarget,fnEnd){
 				clearInterval(obj.timer);
 				obj.timer=setInterval(function(){
-					doMove(obj,oTarget,fnEnd)
+					doMove(obj,oTarget,fnEnd);
 				},30);
 			}
 			function doMove(obj,oTarget,fnEnd){
 				var iX=(oTarget.x - obj.offsetLeft)/5;
 				var iY=(oTarget.y - obj.offsetTop)/5;
-				iX=iX>0?Math.ceil(iX):Math.floor(iX);
-				iY=iY>0?Math.ceil(iY):Math.floor(iY);
-				if(iX==0&&iY==0){
+				iX= iX>0?Math.ceil(iX):Math.floor(iX);
+				iY= iY>0?Math.ceil(iY):Math.floor(iY);
+				if(oTarget.x==obj.offsetLeft&&oTarget.y==obj.offsetTop){
 					clearInterval(obj.timer);
 					fnEnd&&fnEnd();
 				}else{
 					obj.style.left=obj.offsetLeft+iX+'px';
-					obj.style.top=obj.offsetTop+iY+'px';
-
+					obj.style.top=obj.offsetTop+iY+'px'; 
 				}
 			}
-			function clearEvent(){
-				document.onclick=null;
-				document.onmousedown=null;
-				document.onmouseup=null;
-				document.onmousemove=null;
-				for(var i=0;i<aInput.length;i++){
-					aInput[i].value=aInput[i].value.replace("（已激活）",'');
-					aInput[i].onmouseup=aInput[i].onmousedown=function(){
-						(event||window.event).cancelBubble=true;
-					}
-				}
-			}
-
 		}
 	</script>
 </head>
