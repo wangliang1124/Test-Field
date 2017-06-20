@@ -71,12 +71,22 @@
 
 				}
 				document.onmouseup=function(){
-					document.onmousemove=null;
-					
+
+					console.log('测试'+iScale);
 					startMove(oUl,parseInt((oList.offsetWidth - oUl.offsetWidth)*iScale));
+					isStop();
+					document.onmousemove=null;
+					document.onmouseup=null;
 				}
+				return false;
 			}
-			//
+			//阻止滚动条点击事件冒泡
+			oBar.onclick = function (event)
+			{
+				(event || window.event).cancelBubble = true
+			};
+
+			//滚动条两端鼠标移入自动滑动
 			oBarL.onmouseover=oBarR.onmouseover=document.onkeydown=function(event){
 				clearInterval(timer);
 				var event=event||window.event;
@@ -93,17 +103,49 @@
 			oBarL.onmouseout=oBarR.onmouseout=document.onkeyup=function(event){
 				clearInterval(timer);
 			}
+			//点击滚动条黑色背景区，滚动条及图片列表缓冲滑动至目标点
+			oBarM.onclick=function(event){
+				var iTarget=(event||window.event).clientX- oBox.offsetLeft- this.offsetLeft-oBar.offsetWidth/2;
+				//console.log('oBarM'+this.offsetLeft)
+				syncMove(iTarget);
+			}
+			//鼠标滚轮事件
+			oBox.onmouseover=function(event){
+				var event=event||window.event;
+				function mouseWheel(){
+					var delta = event.wheelDelta ? event.wheelDelta : -event.detail * 40;
+					var iTarget=delta>0 ?-50 : 50;
+					syncMove(oBar.offsetLeft+iTarget);	
+				}
+				addHandler(this,'mousewheel',mouseWheel);
+				addHandler(this,'DOMMouseScroll',mouseWheel)
+			}
 			//列表和滚动条同步移动
 			function syncMove(iTarget){
-				console.log(iTarget);
+				//console.log(iTarget);
 				iTarget<=0&&(iTarget=0,clearInterval(timer));
 				iTarget>maxL&&(iTarget=maxL,clearInterval(timer));
 				var iScale=iTarget/maxL;
-				startMove(oBar,iTarget);
-				startMove(oUl,parseInt((oList.offsetWidth - oUl.offsetWidth)*iScale))
+				startMove(oBar,iTarget,function(){isStop()});
+				startMove(oUl,parseInt((oList.offsetWidth - oUl.offsetWidth)*iScale),function(){isStop()})
 			}
-
-
+			//判断停止
+			function isStop(){
+				oBarL.className='barL';
+				oBarR.className='barR';
+				switch(oBar.offsetLeft){
+					case 0:
+					 	/(^|\s)barLStop(\s|$)/.test(oBarL.className) || (oBarL.className+=' barLStop');
+						break;
+					case maxL:
+						/(^|\s)barRStop($|\s)/.test(oBarR.className) || (oBarR.className+=' barRStop');
+						break;
+				}
+			}
+			isStop();
+			function addHandler(elem,type,handler){
+				return elem.addEventListener?elem.addEventListener(type,handler,false):elem.attachEvent('on'+type,handler);
+			}
 			function startMove(obj,iTarget,fnEnd){
 				clearInterval(obj.timer);
 				obj.timer=setInterval(function(){
@@ -111,10 +153,10 @@
 				},25);
 			}
 			function doMove(obj,iTarget,fnEnd){
-				console.log(iTarget);
+				//console.log(iTarget);
 				var iSpeed=(iTarget- obj.offsetLeft)/5;
 				iSpeed=iSpeed>0?Math.ceil(iSpeed):Math.floor(iSpeed);
-				obj.style.left=obj.offsetLeft+iSpeed+'px';
+				iSpeed==0?(clearInterval(obj.timer),fnEnd&&fnEnd()):obj.style.left=obj.offsetLeft+iSpeed+'px';
 			}
 
 		}
