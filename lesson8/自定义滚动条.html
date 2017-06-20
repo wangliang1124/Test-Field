@@ -52,6 +52,7 @@
 			var oBarM=getByClass('barM')[0];
 			var oBar=getByClass('bar',oBarM)[0];
 			var maxL=oBarM.offsetWidth- oBar.offsetWidth;
+			var iMarginRight = getStyle(aLi[0], "marginRight");
 			var iScale=0;
 			var timer=null;
 			oUl.style.width=(aLi[0].offsetWidth+getStyle(aLi[0],'marginRight'))*aLi.length+'px';
@@ -76,7 +77,7 @@
 				}
 			}
 			//
-			oBarL.onmouseover=oBarR.onmouseover=function(event){
+			oBarL.onmouseover=oBarR.onmouseover=document.onkeydown=function(event){
 				clearInterval(timer);
 				var event=event||window.event;
 				var iSpeed=0;
@@ -89,20 +90,23 @@
 					syncMove(getStyle(oBar, "left") + iSpeed);
 				},30)
 			}
+			oBarL.onmouseout=oBarR.onmouseout=document.onkeyup=function(event){
+				clearInterval(timer);
+			}
 			//列表和滚动条同步移动
 			function syncMove(iTarget){
 				console.log(iTarget);
-				iTarget<0&&(iTarget=0);
-				iTarget>maxL&&(iTarget=maxL);
-
+				iTarget<=0&&(iTarget=0,clearInterval(timer));
+				iTarget>maxL&&(iTarget=maxL,clearInterval(timer));
+				var iScale=iTarget/maxL;
 				startMove(oBar,iTarget);
+				startMove(oUl,parseInt((oList.offsetWidth - oUl.offsetWidth)*iScale))
 			}
 
 
 			function startMove(obj,iTarget,fnEnd){
 				clearInterval(obj.timer);
 				obj.timer=setInterval(function(){
-
 					doMove(obj,iTarget,fnEnd);
 				},25);
 			}
