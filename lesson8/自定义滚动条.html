@@ -112,7 +112,7 @@
 			//鼠标滚轮事件
 			oBox.onmouseover=function(event){
 				var event=event||window.event;
-				function mouseWheel(){
+				function mouseWheel(event){
 					var delta = event.wheelDelta ? event.wheelDelta : -event.detail * 40;
 					var iTarget=delta>0 ?-50 : 50;
 					syncMove(oBar.offsetLeft+iTarget);	
@@ -123,8 +123,8 @@
 			//列表和滚动条同步移动
 			function syncMove(iTarget){
 				//console.log(iTarget);
-				iTarget<=0&&(iTarget=0,clearInterval(timer));
-				iTarget>maxL&&(iTarget=maxL,clearInterval(timer));
+				iTarget<=0&&(iTarget=0,timer&&clearInterval(timer));
+				iTarget>=maxL&&(iTarget=maxL,timer&&clearInterval(timer));
 				var iScale=iTarget/maxL;
 				startMove(oBar,iTarget,function(){isStop()});
 				startMove(oUl,parseInt((oList.offsetWidth - oUl.offsetWidth)*iScale),function(){isStop()})
