@@ -55,6 +55,18 @@
 			var oRevert=getByClass('revert',oDrag)[0];
 			var dragMinWidth = 250;
 			var dragMinHeight = 124;
+			var oL = getByClass("resizeL", oDrag)[0];
+			var oT = getByClass("resizeT", oDrag)[0];
+			var oR = getByClass("resizeR", oDrag)[0];
+			var oB = getByClass("resizeB", oDrag)[0];
+			var oLT = getByClass("resizeLT", oDrag)[0];
+			var oTR = getByClass("resizeTR", oDrag)[0];
+			var oBR = getByClass("resizeBR", oDrag)[0];
+			var oLB = getByClass("resizeLB", oDrag)[0];
+	
+			oDrag.style.left = (document.documentElement.clientWidth - oDrag.offsetWidth) / 2 + "px";
+			oDrag.style.top = (document.documentElement.clientHeight - oDrag.offsetHeight) / 2 + "px";
+
 
 			oTitle.onmousedown=function(event){
 				var event=event||window.event;
@@ -110,6 +122,24 @@
 				oDrag.style.top=(document.documentElement.clientHeight- oDrag.offsetHeight)/2+'px';
 				this.style.display='none';
 				oMax.style.display='block';
+			}
+
+			//拖动八个方向改变大小
+			resize(oR);
+			function resize(obj){
+				obj.onmousedown=function(event){
+					var event=event||window.event;
+					var disX=event.clientX-obj.offsetLeft;
+					var disY=event.clientY- obj.offsetTop;
+					console.log(event.clientX,obj.offsetLeft)
+					obj.onmousemove=function(event){
+						 
+						var iW=event.clientX- disX;
+						var iH=event.clientY- disY;
+						console.log(event.clientX)
+						oDrag.style.width=iW+'px';
+					}
+				}
 			}
 		}
 	</script>
