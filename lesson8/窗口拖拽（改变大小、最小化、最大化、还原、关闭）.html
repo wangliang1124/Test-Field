@@ -123,21 +123,60 @@
 				this.style.display='none';
 				oMax.style.display='block';
 			}
+			//阻止冒泡
+			oMin.onmousedown = oMax.onmousedown = oClose.onmousedown = function (event){
+				(event||window.event).cancelBubble=true;			
+			}
+
 
 			//拖动八个方向改变大小
-			resize(oR);
-			function resize(obj){
+			resize(oR,false,false,false,true);
+			resize(oL,true,false,false,true);
+			resize(oT,false,true,true,false);
+			resize(oB,false,false,true,false);
+			resize(oLT,true,true,false,false);
+			resize(oTR,false,true,false,false);
+			resize(oBR,false,false,false,false);
+			resize(oLB,true,false,false,false);
+			
+			function resize(obj,isLeft,isTop,holdX,holdY){
 				obj.onmousedown=function(event){
 					var event=event||window.event;
 					var disX=event.clientX-obj.offsetLeft;
 					var disY=event.clientY- obj.offsetTop;
-					console.log(event.clientX,obj.offsetLeft)
-					obj.onmousemove=function(event){
-						 
-						var iW=event.clientX- disX;
-						var iH=event.clientY- disY;
-						console.log(event.clientX)
-						oDrag.style.width=iW+'px';
+					var oDragLeft=oDrag.offsetLeft;
+					var oDragWidth=oDrag.offsetWidth;
+					var oDragTop=oDrag.offsetTop;
+					var oDragHeight=oDrag.offsetHeight;
+					//console.log(oDrag.offsetWidth)
+					document.onmousemove=function(event){
+						//console.log(oDrag.offsetWidth);
+						var iL= event.clientX- disX;
+						var iT=	event.clientY- disY;
+						var iW=isLeft?oDragWidth-iL: iL+obj.offsetWidth ;
+						var iH=isTop?oDragHeight-iT : iT+obj.offsetHeight ;
+						var maxW=document.documentElement.clientWidth- oDrag.offsetLeft-2;
+						var maxH=document.documentElement.clientHeight - oDrag.offsetTop - 2;
+						
+						isLeft&&(oDrag.style.left=oDragLeft+iL+'px');
+						isTop&&(oDrag.style.top=oDragTop+iT+'px');
+						
+						iW<dragMinWidth&&(iW=dragMinWidth);
+						iW>maxW&&(iW=maxW);
+						iH<dragMinHeight&&(iH=dragMinHeight);
+						iH>maxH&&(iH=maxH);
+						
+						holdX || (oDrag.style.width=iW+'px');
+						holdY || (oDrag.style.height=iH+'px');
+
+						if((isLeft&&iW==dragMinWidth)||(isTop&&iH==dragMinHeight)){
+							document.onmousemove=null;
+						}
+						return false;
+					}
+					document.onmouseup=function(){
+						document.onmousemove=null;
+						document.onmouseup=null;
 					}
 				}
 			}
