@@ -23,7 +23,7 @@
 			var oLi=oStar.getElementsByTagName('li');
 			var oSpan = oStar.getElementsByTagName("span")[1];
 			var oP = oStar.getElementsByTagName("p")[0];
-			var score=star=0;
+			var score=star=2;
 			var aMsg = [
 				"很不满意|差得太离谱，与卖家描述的严重不符，非常不满",
 				"不满意|部分有破损，与卖家描述的不符，不满意",
@@ -48,7 +48,9 @@
 					oSpan.innerHTML=aMsg[this.index-1];	
 				}
 			}
-			//
+			//初始化
+			fnPoint();
+			//点亮
 			function fnPoint(clicked){
 				score= clicked || star;
 				//alert(score);
