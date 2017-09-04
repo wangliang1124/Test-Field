@@ -1,0 +1,533 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>ECharts-7</title>
+</head>
+<style>
+    *{
+        padding: 0px;
+        margin: 0px;
+    }
+    body{
+        background-color: #CCCCCC;
+    }
+	#main{
+		width: 1365px;
+		height: 630px;
+		margin: 0 auto;
+	}
+</style>
+<body>
+	<div id="main"></div>
+    <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="./lib/echarts.min.js"></script>
+	<script>
+	    var myChart = echarts.init(document.getElementById('main'));
+        var cityData = {},dateArr = [],valueArr = [],aqiData = [],topData = [],topX = [],topY = [],cityAqi = {},updateIndex = 0;
+        var color = ["#FFFF00","#FFFF33","#FFCC33","#FFFF66","#FFFF99","#99CC99","#666600","#999966","#FFFF99","#006633","#FF9966","#CC9999","#66CC00","#FFFF99","#CCCC66","#CCCCFF","#993399","#663300","#990033","#339933","#339966","#FF9900","#CC9966","#6699CC","#99CC33","#CC9933","#FF9900","#CCCC33","#FFCC00","#CCCC00"];
+        //获取城市坐标信息
+        /*city.json格式
+        {
+          "type": "Feature",
+          "geometry": {
+            "type": "Point",
+            "coordinates": [125.6, 10.1]
+          },
+          "properties": {
+            "name": "Dinagat Islands"
+          }
+        }*/
+        $.get("../echarts/map/city.json",function(city){
+            myChart.showLoading();
+            var features = city["features"];
+            for(var item in features){
+                cityData[features[item]["properties"]["name"]] = features[item]["geometry"]["coordinates"];
+            }
+        }).done(function(){
+            //获取空气质量数据
+            /*aqi.json格式
+            [{
+                "city": "湛江",
+                "aqi": "57",
+                "date": "2000/6/5"
+            }]*/
+                    $.get("../echarts/data/aqi.json",function(aqi){
+
+                        var daily =  dataSplit(aqi);   
+                        //按天对空气质量数据进行处理,返回格式:
+                        /*
+                        {[
+                            "2000/6/5",
+                            57
+                        ]}*/
+                        var city = dataSplitByCity(aqi); 
+                        //按城市对空气质量数据进行处理,返回格式:
+                         /*{[
+                            "2000/6/5",
+                            57
+                        ]}*/
+                        var i ,j , len,tempX = [],tempY = [];
+                        for(var date in daily){
+                            dateArr.push(date);
+                            valueArr.push(daily[date]);
+                            //转换为散点图所需数据,返回格式:
+                            /*[
+                                {
+                                    name: "湛江",
+                                    value: [110.40075302124023,21.19657588798597,57]
+                                }
+                            ]*/
+                            aqiData.push(dataParse(cityData,valueArr[0]));
+                            topData.push(daily[date].sort(function(a,b){
+                                return b.value - a.value;
+                            }).slice(0,10));
+                        }
+                        //处理每个城市数据,得到每天各个城市aqi数据
+                        for(var c in city){
+                            len = city[c].length;
+                            tempX = [];
+                            tempY = [];
+                            for(j = 0;j < len;j++){
+                                tempX.push(city[c][j][0]);
+                                tempY.push(city[c][j][1]);
+                            }
+                            cityAqi[c] = [tempX,tempY];
+                        }
+                        //处理top 15 数据，以供绘制柱状图
+                        len = topData.length;
+                        for(i = 0; i < len;i++){
+                            tempX = [];
+                            tempY = [];
+                            for(j = 0;j < 10;j++){
+                                if(topData[i][j] == undefined) break;
+                                tempX.unshift(topData[i][j]["value"]);
+                                tempY.unshift(topData[i][j]["name"])
+                            }
+                            topX.push(tempX);
+                            topY.push(tempY);
+                        }
+                    }).done(function(){
+
+                       $.get("../echarts/map/china.json",function(China){
+                            //注册地图名字和数据
+                            var x = cityAqi["西安"][0];
+                            var y = cityAqi["西安"][1];
+                            echarts.registerMap('China', China);
+                            var option = {
+                                backgroundColor: "#CCCCCC",
+                                tooltip : {
+                                    trigger: 'item'
+                                },
+                                title: [{
+                                    text: dateArr[0]+"全国主要城市空气质量",
+                                    textStyle: {
+                                        fontSize: 24
+                                    },
+                                    top: 20,
+                                    left: 52,
+                                    textStyle: {
+                                        color: "#FFF"
+                                    }
+                                },
+                                {
+                                    text: '  \n \n ',
+                                    top: 0,
+                                    left: 0,
+                                    backgroundColor: "#F0494F"
+                                },
+                                {
+                                    text: 'TOP 10',
+                                    right: "30%",
+                                    top: "2%",
+                                    textStyle: {
+                                      fontSize: 18,
+                                      fontWeight: "normal",
+                                      color: "#FFF"
+                                    }
+                                },
+                                {
+                                    text: '西安'.split("").join("\n")+"\n空\n气\n质\n量\n变\n化",
+                                    left: "3%",
+                                    bottom: "10%",
+                                    textStyle: {
+                                      fontSize: 18,
+                                      fontWeight: "normal",
+                                      color: "#FFF"
+                                    }
+                                }
+                                ],
+                                //地理坐标系
+                                geo: {
+                                    map: 'China',
+                                    left: "50px",
+                                    top: "0%",
+                                    label: {
+                                        emphasis: {
+                                            show: false
+                                        }
+                                    },
+                                    roam: true,
+                                    itemStyle: {
+                                        normal: {
+                                            color: "#663366",
+                                            borderColor: "#000000"
+                                        },
+                                        emphasis: {
+                                            color: "#CC0033"
+                                        }
+                                    }
+                                },
+                                grid: [{
+                                    right: "10px",
+                                    top: "10%", 
+                                    width: "30%",
+                                    height:"50%"
+                                },
+                                {
+                                    left: "10%",
+                                    bottom: "5%",
+                                    width: "80%",
+                                    height: "30%"
+                                }],
+                                
+                                xAxis: [{
+                                    type: 'value',
+                                    position: 'top',
+                                    boundaryGap: false,
+                                    gridIndex: 0,
+                                    splitLine: {show: false},
+                                    axisLine: {show: false},
+                                    axisTick: {show: false},
+                                    axisLabel: {margin: 2}
+                                },
+                                {
+                                    type: 'category',
+                                    boundaryGap: false,
+                                    gridIndex: 1,
+                                    splitLine: {show: false},
+                                    axisLine: {show: false},
+                                    axisTick: {show: false},
+                                    axisLabel: {margin: 2},
+                                    data: x
+                                }],
+                                yAxis: [{
+                                    type: 'category',
+                                    nameGap: 16,
+                                    gridIndex: 0,
+                                    axisLine: {show: false},
+                                    axisTick: {show: false},
+                                    axisLabel: {interval: 0},
+                                    data: topY[0]
+                                },
+                                {
+                                    type: 'value',
+                                    nameGap: 16,
+                                    gridIndex: 1,
+                                    axisLine: {show: false},
+                                    axisTick: {show: false},
+                                    axisLabel: {interval: 0},
+                                    splitLine: {
+                                        show: false
+                                    }
+                                }],
+                                dataZoom: [
+                                    {
+                                        type: 'slider',
+                                        xAxisIndex: [1],
+                                        filterMode: 'filter',
+                                        left: "10%"
+                                    },
+                                    {
+                                        type: 'inside',
+                                        xAxisIndex: [1],
+                                        filterMode: 'filter'
+                                    }
+                                ],
+                                series : [
+                                {
+                                    name: 'pm2.5',
+                                    type: 'scatter',
+                                    coordinateSystem: 'geo',
+                                    data: aqiData[0],
+                                    label: {
+                                        normal: {
+                                            formatter: '{b}',  //{a}、{b}、{c}，分别表示系列名，数据名，数据值
+                                            position: 'left',
+                                            show: false
+                                        },
+                                        emphasis: {
+                                            show: true
+                                        }
+                                    },
+                                    itemStyle: {
+                                        normal: {
+                                            color: color[0]
+                                        }
+                                    },
+                                    tooltip: {
+                                        formatter: function(params){
+                                            return "PM2.5: "+params["value"][2];
+                                        }
+                                    }
+                                },
+                                {
+                                    name: 'Top 5',
+                                    type: 'effectScatter',
+                                    coordinateSystem: 'geo',
+                                    tooltip: {
+                                        formatter: function(params){
+                                            return "PM2.5: "+params["value"][2];
+                                        }
+                                    },
+                                    data: dataParse(cityData,valueArr[0].sort(function (a, b) {
+                                        return b.value - a.value;
+                                    }).slice(0, 5)),
+                                    rippleEffect: {
+                                        brushType: 'stroke'
+                                    },
+                                    label: {
+                                        normal: {
+                                            formatter: '{b}',
+                                            position: 'right',
+                                            show: true
+                                        }
+                                    },
+                                    itemStyle: {
+                                        normal: {
+                                            color: color[0],
+                                            shadowBlur: 10,
+                                            shadowColor: color[0]
+                                        }
+                                    },
+                                    zlevel: 1
+                                },
+                                {
+                                    id: 'bar',
+                                    zlevel: 2,
+                                    type: 'bar',
+                                    xAxisIndex: 0, //使用的 x 轴的 index
+                                    yAxisIndex: 0,
+                                    itemStyle: {
+                                        normal: {
+                                            color: color[0]
+                                        }
+                                    },
+                                    data: topX[0]
+                                },
+                                {
+                                    zlevel: 2,
+                                    type: 'line',
+                                    xAxisIndex: 1, //使用的 x 轴的 index
+                                    yAxisIndex: 1,
+                                    data: y,
+                                    sampling: 'average',
+                                    tooltip: {
+                                        trigger: 'axis'
+                                    }
+                                }]
+                            }
+                        myChart.hideLoading();
+                        myChart.setOption(option);
+                        //动态变化，
+                        var id = setInterval(function () {
+                            if(updateIndex >= 118){
+                                window.clearInterval(id);
+                            }
+                            myChart.setOption({
+                                title: [{
+                                    text: dateArr[updateIndex]+"全国主要城市空气质量"
+                                },{},{},{}],
+                                yAxis: [{
+                                    data: topY[updateIndex]
+                                },{}],
+                                series: [{
+                                    data: aqiData[updateIndex],
+                                    itemStyle: {
+                                        normal: {
+                                            color: color[Math.round(Math.random()*29)]
+                                        }
+                                    }
+                                },
+                                {
+                                    itemStyle: {
+                                        normal: {
+                                            color: color[Math.round(Math.random()*29)]
+                                        }
+                                    },
+                                   data: dataParse(cityData,valueArr[updateIndex].sort(function (a, b) {
+                                        return b.value - a.value;
+                                    }).slice(0, 5))
+                                },
+                                {
+                                    itemStyle: {
+                                        normal: {
+                                            color: color[Math.round(Math.random()*29)]
+                                        }
+                                    },
+                                    data: topX[updateIndex]
+
+                                },{}]
+                            });
+                            updateIndex++;
+                        }, 5000)
+            /****************************************/
+
+                        //绑定click事件
+                        myChart.on('click', function (params) {
+                            if (params.componentSubType == "effectScatter"||params.componentSubType=="scatter"){
+                                var name = params.name;  //city
+                                var X = cityAqi[name][0];
+                                var Y = cityAqi[name][1];
+                                var opt = {
+                                    title: [{},{},{},{
+                                        text: name.split("").join("\n")+"\n空\n气\n质\n量\n变\n化",
+                                    }
+                                    ],
+                                    xAxis: [{},
+                                    {
+                                        data: Y
+                                    }],
+                                    series : [{},{},{},{
+                                        data: Y
+                                    }]
+                                }
+
+                                /***********************/
+                                myChart.setOption(opt);
+
+                            }
+                        });
+
+
+                        });//get china
+
+                   });//get api
+
+
+        });//get city
+
+    
+        
+		
+
+        /*********************************/
+
+        //对数据按天进行分割
+        /* @param
+        data:aqi.json返回数据
+        aqi.json格式
+            [{
+                "city": "湛江",
+                "aqi": "57",
+                "date": "2000/6/5"
+            }]
+        返回值dailyAqi格式：
+        {
+            {
+                name: "湛江",
+                value: 57
+            }
+        }
+        */
+        var dataSplit = function(data){
+            if(data[0] !== undefined){
+                var dailyAqi = {},len;
+                var dateIndex = data[0].date;
+                len = data.length;
+                for(var i = 0;i < len;i++){
+                    if (data[i] != undefined) {
+                        dateIndex = data[i]["date"];
+                        if(!(dailyAqi[dateIndex] instanceof Array)){
+                            dailyAqi[dateIndex] = [];
+                        }
+                        dailyAqi[dateIndex].push({
+                            name: data[i]["city"],
+                            value: parseInt(data[i]["aqi"])
+                        });
+                    }
+                    
+                    
+                }
+                return dailyAqi;
+
+            }
+        }
+        //对数据按城市进行分割
+       /* @param
+        data:aqi.json返回数据
+        aqi.json格式
+            [{
+                "city": "湛江",
+                "aqi": "57",
+                "date": "2000/6/5"
+            }]
+        返回值cityAqi格式：
+        {[
+            "2000/6/5",
+            57
+        ]}
+        */
+        var dataSplitByCity = function(data){
+            if(data[0] !== undefined){
+                var cityAqi = {},len;
+                var cityIndex = data[0].city;
+                len = data.length;
+                for(var i = 0;i < len;i++){
+                    if (data[i] != undefined) {
+                        cityIndex = data[i]["city"];
+                        if(!(cityAqi[cityIndex] instanceof Array)){
+                            cityAqi[cityIndex] = [];
+                        }
+                        cityAqi[cityIndex].push([
+                            data[i]["date"],
+                            parseInt(data[i]["aqi"])
+                        ]);
+                    }
+                    
+                    
+                }
+                return cityAqi;
+
+            }
+        }
+        //将数据处理为散点图接受的数据
+        /* @param
+        city:经过处理的city.json数据
+        格式
+            {
+                "湛江": [110.40075302124023,21.19657588798597]
+            }
+        data:经过dataSplit()处理返回的某天数据
+        格式：
+        {
+            {
+                name: "湛江",
+                value: 57
+            }
+        }
+        返回值result格式
+        [
+            {
+                name: "湛江",
+                value: [110.40075302124023,21.19657588798597,57]
+            }
+        ]
+
+        */
+        var dataParse = function(city,data){
+            var result = [],cityPoint,len,index;
+            len = data.length;
+            for(index = 0; index < len; index++ ){
+                cityPoint = city[data[index]["name"]];
+                result.push({
+                    name: data[index]["name"],
+                    value: cityPoint.concat(data[index]["value"])
+                })
+            }
+            return result;
+        }
+	</script>
+</body>
+</html>

@@ -19,11 +19,11 @@
 	+ 效果展示；
 
 + 2017.8--
-	+ 项目一：拼图小游戏：拖动随机排列的图片，完成拼图，使用JQuery实现
-	+ 项目二：在线眼镜试戴\使用JQuery实现
-	+ 项目三：空气质量可视化 http://ife.baidu.com/course/detail/id/55  使用Vue  https://github.com/baidu-ife/ife/blob/master/2015_summer/task/vis_yangfan_01.md
-	+ 项目四：HTML5音乐播放器 Vue  https://zhuanlan.zhihu.com/p/27776029?utm_source=wechat_session&utm_medium=social&from=singlemessage
-	德州扑克 http://ife.baidu.com/course/detail/id/120
+	+ 项目一：拼图小游戏：拖动随机排列的图片，完成拼图 JQuery实现
+	+ 项目二：星级评分\在线眼镜试戴 JQuery 
+	+ 项目三：空气质量可视化 Echarts.js JQuery.js http://ife.baidu.com/course/detail/id/55
+	+ 项目四：HTML5音乐播放器 Vue https://zhuanlan.zhihu.com/p/27776029?utm_source=wechat_session&utm_medium=social&from=singlemessage
+	+ 项目五：德州扑克 Vue  http://ife.baidu.com/course/detail/id/120
 
 
 参考项目：http://ife.baidu.com/2016/task/all
