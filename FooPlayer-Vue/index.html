@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>FooPlayer音乐播放器</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/style.css" media="screen" type="text/css" />
+</head>
+
+<body>
+    <div class="music-player" id="fooplayer">
+        <!--<div style="background-image: url(http://i.imgur.com/yqB0erk.jpg);" class="album"></div>-->
+        <div class="info">
+            <div class="left">
+                <a href="javascript:;" class="icon-shuffle"></a>
+                <a href="javascript:;" class="icon-heart"></a>
+            </div>
+            <div class="center">
+                <div class="jp-playlist">
+                    <ul style="display: block;">
+                        <li class="jp-playlist-current" v-for='item in list'>
+                            <span class="index">{{item.id}}</span>
+                            <span class="name">{{item.name}} </span>
+                            <span class="author">{{item.artist}}</span>
+                        </li>
+                        <li class="jp-playlist-current">
+                            <span class="index">2</span>
+                            <span class="name">Cro Magnon Man </span>
+                            <span class="author">CuPlayer</span>
+                        </li>
+                        <li class="jp-playlist-current">
+                            <span class="index">3</span>
+                            <span class="name">Cro Magnon Man </span>
+                            <span class="author">Cu</span>
+                        </li>
+                        <li class="jp-playlist-current">
+                            <span class="index">4</span>
+                            <span class="name">Cro Magnon Man </span>
+                            <span class="author">CuPlayer.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="right">
+                <a href="javascript:;" class="icon-repeat"></a>
+                <a href="javascript:;" class="icon-share"></a>
+            </div>
+            <div class="progress">
+                <span class="current-time">00:00</span>
+                <i class="control"></i>
+                <span class="end-time">99:99</span>
+            </div>
+        </div>
+        <div class="controls">
+            <div class="current jp-current-time">00:00</div>
+            <div class="play-controls">
+                <a href="javascript:;" class="icon-previous jp-previous" title="previous"></a>
+                <a href="javascript:;" class="icon-play jp-play" title="play"></a>
+                <a href="javascript:;" class="icon-pause jp-pause" title="pause"></a>
+                <a href="javascript:;" class="icon-next jp-next" title="next"></a>
+            </div>
+            <div class="volume-level jp-volume-bar">
+                <span class="jp-volume-bar-value" style="width: 0%"></span>
+                <a href="javascript:;" class="icon-volume-up jp-volume-max" title="max volume"></a>
+                <a href="javascript:;" class="icon-volume-down jp-mute" title="mute"></a>
+            </div>
+        </div>
+        <div id="jquery_jplayer" class="jp-jplayer"></div>
+    </div>
+    <script src="js/vue.js"></script>
+    <script src='js/vue-resource.js'></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/vue-router.js"></script>
+    <script src="js/fooplayer.js"></script>
+</body>
+
+</html>

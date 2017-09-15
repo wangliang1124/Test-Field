@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>watch-example</title>
+</head>
+
+<body>
+    <div id="example-5">
+        <select v-model="test">
+            <option disabled value="">请选择</option>
+            <option>A</option>
+            <option>B</option>
+            <option>C</option>
+        </select>
+        <span>Selected: {{test}}</span>
+    </div>
+
+    <script src='js/vue.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+    <script type='text/javascript'>
+	    new Vue({
+	        el: '#example-5',
+	        data: {
+	            test: ''
+	        }
+	    });
+    </script>
+</body>
+
+</html>

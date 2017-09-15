@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<title>watch-example</title>
+	<style>
+		
+	</style>
+</head>
+<body>
+	<div id="watch-example">
+		<div v-bind:class="classObject"></div>
+		<p>
+			Ask a yes/no question:
+			<input v-model="question">
+		</p>
+		<p>
+			{{answer}}
+		</p>
+	</div>
+	<script src='js/vue.js'></script>
+	<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script>
+	<script type='text/javascript'>
+		vm=new Vue({
+			el:"#watch-example",
+			data:{
+				question:"ask a question",
+				answer:"I cannot give you an answer until you ask a question!",
+				isActive:true,
+				isError:false
+			},
+			computed:{
+				classObject:function() {
+					return {
+						active:this.isActive && !this.isError,
+						error:this.isError && this.isError.type==='fatal'
+					};
+				}
+			},
+			watch:{
+				question:function() {
+					this.answer="waiting for you to stop typing...";
+					this.getAnswer();
+				}
+			},
+			methods:{
+				getAnswer:_.debounce(function() {
+					if(this.question.indexOf('?')===-1){
+						this.answer="questions usually end with a qusetion mark";
+						return;
+					}
+					this.answer="thinking...";
+					var vm=this;
+					axios.get('https://yesno.wtf/api').then(function(response) {
+						vm.answer = _.capitalize(response.data.answer);
+					})
+					.catch(function(error) {
+						vm.answer = 'Error! Could not reach the API. ' + error;
+					});
+				},500)
+			}
+		});
+	</script>	
+</body>
+</html>
