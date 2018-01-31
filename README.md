@@ -12,6 +12,9 @@
 * 7.ShoppingCart-Vue [使用vue2.0实现购物车和地址选配功能](https://www.imooc.com/learn/796)
 * 8.TodoList-Vue 基于vue的todolist，实现list的增删改
 * 9.my-first-wx-mini-program 微信小程序练习之作 [微信小程序入门与实战 常用组件API开发技巧项目实战](https://coding.imooc.com/learn/list/75.html)
+* 10.常用工具封装
+* 11.koa+vue+ Element UI
+* 12.Webpack-Learning 学习webpack [webpack深入与实战](https://www.imooc.com/learn/802)
 
 
 ## 学习计划：
