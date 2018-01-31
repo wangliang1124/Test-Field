@@ -3,15 +3,15 @@
 
 ## 文件说明：
 
-1.原生JavaScript学习 [参考 www.fgm.cc](http://www.fgm.cc/learn/)
-2.DOM事件探秘（慕课网）[DOM事件探秘](https://www.imooc.com/learn/138)  
-3.HTML5-CSS3-Learning [参考：张鑫旭老师博客等...](http://www.zhangxinxu.com/wordpress/)
-4.Professional JavaScript for Web Developers (JavaScript高级程序设计三) [参考](https://github.com/qianlongo/professional-js)
-5.Rating-JQuery 参考：锋利的jQuery [星级评分原理和实现](https://www.imooc.com/learn/842) 
-6.Echarts-Learning全国空气质量可视化 [Echarts官网](http://echarts.baidu.com/index.html)、[空气质量可视化](http://ife.baidu.com/course/detail/id/55)
-5.ShoppingCart-Vue [使用vue2.0实现购物车和地址选配功能](https://www.imooc.com/learn/796)
-6.TodoList-Vue 基于vue的todolist，实现list的增删改
-7.my-first-wx-mini-program 微信小程序练习之作 [微信小程序入门与实战 常用组件API开发技巧项目实战](https://coding.imooc.com/learn/list/75.html)
+* 1.原生JavaScript学习 [参考 www.fgm.cc](http://www.fgm.cc/learn/)
+* 2.DOM事件探秘（慕课网）[DOM事件探秘](https://www.imooc.com/learn/138)  
+* 3.HTML5-CSS3-Learning [参考：张鑫旭老师博客等...](http://www.zhangxinxu.com/wordpress/)
+* 4.Professional JavaScript for Web Developers (JavaScript高级程序设计三) [参考](https://github.com/qianlongo/professional-js)
+* 5.Rating-JQuery 参考：锋利的jQuery [星级评分原理和实现](https://www.imooc.com/learn/842) 
+* 6.Echarts-Learning全国空气质量可视化 [Echarts官网](http://echarts.baidu.com/index.html)、[空气质量可视化](http://ife.baidu.com/course/detail/id/55)
+* 7.ShoppingCart-Vue [使用vue2.0实现购物车和地址选配功能](https://www.imooc.com/learn/796)
+* 8.TodoList-Vue 基于vue的todolist，实现list的增删改
+* 9.my-first-wx-mini-program 微信小程序练习之作 [微信小程序入门与实战 常用组件API开发技巧项目实战](https://coding.imooc.com/learn/list/75.html)
 
 
 ## 学习计划：
