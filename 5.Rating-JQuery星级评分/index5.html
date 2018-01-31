@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<title>星级评分-第五种实现方式</title>
+	<style>
+		body,ul,li{
+			margin: 0;
+			padding: 0;
+		}
+		li{
+			list-style-type: none;
+		}
+		.rating,.rating-display{
+			background: url(img/star.png) repeat-x;
+		}
+		.rating{
+			position: relative;
+			width: 165px;
+			margin: 100px auto;
+		}
+		.rating-display{
+			width:66px;
+			height: 40px;
+			background-position: 0 -40px;
+		}
+		.rating-mask{
+			position: absolute;
+			width: 100%;
+			top:0;
+			left: 0;
+		}
+		.rating-item{
+			float:left;
+			width: 33px;
+			height: 40px;
+			cursor:pointer;
+		}
+	</style>
+</head>
+<body>
+	<!-- 第五种实现方式 -->
+	<div id="rating" class="rating">
+<!-- 		<div class="rating-display"></div>
+		<ul class="rating-mask">
+			<li class="rating-item"></li>
+			<li class="rating-item"></li>
+			<li class="rating-item"></li>
+			<li class="rating-item"></li>
+			<li class="rating-item"></li>
+		</ul> -->
+	</div>
+	<script src='http://libs.baidu.com/jquery/1.11.1/jquery.min.js'></script>
+	<script>
+		var rating=(function() {
+			//模式策略
+			var modeStrategies={
+				entire:function() {
+					return 1;
+				},
+				half:function() {
+					return 2;
+				},
+				quarter:function() {
+					return 4;
+				}
+
+			}
+			//构造函数
+			var Rating=function(el,options) {
+				this.$el=$(el);
+				this.opts=$.extend({},Rating.DEFAULTS,options);
+				if(!modeStrategies[this.opts.mode]){
+					this.opts.mode='entire';
+				}
+				this.ratio=modeStrategies[this.opts.mode]();
+				this.opts.total*=this.ratio;
+				this.opts.num*=this.ratio;
+				this.itemWidth=33/this.ratio;
+				this.displayWidth=this.itemWidth*this.opts.num;
+			};
+			Rating.DEFAULTS={
+				mode:'entire',
+				total:5,
+				num:2,
+				readOnly:false,
+				select:function() {},
+				chosen:function() {}
+			};
+			Rating.prototype.init=function() {
+				this.buildHTML();
+				this.setCSS();
+				if(!this.opts.readOnly){
+					this.bindEvent();
+				}
+			};
+			Rating.prototype.buildHTML=function() {  //创建HTML
+				var html='';
+				html+='<div class="rating-display"></div><ul class="rating-mask">';
+				for(var i=0;i<this.opts.total;i++){
+					html+='<li class="rating-item"></li>';
+				}
+				html+='</ul>';
+				this.$el.html(html);
+			};
+			Rating.prototype.setCSS=function() {   //设置CSS
+				this.$el.css('width',this.opts.total*this.itemWidth);
+				this.$display=this.$el.find('.rating-display');//不能放在构造函数中，因为buildHTML后才有
+				this.$display.width(this.displayWidth);
+				this.$el.find('.rating-item').width(this.itemWidth);
+			};
+			Rating.prototype.bindEvent=function() {  //绑定事件
+				var self=this;			
+				self.$el.on('mouseover','.rating-item',function() {
+					var count=$(this).index()+1;
+					self.$display.width(count*self.itemWidth);
+					(typeof self.opts.select==='function') && self.opts.select.call(this,count,self.opts.total);
+					self.$el.trigger('select',[count,self.opts.total]);
+				}).on('click','.rating-item',function() {
+					var count=$(this).index()+1;
+					self.displayWidth=self.itemWidth*count;
+					(typeof self.opts.chosen==='function') && self.opts.chosen.call(this);
+					self.$el.trigger('chosen');
+				}).on('mouseout',function() {
+					self.$display.width(self.displayWidth);
+				});
+			};
+			Rating.prototype.unbindEvent=function() {
+				this.$el.off();
+			};
+			//初始化
+			var init=function(el,option) {
+				var $el=$(el),
+					rating=$el.data('rating');
+				if(!rating){
+					$el.data('rating',(rating=new Rating(el,(typeof option==='object')&&option)));
+					rating.init();
+				}
+				//console.log(typeof option);
+				if(typeof option==='string'){
+					rating[option]();
+				}
+			};
+			//JQuery
+			$.fn.extend({
+				rating:function(option) {
+					return this.each(function() {
+						init(this,option);
+					});
+				}
+			});
+
+			//返回值，用于在闭合函数外调用
+			return {
+				init:init
+			};
+		})();
+
+		//插件调用方式
+		$('#rating').rating({
+			mode:'half',
+			total:5,
+			num:2.5,
+			readOnly:false,
+			// select:function(count,total) {
+			// 	console.log(count+'/'+total);
+			// },
+			chosen:function() {
+				$('#rating').rating('unbindEvent');
+			}	
+		});
+
+		// rating.init('#rating',{
+		// 	total:6,
+		// 	num:3,
+		// 	readOnly:true,
+		// 	select:function(count,total) {
+		// 		console.log(count+'/'+total);
+		// 	},
+		// 	chosen:function() {
+		// 		rating.init('#rating','unbindEvent');
+		// 	}
+		// });
+	</script>	
+</body>
+</html>

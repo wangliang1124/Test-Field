@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8"/>
+	<title>星级评分</title>
+	<style type="text/css">
+		body,ul,li,div{
+			padding: 0;
+			margin: 0;
+		}
+		li{
+			list-style-type: none;
+		}
+		.rating{
+			width:170px;
+			height: 34px;
+			margin:100px auto;
+		}
+		.rating-item{
+			float:left;
+			width:34px;
+			height: 34px;
+			background: url(img/star.png) no-repeat;
+			cursor:pointer;
+		}
+		.rating-item.on{
+			background-position:0px -40px;
+		}
+		.rating-item.half{
+			background-position:0px -80px;
+		}
+
+	</style>
+</head>
+<body>
+	<div>
+		<ul class='rating' id="rating">
+			<li class="rating-item" title="很不好"></li>
+			<li class="rating-item" title="不好"></li>
+			<li class="rating-item" title="一般"></li>
+			<li class="rating-item" title="好"></li>
+			<li class="rating-item" title="很好"></li>
+		</ul>
+		<ul class='rating' id="rating2">
+			<li class="rating-item" title="很不好"></li>
+			<li class="rating-item" title="不好"></li>
+			<li class="rating-item" title="一般"></li>
+			<li class="rating-item" title="好"></li>
+			<li class="rating-item" title="很好"></li>
+		</ul>
+	</div>
+	<script src='http://libs.baidu.com/jquery/1.11.3/jquery.min.js'></script>
+	<script type="text/javascript">
+		var rating=(function() {
+			//默认参数
+			var defaults={
+				mode:'LightEntire',
+				num:1,
+				readOnly:false,
+				select:function() {},
+				chosen:function() {}
+			};
+			//继承
+			// LightEntire.prototype=new Light();
+			// new LightEntire(); //构造函数一起继承，造成不必要的开销
+			var extend=function(subClass,superClass) {
+				var F=function() {};
+				F.prototype=superClass.prototype;
+				subClass.prototype=new F();
+				subClass.prototype.constructor=subClass;
+			};
+			//点亮
+			var Light=function(el,options) {
+				this.$el=$(el);
+				this.$item=this.$el.find('.rating-item');
+				this.opts=options;
+				this.add=1;
+				this.selectEvent='mouseover';
+			};
+			Light.prototype.init=function() {
+				this.lightOn(this.opts.num);
+				this.bindEvent();
+			};
+			Light.prototype.lightOn=function(num) {
+				count=parseInt(num);
+				this.$item.each(function(index){
+					if(index<count){
+						$(this).removeClass('half');
+						$(this).addClass('on');
+					}else{
+						$(this).removeClass('on');
+						$(this).removeClass('half');
+					}
+				});
+			};
+			Light.prototype.bindEvent=function() {
+				var self=this,
+					itemLength=self.$item.length;
+				self.$el.on(self.selectEvent,'.rating-item', function(e) {
+					var $this=$(this);
+						num=0;
+					self.select(e,$this);
+					num=$(this).index()+self.add;
+					self.lightOn(num);
+					(typeof self.opts.select==='function')&&self.opts.select.call(this,num,itemLength);
+					self.$el.trigger('select',[num,itemLength]);
+				}).on('click','.rating-item',function(event) {
+					self.opts.num=$(this).index()+1;
+					(typeof self.opts.chosen==='function') && self.opts.chosen.call(this,self.opts.num,itemLength);
+					self.$el.trigger('chosen',[self.opts.num,itemLength]);
+				}).on('mouseout', function(event) {
+					self.lightOn(self.opts.num);
+				});
+			};
+			Light.prototype.select=function() {
+				throw new Error('子类必须重写本方法！');
+			};
+			Light.prototype.unbindEvent=function() {
+				this.$el.off();
+			};
+
+			//点亮整颗
+			var LightEntire=function(el,options) {
+				Light.call(this,el,options);
+				this.selectEvent='mouseover';
+			};
+			extend(LightEntire,Light);
+			LightEntire.prototype.lightOn=function(num) {
+				Light.prototype.lightOn.call(this,num);
+			};
+			LightEntire.prototype.select=function() {
+				this.add=1;
+			};
+
+			//点亮半颗
+			var LightHalf=function(el,options) {
+				Light.call(this,el,options);
+				this.selectEvent='mousemove';
+			};
+			extend(LightHalf,Light);
+			LightHalf.prototype.lightOn=function(num) {
+				var count=parseInt(num),
+					isHalf=count!==num;
+				Light.prototype.lightOn.call(this,count);
+				if(isHalf){
+					this.$item.eq(count).addClass('half');
+				}
+			};
+			LightHalf.prototype.select=function(e,$this) {
+				if(e.pageX- $this.offset().left < $this.width()/2){
+					this.add=0.5;
+				}else{
+					this.add=1;
+				}
+			};
+			//点亮模式
+			var mode={
+				'LightEntire':LightEntire,
+				'LightHalf':LightHalf
+			};
+			var init=function(el,option) {
+				var $el=$(el),
+					rating=$el.data('rating'),
+					options=$.extend({},defaults,typeof option==='object'&&option);
+				//new LightEntire(el,options).init();
+				//new LightHalf(el,options).init();
+				if(!mode[options.mode]){
+					options.mode='LightEntire';
+				}
+				if(!rating){
+					$el.data('rating',(rating=new mode[options.mode](el,options)));
+					rating.init();
+				}	
+				if(typeof option==='string'){
+					rating[option]();
+				}
+			}
+			//JQuery插件
+			$.fn.extend({rating:function(option){
+				return this.each(function() {
+					init(this,option);
+				});
+			}});
+			//返回值
+			return {
+				init:init
+			};
+		})();
+		//调用一
+		// rating.init('#rating',{
+		// 	mode:'LightHalf',
+		// 	num:2.5,
+		// 	select:function(num,total) {
+		// 		//console.log(this);
+		// 		console.log(num+'/'+total);
+		// 	},
+		// 	chosen:function() {
+		// 		rating.init('#rating','unbindEvent');
+		// 	}
+		// });
+		// 调用二
+		// $('#rating').on('select', function(event,num,total) {	
+		// 	console.log(num+'/'+total);
+		// }).on('chosen', function(e,num,total) {
+		// 	console.log(num+'/'+total);
+		// });
+		// 调用三
+		$('#rating').rating({
+			mode:'LightEntire',
+			num:2
+		});
+		$('#rating2').rating({
+			mode:'LightHalf',
+			num:2.5,
+		});
+		$('#rating2').on('chosen', function() {
+			$('#rating2').rating('unbindEvent')
+		});	
+		
+	</script>
+</body>
+</html>
