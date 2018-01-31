@@ -1,0 +1,13 @@
+.DS_Store
+node_modules/
+assets/uploads/**
+assets/html/**
+assets/protocol/**
+dist/
+npm-debug.log
+logs
+test/unit/coverage
+test/e2e/reports
+selenium-debug.log
+.idea/
+cert/

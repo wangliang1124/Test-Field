@@ -59,3 +59,6 @@
 
 	Flex学习： 
 	 A Complete Guide to Flexbox  https://css-tricks.com/snippets/css/a-guide-to-flexbox/
+	 Flexbox详解 https://segmentfault.com/a/1190000002910324
+
+	前端基础进阶目录 https://segmentfault.com/a/1190000012646488
