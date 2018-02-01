@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "movie-list": "/pages/movie/movieList/movieList",
+    "split": "/components/split/split"
+  }
+}

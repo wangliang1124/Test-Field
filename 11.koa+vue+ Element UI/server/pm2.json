@@ -1,0 +1,21 @@
+{
+  "apps" : [{
+    "name"               : "RESRful API Server",
+    "script"             : "./dist/app.js",
+    "exec_mode"          : "fork",
+    "instances"          : "3",
+    "max_memory_restart" : "4G", // 超过多大内存自动重启，仅防止内存泄露有意义，需要根据自己的业务设置
+
+    "watch"              : ["dist","src"], // 监控变化的目录，一旦变化，自动重启
+    "ignore_watch"       : ["node_modules", "build", "logs"],
+    "out_file"           : "./logs/out.log", // 日志输出
+    "error_file"         : "./logs/error.log", // 错误日志
+    "env"                : {
+      "NODE_ENV"         : "production"
+    },
+    "env_dev"            : {
+      "NODE_ENV"         : "development"
+    },
+     "node_args"         : "--harmony"   //,"--inspect=ysj.tcfellow.com: 7010" 
+  }]
+}

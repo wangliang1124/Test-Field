@@ -1,0 +1,8 @@
+<!--pages/movie/movieList/movieList.wxml-->
+<view>
+  <view class="movie-list">
+    <view class="movie-cover-item"  wx:for="{{movieList}}" >
+      <movie-cover movie="{{item}}" bindtap="onMovieTap" data-id="{{item.id}}"></movie-cover> 
+    </view>
+  </view>
+</view>

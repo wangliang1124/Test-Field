@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>控制div属性</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		div{
+			width: 300px;
+			margin:0 auto;
+			margin-bottom: 50px;
+			text-align: center;
+		}
+		#div1{
+			width:200px;
+			height: 200px;
+			margin:0 auto;
+			background-color: #000;
+		}
+	</style>
+	<script type="text/javascript">
+	window.onload=function(){
+		var div1=document.getElementById('div1');
+		var btns=document.getElementsByTagName('button');
+		//console.log(typeof btns);
+		btns[0].onclick=function(){
+			div1.style.width='300px';
+		}
+		btns[1].onclick=function(){
+			div1.style.height='300px';
+		}
+		btns[2].onclick=function(){
+			div1.style.backgroundColor='red';
+		}
+		btns[3].onclick=function(){
+			div1.style.display='none';
+		}
+		btns[4].onclick=function(){
+			div1.style.display='block';
+			div1.style.height='200px';
+			div1.style.width='200px';
+			div1.style.backgroundColor='black';
+		}
+	}
+	</script>
+</head>
+<body>
+	<div>
+		<button>变宽</button>
+		<button>变高</button>
+		<button>变色</button>
+		<button>隐藏</button>
+		<button>重置</button>
+	</div>
+	<div id="div1"></div>
+
+</body>
+</html>

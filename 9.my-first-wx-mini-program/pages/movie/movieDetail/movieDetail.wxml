@@ -1,0 +1,66 @@
+<!--pages/movie/movieDetail/movieDetail.wxml-->
+<import src="../star/star.wxml" />
+<view class="movie-detail">
+    <view class="header">
+        <view class="title-wrapper">
+            <view class="title">{{movie.title}}</view>
+            <view class="country">
+                <text wx:for="{{movie.countries}}">{{item + ' '}}</text>
+            </view>
+            <view class="like-comment">
+                <text class="count">{{movie.wish_count}}</text>
+                <text class="like">喜欢</text>
+                <text class="count">{{movie.reviews_count}}</text>
+                <text class="comment">评论</text>
+            </view>
+            <image class="cover" src="{{movie.images.large}}"></image>
+            <image class="background" src="{{movie.images.large}}" mode="aspectFill"></image>
+        </view>
+        <view class="info">
+            <view class="info-item">
+                <text class="title">{{movie.original_title}}</text>
+            </view>
+            <view class="info-item">
+                <text class="info-title">评分</text>
+                <view class="rating-wrapper">
+                    <template is="star" data="{{score, starNum }}" />
+                </view>
+            </view>
+            <view class="info-item">
+                <text class="info-title">导演</text>
+                <text wx:for="{{movie.directors}}">{{item.name}}</text>
+            </view>
+            <view class="info-item">
+                <text class="info-title">影人</text>
+                <text wx:for="{{movie.casts}}">{{item.name +' '}}</text>
+            </view>
+            <view class="info-item">
+                <text class="info-title">类型</text>
+                <text wx:for="{{movie.genres}}">{{item +' '}}</text>
+            </view>
+        </view>
+    </view>
+    <view class="content">
+        <text class="title">剧情简介</text>
+        <view class="intro">{{movie.summary}}</view>
+    </view>
+    <view class="cast">
+        <view class="title">影人</view>
+        <scroll-view scroll-x="true" style="width: 100%; height: 210rpx; white-space: nowrap;">
+            <view class="cast-item" wx:for="{{movie.casts}}">
+                <image src="{{item.avatars.large}}"></image>
+                <view>{{item.name}}</view>
+            </view>
+            <view class="cast-item" wx:for="{{movie.casts}}">
+                <image src="{{item.avatars.large}}"></image>
+                <view>{{item.name}}</view>
+            </view>
+        </scroll-view>
+    </view>
+    <scroll-view scroll-x="true" scroll-top="10" style="background:black;width: 100%;height:100px;white-space: nowrap;">
+        <view style="background: red; width: 150px; height: 100px; display: inline-block;"></view>
+        <view style="background: green; width: 150px; height: 100px; display: inline-block;"></view>
+        <view style="background: blue; width: 150px; height: 100px; display: inline-block;"></view>
+        <view style="background: yellow; width: 150px; height: 100px; display: inline-block;"></view>
+    </scroll-view>
+</view>

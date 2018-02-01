@@ -1,0 +1,40 @@
+/*
+21. Liquid, three columns, hybrid widths (n.21)
+
+要求
+
+wrapper margin-left:-25%为extra留出空间 width:100%不能省
+content margin-left:25% margin-right: 200px为navigation留出空间
+navigation 宽度200px，位于content右侧
+extra 宽度25%，位于content右侧
+*/
+#container {
+    margin: 0 auto;
+}
+
+#wrapper {
+    float: left;
+    width: 100%;
+    margin-left: -25%;
+}
+
+#content {
+    margin-left: 25%;
+    margin-right: 200px;
+}
+
+#navigation {
+    float: left;
+    width: 200px;
+    margin-left: -200px;
+}
+
+#extra {
+    float: left;
+    width: 25%;
+    /*margin-left: -25%; Error */
+}
+
+#footer {
+    clear: both;
+}

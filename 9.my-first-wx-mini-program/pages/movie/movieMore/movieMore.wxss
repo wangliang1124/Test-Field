@@ -1,0 +1,10 @@
+/* pages/movie/movieMore/movieMore.wxss */
+
+.movie-more{
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 24rpx;
+  height: 100%;
+   /* overflow: hidden;  */
+}

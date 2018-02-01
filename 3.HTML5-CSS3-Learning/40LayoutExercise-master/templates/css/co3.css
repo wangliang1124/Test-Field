@@ -1,0 +1,31 @@
+/* 3. Three percentage columns(n.3)
+要求
+wrapper 左对齐且占据50%宽度
+extra、navigation宽度25%，依次位于content右侧
+
+*/
+
+#wrapper {
+    float: left;
+    width: 50%;
+}
+
+/*
+#content {
+    margin: 0%;
+}
+*/
+
+#navigation {
+    float: right;
+    width: 25%;
+}
+
+#extra {
+    float: left;
+    width: 25%;
+}
+
+#footer {
+    clear: left;
+}

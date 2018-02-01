@@ -1,0 +1,38 @@
+/*
+8. Three fixed columns(n.8)
+
+要求
+
+在7的基础上，调换navigation和extra
+*/
+#container {
+    width: 700px;
+    margin: 0 auto;
+}
+
+#wrapper {
+    float: left;
+    width: 100%;
+}
+
+#content {
+    width: 400px;
+    margin-left: 150px;
+    margin-right: 150px;
+}
+
+#navigation {
+    float: left;
+    width: 150px;
+    margin-left: -700px;
+}
+
+#extra {
+    float: left;
+    width: 150px;
+    margin-left: -150px;
+}
+
+#footer {
+    clear: both;
+}

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+<head>
+	<title>函数接收参数并弹出</title>
+	<meta charset="utf-8">
+	<style type="text/css">
+		*{margin:0px;padding:0px;}
+		body{
+			font:1.5em Tahoma;
+		}
+		div{
+			width: 800px;
+			margin:0 auto;
+			padding-top: 30px;
+			text-align: center;
+			line-height:40px;
+		}
+		#btn{cursor:pointer;}
+	</style>
+	<script type="text/javascript">
+		window.onload=function(){
+			var input=document.getElementsByTagName('input'),
+				btn=document.getElementById('btn');
+				btn.onclick=function(){
+					alert(input[0].value);
+					alert(input[1].value)
+				}
+		}
+	</script>
+</head>
+<body>
+	<div>
+		<input type="text" name="市" value="北京市"><br/>
+		<input type="text" name="区" value="朝阳区"><br/>
+		<input type="button" name="" value="传参" id='btn'>
+	</div>
+
+</body>
+</html>

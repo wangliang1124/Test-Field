@@ -1,0 +1,37 @@
+/*
+39. One column fixed and two halves (n.39)
+
+要求
+
+container 居中且宽度700px
+wrapper 宽100%
+navigation 宽度50%，位于content底部偏左
+extra 宽度50%，位于content底部偏右
+
+*/
+#container {
+    margin: 0 auto;
+    width: 700px;
+}
+
+#wrapper {
+    float: right;
+    width: 100%;
+}
+
+#content {
+}
+
+#navigation {
+    float: left;
+    width: 50%;
+}
+
+#extra {
+    float: right;
+    width: 50%;
+}
+
+#footer {
+    clear: both;
+}

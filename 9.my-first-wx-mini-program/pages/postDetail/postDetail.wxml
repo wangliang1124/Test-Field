@@ -1,0 +1,25 @@
+<view class="post-detail">
+  <view class="head-wrapper">
+    <image class="head-img" src="{{played?detail.music.coverImg:detail.headImgSrc}}" mode="widthFix"></image>
+    <image class="music" bindtap="onMusicTap" src="{{played?'/assets/img/music/music-stop.png': '/assets/img/music/music-start.png'}}"></image>
+  </view>
+  <view class="content-wrapper">
+    <view class="author-wrapper">
+      <image class="avatar" src="{{detail.avatar}}"></image>
+      <text class="author">{{detail.author}}</text>
+      <text class="post">发表于</text>
+      <text class="time">{{detail.dateTime}}</text>
+    </view>
+    <view class="title">{{detail.title}}</view>
+    <view class="line">
+      <image class="icon" wx:if="{{shared}}" src="/assets/img/icon/share.png"></image>
+      <image class="icon" wx:else bind:tap="onShareTap" src="/assets/img/icon/share-anti.png"></image>
+      <image class="icon" wx:if="{{collected}}" bind:tap="onCollectionTap" src="/assets/img/icon/collection.png"></image>
+      <image class="icon" wx:else bind:tap="onCollectionTap" src="/assets/img/icon/collection-anti.png"></image>
+    </view>
+    <view class="content">
+      {{detail.detail}}
+    </view>
+  </view>
+</view>
+

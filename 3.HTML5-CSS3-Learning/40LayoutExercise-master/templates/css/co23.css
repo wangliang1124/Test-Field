@@ -1,0 +1,41 @@
+
+/*
+23. Two columns liquid, side fixed (n.23)(flaot left|right)
+
+要求
+
+wrapper margin-left:-200px为navigation、extra留出空间 width:100%不能省
+content margin-left:200px
+navigation 宽度200px，位于content右侧 float:right
+extra 宽度200px，位于content右侧、navigation底部 float:right; clear: right
+图示
+
+*/
+#container {
+    margin: 0 auto;
+}
+
+#wrapper {
+    float: left;
+    width: 100%;
+    margin-left: -200px;
+}
+
+#content {
+    margin-left: 200px;
+}
+
+#navigation {
+    float: right;
+    width: 200px;
+}
+
+#extra {
+    float: right;
+    clear: right;
+    width: 200px;
+}
+
+#footer {
+    clear: both;
+}

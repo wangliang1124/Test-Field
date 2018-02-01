@@ -1,0 +1,51 @@
+/*
+33. Two colums fixed (n.33)
+
+要求
+
+23的扩展，增加container宽度700px，实现方式可简化，因为宽度固定
+container 居中且宽度700px
+wrapper 宽度500px
+navigation 宽度200px，位于content右侧 float:right
+extra 宽度200px，位于content右侧 float:right; clear: right
+
+23. Two columns liquid, side fixed (n.23)(flaot left|right)
+
+要求
+
+wrapper margin-left:-200px为navigation、extra留出空间 width:100%不能省
+content margin-left:200px
+navigation 宽度200px，位于content右侧 float:right
+extra 宽度200px，位于content右侧、navigation底部 float:right; clear: right
+图示
+
+*/
+#container {
+    margin: 0 auto;
+    width: 700px;
+}
+
+#wrapper {
+    float: left;
+    width: 500px;
+    /*margin-left: -200px;*/
+}
+
+#content {
+    /*margin-left: 200px;*/
+}
+
+#navigation {
+    float: right;
+    width: 200px;
+}
+
+#extra {
+    float: right;
+    clear: right;
+    width: 200px;
+}
+
+#footer {
+    clear: both;
+}

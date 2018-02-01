@@ -1,0 +1,16 @@
+/* pages/movie/movieList/movieList.wxss */
+
+.movie-list {
+  display: flex;
+  flex-flow: row wrap;
+  width: 100%;
+}
+
+.movie-cover-item {
+  flex: 0 0 32%;
+  width: 32%;   
+  margin-right: 2%;
+}
+.movie-cover-item:nth-child(3n+3) {
+  margin-right: 0;
+}

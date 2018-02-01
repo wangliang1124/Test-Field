@@ -1,0 +1,35 @@
+{
+  "pages": [
+    "pages/welcome/welcome",
+    "pages/post/post",
+    "pages/postDetail/postDetail",
+    "pages/movie/movie",
+    "pages/movie/movieMore/movieMore",
+    "pages/movie/movieDetail/movieDetail"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#405f80",
+    "navigationBarTitleText": "我的小程序",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/post/post",
+        "text": "新闻",
+        "iconPath": "/assets/img/tab/yuedu.png",
+        "selectedIconPath": "/assets/img/tab/yuedu_hl.png"
+      },
+      {
+        "pagePath": "pages/movie/movie",
+        "text": "电影",
+        "iconPath": "/assets/img/tab/dianying.png",
+        "selectedIconPath": "/assets/img/tab/dianying_hl.png"
+      }
+    ],
+    "selectedColor": "rgb(240,20,20)",
+    "borderStyle": "white",
+    "position": "bottom"
+  }
+}

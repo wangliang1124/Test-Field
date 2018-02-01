@@ -1,0 +1,6 @@
+/* components/split/split.wxss */
+.split{
+  width: 100%;
+  height: 24rpx;
+  background: #f2f2f2;
+}

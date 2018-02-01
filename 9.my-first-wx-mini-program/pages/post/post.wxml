@@ -1,0 +1,21 @@
+<!--pages/post/post.wxml-->
+<import src="postItem/postItem.wxml"/> 
+
+<view class="post">
+  <swiper class='carousel' indicator-dots='true' indicator-color="rgb(255, 255, 255)">
+    <block wx:for="{{headImgList}}">
+      <swiper-item>
+        <navigator url="{{item.url}}"><image src="{{item.imgUrl}}"></image></navigator>
+      </swiper-item>
+    </block>
+  </swiper>
+  <view class='post-list' >
+    <block wx:for="{{postList}}" wx:for-index="idx">
+<!--       <view bindtap="" data-postid="{{item.postId}}" wx:key="idx"> -->
+       <navigator url="/pages/postDetail/postDetail?id={{item.postId}}" hover-class="navigator-hover">
+          <template is="postItem"  data="{{...item}}"/>
+       </navigator>
+      <!-- </view> -->
+    </block> 
+  </view>
+</view>

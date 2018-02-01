@@ -1,0 +1,41 @@
+/*
+34. Two colums fixed (n.34)
+
+要求
+
+24的扩展，增加container宽度700px，实现方式可简化，因为宽度固定
+container 居中且宽度700px
+wrapper 宽度500px
+navigation 宽度200px，位于content左侧 float:left
+extra 宽度200px，位于content左侧 float:left; clear: left
+
+*/
+#container {
+    margin: 0 auto;
+    width: 700px;
+}
+
+#wrapper {
+    float: right;
+    width: 500px;
+    /*margin-left: -200px;*/
+}
+
+#content {
+    /*margin-left: 200px;*/
+}
+
+#navigation {
+    float: left;
+    width: 200px;
+}
+
+#extra {
+    float: left;
+    clear: left;
+    width: 200px;
+}
+
+#footer {
+    clear: both;
+}

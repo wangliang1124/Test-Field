@@ -1,0 +1,34 @@
+/*
+17. Liquid, secondary columns fixed-width (n.17)（开始float：right）
+要求
+wrapper 右对齐(float:right)且宽度自适应，margin-left为400px
+extra、navigation 宽度200px，依次位于content左侧
+*/
+#container {
+    margin: 0 auto;
+}
+
+#wrapper {
+    float: right;
+    width: 100%;
+}
+
+#content {
+    margin-left: 400px;
+}
+
+#navigation {
+    float: right;
+    width: 200px;
+    margin-right: -400px;
+}
+
+#extra {
+    float: right;
+    width: 200px;
+    margin-right: -200px;
+}
+
+#footer {
+    clear: both;
+}

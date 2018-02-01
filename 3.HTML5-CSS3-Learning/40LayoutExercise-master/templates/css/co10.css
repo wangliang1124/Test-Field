@@ -1,0 +1,32 @@
+/*
+10. Three fixed columns(n.10)
+要求
+在9的基础上，调换navigation和extra
+*/
+#container {
+    width: 700px;
+    margin: 0 auto;
+}
+
+#wrapper {
+    float: left;
+    width: 400px;
+}
+
+#content {
+    /*width: 400px;*/
+}
+
+#navigation {
+    float: left;
+    width: 150px;
+}
+
+#extra {
+    float: left;
+    width: 150px;
+}
+
+#footer {
+    clear: both;
+}

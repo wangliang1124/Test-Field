@@ -1,0 +1,130 @@
+/* pages/movie/movieDetail/movieDetail.wxss */
+@import '../star/star.wxss';
+
+.header {
+  /* margin: 36rpx 24rpx;  */
+}
+
+.title-wrapper {
+  position: relative;
+  padding: 36rpx 24rpx;
+  height: 300rpx;
+  /* background: rgba(7, 17, 27, 0.2); *//* overflow: hidden; */
+}
+
+.background {
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  filter: blur(20rpx);
+}
+
+.title-wrapper .title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.title-wrapper .country {
+  margin-top: 24rpx;
+  font-size: 12px;
+  color: #fff;
+}
+
+.title-wrapper .like-comment {
+  margin-top: 36rpx;
+  font-size: 10px;
+}
+
+.title-wrapper .like-comment .count {
+  color: #d1434a;
+}
+
+.title-wrapper .like-comment .like, .comment {
+  margin: 0 24rpx 0 4rpx;
+  color: #666;
+}
+
+.title-wrapper .cover {
+  position: absolute;
+  right: 24rpx;
+  bottom: 0;
+  width: 160rpx;
+  height: 232rpx;
+}
+
+.info {
+  padding: 36rpx 24rpx;
+  margin-top: 36rpx;
+  font-size: 12px;
+}
+
+.info .info-item {
+  color: rgb(77, 85, 93);
+}
+
+.info .info-item .rating-wrapper {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.info .info-title {
+  margin-right: 24rpx;
+  vertical-align: middle;
+  color: rgb(147, 153, 159);
+}
+
+.content {
+  padding: 36rpx 24rpx;
+  border-top: 1rpx solid rgba(7, 17, 27, 0.1);
+  border-bottom: 1rpx solid rgba(7, 17, 27, 0.1);
+}
+
+.content .title {
+  font-size: 14px;
+  color: #666;
+}
+
+.content .intro {
+  line-height: 2;
+  font-size: 10px;
+  color: #666;
+}
+
+.cast {
+  padding: 36rpx 24rpx;
+  width: 100%;
+}
+
+.cast .title {
+  font-size: 14px;
+  color: #666;
+}
+
+.cast .cast-item {
+  display: inline-block;
+  /* position: relative; */
+/*   width: 30%;
+  height: 0; */
+  width: 170rpx;
+  height: 210rpx;
+  /* padding-top: 43.5%; */
+  margin-right: 12rpx;
+  font-size: 12px;
+  text-align: center;
+}
+
+.cast .cast-item:last-child {
+  margin-right: 0;
+}
+
+.cast .cast-item image {
+/*   position: absolute;
+  top: 0;
+  left: 0; */
+  width: 100%;
+  height: 100%;
+}

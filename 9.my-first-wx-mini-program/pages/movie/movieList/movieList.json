@@ -1,0 +1,6 @@
+{
+  "component": true,
+  "usingComponents": {
+    "movie-cover": "/pages/movie/movieCover/movieCover"
+  }
+}

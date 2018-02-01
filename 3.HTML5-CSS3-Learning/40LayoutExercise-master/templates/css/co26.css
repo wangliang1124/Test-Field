@@ -1,0 +1,39 @@
+/*
+26. Two percentage columns (n.25)（float left|right）
+
+要求
+
+24基础上将固定宽度200px换成百分比30%
+wrapper margin-right:-30%为navigation、extra留出空间 width:100%不能省
+content margin-right:30%
+navigation 宽度30%，位于content左侧 float:left
+extra 宽度30%，位于content左侧 float:left clear: left
+图示*/
+#container {
+    margin: 0 auto;
+}
+
+#wrapper {
+    float: right;
+    width: 100%;
+    margin-right: -30%;
+}
+
+#content {
+    margin-right: 30%;
+}
+
+#navigation {
+    float: left;
+    width: 30%;
+}
+
+#extra {
+    float: left;
+    clear: left;
+    width: 30%;
+}
+
+#footer {
+    clear: both;
+}

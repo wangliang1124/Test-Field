@@ -1,0 +1,23 @@
+/* pages/movie/star/star.wxss */
+
+.star {
+  display: inline-block;
+  /* line-height: 60rpx; */
+  /* font-size: 0; */
+}
+
+.star-wrapper {
+  display: inline-block;
+   vertical-align: middle; 
+}
+
+.star-item {
+  width: 24rpx;
+  height: 24rpx;
+}
+
+.score {
+   margin-left: 12rpx; 
+   vertical-align: middle; 
+  font-size: 12px;
+}

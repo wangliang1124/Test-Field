@@ -1,0 +1,40 @@
+/*1. Three percentage columns(n.1)*/
+
+/*基本样式*/
+/* --
+
+三栏布局
+
+三个部分，分别是wrapper、navigation、extra
+要求：
+wrapper 居中且占据50%宽度
+navigation、extra 宽度25%，分居content两侧，左侧navigation，右侧extra
+
+#wrapper.width: 50%;  --> ERROR
+
+-- */
+/*布局*/
+#wrapper {
+    float: left;
+    width: 100%;
+}
+
+#content {
+    margin: 0 25%;
+}
+
+#navigation {
+    float: left;
+    width: 25%;
+    margin-left: -100%;
+}
+
+#extra {
+    float: left;
+    width: 25%;
+    margin-left: -25%;
+}
+
+#footer {
+    clear: left;
+}

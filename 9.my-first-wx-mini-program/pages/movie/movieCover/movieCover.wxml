@@ -1,0 +1,10 @@
+<!--pages/movie/movieCover/movieCover.wxml-->
+<import src="../star/star.wxml" />
+
+<view class="movie-cover">
+  <view class="cover-wrapper">
+    <image class="cover" src="{{movie.images.large}}"></image>
+  </view>
+  <view class="title">{{movie.title}}</view>
+  <template is="star" data="{{score, starNum}}"/>
+</view>

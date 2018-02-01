@@ -1,0 +1,38 @@
+/*
+36. Two colums fixed (n.36)
+
+要求
+
+container 居中且宽度700px
+wrapper 宽度500px
+navigation 宽度200px，位于content左侧 float:left
+extra 宽度500px，位于content底部
+
+*/
+#container {
+    margin: 0 auto;
+    width: 700px;
+}
+
+#wrapper {
+    float: right;
+    width: 500px;
+}
+
+#content {
+}
+
+#navigation {
+    float: left;
+    width: 200px;
+}
+
+#extra {
+    float: right;
+    clear: right;
+    width: 500px;
+}
+
+#footer {
+    clear: both;
+}

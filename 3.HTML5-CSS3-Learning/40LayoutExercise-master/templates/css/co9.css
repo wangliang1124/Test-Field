@@ -1,0 +1,36 @@
+/*
+9. Three fixed columns(n.9)
+
+要求
+
+container 宽度700px且居中
+wrapper 左对齐且宽度400px
+extra、navigation 150px，依次位于content右侧
+*/
+#container {
+    width: 700px;
+    margin: 0 auto;
+}
+
+#wrapper {
+    float: left;
+    width: 400px;
+}
+
+#content {
+    /*width: 400px;*/
+}
+
+#navigation {
+    float: right;
+    width: 150px;
+}
+
+#extra {
+    float: right;
+    width: 150px;
+}
+
+#footer {
+    clear: both;
+}

@@ -1,0 +1,35 @@
+/*
+16. Liquid, secondary columns fixed-width (n.16)
+要求
+在15的基础上，调换navigation和extra
+
+
+*/
+#container {
+    margin: 0 auto;
+}
+
+#wrapper {
+    float: left;
+    width: 100%;
+}
+
+#content {
+    margin-right: 400px;
+}
+
+#navigation {
+    float: left;
+    width: 200px;
+    margin-left: -200px;
+}
+
+#extra {
+    float: left;
+    width: 200px;
+    margin-left: -400px;
+}
+
+#footer {
+    clear: both;
+}

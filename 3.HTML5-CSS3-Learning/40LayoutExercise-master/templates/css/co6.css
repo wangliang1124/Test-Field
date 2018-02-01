@@ -1,0 +1,30 @@
+/* 6. Three percentage columns(n.6)
+要求
+在5的基础上，调换navigation和extra
+*/
+
+
+#wrapper {
+    float: right;
+    width: 50%;
+}
+
+/*
+#content {
+    margin: 0%;
+}
+*/
+
+#navigation {
+    float: right;
+    width: 25%;
+}
+
+#extra {
+    float: right;
+    width: 25%;
+}
+
+#footer {
+    clear: both;
+}

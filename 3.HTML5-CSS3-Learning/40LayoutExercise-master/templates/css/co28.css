@@ -1,0 +1,32 @@
+/*
+28. One column liquid and two halves (n.27)
+要求
+wrapper 占满一行
+navigation 宽度50%，位于content底部偏右
+extra 宽度50%，位于content底部偏左
+图示*/
+#container {
+    margin: 0 auto;
+}
+
+#wrapper {
+    float: left;
+    width: 100%;
+}
+
+#content {
+}
+
+#navigation {
+    float: right;
+    width: 50%;
+}
+
+#extra {
+    float: right;
+    width: 50%;
+}
+
+#footer {
+    clear: both;
+}

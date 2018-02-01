@@ -1,0 +1,33 @@
+/*
+40. One column fixed and two halves (n.40)
+
+要求
+
+39基础上调换navigation和extra顺序
+*/
+#container {
+    margin: 0 auto;
+    width: 700px;
+}
+
+#wrapper {
+    float: right;
+    width: 100%;
+}
+
+#content {
+}
+
+#navigation {
+    float: right;
+    width: 50%;
+}
+
+#extra {
+    float: left;
+    width: 50%;
+}
+
+#footer {
+    clear: both;
+}

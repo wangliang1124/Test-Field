@@ -1,0 +1,35 @@
+/*
+38. Two colums fixed (n.38)
+
+要求
+
+37基础上调换wrapper和navigation顺序
+
+*/
+#container {
+    margin: 0 auto;
+    width: 700px;
+}
+
+#wrapper {
+    float: right;
+    width: 500px;
+}
+
+#content {
+}
+
+#navigation {
+    float: left;
+    width: 200px;
+}
+
+#extra {
+    float: right;
+    clear: right;
+    width: 100%;
+}
+
+#footer {
+    clear: both;
+}

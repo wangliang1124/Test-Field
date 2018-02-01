@@ -1,0 +1,36 @@
+/*
+19. Liquid, three columns, hybrid widths (n.19)(混合宽度)
+要求
+navigation 宽度200px，位于content左侧
+content margin-left:200px margin-right: 33%
+extra 宽度33%，位于content右侧
+*/
+#container {
+    margin: 0 auto;
+}
+
+#wrapper {
+    float: left;
+    width: 100%;
+}
+
+#content {
+    margin-left: 200px;
+    margin-right: 33%;
+}
+
+#navigation {
+    float: left;
+    width: 200px;
+    margin-left: -100%;
+}
+
+#extra {
+    float: left;
+    width: 33%;
+    margin-left: -33%;
+}
+
+#footer {
+    clear: both;
+}

@@ -1,0 +1,48 @@
+/*基本样式*/
+
+p {
+    margin: 0 10px 10px
+}
+
+#container {
+    font-size: 12px;
+    font-family: arial, sans-serif;
+}
+
+#header {
+    height: 80px;
+    background-color: rgb(238, 238, 238);
+    color: rgb(122, 177, 36);
+    padding-left: 10px;
+    line-height: 80px;
+}
+
+#header h1 {
+    margin: 0;
+}
+
+#navigation {
+    background-color: rgb(186, 203, 253);
+}
+
+#extra {
+    background-color: rgb(253, 133, 67);
+}
+
+#footer {
+    height: 14px;
+    padding: 5px 10px 5px 10px;
+    color: #FFF;
+    background-color: #333;
+}
+
+#footer p {
+    line-height: 14px;
+    margin: 0px;
+}
+
+#content {
+    margin: 0 auto;
+    text-align: center;
+    background-color: cadetblue;
+}

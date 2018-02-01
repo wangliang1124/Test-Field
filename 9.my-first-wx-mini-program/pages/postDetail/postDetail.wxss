@@ -1,0 +1,70 @@
+.post-detail {
+  width: 100%;
+  height: 100%;
+  font-size: 12px;
+}
+.head-wrapper{
+  position: relative;
+}
+.head-wrapper .head-img {
+  width: 100%;
+  height: 400rpx;
+  object-fit: cover;
+}
+.head-wrapper .music{
+  position: absolute;
+  z-index: 100;
+  top: 50%;
+  left: 50%;
+  width: 128rpx;
+  height: 128rpx;
+  transform: translate(-50%, -50%);
+  opacity: 0.6
+}
+.content-wrapper {
+  padding: 24rpx;
+}
+.author-wrapper{
+  color: rgb(147,153,159);
+}
+.content-wrapper .author-wrapper .avatar {
+  width: 64rpx;
+  height: 64rpx;
+  vertical-align: middle;
+  /* vertical-align: bottom; */
+}
+.content-wrapper .author-wrapper .author {
+  margin-left: 12rpx;
+  font-size: 14px;
+  line-height: 64rpx;
+}
+.content-wrapper .author-wrapper .post,.time {
+  margin-left: 24rpx;
+  font-size: 10px;
+}
+.content-wrapper .title{
+  margin-top: 24rpx;
+  font-size: 14px;
+  font-weight: 700;
+  color: rgb(7,17,27)
+}
+.line{
+  margin-top: 36rpx;
+  border-bottom: 1rpx solid rgba(7,17,27,0.1);
+  /* background: rgba(7,17,27,0.1); */
+}
+.line .icon{
+  position: relative;
+  float: right;
+  margin-left: 24rpx;
+  top: -32rpx;
+  width: 64rpx;
+  height: 64rpx;
+}
+.content{
+  clear: right;
+  line-height: 2;
+  font-size: 12px;
+  font-weight: 300;
+  letter-spacing: 4rpx;
+}

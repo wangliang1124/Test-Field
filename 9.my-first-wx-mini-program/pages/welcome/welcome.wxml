@@ -1,0 +1,8 @@
+<!--首页-->
+<view class='welcome'>
+  <image class='avatar' src='../../assets/img/user_avatar.jpg'></image>
+  <text class='hello'>Hello, Leon</text>
+  <view class='btn-wrapper'>
+    <text class='btn' bindtap='onBtnTap'>开启小程序之旅</text>
+  </view>
+</view>

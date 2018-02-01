@@ -1,0 +1,9 @@
+<!--pages/movie/movieMore/movieMore.wxml-->
+
+ <scroll-view class="movie-more" bindscrolltolower="onScrollToBottom" scroll-y="true"> 
+<!-- <view class="movie-more"> -->
+<movie-list movie-list="{{movieList}}"></movie-list>
+<!-- </view> -->
+  
+ </scroll-view> 
+

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>自定义滚动条</title>
+	<style type="text/css">
+		body,div,ul,li,p{margin:0;padding:0;}
+		body{background:#3e3e3e;font:14px/1.5 \5fae\8f6f\96c5\9ed1;}
+		#box{width:600px;margin:20px auto;}
+		.list{position:relative;width:600px;height:144px;margin-bottom:10px;overflow:hidden;border-radius:8px;}
+		.list ul{position:absolute;top:0;left:0;height:144px;}
+		.list li{display:inline;float:left;width:142px;height:144px;list-style:none;background:#000;margin-right:8px;border-radius:8px;}
+		.list li img{float:left;width:124px;height:100px;border-radius:5px;margin:10px 0 0 10px;}
+		.list li p{float:left;color:#fff;width:100%;text-align:center;line-height:34px;}
+		.scrollBar{position:relative;height:19px;background:#0a0a0a;overflow:hidden;}
+		.scrollBar .barL,.scrollBar .barR,.scrollBar .barLStop,.scrollBar .barRStop{position:absolute;top:0;width:28px;height:19px;cursor:pointer;background:url(img/03.gif) no-repeat;}
+		.scrollBar .barL{left:0;}
+		.scrollBar .barR{right:0;background-position:right 0;}
+		.scrollBar .barLStop{left:0;background-position:0 -19px;cursor:default;}
+		.scrollBar .barRStop{right:0;background-position:right -19px;cursor:default;}
+		.scrollBar .barM{position:relative;height:15px;border:1px solid #545454;border-width:1px 0;margin:0 28px;padding:1px 0;z-index:1;cursor:pointer;}
+		.scrollBar .bar{position:absolute;top:1px;left:0;width:150px;height:15px;cursor:e-resize;background:url(img/01.gif) repeat-x;}
+		.scrollBar .bar .l,.scrollBar .bar .r{position:absolute;top:0;width:6px;height:15px;background:url(img/02.gif) no-repeat;}
+		.scrollBar .bar .l{left:-6px;}
+		.scrollBar .bar .r{right:-6px;background-position:right 0;}
+		#desc{color:#ccc;width:578px;padding:10px;margin:0 auto;line-height:2;border:1px dashed #666;}
+		#desc dd{margin-left:2em;}
+		.ta-r{text-align:right;
+	</style>
+	<script type="text/javascript">
+		function getByClass(classname,oParent){
+			var oParent=oParent?oParent:document;
+			var aClass=[];
+			var aElem=oParent.getElementsByTagName('*');
+			for(var i=0;i<aElem.length;i++){
+				if(aElem[i].className==classname){
+					aClass.push(aElem[i]);
+				}
+			}
+			return aClass;	
+		}
+		function getStyle(obj,attr){
+			return parseFloat(obj.currentStyle?obj.currentStyle[attr]:getComputedStyle(obj,null)[attr])
+		}
+		window.onload=function(){
+			var oBox=document.getElementById('box');
+			var oList=getByClass('list')[0];
+			var oUl=oBox.getElementsByTagName('ul')[0];
+			var aLi=oBox.getElementsByTagName('li');
+			var oBarL=getByClass('barL')[0];
+			var oBarR=getByClass('barR')[0];
+			var oBarM=getByClass('barM')[0];
+			var oBar=getByClass('bar',oBarM)[0];
+			var maxL=oBarM.offsetWidth- oBar.offsetWidth;
+			var iMarginRight = getStyle(aLi[0], "marginRight");
+			var iScale=0;
+			var timer=null;
+			oUl.style.width=(aLi[0].offsetWidth+getStyle(aLi[0],'marginRight'))*aLi.length+'px';
+
+			//拖动滚动条
+			oBar.onmousedown=function(e){
+				e=e||window.event;
+				var disX=e.clientX- oBar.offsetLeft;
+				document.onmousemove=function(e){
+					var e=e||window.event;
+					var l=e.clientX- disX;
+					l<0&&(l=0);
+					l>maxL&&(l=maxL);
+					oBar.style.left=l+'px';
+					iScale=l/maxL;
+
+				}
+				document.onmouseup=function(){
+
+					console.log('测试'+iScale);
+					startMove(oUl,parseInt((oList.offsetWidth - oUl.offsetWidth)*iScale));
+					isStop();
+					document.onmousemove=null;
+					document.onmouseup=null;
+				}
+				return false;
+			}
+			//阻止滚动条点击事件冒泡
+			oBar.onclick = function (event)
+			{
+				(event || window.event).cancelBubble = true
+			};
+
+			//滚动条两端鼠标移入自动滑动
+			oBarL.onmouseover=oBarR.onmouseover=document.onkeydown=function(event){
+				clearInterval(timer);
+				var event=event||window.event;
+				var iSpeed=0;
+				if(this==oBarR || event.keyCode==39){
+					iSpeed=10;
+				}else if(this==oBarL || event.keyCode==37){
+					iSpeed=-10;
+				}
+				timer=setInterval(function(){
+					syncMove(getStyle(oBar, "left") + iSpeed);
+				},30)
+			}
+			oBarL.onmouseout=oBarR.onmouseout=document.onkeyup=function(event){
+				clearInterval(timer);
+			}
+			//点击滚动条黑色背景区，滚动条及图片列表缓冲滑动至目标点
+			oBarM.onclick=function(event){
+				var iTarget=(event||window.event).clientX- oBox.offsetLeft- this.offsetLeft-oBar.offsetWidth/2;
+				//console.log('oBarM'+this.offsetLeft)
+				syncMove(iTarget);
+			}
+			//鼠标滚轮事件
+			oBox.onmouseover=function(event){
+				var event=event||window.event;
+				function mouseWheel(event){
+					var delta = event.wheelDelta ? event.wheelDelta : -event.detail * 40;
+					var iTarget=delta>0 ?-50 : 50;
+					syncMove(oBar.offsetLeft+iTarget);	
+				}
+				addHandler(this,'mousewheel',mouseWheel);
+				addHandler(this,'DOMMouseScroll',mouseWheel)
+			}
+			//列表和滚动条同步移动
+			function syncMove(iTarget){
+				//console.log(iTarget);
+				iTarget<=0&&(iTarget=0,timer&&clearInterval(timer));
+				iTarget>=maxL&&(iTarget=maxL,timer&&clearInterval(timer));
+				var iScale=iTarget/maxL;
+				startMove(oBar,iTarget,function(){isStop()});
+				startMove(oUl,parseInt((oList.offsetWidth - oUl.offsetWidth)*iScale),function(){isStop()})
+			}
+			//判断停止
+			function isStop(){
+				oBarL.className='barL';
+				oBarR.className='barR';
+				switch(oBar.offsetLeft){
+					case 0:
+					 	/(^|\s)barLStop(\s|$)/.test(oBarL.className) || (oBarL.className+=' barLStop');
+						break;
+					case maxL:
+						/(^|\s)barRStop($|\s)/.test(oBarR.className) || (oBarR.className+=' barRStop');
+						break;
+				}
+			}
+			isStop();
+			function addHandler(elem,type,handler){
+				return elem.addEventListener?elem.addEventListener(type,handler,false):elem.attachEvent('on'+type,handler);
+			}
+			function startMove(obj,iTarget,fnEnd){
+				clearInterval(obj.timer);
+				obj.timer=setInterval(function(){
+					doMove(obj,iTarget,fnEnd);
+				},25);
+			}
+			function doMove(obj,iTarget,fnEnd){
+				//console.log(iTarget);
+				var iSpeed=(iTarget- obj.offsetLeft)/5;
+				iSpeed=iSpeed>0?Math.ceil(iSpeed):Math.floor(iSpeed);
+				iSpeed==0?(clearInterval(obj.timer),fnEnd&&fnEnd()):obj.style.left=obj.offsetLeft+iSpeed+'px';
+			}
+
+		}
+	</script>
+</head>
+<body>
+<div id="box">
+    <div class="list">
+        <ul>
+            <li><img src="img/1 (1).jpg" /><p>iPhone 4</p></li>
+            <li><img src="img/2 (1).jpg" /><p>iPad 2</p></li>
+            <li><img src="img/3.jpg" /><p>iPod touch</p></li>
+            <li><img src="img/4.jpg" /><p>iPod classic</p></li>
+            <li><img src="img/5.jpg" /><p>iPod shuffle</p></li>
+            <li><img src="img/6.jpg" /><p>iPod nano</p></li>
+            <li><img src="img/7.jpg" /><p>MacBook Air</p></li>
+            <li><img src="img/8.jpg" /><p>MacBook Pro</p></li>
+            <li><img src="img/9.jpg" /><p>Mac mini</p></li>
+            <li><img src="img/10.jpg" /><p>Mac Pro</p></li>
+        </ul>
+    </div>
+    <!--/list-->
+    <div class="scrollBar">
+        <div class="barL"></div>
+        <div class="barM">
+            <div class="bar">
+                <div class="l"></div>
+                <div class="r"></div>
+            </div>
+        </div>
+        <div class="barR"></div>
+    </div>
+    <!--/scrollBar-->
+</div>
+<!--/box-->
+<dl id="desc">
+    <dt>功能说明：</dt>
+    <dd>① 拖动滚动条，图片列表缓冲滑动至目标点；</dd>
+    <dd>② 滚动条两端鼠标移入自动滑动；</dd>
+    <dd>③ 滚动条滑动到两端自动更换为停止标识；</dd>
+    <dd>④ 点击滚动条黑色背景区，滚动条及图片列表缓冲滑动至目标点；</dd>
+    <dd>⑤ 支持键盘左右键；</dd>
+    <dd>⑥ 支持鼠标滚轮。</dd>
+    <dd class="ta-r">By Leon</dd>
+</dl>
+</body>
+</html>

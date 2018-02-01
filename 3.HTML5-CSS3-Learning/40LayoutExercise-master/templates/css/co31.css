@@ -1,0 +1,43 @@
+/*
+31. Two columns liquid, fixed side and large one (n.31)
+
+要求
+
+在29基础上，把百分比宽度30%换成固定200px
+wrapper margin-right:-200px为navigation留出空间
+content margin-right:200px
+navigation 宽度200px，位于content左侧
+extra 宽度100%，位于content底部
+
+图示*/
+#container {
+    margin: 0 auto;
+}
+
+#wrapper {
+    float: right;
+    width: 100%;
+    margin-right: -200px;
+    /*margin-left: -200px; 也可以*/
+
+}
+
+#content {
+    margin-right: 200px;
+    /*margin-left: 200px;*/
+
+}
+
+#navigation {
+    float: left;
+    width: 200px;
+}
+
+#extra {
+    float: left;
+    width: 100%;
+}
+
+#footer {
+    clear: both;
+}

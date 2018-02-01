@@ -1,0 +1,10 @@
+<!--pages/movie/star/star.wxml-->
+<template name="star">
+  <view class='star'>
+    <view class="star-wrapper">
+      <image wx:for="{{starNum}}" class='star-item' src="/assets/img/icon/star.png"></image>
+      <image wx:for="{{5-starNum}}" class='star-item' src="/assets/img/icon/none-star.png"></image>
+    </view>
+    <text class="score"wx:if="{{score > 0}}">{{score}}</text>
+  </view>
+</template>

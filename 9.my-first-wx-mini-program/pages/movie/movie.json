@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "豆瓣电影",
+  "usingComponents": {
+    "movie-list": "/pages/movie/movieList/movieList",
+    "split": "/components/split/split"
+  }
+}

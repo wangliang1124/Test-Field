@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>拼图小游戏</title>
+	<style type="text/css">
+		body,ul,li{margin:0;padding:0;}
+		body{font:30px/1.5 Tahoma;background:url(img/bg.png);}
+		#box{position:relative;width:410px;height:570px;margin:10px auto;}
+		#box li{float:left;width:82px;height:190px;overflow:hidden;}
+		#box li img{width:82px;height:190px;}
+		#box li.hig{width:78px;height:186px;overflow:hidden;border:2px dashed yellow;}
+		#box li.hig img{width:78px;height:186px;opacity:0.5;filter:alpah(opacity=50);}
+		#mask{position:absolute;top:0;left:0;width:410px;height:570px;background:red;opacity:0;filter:alpha(opacity=0);}
+		input{cursor:pointer;}
+		#photo{text-align:center;margin:10px 0;}
+		#photo img{width:100px;height:100px;border-radius:5px;margin:0 5px;opacity:0.5;filter:alpha(opacity=50);cursor:pointer;}
+		#photo img.hover{opacity:1;filter:alpha(opacity=100);}
+		#photo img.selected{border:2px solid yellow;width:96px;height:96px;opacity:1;filter:alpha(opacity=100);}
+	</style>
+	<script type="text/javascript" src='./lib/jquery-1.12.4.js'></script>
+	<script type="text/javascript">
+		/*
+		window.onload=function(){
+			// var photo=document.getElementById('photo');
+			// var girls=photo.getElementsByTagName('img');
+			// var box=document.getElementById('box');
+			// var startGame=document.getElementsByTagName('input')[0];
+			// var imgPath=0;
+
+
+			//载入
+			
+			for(var i=0,n=$girls.length;i<n;i++){
+				//默认图片背景
+				box.style.background='url(img/girl'+imgPath+'/bg.png) no-repeat';
+				girls[i].index=i;
+				girls[i].onmouseover=function () {
+					this.className+=' hover';
+				};
+				girls[i].onmouseout=function () {
+					this.className=this.className.replace(/\shover/,'');
+				};
+				girls[i].onclick=function() {
+					//this.index=i;
+					for(var i=0;i<n;i++){
+						girls[i].className='';
+					}
+					this.className='selected';
+					imgPath=this.index;
+					box.style.background='url(img/girl'+imgPath+'/bg.png) no-repeat';
+					console.log('img/girl'+this.index+'/bg.png');
+				}
+			}
+			
+
+
+			//点击开始游戏
+			startGame.onclick=function() {
+				this.value='重新开始';
+				box.innerHTML='';
+				game();
+			}
+			//游戏主体
+			function game() {
+				//刚开始图片正常排序
+				//5秒钟图片随机排序
+				var fragment=document.createDocumentFragment();
+				for(i=1;i<=15;i++){
+					var li=document.createElement('li');	
+					var img=document.createElement('img');
+					img.src='img/girl'+imgPath+'/'+ i +'.png';
+					console.log(imgPath);	
+					li.appendChild(img);
+					fragment.appendChild(li);
+				}
+				box.appendChild(fragment);
+
+			}
+			//判断是否完成
+			function finish() {
+				
+			}
+			//运动
+			function startMove() {
+				
+			}
+			function doMove() {
+				
+			}
+		}
+		*/
+		$(document).ready(function(){
+			var $photo=$('#photo'),
+				$girls=$('img'),
+				$box=$('#box'),
+				$li=null,
+				$startGame=$('input:first');
+			var $imgPath=0;
+			var $imgData=[];
+			for (var i = 0; i < 15; i++) {
+				$imgData.push(i+1);
+			}
+			//载入
+			$box.css('background-image','url(img/girl'+$imgPath+'/bg.png)');
+			$girls.mouseover(function(){
+				$(this).addClass('hover');
+			}).mouseout(function(){
+				$(this).removeClass('hover');
+			}).click(function(){
+				$girls.removeClass();
+				$(this).addClass('selected');
+				$imgPath=$(this).index();
+				$box.html('');
+				$box.css('background-image','url(img/girl'+$imgPath+'/bg.png)');
+			});
+			//点击开始游戏
+			$startGame.click(function() {
+				$(this).val("重新开始");
+				$box.html('');
+				game();
+			});
+			//游戏主体
+			function game() {
+				//随机排列图片
+				var $content='';
+				$imgData.sort(function(a,b){
+					return Math.random()>0.5?-1:1;
+				});
+				for (var i = 0; i < 15 ; i++) {
+					$content+='<li '+'id='+i+'><img src="img/girl'+$imgPath+'/'+$imgData[i]+'.png"></img></li>';	
+				}
+				$box.append($content);
+				
+				//拖动函数
+				(function(){
+					var $current=null;//当前图片所在的li
+					var $nearest=null;//最近碰触图片
+					var originLeft,originTop;
+					$li=$('li');
+					$li.each(function () {
+						//console.log($(this).position().left,$(this).position().top);
+						$(this).css({
+							'cursor':'move',
+							'left':$(this).position().left,
+							'top':$(this).position().top
+						});
+					}).each(function() {
+						$(this).css('position','absolute'); //改变布局为absolute以便使left，top属性起作用
+					});
+					$li.mousedown(function(e){
+						e.preventDefault();	//阻止拖拽图片的默认行为，否则会导致mouseup事件无法执行
+						var l,t,disX,disY;
+						$current=$(this);	
+						//console.log($nearest);
+						//isDrag=true;
+						originLeft=$current.position().left
+						originTop=$current.position().top
+						disX=e.pageX- originLeft;
+						disY=e.pageY- originTop;
+						$(document).mousemove(function(e){
+							$nearest=findNearest($current);
+							l=e.pageX- disX;
+							t=e.pageY- disY;
+							//console.log(l,t);
+							$current.css({'left':l,'top':t,'z-index':999});
+							$li.each(function() {
+								$(this).removeClass('hig');
+							})
+							$nearest && $nearest.addClass('hig');
+						});
+					});
+					$(document).mouseup(function() {
+						//alert();
+						$(this).off('mousemove');
+						if($nearest){
+							// $current.css({'border':'0px','z-index':0,'left':$nearest.position().left,'top':$nearest.position().top});
+							//交换位置
+							$current.animate({'border':'0px','z-index':0,'left':$nearest.position().left,'top':$nearest.position().top},'slow');
+							$nearest.animate({'left':originLeft,'top':originTop},function(){
+								var tmp;
+								tmp=$(this).attr('id');
+								$(this).attr('id',$current.attr('id'));
+								$current.attr('id',tmp);
+								isFinished() && alert('完成');
+							});
+							$nearest.removeClass('hig');
+							
+							// $nearest.css({'left':originLeft,'top':originTop});
+						}
+					});
+				})();//拖动函数结束
+			}//game()结束
+
+			//找到遇到的最近图片元素
+			function findNearest($obj) {
+				var dis=[],result=[];
+				$li.each(function(){
+					//console.log( isTouched( $obj,$(this) ) );
+					// ($(this)!=$obj)==true ? $(...)包装后形成一个新的JQuery对象，也就是说此$(this)和$current都是包装后的JQuery对象
+					if($(this)[0]!=$obj[0] && isTouched($obj,$(this))){
+						dis.push(getDistance($obj,$(this)));
+						result.push($(this));
+						
+					} 
+				});
+				var min=dis[0],$r=result[0];
+				for (var i = 1; i < dis.length; i++) { 	
+				 	//console.log(result[i]);
+				 	if(min>dis[i]){
+				 		min=dis[i];
+				 		$r=result[i];
+				 	}
+				} 
+				//console.log(result.length);
+				return $r;
+			}
+			//求两点之间的距离
+			function getDistance($obj1, $obj2){
+
+				var a=($obj1.position().left+$obj1.width()/2)-($obj2.position().left+$obj2.width()/2);
+				var b=($obj1.position().top+$obj1.height()/2)-($obj2.position().top+$obj2.height()/2);
+				return Math.sqrt(a*a+b*b);
+			}
+
+			//碰撞检测
+			function isTouched($obj1, $obj2){
+				var l1=$obj1.position().left,
+					r1=l1+$obj1.width(),
+					t1=$obj1.position().top,
+					b1=t1+$obj1.height(),
+
+					l2=$obj2.position().left,
+					r2=l2+$obj2.width(),
+					t2=$obj2.position().top,
+					b2=t2+$obj2.height();
+					
+				return !(l1>r2 || r1<l2 || t1>b2 || b1<t2);
+			}
+
+			//判断是否完成
+			function isFinished() {
+				var success=true;
+				$('li').each(function(){
+					console.log((parseInt($(this).attr('id'))+1),parseInt($(this).children(':first').attr('src').match(/(\d+)\.png/)[1]));
+					if(parseInt($(this).attr('id'))+1!= parseInt($(this).children(':first').attr('src').match(/(\d+)\.png/)[1])){
+						success=false;
+					}
+				});
+				return success;
+			}
+		});
+	</script>
+</head>
+<body>
+	<div id="photo"><img src="img/girl0/girl.jpg" class="selected" /><img src="img/girl1/girl.jpg" /><img src="img/girl2/girl.jpg" /></div>
+	<center><input type="button" value="开始游戏" /></center>
+	<ul id="box"></ul>
+</body>
+</html>

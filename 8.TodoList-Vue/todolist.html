@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="witdh=device-width,initial-scale=1,maximum-scale=1, user-scalable=no">
+	<title>Leon's TodoList</title>
+	<style>
+		*{
+			padding: 0;
+			margin: 0;
+			font-family: '微软雅黑';
+		}
+		body{
+			background: #6a6a6a
+		}
+		#todo-list{
+			display: flex;
+			/*justify-content:center;*/
+			flex-direction:column;
+			align-items: center;
+			width: 600px;
+			margin:0 auto;
+			margin-top: 20px;
+			/*border: 1px solid red;*/
+		}
+		h1{
+			color: #ccc;
+			/*background: #000;*/
+			width: 100%;
+			text-align: center;
+			/*text-shadow: 2px 2px 6px*/
+		}
+		input{
+			line-height: 40px;
+			margin: 10px 0;
+			padding-left: 10px;
+			width: 100%;
+			border: 2px solid #666;
+			border-radius: 10px;
+			box-shadow: 0px 0px 20px #333;
+			background: #333;
+			color: #fff;
+			/*height: 30px;*/
+		}
+		input:focus{
+			border-color: #ccc;
+			outline: none;
+		}
+		.warning{
+			align-self:flex-start;
+			color:#ccc;
+		}
+		ul{
+			width: 100%;
+			list-style-type: none;
+		}
+		li{
+			margin: 20px 0px;
+			width: 100%;
+			height: 20px;
+			font-size: 18px;
+			font-style: italic;
+			
+			color: #1afa29;
+			line-height: 20px;
+		}
+		.stage{
+			/*display: inline-block;*/
+			float:right;
+			width:25px;
+			height: 20px;
+			background: url('img/stage.png') no-repeat;
+			cursor:pointer;
+			/*background-position: 0 23px;*/
+		}
+		.remove{
+			/*display: inline-block;*/
+			float:right;
+			width:25px;
+			height: 20px;
+			background: url('img/remove.png') no-repeat;
+			cursor: pointer;
+		}
+		.finish{
+			background-position: 0 -20px;
+			cursor:auto;
+		}
+		li.delete{
+			text-decoration:line-through;
+			color: #ccc;
+		}
+		li span.delete{
+			background: url('img/delete.png') no-repeat;
+			cursor:auto;
+		}
+	</style>
+</head>
+<body>
+	<div id="todo-list">
+		<my-header></my-header>
+		<input type="text" v-model.trim="newItemText" v-on:keyup.enter="addTodo" placeholder='添加新任务todo'>
+		<span class="warning" v-if='isWarning'>" 输入不能为空 "</span>
+		<ul>
+			<li v-for="item in items" v-bind:class="{delete:item.isDelete}">{{item.id+'. '}}
+				<span  
+					v-bind:contenteditable='!item.isFinished && !item.isDelete' 
+					spellcheck='false' 
+					v-on:input='modify(item,$event)'
+				>{{item.text}}</span>
+				<span class="stage" v-bind:class="{finish:item.isFinished,delete:item.isDelete}" v-on:click="finish(item)"></span><!-- v-if='!item.isDelete' -->
+				<span class="remove" v-on:click='deleteItem(item)' v-if='!item.isDelete && !item.isFinished '></span>
+			</li>
+		</ul>
+		<statictics v-bind:num='finishNum'></statictics>
+	</div>
+	<script src='js/vue.js'></script>
+<!-- 	<script src="https://cdn.jsdelivr.net/npm/axios@0.12.0/dist/axios.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/lodash@4.13.1/lodash.min.js"></script> -->
+	<script type='text/javascript'>
+		//统计组件
+		Vue.component('statictics',{
+			template:'<footer>已完成{{this.num}}个任务</footer>',
+			// data:function() {
+			// 	return {
+			// 		statistics:this.count
+			// 	};
+			// },
+			props:['num'],
+			// computed:{
+			// 	statistics:function() {
+			// 		return this.num;
+			// 	}
+			// }
+		});
+		//根实例
+		new Vue({
+			el:"#todo-list",
+			data:{
+				items:[ //初始值
+					{id:1,text:'学习Vue',isFinished:false,isDelete:false},
+					{id:2,text:'跑步',isFinished:false,isDelete:false},
+					{id:3,text:'练英语口语',isFinished:false,isDelete:false},
+					{id:4,text:'看书',isFinished:false,isDelete:false},
+				],
+				newItemText:'',//新增项
+				// placeholder:"添加新任务todo",
+				isWarning:false,	//输入为空的时候显示提示信息  
+			},
+			//或者可以这样
+			// data:function() {	// data只能用functiona返回，否则报错 或者把fetch()定义在生成实例之前
+			// 	return {
+			// 		items: this.fetch(),
+			// 		newItemText:'',
+			// 	};
+			// },
+			mounted:function() {
+				this.$nextTick(function () {
+					this.getList();
+				});
+			},
+			computed:{
+				// itemsData:function() {
+				// 	return JSON.parse(window.localStorage.getItem('todo-list'));
+				// },
+				finishNum:function() {
+					var i=0;
+					this.items.forEach(function(item) {
+						if(item.isFinished){
+							i++;
+						}
+					});
+					//console.log('==='+i);
+					return i;
+				}
+			},
+			watch:{
+				'items':{ //监测items的变化，如果新增就存入本地数据
+					handler:function(items) {
+						localStorage.setItem('todo-list',JSON.stringify(items));
+					},
+					deep:true
+				},
+			},
+			methods:{
+				getList:function() {	//从localStorage获取todo list
+					this.items=JSON.parse(window.localStorage.getItem('todo-list')) || this.items;
+				},
+				addTodo:function() {	//添加新todo
+					if(this.newItemText===''){
+						// this.placeholder="输入不能为空";
+						this.isWarning=true;
+						return;
+					}
+					this.items.push({	
+						id:this.items.length+1,
+						text:this.newItemText,
+						isFinished:false,
+						isDelete:false
+					});
+					this.newItemText="";
+					this.isWarning=false;
+					// this.placeholder="添加新任务todo";
+				},
+				modify:function(item,event) {	//修改todo内容
+					item.text=event.target.innerText;
+					// console.log(event.target.innerHTML);
+				},
+				deleteItem:function(item) {	//删除todo项目
+					if(item.isFinished){
+						return false;
+					}
+					item.isDelete=true;
+					item.text+='(任务已放弃)';
+				},
+				finish:function(item) {	//完成一项任务
+					if(item.isFinished){
+						return false;
+					}
+					item.isFinished=true;
+				},
+				getNum:function() {
+					var i=0;
+					this.items.forEach(function(item) {
+						if(item.isFinished){
+							i++;
+						}
+					});
+					//console.log('==='+i);
+					return i;
+				},
+				// fetch:function() {	//获取todo-list
+				// 	return JSON.parse(window.localStorage.getItem('todo-list')) || [];
+				// }
+			},
+			components:{
+				myHeader:{
+					template:'<header><h1>My Todo List</h1></header>'
+				}
+			}
+		});
+	</script>	
+</body>
+</html>
