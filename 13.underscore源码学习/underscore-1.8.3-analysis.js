@@ -62,7 +62,7 @@
   var _ = function(obj) {
     // 以下均针对 OOP 形式的调用
     // 如果是非 OOP 形式的调用，不会进入该函数内部
-
+    // console.log('======================')
     // 如果 obj 已经是 `_` 函数的实例，则直接返回 obj
     if (obj instanceof _)
       return obj;
@@ -122,6 +122,7 @@
       // 则执行以下 case
       // _.each、_.map
       case 3: return function(value, index, collection) {
+        // console.log('我执行了吗')
         return func.call(context, value, index, collection);
       };
 
@@ -277,7 +278,7 @@
   _.each = _.forEach = function(obj, iteratee, context) {
     // 根据 context 确定不同的迭代函数
     iteratee = optimizeCb(iteratee, context);
-
+    // console.log(iteratee)
     var i, length;
 
     // 如果是类数组
@@ -290,7 +291,7 @@
     } else { // 如果 obj 是对象
       // 获取对象的所有 key 值
       var keys = _.keys(obj);
-
+      // console.log(keys)
       // 如果是对象，则遍历处理 values 值
       for (i = 0, length = keys.length; i < length; i++) {
         iteratee(obj[keys[i]], keys[i], obj); // (value, key, obj)
@@ -326,6 +327,7 @@
       // 如果 obj 为数组，则 currentKey 为 index 值
       var currentKey = keys ? keys[index] : index;
       results[index] = iteratee(obj[currentKey], currentKey, obj);
+      // console.log(results)
     }
 
     // 返回新的结果数组
@@ -363,6 +365,7 @@
       // Determine the initial value if none is provided.
       // 如果没有指定初始值
       // 则把第一个元素指定为初始值
+      // console.log(arguments);
       if (arguments.length < 3) {
         memo = obj[keys ? keys[index] : index];
         // 根据 dir 确定是向左还是向右遍历
@@ -508,7 +511,7 @@
   _.invoke = function(obj, method) {
     // *arguments 参数
     var args = slice.call(arguments, 2);
-
+    console.log(args);
     // 判断 method 是不是函数
     var isFunc = _.isFunction(method);
 

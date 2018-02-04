@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<head>
+	<meta charset="UTF-8">
+	<title>测试underscore</title>
+	<style>
+		
+	</style>
+</head>
+<body>
+	<h1>学习underscore</h1>
+	<div id="content" style="white-space: pre"></div>
+	<script src='underscore-1.8.3-analysis.js'></script>
+	<!-- <script src='underscore-min.js'></script> -->
+	<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script> -->
+	<script type='text/javascript'>
+		window.onload = function() {
+			const doc = document
+			const title = doc.getElementById('content')
+			const collection = doc.getElementsByTagName('script')
+			// title.innerHTML = optimizeCb
+			// _.each({one: 1, two: 2, three: 3, length: 10}, console.log);
+			// _.each(collection, console.log)
+			const result  = _.map({one: 1, two: 2, three: 3, length: '10'}, item =>{ if (item > 2) return item }  );
+			// const result = _.map({one: 1, two: 2, three: 3}, function(num, key){ return num * 3; });
+			// console.log(result);
+			// _.map(collection, console.log)
+			// var sum = _.reduce([1, 2, 3], function(memo, num){ return memo + num; });
+			// var list = [[0, 1], [2, 3], [4, 5, [7, 8]]];
+			// var flat = _.reduceRight(list, function(a, b) { 
+			// 	console.log(arguments);
+			// 	return a.concat(b); 
+			// }, []);
+
+			const r  = _.invoke([[5, 1, 7], [3, 2, 1]], 'sort');
+
+			console.log(r);
+			// console.log(_.each())
+			// console.log(_.each([1, 2, 3], alert))
+			// _.each([1, 2, 3], alert);
+			// for(var i in this){
+			// 	console.log(i)
+			// }
+			
+		}
+	</script>	
+</body>
+</html>
