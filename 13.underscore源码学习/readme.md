@@ -9,3 +9,17 @@
 
 
 学习方法： 照敲代码，注释之
+
+
+1.  i++ a和 ++i 的区别
+  The value i++ is the value of i before the increment. The value of ++i is the value of i after the increment.
+  Example:
+    `
+      var i = 42;
+      alert(i++); // shows 42
+      alert(i); // shows 43
+      i = 42;
+      alert(++i); // shows 43
+      alert(i); // shows 43
+    `
+
