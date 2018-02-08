@@ -1,122 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-	<meta charset="UTF-8">
-	<title>ch0602：创建对象的方法</title>
+    <meta charset="UTF-8">
+    <title>ch0602：创建对象的方法</title>
 </head>
+
 <body>
-	<script>
-		//通过Object构造函数创建
-		var person=new Object();
-		person.name='leon';
-		person.age=30;
-		person.sex='man';
-		person.say=function() {
-			console.log('my name is '+this.name);
-		};
-		person.say();
-		//通过字面量创建
-		var person={
-			name:'leon',
-			age:30,
-			job:'software engineer',
-			say:function(){
-				console.log('my job is '+this.job);
-			}
-		}
-		person.say();
-		//虽然Object 构造函数或对象字面量都可以用来创建单个对象，但这些方式有个明显的缺点：
-		//使用同一个接口创建很多对象，会产生大量的重复代码。
-		//工厂模式
-		function creatPerson(name,age,job) {	
-			var o=new Object();
-			o.name=name;
-			o.age=age;
-			o.job=job;
-			o.say=function() {
-				console.log('my name is '+ this.name);
-			}
-			return o;
-		}
-		var person1=creatPerson('zs',20,'student');
-		var person2=creatPerson('ls',30,'web font-end developer')
-		person1.say();
-		person2.say();
-		//工厂模式虽然解决了创建多个相似对象的问题，但却没有解决对象识别的问题（即怎样知道一个对象的类型）。
-		//构造函数模式
-		/*
+    <script>
+    //通过Object构造函数创建
+    var person = new Object();
+    person.name = 'leon';
+    person.age = 30;
+    person.sex = 'man';
+    person.say = function() {
+        console.log('my name is ' + this.name);
+    };
+    person.say();
+    //通过字面量创建
+    var person = {
+        name: 'leon',
+        age: 30,
+        job: 'software engineer',
+        say: function() {
+            console.log('my job is ' + this.job);
+        }
+    }
+    person.say();
+    //虽然Object 构造函数或对象字面量都可以用来创建单个对象，但这些方式有个明显的缺点：
+    //使用同一个接口创建很多对象，会产生大量的重复代码。
+    //工厂模式
+    function creatPerson(name, age, job) {
+        var o = new Object();
+        o.name = name;
+        o.age = age;
+        o.job = job;
+        o.say = function() {
+            console.log('my name is ' + this.name);
+        }
+        return o;
+    }
+    var person1 = creatPerson('zs', 20, 'student');
+    var person2 = creatPerson('ls', 30, 'web font-end developer')
+    person1.say();
+    person2.say();
+    //工厂模式虽然解决了创建多个相似对象的问题，但却没有解决对象识别的问题（即怎样知道一个对象的类型）。
+    //构造函数模式
+    /*
 			与工厂模式的不同：
 		 	没有显式地创建对象；
  			直接将属性和方法赋给了this 对象；
  			没有return 语句。
 		 */
-		function Person3(name,age,job) {
-			this.name=name;
-			this.age=age;
-			this.job=job;
-			this.say=function() {
-				console.log('my name is '+ this.name);
-			};
-		}
-		var person3=new Person3('wy',23,'salesman');
-		//(1) 创建一个新对象；(2) 将构造函数的作用域赋给新对象（因此this 就指向了这个新对象）；
-		//(3) 执行构造函数中的代码（为这个新对象添加属性）；(4) 返回新对象。
-		person3.say();
-		console.log(person3.constructor==Person);
-		console.log(person3 instanceof Person);
-		//构造函数的主要问题:每个方法都要在每个实例上重新创建一遍。
-		//解决办法：把函数放在构造函数外部。缺点：在全局作用域中，没有封装性。	
-		/*
-		function Person(name,age,job) {
-			this.name=name;
-			this.age=age;
-			this.job=job;
-			this.say=say;
-		}
-		function say() {
-			console.log('my name is '+ this.name);
-		}
-		window.say();//在全局中调用没有意义
-		*/
-		//原型模式
-		function Person4() {
-		};
-		Person4.prototype.name='we';
-		Person4.prototype.age=24;
-		Person4.prototype.job='Doctor';
-		Person4.prototype.say=function() {
-			console.log('my name is '+ this.name);
-		};
-		var person4=new Person4();
-		person4.say();
-		console.log(Object.getPrototypeOf(person4));
-		person4.name='wanger';
-		//delete person4.name;
-		console.log(person4.hasOwnProperty('name'),'name' in person4);
-		var keys=Object.getOwnPropertyNames(Person4.prototype);//Object.keys(Person4.prototype);
-		console.log(keys);
-		//原型模式的缺点：原型中属性是所有实例共享的
-		
-		//组合使用构造函数模式和原型模式
-		function Person(name, age, job){
-			this.name = name;
-			this.age = age;
-			this.job = job;
-			this.friends = ["Shelby", "Court"];
-		}
-		Person.prototype = {
-			constructor : Person,
-			sayName : function(){
-			alert(this.name);
-		}
-		}
-		var person1 = new Person("Nicholas", 29, "Software Engineer");
-		var person2 = new Person("Greg", 27, "Doctor");
-		person1.friends.push("Van");
-		alert(person1.friends); //"Shelby,Count,Van"
-		alert(person2.friends); //"Shelby,Count"
-		alert(person1.friends === person2.friends); //false
-		alert(person1.sayName === person2.sayName); //true
-	</script>
+    function Person3(name, age, job) {
+        this.name = name;
+        this.age = age;
+        this.job = job;
+        this.say = function() {
+            console.log('my name is ' + this.name);
+        };
+    }
+    Person3.prototype.eat = function() {
+    	console.log('吃')
+    }
+    var person3 = new Person3('wy', 23, 'salesman');
+    //(1) 创建一个新对象；(2) 将构造函数的作用域赋给新对象（因此this 就指向了这个新对象）；
+    //(3) 执行构造函数中的代码（为这个新对象添加属性）；(4) 返回新对象。
+    person3.say();
+    console.log(person3);
+    console.log(person3.__proto__ === Person3.prototype)
+    console.log(Person3.prototype.valueOf())
+    // console.log(Person3.__proto__)
+    // console.log(person3 instanceof Person);
+    //构造函数的主要问题:每个方法都要在每个实例上重新创建一遍。
+    //解决办法：把函数放在构造函数外部。缺点：在全局作用域中，没有封装性。	
+    /*
+    function Person(name,age,job) {
+    	this.name=name;
+    	this.age=age;
+    	this.job=job;
+    	this.say=say;
+    }
+    function say() {
+    	console.log('my name is '+ this.name);
+    }
+    window.say();//在全局中调用没有意义
+    */
+    //原型模式
+    function Person4() {};
+    Person4.prototype.name = 'we';
+    Person4.prototype.age = 24;
+    Person4.prototype.job = 'Doctor';
+    Person4.prototype.say = function() {
+        console.log('my name is ' + this.name);
+    };
+    var person4 = new Person4();
+    person4.say();
+    console.log(Object.getPrototypeOf(person4));
+    person4.name = 'wanger';
+    //delete person4.name;
+    console.log(person4.hasOwnProperty('name'), 'name' in person4);
+    var keys = Object.getOwnPropertyNames(Person4.prototype); //Object.keys(Person4.prototype);
+    console.log(keys);
+    //原型模式的缺点：原型中属性是所有实例共享的
+
+    //组合使用构造函数模式和原型模式
+    function Person(name, age, job) {
+        this.name = name;
+        this.age = age;
+        this.job = job;
+        this.friends = ["Shelby", "Court"];
+    }
+    Person.prototype = {
+        constructor: Person,
+        sayName: function() {
+            console.log(this.name);
+        }
+    }
+    var person1 = new Person("Nicholas", 29, "Software Engineer");
+    var person2 = new Person("Greg", 27, "Doctor");
+    person1.friends.push("Van");
+    console.log(person1.friends); //"Shelby,Count,Van"
+    console.log(person2.friends); //"Shelby,Count"
+    console.log(person1.friends === person2.friends); //false
+    console.log(person1.sayName === person2.sayName); //true
+    </script>
 </body>
+
 </html>

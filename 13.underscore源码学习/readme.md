@@ -6,3 +6,6 @@
   * Underscore源码分析 
     https://www.gitbook.com/book/yoyoyohamapi/undersercore-analysis/details
     源码注释：https://github.com/yoyoyohamAPI/underscore/blob/master/underscore.analysis.js
+
+
+学习方法： 照敲代码，注释之
