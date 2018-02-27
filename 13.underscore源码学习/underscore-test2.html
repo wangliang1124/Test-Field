@@ -22,6 +22,7 @@
 			      fNOP    = function() {},
 			      fBound  = function() {
 			      	console.log(this) // => fBound {}
+			      	console.log(this.__proto__.__proto__ === fNOP.prototype)
 			        return fToBind.apply(this instanceof fNOP
 			               ? this
 			               : oThis,
@@ -31,10 +32,11 @@
 			  if (this.prototype) {
 			    // Function.prototype doesn't have a prototype property
 			    fNOP.prototype = this.prototype; 
-			    console.log(this.prototype)
+			    // console.log(this.prototype)
 			  }
 			  fBound.prototype = new fNOP();
-			  console.log(fBound.prototype )
+			  // var temp = new fNOP();
+			  // console.log(temp)
 			  return fBound;
 			};
 
