@@ -87,3 +87,91 @@ bug: var a = new Number(0);  a !== +a // => true // 转化为 Number{0} !== 0
   }
   `
 > https://www.h5jun.com/post/array-shuffle.html
+
+## 5. new会执行什么操作
+
+* 创建新的对象
+* 新对象的__proto__属性的值设置为构造函数的prototype属性值
+* 构造函数中的this指向该对象, 执行构造函数中的代码
+* 返回对象(除非构造函数返回一个对象)
+
+` // 模拟new
+  function Person() { this.name = a; console.log(this) }
+  function init() {
+    var p = {}; // 创建新的对象
+    p.__proto__ = Person.prototype; // 新对象的__proto__属性的值设置为构造函数的prototype属性值
+    var temp = Person.call(p, 'John'); // 构造函数中的this指向该对象, 执行构造函数中的代码
+    if(temp !== null && typeof temp === 'object')     // 返回对象(除非构造函数返回一个对象)
+      return temp;
+    return p;
+  }
+`
+
+## 6. 关于bind & new
+先看MDN上bind的polyfill
+`
+  if (!Function.prototype.bind) {
+    Function.prototype.bind = function(oThis) {
+      if (typeof this !== 'function') {
+        // closest thing possible to the ECMAScript 5
+        // internal IsCallable function
+        throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
+      }
+
+      var aArgs   = Array.prototype.slice.call(arguments, 1),
+          fToBind = this,
+          fNOP    = function() {},
+          fBound  = function() {
+            return fToBind.apply(this instanceof fNOP
+                   ? this
+                   : oThis,
+                   aArgs.concat(Array.prototype.slice.call(arguments)));
+          };
+
+      if (this.prototype) {
+        // Function.prototype doesn't have a prototype property
+        fNOP.prototype = this.prototype; 
+      }
+      fBound.prototype = new fNOP();
+
+      return fBound;
+    };
+  }
+`
+接着，这是《你不知道的JavaScript》中的一段代码，这段代码怎么执行的？
+`
+  function foo(something) {
+    this.a = something;
+  }
+  var obj1 = {};
+  var bar = foo.bind( obj1 ); 
+  bar( 2 );
+  console.log( obj1.a ); // 2
+  var baz = new bar(3);
+  console.log( obj1.a ); // 2
+  console.log( baz.a ); // 3
+`
+
+首先看这一句`var bar = foo.bind( obj1 ); `, bind被foo调用（bind的执行环境是foo），因此polyfill中`fToBind = this,`的this就是foo，具体实行过程如下：
+
+* fNOP.prototype = foo.prototype
+* 创建对象temp
+* temp.__proto__ = fNOP.prototype
+* 执行fNOP(),this指向temp
+* 返回temp
+* fBound.prototype = temp
+* bar = fBound
+
+然后看这一句`var baz = new bar(3);`，这里发生了什么
+
+* 创建新的对象temp2
+* temp2.__proto__ = bar.prototype
+* this指向temp2，执行`function() {
+            return fToBind.apply(this instanceof fNOP  
+                   ? this
+                   : oThis,
+                   aArgs.concat(Array.prototype.slice.call(arguments)));
+          };`
+   因为this === temp2, temp2.__proto__ = bar.prototype, bar.prototype.__proto__  === fNOP.prototype
+   因此，this instanceof fNOP  === true
+* baz = 
