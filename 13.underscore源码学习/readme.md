@@ -109,69 +109,68 @@ bug: var a = new Number(0);  a !== +a // => true // 转化为 Number{0} !== 0
 
 ## 6. 关于bind & new
 先看MDN上bind的polyfill
-`
-  if (!Function.prototype.bind) {
-    Function.prototype.bind = function(oThis) {
-      if (typeof this !== 'function') {
-        // closest thing possible to the ECMAScript 5
-        // internal IsCallable function
-        throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
-      }
 
-      var aArgs   = Array.prototype.slice.call(arguments, 1),
-          fToBind = this,
-          fNOP    = function() {},
-          fBound  = function() {
-            return fToBind.apply(this instanceof fNOP
-                   ? this
-                   : oThis,
-                   aArgs.concat(Array.prototype.slice.call(arguments)));
-          };
+  `
+ 
+    if (!Function.prototype.bind) {
+      Function.prototype.bind = function(oThis) {
+        if (typeof this !== 'function') {
+          throw new TypeError('Function.prototype.bind - what is trying to be bound is not callable');
+        }
 
-      if (this.prototype) {
-        // Function.prototype doesn't have a prototype property
-        fNOP.prototype = this.prototype; 
-      }
-      fBound.prototype = new fNOP();
+        var aArgs   = Array.prototype.slice.call(arguments, 1),
+            fToBind = this,
+            fNOP    = function() {},
+            fBound  = function() {
+              return fToBind.apply(this instanceof fNOP
+                     ? this
+                     : oThis,
+                     aArgs.concat(Array.prototype.slice.call(arguments)));
+            };
 
-      return fBound;
-    };
-  }
-`
+        if (this.prototype) {
+          // Function.prototype doesn't have a prototype property
+          fNOP.prototype = this.prototype; 
+        }
+        fBound.prototype = new fNOP();
+
+        return fBound;
+      };
+    }
+    
+  `
 接着，这是《你不知道的JavaScript》中的一段代码，这段代码怎么执行的？
-`
-  function foo(something) {
-    this.a = something;
-  }
-  var obj1 = {};
-  var bar = foo.bind( obj1 ); 
-  bar( 2 );
-  console.log( obj1.a ); // 2
-  var baz = new bar(3);
-  console.log( obj1.a ); // 2
-  console.log( baz.a ); // 3
-`
 
-首先看这一句`var bar = foo.bind( obj1 ); `, bind被foo调用（bind的执行环境是foo），因此polyfill中`fToBind = this,`的this就是foo，具体实行过程如下：
+  `
+  
+    function foo(something) {
+      this.a = something;
+    }
+    var obj1 = {};
+    var bar = foo.bind( obj1 ); 
+    bar( 2 );
+    console.log( obj1.a ); // 2
+    var baz = new bar(3);
+    console.log( obj1.a ); // 2
+    console.log( baz.a ); // 3
+  `
 
-* fNOP.prototype = foo.prototype
-* 创建对象temp
-* temp.__proto__ = fNOP.prototype
-* 执行fNOP(),this指向temp
-* 返回temp
-* fBound.prototype = temp
-* bar = fBound
+首先看这一句`var bar = foo.bind( obj1 ); `, bind被foo调用（bind的执行环境是foo），因此polyfill中`fToBind = this,`的this就是foo，模拟过程如下：
+  
+  `
+   
+    var obj1 = {'__proto__': foo.prototype}
+    fNOP.apply(obj1, arguments);
+    fbound.prototype = obj1;
+    bar = fBound;
+   `
 
-然后看这一句`var baz = new bar(3);`，这里发生了什么
+然后看这一句`var baz = new bar(3);`，模拟如下：
 
-* 创建新的对象temp2
-* temp2.__proto__ = bar.prototype
-* this指向temp2，执行`function() {
-            return fToBind.apply(this instanceof fNOP  
-                   ? this
-                   : oThis,
-                   aArgs.concat(Array.prototype.slice.call(arguments)));
-          };`
-   因为this === temp2, temp2.__proto__ = bar.prototype, bar.prototype.__proto__  === fNOP.prototype
-   因此，this instanceof fNOP  === true
-* baz = 
+  `
+  
+    // bar.prototype === obj1, obj1 === { __proto__: foo.prototype }, foo.prototype === { constructor: foo, __proto__} 
+    var obj2 = { __proto__: bar.prototype }  //  obj2 = { __proto__: {__proto__: { constructor: foo, __proto__} } }
+    bar.apply(obj2, arguments)
+    baz = obj2
+  `
