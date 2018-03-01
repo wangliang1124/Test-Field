@@ -159,7 +159,7 @@ bug: var a = new Number(0);  a !== +a // => true // 转化为 Number{0} !== 0
   
   `
    
-    var obj1 = {'__proto__': foo.prototype}
+    var obj1 = {'__proto__': foo.prototype} 
     fNOP.apply(obj1, arguments);
     fbound.prototype = obj1;
     bar = fBound;
@@ -174,3 +174,20 @@ bug: var a = new Number(0);  a !== +a // => true // 转化为 Number{0} !== 0
     bar.apply(obj2, arguments)
     baz = obj2
   `
+## 7.new Foo() 和 Object.create(o)的区别
+  `
+    var Foo = function() {
+      console.log('new Foo')
+    }
+    Foo.prototype.name = 'test1'
+    var o = { name: 'test2' }
+
+    obj1 = new Foo()
+    obj2 = Object.create(o)
+    console.log(obj1)
+    console.log(obj2)
+  `
+  对比执行结果发现obj1.__proto__比obj2.__proto__多了一个.constructor
+  我的理解：使用new调用构造函数创建新对象obj1，本质上就是把obj1的原型链关联到Foo.prototype。而Object.create是直接关联到对象o，因此更加直观和好理解。 
+
+  > 参考 https://www.zhihu.com/question/34183746
