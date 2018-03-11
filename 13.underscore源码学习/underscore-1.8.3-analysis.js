@@ -66,8 +66,8 @@
     // 如果 obj 已经是 `_` 函数的实例，则直接返回 obj
     if (obj instanceof _)
       return obj;
-    console.log('sss')
-    console.log(this)
+    // console.log('sss')
+    // console.log(this)
     // 如果不是 `_` 函数的实例
     // 则调用 new 运算符，返回实例化的对象
     if (!(this instanceof _)){
