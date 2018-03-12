@@ -30,10 +30,82 @@
 * 26.什么是三元表达式？“三元” 表示什么意思？
 * 27.函数的参数元是什么？
 * 28.什么是 "use strict"? 使用它的好处和坏处分别是什么？
-http://www.cnblogs.com/coco1s/p/4029708.html
-https://github.com/qiu-deqing/FE-interview
-
 > https://github.com/paddingme/Front-end-Web-Development-Interview-Question/blob/master/questions/7.md
+> 答案： https://github.com/infp/Front-end-Interview/blob/master/faq/javascript.md
+
+## 各大互联网公司2014前端笔试面试题–JavaScript篇
+
+* 1.JavaScript是一门什么样的语言，它有哪些特点？
+* 2.JavaScript的数据类型都有什么？
+* 3.已知ID的Input输入框，希望获取这个输入框的输入值，怎么做？
+* 4.希望获取到页面中所有的checkbox怎么做？(不使用第三方框架)
+* 5.设置一个已知ID的DIV的html内容为xxxx，字体颜色设置为黑色(不使用第三方框架)
+* 6.当一个DOM节点被点击时候，我们希望能够执行一个函数，应该怎么做？
+* 7.什么是Ajax和JSON，它们的优缺点。
+* 8.看下列代码输出为何？解释原因。 `var a; alert(typeof a); // undefined  alert(b); // 报错`
+* 9.看下列代码,输出什么？解释原因。 `var a = null;  alert(typeof a);`
+* 10.看下列代码,输出什么？解释原因。
+	`var undefined;
+	undefined == null; // true
+	1 == true;   // true
+	2 == true;   // false
+	0 == false;  // true
+	0 == '';     // true
+	NaN == NaN;  // false
+	[] == false; // true
+	[] == ![];   // true`
+> http://www.cnblogs.com/coco1s/p/4029708.html
+> http://www.codeceo.com/2014-javascript-interview.html#13688-tsina-1-6076-57d4d90508c08d162896a47818ce968b
+
+## 5个典型的JavaScript面试题
+* 问题1：作用域: `(function() { var a = b = 5;})(); console.log(b);`, 请问控制台上会输出什么？
+* 问题2：创建"内置"方法: 给String对象定义一个repeatify方法。该方法接收一个整数参数，作为字符串重复的次数，最后返回重复指定次数的字符串。
+例如：`onsole.log('hello'.repeatify(3));` 输出应该是 `hellohellohello`
+* 声明提前: 下面这段代码的结果是什么？为什么？
+`function test() { console.log(a); console.log(foo()); var a = 1; function foo() { return 2;} }; test();`
+* 问题4：JavaScript中的this: 下面代码的运行结果是什么并做解释。?
+`var fullname = 'John Doe';
+var obj = {
+	fullname: 'Colin Ihrig',
+	prop: {
+		fullname: 'Aurelio De Rosa',
+		getFullname: function() {
+			return this.fullname;
+		}
+	}
+};
+console.log(obj.prop.getFullname());
+var test = obj.prop.getFullname;
+console.log(test());`
+* 问题5：call()和apply(): 修复前一个问题，让最后一个console.log() 打印输出'Aurelio De Rosa'.
+> http://web.jobbole.com/81785/
+> http://web.jobbole.com/92323/?utm_source=blog.jobbole.com&utm_medium=relatedPosts
+
+## 一些JS题目的解答
+> https://github.com/xufei/blog/blob/master/posts/2013-12-02-%E4%B8%80%E4%BA%9BJS%E9%A2%98%E7%9B%AE%E7%9A%84%E8%A7%A3%E7%AD%94.md
+
+## 前端开发面试题
+> https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers
+> https://github.com/allenGKC/Front-end-Interview-questions
+> https://github.com/qiu-deqing/FE-interview
+
+## 航旅无线前端团队必备技能
+> https://github.com/jayli/jayli.github.com/issues/16
+
+## ele面试 JavaScript 基础问题
+> https://github.com/ElemeFE/node-interview/blob/master/sections/zh-cn/common.md
+
+## ele面试 Network
+> https://github.com/ElemeFE/node-interview/blob/master/sections/zh-cn/network.md
+
+## HTTP 协议入门 
+> http://www.ruanyifeng.com/blog/2016/08/http.html
+
+## 理解RESTful架构
+> http://www.ruanyifeng.com/blog/2011/09/restful.html
+
+## 面试前端工程师
+> https://github.com/paddingme/Front-end-Web-Development-Interview-Question/blob/master/interview/1.md
 
 # 前端工作面试常见问题
 
