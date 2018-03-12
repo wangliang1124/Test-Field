@@ -1,3 +1,4 @@
+/* eslint-disable */
 (function() {
   var root = this;
   
@@ -217,7 +218,7 @@
     var isFunc = _.isFunction(method);
     return _.map(obj, function(value) {
       var func = isFunc ? method : value[method];
-      return func == null ? func ： func.apply(value, args);
+      return func == null ? func : func.apply(value, args);
     })
   };
 
@@ -395,7 +396,7 @@
       if(isArrayLike(value) && (_.isArray(value) || _.isArguments(value))) {
         if(!shallow) value = flatten(value, shallow, strict);
         var j = 0, len = value.length;
-        output.length + = len;
+        output.length += len;
         while(j < len) {
           output[idx++] = value[j++];
         }
@@ -518,7 +519,7 @@
   function createIndexFinder(dir, predicateFind, sortedIndex) {
     return function(array, item, idx) {
       var i = 0, length = getLength(array);
-      if(typeof idx = 'number') {
+      if(typeof idx == 'number') {
         if(dir > 0) {
           i = idx >= 0 ?idx : Math.max(idx + length, i);
         } else {
@@ -558,6 +559,63 @@
     return range;
   };
 
+  var executeBound = function(sourceFunc, boundFunc, context, callingContext, args) {
+    if(!(callingContext instanceof boundFunc)) return sourceFunc.apply(context, args);
+    var self = baseCreate(sourceFunc.prototype);
+    var result  = sourceFunc.apply(self, args);
+    if(_.isObject(result)) return result;
+    return self;
+  };
+
+  _.bind = function(func, context) {
+    if(nativeBind && func.bind === nativeBind) return nativeBind.apply(func, slice.call(arguments, 1));
+    if(!_.isFunction(func)) throw new TypeError('Bind must be called on a function');
+    var args = slice.call(arguments, 2);
+    var bound = function() {
+      return executeBound(func, bound, context, this, args.concat(slice.call(arguments)));
+    };
+    return bound;
+  };
+
+  _.partial = function(func) {
+    var boundArgs = slice.call(arguments, 1);
+    var bound = function() {
+      var position = 0, length = boundArgs.length;
+      var args = Array(length);
+      for(var i = 0; i < length; i++) {
+        args[i] = boundArgs[i] === _ ? arguments[position++] : boundArgs[i];
+      }
+      while(position < arguments.length) args.push(arguments[position++]);
+      return executeBound(func, bound, this, this, args);
+    };
+    return bound;
+  }
+  _.bindAll = function(obj) {
+    var i, length = arguments.length, key;
+    if(length <= 1) throw new Error('bindAll must be passed function names');
+    for(i = 1; i < length; i++) {
+      key = arguments[i];
+      obj[key] = _.bind(obj[key], obj);
+    }
+    return obj;
+  };
   
+  _.memoize = function(func, hasher) {
+    var memoize = function(key) {
+      var cache = memoize.cache;
+      var address = '' + (hasher ? hasher.apply(this, arguments) : key);
+      if(!_.has(cache, address)) cache[address] = func.apply(this, arguments);
+      return cache[address];
+    };
+    memoize.cache = {};
+    return memoize;
+  };
+
+  _.delay = function(func, wait) {
+    var args  = slice.call(arguments, 2);
+    return setTimeout(function() {
+      return func.apply(null, args);
+    }, wait)
+  };  
 
 }.call(this));
