@@ -73,20 +73,33 @@
 	+ 第二句执行Person函数并把结果返回给变量person(在编译时会先声明person)
 	+ 第三句调用Person作为构造函数,new一个新的对象实例，赋值给person
 
-* 12.call 和 .apply 的区别是什么？
+* 13.call 和 .apply 的区别是什么？
 	+ call参数是一个个传递的 func.call(obj, arg1, arg2, arg3....)
 	+ apply第二个参数是数组形式 func.apply(obj, [arg1,arg2,arg3..])
 	+ call的执行效率高于apply，apply对参数进行一系列检验和深拷贝
 
-* 13.请解释 Function.prototype.bind 的作用？
+* 14.请解释 Function.prototype.bind 的作用？
 	+ 返回一个预绑定this的函数，这个函数调用时才把this绑定到预先给定的context上
 
 * ~~14.你能解释一下JavaScript中的继承是如何工作的吗？~~
 
 * 15.请尽可能详尽的解释 AJAX 的工作原理。
-	+ AJAX的核心由JavaScript XMLHTTPRequest DOM对象组成，通过XMLHTTPRequest对象向服务器发送请求，并监听响应情况，获取数据，并由js操作DOM更新页面。
-
+	+ AJAX的核心由JavaScript、XMLHTTPRequest、 DOM对象组成，通过XMLHTTPRequest对象向服务器发送请求，并监听响应情况，获取数据，并由js操作DOM更新页面。
+	`var xhr = new XMLHttpRequest(); // ie7+ 
+	 xhr.onreadystatechange = function() {
+			if(readyState === 4) {
+				if((xhr.status >= 200 && xhr.stauts < 300) || xhr.status === 304) {
+					console.log(xhr.responseText);
+				} else {
+					console.log('request was failed:' + xhr.status);
+				}
+			}
+	 }
+	 xhr.open('get', '/api/test', true)
+	 xhr.send(null)
+	`
 * 16.请解释 JSONP 的工作原理，以及它为什么不是真正的 AJAX。
+
 * 17.你使用过 JavaScript 模板系统吗？
 * 18.请解释变量声明提升。
 * 19.请描述下事件冒泡机制。
