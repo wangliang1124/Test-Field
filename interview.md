@@ -15,13 +15,15 @@
 	+ 如果是被一个对象调用的，则指向这个对象
 	+ 可以通过call()或apply()强制绑定this
 	+ 使用new构造一个对象时，this指向新创建的实例对象
+	+ 箭头函数的this就是所在外部作用域的this
 
 * 3.解释下原型继承的原理。
 	+ "继承"的说法不准确，因为JS没有父类、子类，类和实例的概念，只有对象
-	+ 继承的本质是委托，通过在原型链层层遍历的方式查找需要的属性
-	+ 每个函数Foo()在声明时,系统都会创建一个相应的Foo.prototype
+	+ 继承的本质是委托，当要访问一个对象obj的属性时，会先在obj上查找,没有的话，再通过在原型链层层遍历的方式查找需要的属性
+	+ 例如函数Foo()在声明时,系统都会创建一个相应的Foo.prototype
 	+ 通过new Foo()，新的对象有个__proto__的不可枚举属性指向Foo.prototype
 	+ 这个新的对象实例可以直接调用Foo.prototype的属性（或者说所有new的实例对象都可以继承原型上的属性）
+	+ 原型链的尽头是Object.prototype
 	+ 化繁为简: Object.create()
 	> 《你不知道的JavaScript上卷，第二部分第5章原型》
 	
@@ -31,19 +33,59 @@
 	* 优点：速度快，时间复杂度为O(1)。
 	> http://blog.csdn.net/v_july_v/article/details/6256463
 
-* 5.解释下为什么接下来这段代码不是 IIFE(立即调用的函数表达式)：function foo(){ }();.
+* 5.解释下为什么接下来这段代码不是 IIFE(立即调用的函数表达式)：function foo(){ }();要做哪些改动使它变成 IIFE？
+	+ function关键字开头，函数声明, 无法立即运行
+	+ 改成表达式才能运行，(function foo(){ }()) 或者 (function foo(){ })()
+	+ 可以传参,(function foo(global, undefined){ })(window)
+
 * 6.描述以下变量的区别：null，undefined 或 undeclared？
+	+ null：声明了并赋值为null
+	+ undefined: 声明了但未赋值
+	+ 比如声明一个变量a，如果还未赋值则表示a引用的值未定义，a = null表示a的值是null，而null表示一个空值
+	+ null 是一个特殊关键字，不是标识符，我们不能将其当作变量来使用和赋值。undefined是一个标识符，可以被当作变量来使用和赋值。
+	+ null 和 undefined 转换为数字的结果不同: +null => 0, +undefined => NaN
+	+ undeclared: 变量未声明，作用域里找不到
+
 * 7.什么是闭包，如何使用它，为什么要使用它？
+	+ 函数可以创建一个作用域
+	+ 在函数外部无法访问函数内部定义的变量
+	+ 如果在函数内部声明一个函数，这个函数可以访问父函数的作用域，当把这个子函数所引用的函数对象作为值返回时，这个子函数依然持有父函数作用域引用，这个引用就是闭包
+
 * 8.请举出一个匿名函数的典型用例？
-* 9.解释 “JavaScript 模块模式” 以及你在何时使用它。
+	+ 回调函数 function foo(){ return function() {} }
+	+ 立即执行函数 (function(){ })()
+	+ 函数表达式 var foo = function() {}
+
+* 9.解释"JavaScript模块模式"以及你在何时使用它。
+	+ 利用函数作用域和闭包的特点，把一些功能封装在一个命名空间下
+	+ 保持内部数据变量是隐藏且私有的状态，可以避免全局变量污染
+
 * 10.你是如何组织自己的代码？是使用模块模式，还是使用经典继承的方法？
+	+ 模块模式用的比较多
+	+ 一个组件或者插件，通过es6的import ...from...方式引入
+
 * 11.请指出 JavaScript 宿主对象和原生对象的区别？
-	* A: 宿主对象是指DOM和BOM。原生对象是Object、Function、Array、String、Boolean、Number、Date、RegExp、Error、Math等对象
+	+ 宿主对象是指DOM和BOM等，是由宿主框架通过某种机制注册到JavaScript引擎中的对象
+	+ 原生对象是Object、Function、Array、String、Boolean、Number、Date、RegExp、Error、Math，实质上是构造函数。
+
 * 12.Difference between: function Person(){}, var person = Person(), and var person = new Person()?
+	+ 第一句声明了一个Person函数
+	+ 第二句执行Person函数并把结果返回给变量person(在编译时会先声明person)
+	+ 第三句调用Person作为构造函数,new一个新的对象实例，赋值给person
+
 * 12.call 和 .apply 的区别是什么？
+	+ call参数是一个个传递的 func.call(obj, arg1, arg2, arg3....)
+	+ apply第二个参数是数组形式 func.apply(obj, [arg1,arg2,arg3..])
+	+ call的执行效率高于apply，apply对参数进行一系列检验和深拷贝
+
 * 13.请解释 Function.prototype.bind 的作用？
-* 14.你能解释一下 JavaScript 中的继承是如何工作的吗？
+	+ 返回一个预绑定this的函数，这个函数调用时才把this绑定到预先给定的context上
+
+* ~~14.你能解释一下JavaScript中的继承是如何工作的吗？~~
+
 * 15.请尽可能详尽的解释 AJAX 的工作原理。
+	+ AJAX的核心由JavaScript XMLHTTPRequest DOM对象组成，通过XMLHTTPRequest对象向服务器发送请求，并监听响应情况，获取数据，并由js操作DOM更新页面。
+
 * 16.请解释 JSONP 的工作原理，以及它为什么不是真正的 AJAX。
 * 17.你使用过 JavaScript 模板系统吗？
 * 18.请解释变量声明提升。
@@ -57,8 +99,19 @@
 * 26.什么是三元表达式？“三元” 表示什么意思？
 * 27.函数的参数元是什么？
 * 28.什么是 "use strict"? 使用它的好处和坏处分别是什么？
+
+* 29.在什么时候你会使用 document.write()？
+	+ 会重绘整个页面
+	+ 很少使用，首页loading的时候使用过
+	+ 广告弹窗
+
+* 30.你何时优化自己的代码？
+
+* 15.请指出浏览器特性检测，特性推断和浏览器 UA 字符串嗅探的区别？
+
 > https://github.com/paddingme/Front-end-Web-Development-Interview-Question/blob/master/questions/7.md
 > 答案： https://github.com/infp/Front-end-Interview/blob/master/faq/javascript.md
+https://github.com/sunyongjian/blog/issues/23
 
 ## 各大互联网公司2014前端笔试面试题–JavaScript篇
 
@@ -185,3 +238,7 @@ console.log(test());`
 * 最近在学什么？接下来半年你打算学习什么？
 * 做什么方面的事情最让你有成就感？需求设计？规划？具体开发？
 * 后续想做什么？3 年后你希望自己是什么水平？
+
+> 2017-08 面试总结 https://github.com/sunyongjian/blog/issues/32
+
+> 十大经典排序算法总结（JavaScript描述） https://juejin.im/post/57dcd394a22b9d00610c5ec8

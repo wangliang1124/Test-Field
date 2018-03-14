@@ -534,7 +534,7 @@
         return idx >= 0 ? idx + i : -1;
       }
       for(idx = dir > 0 ? i: length - 1; idx >= 0 && idx < length; idx += dir) {
-        if(array[idx] ===item) return idx;
+        if(array[idx] === item) return idx;
       }
       return -1;
     };
@@ -753,4 +753,138 @@
     return keys;
   };
 
+  _.allKeys = function(obj) {
+    if(!_.isObject(ojb)) return [];
+    var keys = [];
+    for(var key in obj)keys.push(key);
+    if(hasenumbug) collectNonEnumProps(obj, keys);
+    return keys;
+  };
+
+  _.values = function(obj) {
+    var keys = _.keys(obj);
+    var length = keys.length;
+    var values = Array(length);
+    for(var i = 0; i < length; i++) {
+      values[i] = obj[keys[i]];
+    }
+    return values;
+  };
+
+  _.mapObject = function(obj, iteratee, context) {
+    iteratee = cb(iteratee, context);
+    var keys = _.keys(obj),
+        length = keys.length,
+        results = {},
+        currentKey;
+    for(var index = 0; index < length; index++) {
+      currentKey = keys[index];
+      results[currentKey] = iteratee(obj[currentKey], currentKey, obj);
+    }
+    return results;
+  };
+
+  _.pairs = function(obj) {
+    var keys = _.keys(obj);
+    var length = keys.length;
+    var pairs = Array(length);
+    for (var i = 0; i < length; i++) {
+      pairs[i] = [keys[i], obj[keys[i]]]
+    }
+    return pairs;
+  };
+
+  _.invert = function(obj) {
+    var result = {};
+    var keys = _.keys(obj);
+    for(var i = 0, length = keys.length; i < length; i++){
+      result[obj[keys[i]]] = keys[i];
+    }
+    return result;
+  };
+
+  _.functions = _.methods = function(obj) {
+    var names = [];
+    for(var key in obj) {
+      if(_.isFunction(obj[key])) names.push(key);
+    }
+    return names.sort();
+  };
+
+  _.extend = createAssigner(_.allKeys);
+
+  _.extendOwn = createAssigner(_.keys);
+
+  _.findKey = function(obj, predicate, context) {
+    predicate = cb(predicate, context);
+    var keys = _.keys(obj), key;
+    for(var i = 0, length = keys.length; i < length; i++){
+      keys = keys[i]
+      if(predicate(obj[key], key, obj)) return key;
+    }
+  }
+
+  _.pick = function(object, oiteratee, context) {
+    var result = {}, obj = object, iteratee, keys;
+    if(obj == null) return result;
+    if(_.isFunction(oiteratee)) {
+      keys = _.allKeys(obj);
+      iteratee = optimizeCb(oiteratee, context);
+    } else {
+      keys = flatten(arguments, false, false, 1);
+      iteratee = function(value, key, obj) { return key in obj; };
+      obj = Object(obj);
+    }
+    for(var i = 0, length = keys.length; i < length; i++){
+      var key = keys[i];
+      var value = obj[key];
+      if(iteratee(value, key, obj)) result[key] = value;
+    }
+    return result;
+  };
+
+  _.omit = function(obj, iteratee, context) {
+    if(_.isFunction(iteratee)) {
+      iteratee = _.negate(iteratee);
+    } else {
+      var keys = _.map(flatten(arguments, false, false, 1), String);
+      iteratee = function(value, key) {
+        return !_.contains(keys, key);
+      };
+    }
+    return _.pick(obj, iteratee, context);
+  };
+
+  _.default = createAssigner(_.allKeys, true);
+
+  _.create = function(prototype, props) {
+    var result = baseCreate(prototype);
+    if(props) _.extendOwn(result, props);
+    return result;
+  };
+
+  _.clone = function(obj) {
+    if(!_.isObject(obj)) return obj;
+    return _.isArray(obj) ? obj.slice() : _.extend({}, obj);
+  };
+
+  _.tap = function(obj, interceptor) {
+    interceptor(obj);
+    return obj;
+  };
+
+  _.isMatch = function(object, attrs) {
+    var keys = _.keys(attrs), length = keys.length;
+    if(object == null) return !length;
+    var obj = Object(object);
+    for(var i = 0; i < length; i++) {
+      var key = keys[i];
+      if(attrs[key] !== obj[key] || !(key in obj)) return false;
+    }
+    return true;
+  };
+
+  var eq = function(a, b, aStack, bStack) {
+    
+  };
 }.call(this));
