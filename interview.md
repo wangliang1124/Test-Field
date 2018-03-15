@@ -52,7 +52,8 @@
 	+ 如果在函数内部声明一个函数，这个函数可以访问父函数的作用域，当把这个子函数所引用的函数对象作为值返回时，这个子函数依然持有父函数作用域引用，这个引用就是闭包
 
 * 8.请举出一个匿名函数的典型用例？
-	+ 回调函数 function foo(){ return function() {} }
+	+ 作为回调var myPromise = new Promise(function(resolve, reject){ })
+	+ 高阶函数：作为返回值function foo(){ return function() {} }
 	+ 立即执行函数 (function(){ })()
 	+ 函数表达式 var foo = function() {}
 
@@ -83,7 +84,8 @@
 
 * ~~14.你能解释一下JavaScript中的继承是如何工作的吗？~~
 
-* 15.请尽可能详尽的解释 AJAX 的工作原理。
+* 15.请尽可能详尽的解释AJAX的工作原理。
+	+ AJAX是一种异步的无须刷新整个页面就可以响应用户交互的技术，也就是说它可以只更新或重载部分页面。
 	+ AJAX的核心由JavaScript、XMLHTTPRequest、 DOM对象组成，通过XMLHTTPRequest对象向服务器发送请求，并监听响应情况，获取数据，并由js操作DOM更新页面。
 	`var xhr = new XMLHttpRequest(); // ie7+ 
 	 xhr.onreadystatechange = function() {
@@ -98,20 +100,103 @@
 	 xhr.open('get', '/api/test', true)
 	 xhr.send(null)
 	`
+	> https://segmentfault.com/a/1190000004322487 
+
 * 16.请解释 JSONP 的工作原理，以及它为什么不是真正的 AJAX。
+	+ 动态创建script标签： var script = document.createElement('script');
+	+ 设置script元素的src属性为要请求的url, script.src = 'http://www.test.com/?callback=handleResponse';
+	+ 定义处理函数：function handleResponse(res){ console.log(res) }
+	+ 把scirpt元素插入页面中的某个位置： document.body.appendChild(script);
+	+ callback是约定好的查询query，服务器接收到请求后，用前端提供的函数名handlResponse，把json数据以参数的形式传入，然后返回给浏览器
+	+ 因为handlResponse已经声明过，资源下载以后会立即执行。
+	+ 因为ajax没有用到XMLHttpRequest去请求资源，因此不是ajax
+	+ JSONP是利用script标签没有同源策略限制，可以与第三方通信，从而实现跨域。
+	+ 只能实现get请求
+	+ 响应可能包含不安全的代码
+	+ 要确定JSONP请求是否失败不容易
 
 * 17.你使用过 JavaScript 模板系统吗？
+	+ 研究过underscore的_.template()
+
 * 18.请解释变量声明提升。
+	+ JavaScirpt代码在被解释之前会被编译
+	+ 在编译阶段，编译器会找到作用域内所有的声明，初始值为undefined
+	+ 也就是说即使某个变量看起来即使是先赋值后声明的，在内部实际上是在编译阶段声明，在执行阶段赋值
+	+ 就好像变量或函数声明从它们在代码中的位置被移动到了最上面，这个过程就叫提升
+
 * 19.请描述下事件冒泡机制。
+	+ DOM事件流有三个阶段：捕获阶段、目标阶段、冒泡阶段
+	+ 事件触发是会从根元素由外向内的传播，直到目标元素
+	+ 然后事件又从最里层的目标元素，逐层冒泡到最外层，在每层都会触发事件
+	+ 如果要禁止事件的冒泡，可以在目标元素的事件方法里调用event.stopPropagation()方法
+
 * 20."attribute" 和 "property" 的区别是什么？
+	+ attribute是指HTML标签上的属性，attribute只能是字符串
+	+ property是指DOM对象的属性
+	+ 标准的 DOM properties 与 attributes 是同步的
+
 * 21.请指出 document load 和 document ready 两个事件的区别。
+	+ window.onload是网页上所以资源加载完毕才执行，只能有一个
+	+ domReady：dom标签加载完毕后即可执行（关联资源还没有加载玩），可以有多个
+
 * 22.== 和 === 有什么不同？
+	+ '==' 宽松相等，允许在相等比较中进行强制类型转换
+	+ '===' 是严格相等，不允许强制类型转换，注意：+0 === -0
+	+ 使用'=='时要注意一些坑：
+		+ 其他类型和布尔类型之间的相等比较（避免使用），如： '42' == true // => false 原因：true => 1，1 == '42' => 1 == 42 => false 
+		+ null == undefined // => true，除此之外其他值都不存在这种情况。 即 null == false // => false
+		+ NaN不等于任何值，包括自己 NaN == NaN // => false
+
 * 23.你如何从浏览器的 URL 中获取查询字符串参数。
+	`var qs = (function(queryString){
+			var q = queryString.substring(1).split('&')
+			if(q == '') return {};
+			var result = {};
+			for(var i = 0; i < q.length; i++) {
+				var arr = q[i].split('=');
+				result[arr[0]] = arr[1] ? decodeURIComponent(arr[1].replace(/\+/g, ' ')) : '';
+			}
+			return result;
+		})(window.location.search)
+	`
+
 * 24.请解释一下 JavaScript 的同源策略。
+	+ 同源：协议(http\https) 域名(www.baidu.com\map.baidu.com) 端口(80\81)
+	+ 出于安全的考虑，不允许源a访问源b的资源
+
+	> 跨域CORS http://www.ruanyifeng.com/blog/2016/04/cors.html
+	> http://harttle.land/2016/12/28/cors-with-cookie.html
+	> https://segmentfault.com/a/1190000012469713
+	> https://stackoverflow.com/questions/11474336/same-origin-policy-in-layman-terms
+
 * 25.描述一种 JavaScript 中实现 memoization(避免重复运算)的策略。
+	
+	> http://taobaofed.org/blog/2016/07/14/performance-optimization-memoization/
+
 * 26.什么是三元表达式？“三元” 表示什么意思？
+	+ condition ? expr1 : expr2
+	+ 如果条件值为真值（true），运算符就会返回 expr1 的值；否则， 就会返回 expr2 的值
+
 * 27.函数的参数元是什么？
+	+ arguments对象
+	`var log = function() {
+		var args = Array.prototype.slice.call(arguments)
+		args.unshift('(app) ')
+		console.log(args)
+		console.log.apply(console,args)
+	}
+	log('sss')
+	`
+
 * 28.什么是 "use strict"? 使用它的好处和坏处分别是什么？
+	+ 将使 JS 代码以严格模式（strict mode）运行。使用了较为严格的错误检测条件检测。
+	+ 消除JavaScript语法的不合理不严谨的地方，减少怪异行为
+	+ 消除代码代码运行的不安全之处： eval中不允许声明变量； this始终是指定的值，func.call(null)全局下this转换为window
+	+ 提高编译效率
+	+ 为未来的新版本做铺垫： 淘汰了with arguments.caller arguments.callee
+	坏处： 估计写代码没那么随意了
+
+	> 参考： 高程三附录B
 
 * 29.在什么时候你会使用 document.write()？
 	+ 会重绘整个页面
@@ -121,10 +206,26 @@
 * 30.你何时优化自己的代码？
 
 * 15.请指出浏览器特性检测，特性推断和浏览器 UA 字符串嗅探的区别？
+* 17.使用 Ajax 都有哪些优劣？
+	* 优势
+		+ 无刷新在页面与服务器通信，更新页面，用户体验好。
+		+ 异步与服务器通信，不需要打断用户的操作，具有更加迅速的响应能力。
+		+ 前端和后端负载平衡。可以把以前一些服务器负担的工作转嫁到客户端，利用客户端闲置的能力来处理，减轻服务器和带宽的负担，节约空间和宽带租用成本。并且减轻服务器的负担，ajax的原则是“按需取数据”，可以最大程度的减少冗余请求，和响应对服务器造成的负担。
+		+ 界面与应用分离
+		+ Ajax使WEB中的界面与应用分离（也可以说是数据与呈现分离），有利于分工合作、减少非技术人员对页面的修改造成的WEB应用程序错误、提高效率、也更加适用于现在的发布系统。
+		+ 基于标准化的并被广泛支持的技术，不需要下载插件或者小程序。
+	* 缺点：
+		+ AJAX干掉了Back和History功能，即对浏览器机制的破坏。
+		+ AJAX的安全问题
+		+ Ajax技术就如同对企业数据建立了一个直接通道，这使得开发者在不经意间会暴露比以前更多的数据和服务器逻辑。Ajax也难以避免一些已知的安全弱点，诸如跨站点脚步攻击、SQL注入攻击和基于Credentials的安全漏洞等等
+		+ 对搜索引擎支持较弱。
+		+ 客户端过肥，太多客户端代码造成开发上的成本。
+		+ 违背URL和资源定位的初衷,采用了Ajax技术，也许你在该URL地址下面看到的和我在这个URL地址下看到的内容是不同的。
 
 > https://github.com/paddingme/Front-end-Web-Development-Interview-Question/blob/master/questions/7.md
 > 答案： https://github.com/infp/Front-end-Interview/blob/master/faq/javascript.md
 https://github.com/sunyongjian/blog/issues/23
+我遇到的前端面试题2017 https://segmentfault.com/a/1190000011091907
 
 ## 各大互联网公司2014前端笔试面试题–JavaScript篇
 
@@ -150,31 +251,90 @@ https://github.com/sunyongjian/blog/issues/23
 > http://www.cnblogs.com/coco1s/p/4029708.html
 > http://www.codeceo.com/2014-javascript-interview.html#13688-tsina-1-6076-57d4d90508c08d162896a47818ce968b
 
-## 5个典型的JavaScript面试题
+## 5个典型的JavaScript面试题 
 * 问题1：作用域: `(function() { var a = b = 5;})(); console.log(b);`, 请问控制台上会输出什么？
+	+ 5
+
 * 问题2：创建"内置"方法: 给String对象定义一个repeatify方法。该方法接收一个整数参数，作为字符串重复的次数，最后返回重复指定次数的字符串。
-例如：`onsole.log('hello'.repeatify(3));` 输出应该是 `hellohellohello`
-* 声明提前: 下面这段代码的结果是什么？为什么？
-`function test() { console.log(a); console.log(foo()); var a = 1; function foo() { return 2;} }; test();`
-* 问题4：JavaScript中的this: 下面代码的运行结果是什么并做解释。?
-`var fullname = 'John Doe';
-var obj = {
-	fullname: 'Colin Ihrig',
-	prop: {
-		fullname: 'Aurelio De Rosa',
-		getFullname: function() {
-			return this.fullname;
+	例如：`console.log('hello'.repeatify(3));` 输出应该是 `hellohellohello`
+	* 答：`String.prototype.repeatify = String.prototype.repeatify || function(times) {
+		var str = '';
+		var times = + times
+		console.log(typeof times)
+		for(var i = 0; i < times; i++) {
+			str += this;
 		}
+		return str;
 	}
-};
-console.log(obj.prop.getFullname());
-var test = obj.prop.getFullname;
-console.log(test());`
-* 问题5：call()和apply(): 修复前一个问题，让最后一个console.log() 打印输出'Aurelio De Rosa'.
+	console.log('hello'.repeatify('3'));
+	`
+
+* 问题3：下面这段代码的结果是什么？为什么？
+	`function test() { console.log(a); console.log(foo()); var a = 1; function foo() { return 2;} }; test();`
+	+ 答： undefined, 2
+
+* 问题4：JavaScript中的this: 下面代码的运行结果是什么并做解释。?
+	`var fullname = 'John Doe';
+	var obj = {
+		fullname: 'Colin Ihrig',
+		prop: {
+			fullname: 'Aurelio De Rosa',
+			getFullname: function() {
+				return this.fullname;
+			}
+		}
+	};
+	console.log(obj.prop.getFullname());
+	var test = obj.prop.getFullname;
+	console.log(test());`
+	+ 答： 'Aurelio De Rosa', 'John Doe'
+
+* 问题5：修复前一个问题，让最后一个console.log() 打印输出'Aurelio De Rosa'.
+	+ 答： console.log(test.call(obj.prop))
+
+> http://web.jobbole.com/80564/
+
+## 再来5个JavaScript面试题
 > http://web.jobbole.com/81785/
+
+## 25个最基本的 JavaScript 面试问题及答案
 > http://web.jobbole.com/92323/?utm_source=blog.jobbole.com&utm_medium=relatedPosts
 
-## 一些JS题目的解答
+## 代码题
+
+* 1.问题：下面语句的返回值是什么？
+`~~3.14`
+> 答案：3
+
+* 2.问题：下面的语句的返回值是什么？
+`"i'm a lasagna hog".split("").reverse().join("");`
+> 答案："goh angasal a m'i"
+
+* 3.问题：window.foo 的值是什么？
+`( window.foo || ( window.foo = "bar" ) );`
+> 答案："bar" 只有 window.foo 为假时的才是上面答案，否则就是它本身的值。
+
+* 4.问题：下面两个 alert 的结果是什么?
+`var foo = "Hello"; 
+(function() { 
+  var bar = " World";
+  alert(foo + bar);
+})();
+alert(foo + bar);`
+> 答案: "Hello World" 和 ReferenceError: bar is not defined
+
+* 5.问题：foo.length 的值是什么?
+`var foo = [];
+foo.push(1);
+foo.push(2);`
+> 答案：2
+
+* 6.问题：foo.length 的值是什么？
+`var foo = {};
+foo.bar = 'hello';`
+> 答案: undefined
+
+## 一些JS题目的解答(考察作用域和变量提升、this指向)
 > https://github.com/xufei/blog/blob/master/posts/2013-12-02-%E4%B8%80%E4%BA%9BJS%E9%A2%98%E7%9B%AE%E7%9A%84%E8%A7%A3%E7%AD%94.md
 
 ## 前端开发面试题
@@ -182,8 +342,6 @@ console.log(test());`
 > https://github.com/allenGKC/Front-end-Interview-questions
 > https://github.com/qiu-deqing/FE-interview
 
-## 航旅无线前端团队必备技能
-> https://github.com/jayli/jayli.github.com/issues/16
 
 ## ele面试 JavaScript 基础问题
 > https://github.com/ElemeFE/node-interview/blob/master/sections/zh-cn/common.md
@@ -200,7 +358,19 @@ console.log(test());`
 ## 面试前端工程师
 > https://github.com/paddingme/Front-end-Web-Development-Interview-Question/blob/master/interview/1.md
 
-# 前端工作面试常见问题
+## 2017-08面试总结 
+> https://github.com/sunyongjian/blog/issues/32
+
+## 十大经典排序算法总结（JavaScript描述） 
+	> 学习JavaScript数据结构与算法
+	> https://juejin.im/post/57dcd394a22b9d00610c5ec8
+	> ES6的数据结构与算法 https://www.talkingcoder.com/article/6374220543809234154
+
+## 设计模式
+	> JavaScript设计模式与开发实践
+	> https://segmentfault.com/a/1190000004568177
+
+## 前端工作面试常见问题
 
 * 1.在制作一个Web应用或Web站点的过程中，你是如何考虑他的UI、安全性、高性能、SEO、可维护性以及技术因素的？
 * 2.你能描述一下渐进增强和优雅降级之间的不同吗?
@@ -213,45 +383,7 @@ console.log(test());`
 	* FE的角度上再看输入url后都发生了什么 http://div.io/topic/609
 	* 当你输入一个网址，实际会发生什么? http://blog.jobbole.com/33951/
 
+ > https://github.com/nioteam/jquery-plugins/issues/19
 
-# 项目相关
-一般来说会问如下几方面的问题：
-* 做过最满意的项目是什么？
-* 项目背景
-	+ 为什么要做这件事情？
-	+ 最终达到什么效果？
-* 你处于什么样的角色，起到了什么方面的作用？
-* 在项目中遇到什么技术问题？具体是如何解决的？
-* 如果再做这个项目，你会在哪些方面进行改善？
-
-# 技术相关 - 1 面
-* 描述一个你遇到过的技术问题，你是如何解决的？
-	+ 这个问题很常见，有没有遇到过很不常见的问题？比如在网上根本搜不到解决方法的？
-* 是否有设计过通用的组件？
-	+ 请设计一个 Dialog（弹出层） / Suggestion（自动完成） / Slider（图片轮播） 等组件
-	+ 你会提供什么接口？
-	+ 调用过程是怎样的？可能会遇到什么细节问题？
-
-# 技术相关 - 2 面
-技术二面主要判断技术深度及广度
-
-* 你最擅长的技术是什么？
-	* 你觉得你在这个技术上的水平到什么程度了？你觉得最高级别应该是怎样的？
-* 浏览器及性能
-	* 一个页面从输入 URL 到页面加载完的过程中都发生了什么事情？越详细越好（这个问既考察技术深度又考察技术广度，其实要答好是相当难的，注意越详细越好）
-	* 谈一下你所知道的页面性能优化方法？
-		* 这些优化方法背后的原理是什么？
-		* 除了这些常规的，你还了解什么最新的方法么？
-	* 如何分析页面性能？
-* 其它
-	* 除了前端以外还了解什么其它技术么？
-	* 对计算机基础的了解情况，比如常见数据结构、编译原理等
-
-# 兴趣相关
-* 最近在学什么？接下来半年你打算学习什么？
-* 做什么方面的事情最让你有成就感？需求设计？规划？具体开发？
-* 后续想做什么？3 年后你希望自己是什么水平？
-
-> 2017-08 面试总结 https://github.com/sunyongjian/blog/issues/32
-
-> 十大经典排序算法总结（JavaScript描述） https://juejin.im/post/57dcd394a22b9d00610c5ec8
+## FEX 面试问题 
+> https://github.com/fex-team/interview-questions
