@@ -32,6 +32,7 @@
 	* 当使用哈希表进行查询的时候，就是再次使用哈希函数将key转换为对应的数组下标，并定位到该地址获取value
 	* 优点：速度快，时间复杂度为O(1)。
 	> http://blog.csdn.net/v_july_v/article/details/6256463
+	> https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-implemented
 
 * 5.解释下为什么接下来这段代码不是 IIFE(立即调用的函数表达式)：function foo(){ }();要做哪些改动使它变成 IIFE？
 	+ function关键字开头，函数声明, 无法立即运行
@@ -69,7 +70,7 @@
 	+ 宿主对象是指DOM和BOM等，是由宿主框架通过某种机制注册到JavaScript引擎中的对象
 	+ 原生对象是Object、Function、Array、String、Boolean、Number、Date、RegExp、Error、Math，实质上是构造函数。
 
-* 12.Difference between: function Person(){}, var person = Person(), and var person = new Person()?
+* 12.请指出以下代码的区别： function Person(){}, var person = Person(), and var person = new Person()?
 	+ 第一句声明了一个Person函数
 	+ 第二句执行Person函数并把结果返回给变量person(在编译时会先声明person)
 	+ 第三句调用Person作为构造函数,new一个新的对象实例，赋值给person
@@ -135,9 +136,11 @@
 	+ property是指DOM对象的属性
 	+ 标准的 DOM properties 与 attributes 是同步的
 
-* 21.请指出 document load 和 document ready 两个事件的区别。
+* 21.Difference between document load event and document DOMContentLoaded event?
 	+ window.onload是网页上所以资源加载完毕才执行，只能有一个
-	+ domReady：dom标签加载完毕后即可执行（关联资源还没有加载玩），可以有多个
+	+ DOMContentLoaded: dom标签加载完毕后即可执行（关联资源还没有加载玩）
+	> The DOMContentLoaded event is fired when the document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading (the load event can be used to detect a fully-loaded page).
+	> https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded
 
 * 22.== 和 === 有什么不同？
 	+ '==' 宽松相等，允许在相等比较中进行强制类型转换
@@ -164,14 +167,14 @@
 	+ 同源：协议(http\https) 域名(www.baidu.com\map.baidu.com) 端口(80\81)
 	+ 出于安全的考虑，不允许源a访问源b的资源
 
-	> 跨域CORS http://www.ruanyifeng.com/blog/2016/04/cors.html
-	> http://harttle.land/2016/12/28/cors-with-cookie.html
-	> https://segmentfault.com/a/1190000012469713
-	> https://stackoverflow.com/questions/11474336/same-origin-policy-in-layman-terms
+> 跨域CORS http://www.ruanyifeng.com/blog/2016/04/cors.html
+> http://harttle.land/2016/12/28/cors-with-cookie.html
+> https://segmentfault.com/a/1190000012469713
+> https://stackoverflow.com/questions/11474336/same-origin-policy-in-layman-terms
 
 * 25.描述一种 JavaScript 中实现 memoization(避免重复运算)的策略。
 	
-	> http://taobaofed.org/blog/2016/07/14/performance-optimization-memoization/
+> http://taobaofed.org/blog/2016/07/14/performance-optimization-memoization/
 
 * 26.什么是三元表达式？“三元” 表示什么意思？
 	+ condition ? expr1 : expr2
@@ -194,18 +197,30 @@
 	+ 消除代码代码运行的不安全之处： eval中不允许声明变量； this始终是指定的值，func.call(null)全局下this转换为window
 	+ 提高编译效率
 	+ 为未来的新版本做铺垫： 淘汰了with arguments.caller arguments.callee
-	坏处： 估计写代码没那么随意了
+	+ 坏处： 估计写代码没那么随意了
 
-	> 参考： 高程三附录B
+> 参考： 高程三附录B
 
 * 29.在什么时候你会使用 document.write()？
 	+ 会重绘整个页面
 	+ 很少使用，首页loading的时候使用过
 	+ 广告弹窗
 
-* 30.你何时优化自己的代码？
 
 * 15.请指出浏览器特性检测，特性推断和浏览器 UA 字符串嗅探的区别？
+	+ 特性检测：
+		`if (window.XMLHttpRequest) {
+	    new XMLHttpRequest();
+		}`
+	+ 特征推断:
+	`if (document.getElementsByTagName) {
+	    element = document.getElementById(id);
+	}`
+	+ UA字符串嗅探:
+	`if (navigator.userAgent.indexOf("MSIE 7") > -1){
+    //do something
+	}`
+
 * 17.使用 Ajax 都有哪些优劣？
 	* 优势
 		+ 无刷新在页面与服务器通信，更新页面，用户体验好。
@@ -221,43 +236,131 @@
 		+ 对搜索引擎支持较弱。
 		+ 客户端过肥，太多客户端代码造成开发上的成本。
 		+ 违背URL和资源定位的初衷,采用了Ajax技术，也许你在该URL地址下面看到的和我在这个URL地址下看到的内容是不同的。
+* 请实现一个遍历至 100 的 for loop 循环，在能被 3 整除时输出 "fizz"，在能被 5 整除时输出 "buzz"，在能同时被 3 和 5 整除时输出 "fizzbuzz"。
+		`for(var i = 0; i <= 100; i++) {
+			if(i % 3 === 0) console.log( i + 'fizz')
+			if(i % 5 === 0) console.log(i + 'buzz')
+			if(i % 3 === 0 && i % 5 === 0) console.log(i + 'fizzbuzz')
+		}
+		`
+* Why is it, in general, a good idea to leave the global scope of a website as-is and never touch it?
+	+ 安全，变量直接暴露在全局，任何人都可能修改
+	+ 减少名称冲突
+	+ 利于模块化
+	+ 优雅
+
+* Why would you use something like the load event? Does this event have disadvantages? Do you know any alternatives, and why would you use those?
+	+ load event tells browser to do something only after everthing including frames, images, asynchronous JavaScripts are fully loaded.
+	+ If you want event function to execute before fully loaded frames, images, async scripts, use domcontentloaded instead.
+
+* Explain what a single page app is and how to make one SEO-friendly.
+* What is the extent of your experience with Promises and/or their polyfills?
+	`new Promise((resolve, reject) => {
+		if (resolve) {
+			resolve('success')；
+		} else {
+			reject('failed')
+		}
+	}).then((result) => {
+			console.log(result)
+	})`
+	+ polyfill: bluebird
+
+* What are the pros and cons of using Promises instead of callbacks?
+	+ 地狱回掉
+	+ 信任
+	+ 错误处理
+
+* What tools and techniques do you use debugging JavaScript code?
+	+	Chrome Dev Tools.
+
+* What language constructions do you use for iterating over object properties and array items?
+	+ Array
+		+ for
+		+ forEach
+	+ Object
+		+ for(var key in obj) { if(obj.hasOwnProperty(key)){ // 过滤不可枚举属性 } } 
+		+ Object.keys(obj).forEach
+
+* Explain the difference between mutable and immutable objects.
+	* What is an example of an immutable object in JavaScript?
+	* What are the pros and cons of immutability?
+	* How can you achieve immutability in your own code?
+
+> Mutable object means its state is allowed to be changed over time. Immutable object's value doesn't change from the time it was created.
+
+> Immutable examples are primitive types like String, Number. You can't change the definition of 2 after executing 2 + 5. No matter how you operate strings, the definition of c won't change.
+
+> Mutable examples are array, object or anything opposite to immutability. You can change the value of an array or object anytime and the result will be what you desired.
+
+> Immutable object won't be changed after it has been initialized. We can take advantage of this. Making immutable objects into a collection of cache since these objects don't change at all. Our program is actually accessing the same data. This is a good approach to saving memory by taking advantage of immutable. The downside of immutability is that it actually involving constantly deep clone and assigning. This is an overhead of trading computing speed for memory.
+
+> To achieve immutability on array or object or any type you want, you have to do deep clone, or simply use library like immutable.js developed by Facebook.
+
+> facebook immutable.js 意义何在，使用场景？ https://www.zhihu.com/question/28016223
+
+
+* Explain the difference between synchronous and asynchronous functions.
+	+ 同步是阻塞的，异步是非阻塞的
+		`function blocking(){
+	    console.log("1");
+	    console.log("2");
+		}
+		function nonBlocking(){
+		    setTimeout(function(){
+		        console.log("1");
+		    }, 1000);
+		    console.log("2");
+		}`
+
+> https://stackoverflow.com/questions/748175/asynchronous-vs-synchronous-execution-what-does-it-really-mean
+
+
+* What is event loop? What is the difference between call stack and task queue?
+
+> Event loop is how JavaScript with single-threaded performs tasks without blocking.
+
+> Event loop is a queue of callback functions. When a asynchronous function executes, it is pushed into task queue and JavaScript will only start processing task queue after codes after async function are executed.
+
+> The difference between call stack and task queue is that task queue is a place where JavaScrip schedules async function while call stack is a place for JavaScript to trace what the current function is.
+
+> 什么是 Event Loop？ http://www.ruanyifeng.com/blog/2013/10/event_loop.html
+
+> JavaScript 运行机制详解：再谈Event Loop  http://www.ruanyifeng.com/blog/2014/10/event-loop.html
+
+* Explain the differences on the usage of foo between function foo() {} and var foo = function() {}
+	+ 函数声明 和 函数表达式	
+
+* What are the differences between variables created using let, var or const?
+	+ var、let、const 区别？ https://www.jianshu.com/p/4e9cd99ecbf5
+
++ 箭头函数，解构赋值，字符串模版，扩展符
+
+* What is the definition of a higher-order function?
+
+>  JavaScript高阶函数的应用 https://segmentfault.com/a/1190000012008266
+
+* Can you give an example of a curry function and why this syntax offers an advantage?
+
+ > JavaScript专题之函数柯里化 https://github.com/mqyqingfeng/Blog/issues/42
 
 > https://github.com/paddingme/Front-end-Web-Development-Interview-Question/blob/master/questions/7.md
 > 答案： https://github.com/infp/Front-end-Interview/blob/master/faq/javascript.md
 https://github.com/sunyongjian/blog/issues/23
+http://andrewyan.logdown.com/posts/643979-front-end-job-interview-questions
 我遇到的前端面试题2017 https://segmentfault.com/a/1190000011091907
 
 ## 各大互联网公司2014前端笔试面试题–JavaScript篇
 
-* 1.JavaScript是一门什么样的语言，它有哪些特点？
-* 2.JavaScript的数据类型都有什么？
-* 3.已知ID的Input输入框，希望获取这个输入框的输入值，怎么做？
-* 4.希望获取到页面中所有的checkbox怎么做？(不使用第三方框架)
-* 5.设置一个已知ID的DIV的html内容为xxxx，字体颜色设置为黑色(不使用第三方框架)
-* 6.当一个DOM节点被点击时候，我们希望能够执行一个函数，应该怎么做？
-* 7.什么是Ajax和JSON，它们的优缺点。
-* 8.看下列代码输出为何？解释原因。 `var a; alert(typeof a); // undefined  alert(b); // 报错`
-* 9.看下列代码,输出什么？解释原因。 `var a = null;  alert(typeof a);`
-* 10.看下列代码,输出什么？解释原因。
-	`var undefined;
-	undefined == null; // true
-	1 == true;   // true
-	2 == true;   // false
-	0 == false;  // true
-	0 == '';     // true
-	NaN == NaN;  // false
-	[] == false; // true
-	[] == ![];   // true`
 > http://www.cnblogs.com/coco1s/p/4029708.html
-> http://www.codeceo.com/2014-javascript-interview.html#13688-tsina-1-6076-57d4d90508c08d162896a47818ce968b
 
-## 5个典型的JavaScript面试题 
+## 5个典型的JavaScript面试题 √
 * 问题1：作用域: `(function() { var a = b = 5;})(); console.log(b);`, 请问控制台上会输出什么？
 	+ 5
-
 * 问题2：创建"内置"方法: 给String对象定义一个repeatify方法。该方法接收一个整数参数，作为字符串重复的次数，最后返回重复指定次数的字符串。
 	例如：`console.log('hello'.repeatify(3));` 输出应该是 `hellohellohello`
-	* 答：`String.prototype.repeatify = String.prototype.repeatify || function(times) {
+	* 答：
+	`String.prototype.repeatify = String.prototype.repeatify || function(times) {
 		var str = '';
 		var times = + times
 		console.log(typeof times)
@@ -274,19 +377,19 @@ https://github.com/sunyongjian/blog/issues/23
 	+ 答： undefined, 2
 
 * 问题4：JavaScript中的this: 下面代码的运行结果是什么并做解释。?
-	`var fullname = 'John Doe';
-	var obj = {
-		fullname: 'Colin Ihrig',
-		prop: {
-			fullname: 'Aurelio De Rosa',
-			getFullname: function() {
-				return this.fullname;
+		`var fullname = 'John Doe';
+		var obj = {
+			fullname: 'Colin Ihrig',
+			prop: {
+				fullname: 'Aurelio De Rosa',
+				getFullname: function() {
+					return this.fullname;
+				}
 			}
-		}
-	};
-	console.log(obj.prop.getFullname());
-	var test = obj.prop.getFullname;
-	console.log(test());`
+		};
+		console.log(obj.prop.getFullname());
+		var test = obj.prop.getFullname;
+		console.log(test());`
 	+ 答： 'Aurelio De Rosa', 'John Doe'
 
 * 问题5：修复前一个问题，让最后一个console.log() 打印输出'Aurelio De Rosa'.
@@ -300,7 +403,7 @@ https://github.com/sunyongjian/blog/issues/23
 ## 25个最基本的 JavaScript 面试问题及答案
 > http://web.jobbole.com/92323/?utm_source=blog.jobbole.com&utm_medium=relatedPosts
 
-## 代码题
+## 代码题 √
 
 * 1.问题：下面语句的返回值是什么？
 `~~3.14`
@@ -334,14 +437,14 @@ foo.push(2);`
 foo.bar = 'hello';`
 > 答案: undefined
 
-## 一些JS题目的解答(考察作用域和变量提升、this指向)
+## 一些JS题目的解答(考察作用域和变量提升、this指向) √
 > https://github.com/xufei/blog/blob/master/posts/2013-12-02-%E4%B8%80%E4%BA%9BJS%E9%A2%98%E7%9B%AE%E7%9A%84%E8%A7%A3%E7%AD%94.md
 
 ## 前端开发面试题
-> https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers
-> https://github.com/allenGKC/Front-end-Interview-questions
-> https://github.com/qiu-deqing/FE-interview
-
+> 前端开发面试题 https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers
+> 史上最全 前端开发面试问题及答案整理 https://github.com/allenGKC/Front-end-Interview-questions
+> 收集的前端面试题和答案 https://github.com/qiu-deqing/FE-interview
+> 前端开发面试题 https://segmentfault.com/a/1190000000465431
 
 ## ele面试 JavaScript 基础问题
 > https://github.com/ElemeFE/node-interview/blob/master/sections/zh-cn/common.md
@@ -351,6 +454,8 @@ foo.bar = 'hello';`
 
 ## HTTP 协议入门 
 > http://www.ruanyifeng.com/blog/2016/08/http.html
+
+## TCP协议小结 https://segmentfault.com/a/1190000013342156
 
 ## 理解RESTful架构
 > http://www.ruanyifeng.com/blog/2011/09/restful.html
@@ -362,28 +467,30 @@ foo.bar = 'hello';`
 > https://github.com/sunyongjian/blog/issues/32
 
 ## 十大经典排序算法总结（JavaScript描述） 
-	> 学习JavaScript数据结构与算法
-	> https://juejin.im/post/57dcd394a22b9d00610c5ec8
-	> ES6的数据结构与算法 https://www.talkingcoder.com/article/6374220543809234154
+>  学习JavaScript数据结构与算法
+>  https://juejin.im/post/57dcd394a22b9d00610c5ec8
+>  ES6的数据结构与算法 https://www.talkingcoder.com/article/6374220543809234154
 
 ## 设计模式
-	> JavaScript设计模式与开发实践
-	> https://segmentfault.com/a/1190000004568177
-
-## 前端工作面试常见问题
-
-* 1.在制作一个Web应用或Web站点的过程中，你是如何考虑他的UI、安全性、高性能、SEO、可维护性以及技术因素的？
-* 2.你能描述一下渐进增强和优雅降级之间的不同吗?
-* 3.请解释一下什么是“语义化的 HTML”？
-* 4.你如何对网站的文件和资源进行优化？
-* 5.请说出三种减少页面加载时间的方法。
-* 6.请写一个简单的幻灯效果页面
-* 7.请尽可能完整得描述下从输入URL到整个网页加载完毕及显示在屏幕上的整个流程
-	* 从输入 URL 到页面加载完成的过程中都发生了什么事情？ http://fex.baidu.com/blog/2014/05/what-happen/
-	* FE的角度上再看输入url后都发生了什么 http://div.io/topic/609
-	* 当你输入一个网址，实际会发生什么? http://blog.jobbole.com/33951/
-
- > https://github.com/nioteam/jquery-plugins/issues/19
+> JavaScript设计模式与开发实践
+> https://segmentfault.com/a/1190000004568177
 
 ## FEX 面试问题 
 > https://github.com/fex-team/interview-questions
+
+## 我遇到的前端面试题2017 
+> https://segmentfault.com/a/1190000011091907
+## 从输入URL到页面加载发生了什么？ 
+> https://segmentfault.com/a/1190000006879700
+## 更快更安全，HTTPS 优化总结 
+> https://segmentfault.com/a/1190000013380916
+## 12个HTML和CSS必须知道的重点难点问题 
+> https://segmentfault.com/a/1190000013375700
+## 50道CSS基础面试题（附答案） 
+> https://segmentfault.com/a/1190000013325778
+## 面试的信心来源于过硬的基础  
+> https://segmentfault.com/a/1190000013331105
+## 实现一个算法，寻找字符串中出现次数最少的、并且首次出现位置最前的字符。 
+> https://segmentfault.com/q/1010000008703575
+## ajax跨域，这应该是最全的解决方案了 
+> https://segmentfault.com/a/1190000012469713
