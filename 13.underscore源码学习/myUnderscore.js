@@ -885,6 +885,163 @@
   };
 
   var eq = function(a, b, aStack, bStack) {
-    
+    if (a === b) return a !== 0 || 1 / a === 1 / b;
+    if (a == null || b == null) return a === b;
+    if (a instanceof _) a = a._wrapped;
+    if (b instanceof _) b = b._wrapped;
+    var className = toString.call(a);
+    if (className !== toString.call(b)) return false;
+    switch (className) {
+      case '[object RegExp]':
+      case '[object String]': 
+        return '' + a === '' + b;
+      case '[object Number]': 
+        if (+a !== +a) return +b !== +b;
+        return +a === 0 ? 1 / +a === 1 / b : +a === +b;
+      case '[object Date]':
+      case '[object Boolean]': 
+        return +a === +b;
+    }
+
+    var areArrays = className === '[object Array]';
+    if (!areArrays) {
+      if (typeof a != 'object' || typeof b != 'object') return false;
+      var aCtor = a.constructor, bCtor = b.constructor;
+      if (aCtor !== bCtor && !(_.isFunction(aCtor) && aCtor instanceof aCtor && 
+        _.isFunction(bCtor) && bCtor instanceof bCtor) 
+        && ('constructor' in a && 'constructor' in b)) {
+        return false
+      }
+    }
+
+    aStack = aStack || [];
+    bStack = bStack || [];
+    var length = aStack.length;
+    while(length--) {
+      if(aStack[length] === a) return bStack[length] === b;
+    }
+
+    aStack.push(a);
+    bStack.push(b);
+
+    if (areArrays) {
+      length = a.length;
+      if(length !== b.length) return false;
+      while(length--) {
+        if(!eq(a[length], b[length], aStack, bStack)) return false;
+      }
+    } else {
+      var keys = _.keys(a), key;
+      length = keys.length;
+      if (_.keys(b).length !== length) return false;
+      while (length--) {
+        key = keys[length];
+        if (!(_.has(b, key) && eq(a[key], b[key], aStack, bStack))) return false;
+      }
+    }
+
+    aStack.pop();
+    bStack.pop();
+    return true;
   };
+
+  _.isEqual = function(a, b) {
+    return eq(a, b);
+  };
+
+  _.isEmpty = function(obj) {
+    if(obj == null) return true;
+    if(isArrayLike(obj) && (_.isArray(obj) || _.isString(obj) || _.isArguments(obj))) return obj.length === 0;
+    return _.keys(obj).length === 0;
+  };
+
+  _.isArray = nativeIsArray || function(obj) {
+    return toString.call(obj) === '[object Array]';
+  };
+
+  _.isObject = function(obj) {
+    var type = typeof obj
+    return type === 'function' || type === 'object' && !!obj;
+  };
+
+  _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error'], function(name){
+    _['is' + name] = function(obj) {
+      return toString.call(obj) === '[object ' + name + ']'
+    };
+  });
+
+  if(!_.isArguments(arguments)) {
+    _.isArguments = function(obj) {
+      return _.has(obj, 'callee');
+    };
+  };
+
+  if (typeof /./ != 'function' && typeof Int8Array != 'object') {
+    _.isFunction = function(obj) {
+      return typeof obj == 'function' || false;
+    }
+  }
+
+  _.isFinite = function(obj) {
+    return isFinite(obj) && !isNaN(parseFloat(obj))
+  }
+
+  _.isNaN = function(obj) {
+    return _.isNumber(obj) && obj !== +obj;
+  }
+
+  _.isBoolean = function(obj) {
+    return obj === ture || obj === false || toString.call(obj) === '[object Boolean]';
+  };
+
+  _.isNull = function(obj) {
+    return obj === null;
+  };
+
+  _.isUndefined = function(obj) {
+    return obj === void 0;
+  };
+
+  _.has = function(obj, key) {
+    return obj != null && hasOwnProperty.call(obj, key);
+  };
+
+  // Utility Functions
+
+  _.noConflict = function() {
+    root._ = previousUnderscore;
+    return this;
+  };
+
+  _.identity = function(value) {
+    return value;
+  };
+
+  _.constant = function(value) {
+    return function() {
+      return value;
+    };
+  };
+
+  _.noop = function() {};
+
+  _.property = property;
+
+  _.propertyOf = function(obj) {
+    return obj === null ? function() {} : function(key) { return obj[key] };
+  };
+
+  _.matcher = _.matches = function(attrs) {
+    attrs = _.extendOwn({}, attrs);
+    return function(obj) {
+      return _.isMatch(obj, attrs);
+    };
+  };
+
+  _.times = function(n, iteratee, context) {
+    var accum = Array(Math.max(0, n));
+    iteratee = optimizeCb(iteratee, context, 1);
+    for (var i = 0; i < n; i++) accum[i] = iteratee(i);
+    return accum;
+  }
 }.call(this));

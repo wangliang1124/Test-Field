@@ -90,10 +90,16 @@
 		this.values = function() {}
 	}
 
+	// 哈希表
 	function HashTable() {}
-
+	
+	// 二叉搜索树
 	function BinarySearchTree() {
 		
 	}
 
+	// 图
+	function Graph() {
+		
+	}
 }())
