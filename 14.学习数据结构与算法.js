@@ -102,4 +102,25 @@
 	function Graph() {
 		
 	}
+
+	// 排序
+	function ArrayList() {
+		var array = [];
+		this.insert = function(item) {
+			array.push(item);
+		}
+		this.toString = function() {
+			return array.join();
+		}
+	}
+
+	// 冒泡算法
+	this.BubbleSort = function() {
+
+	}
+
+	this.selectionSort = function() {}
+	this.insertionSort = function() {}
+	this.mergeSort = function() {}
+	this.quickSort = function() {}
 }())
