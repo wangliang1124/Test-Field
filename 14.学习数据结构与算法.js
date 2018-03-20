@@ -123,4 +123,10 @@
 	this.insertionSort = function() {}
 	this.mergeSort = function() {}
 	this.quickSort = function() {}
+
+	// 顺序搜索
+	this.sequentialSearch = function() {}
+	// 二分搜索
+	this.binarySearch = function() {}
+	
 }())
