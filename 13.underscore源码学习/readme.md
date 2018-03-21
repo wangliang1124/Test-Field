@@ -66,12 +66,14 @@
 > http://frontenddev.org/link/conversion-of-tostring-and-the-valueof-javascript-object.html
 
 ## 3. _.isNaN Bug
-  `
-    _.isNaN = function(obj) {
-      return _.isNumber(obj) && obj !== +obj; // 修复_.isNumber(obj) && isNaN(obj);
-    };
-  `
+  `_.isNaN = function(obj) {
+      return _.isNumber(obj) && obj !== +obj;  // var a = new Number(NaN); a === a; a!==+a;
+    };`
 bug: var a = new Number(0);  a !== +a // => true // 转化为 Number{0} !== 0 
+* 最新版
+  `_.isNaN = function(obj) {
+    return _.isNumber(obj) && isNaN(obj); 
+  };`
 
 ## 4.  经典的随机排列 O(n) 复杂度
   `
