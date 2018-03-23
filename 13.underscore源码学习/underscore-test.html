@@ -47,6 +47,30 @@
 			// 
 			console.log(_.first([5, 4, 3, 2, 1], 4));
 			console.log(_.isNumber(new Number(0)))
+
+			var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'toString', 'propertyIsEnumerable', 'hasOwnProperty', 'toLocaleString'];
+
+			function collectNonEnumProps(obj, keys) {
+			  var nonEnumIdx = nonEnumerableProps.length;
+			  var constructor = obj.constructor;
+			  var proto = (_.isFunction(constructor) && constructor.prototype) || ObjProto;
+
+			  var prop = 'constructor';
+			  if(_.has(obj, prop) && !_.contains(keys, prop)) keys.push(prop);
+
+			  while(nonEnumIdx--) {
+			    prop = nonEnumerableProps[nonEnumIdx];
+			    if(prop in obj && obj[prop] !== proto[prop] && !_.contains(keys, prop)) {
+			      keys.push(prop);
+			    }
+			  }
+			}
+
+			var Func = function() {}; Func.prototype.toString = null;
+			var obj = { constructor: Func };
+			var keys = []
+			collectNonEnumProps(obj, keys)
+			console.log(keys)
 		}
 	</script>	
 </body>

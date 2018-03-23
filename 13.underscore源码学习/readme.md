@@ -193,3 +193,14 @@ bug: var a = new Number(0);  a !== +a // => true // 转化为 Number{0} !== 0
   我的理解：使用new调用构造函数创建新对象obj1，本质上就是把obj1的原型链关联到Foo.prototype。而Object.create是直接关联到对象o，因此更加直观和好理解。 
 
   > 参考 https://www.zhihu.com/question/34183746
+
+## 7. 关于 collectNonEnumProps, 测试以下代码有bug
+  `
+    var Func = function() {}; 
+    Func.prototype.toString = null;
+    var obj = { constructor: Func };
+    var keys = [];
+    collectNonEnumProps(obj, keys);
+    console.log(keys);
+    `
+关键是这两句： `var proto = (_.isFunction(constructor) && constructor.prototype) || ObjProto; ... if(...obj[prop] !== proto[prop]...)`
