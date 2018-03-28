@@ -494,3 +494,5 @@ foo.bar = 'hello';`
 > https://segmentfault.com/q/1010000008703575
 ## ajax跨域，这应该是最全的解决方案了 
 > https://segmentfault.com/a/1190000012469713
+## 偶尔发现的一个技术博客
+> https://github.com/isLishude/blog/labels/%E5%89%8D%E7%AB%AF

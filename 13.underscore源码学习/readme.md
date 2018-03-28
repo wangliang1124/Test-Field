@@ -1,5 +1,4 @@
- 参考资料：
-
+## 参考资料：
   * Underscore.js源码解读&系列文章 
     https://github.com/hanzichi/underscore-analysis 
     源码注释：https://github.com/hanzichi/underscore-analysis/blob/master/underscore-1.8.3.js/underscore-1.8.3-analysis.js
@@ -8,7 +7,11 @@
     源码注释：https://github.com/yoyoyohamAPI/underscore/blob/master/underscore.analysis.js
 
 
-学习方法： 照敲代码，注释之
+## 学习方法
+  * 1. 结合参考资料学习和注释学习代码
+  * 2. 深度理解系列文章 https://github.com/hanzichi/underscore-analysis，https://www.gitbook.com/book/yoyoyohamapi/undersercore-analysis/details
+  * 3. 测试各个函数的用法，阅读代码并注释
+  * 4. 不看源码实现各个函数
 
 
 ## 1.  i++ a和 ++i 的区别
@@ -204,3 +207,75 @@ bug: var a = new Number(0);  a !== +a // => true // 转化为 Number{0} !== 0
     console.log(keys);
     `
 关键是这两句： `var proto = (_.isFunction(constructor) && constructor.prototype) || ObjProto; ... if(...obj[prop] !== proto[prop]...)`
+
+
+## 8. 数组去重
+
+* 方法一：定义一个变量数组 res 保存结果，遍历需要去重的数组，如果该元素已经存在在 res 中了，则说明是重复的元素，如果没有，则放入 res 中。 复杂度O(n^2)
+`function unique(arr) {
+    var res = [];
+    for(var i = 0, len = arr.length; i < len; i++) {
+      var item = arr[i];
+      for(var j = 0, l = res.length; j < l; j++) {
+        if(item === res[j]) break;
+      }
+      // 简化： (res.indexOf(item) === -1) && res.push(item)
+      if(j === l) res.push(item); // j===l说明res遍历完毕，没有找到相同元素
+    }
+    return res
+  }
+  // 或
+  function unique(arr) {
+    return arr.filter(function(value, index, array) {
+      return array.indexOf(value) === index;
+    })
+  }
+`
+* 方法二：先找不重复的，然后把重复的最后一个放入数组
+`function unique(arr) {
+    var res = [];
+    for(var i = 0; len = arr.length; i < len; i++) {
+      for(var j = i + 1; j < len; j ++) {
+        if(arr[j] === arr[i]) j = ++i
+      }
+      res.push(arr[i])
+    }
+    return res;
+  }
+`
+* 方法三：先对数组排序，然后比较前后元素
+`function unique(arr) {
+  var res = [];
+  return arr.concat().sort().filter(function(value, index, array){
+    return !index || value !== array[index - 1] // ！index 判断第一个元素
+  });
+}
+`
+* 方法四：利用Object的hash特性
+`function unique(arr) {
+  var seen = {};
+  arr.filter(function(item) {
+    return seen.hasOwnProperty(item) ? false : (seen[item] = true)
+  })
+} // 无法区分[1, '1']
+// 改进方法四
+function unique(arr) {
+  var res = [];
+  var hash = {};
+  for (var i = 0, len = arr.length; i < len; i++) {
+    var item = arr[i];
+    var key = typeof(item) + item; // 使用es6新增的Symbol var key = Symbol(item) 或者 JSON.stringify(item)
+    if(hash[key] !== 1){
+      res.push(item);
+      hash[key] = 1;
+    }
+  }
+  return res;
+}
+`
+* 方法五：es6新特性
+`function unique(arr) {
+  return Array.from(new Set(arr)) // return [...new Set(arr)]
+}
+`
+
