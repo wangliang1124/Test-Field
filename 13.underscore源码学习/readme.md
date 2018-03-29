@@ -14,17 +14,18 @@
   * 4. 不看源码实现各个函数
 
 
-## 1.  i++ a和 ++i 的区别
+## 1.  i++ 和 ++i 的区别
   The value i++ is the value of i before the increment. The value of ++i is the value of i after the increment.
   Example:
-    `
-      var i = 42;
-      alert(i++); // shows 42
-      alert(i); // shows 43
-      i = 42;
-      alert(++i); // shows 43
-      alert(i); // shows 43
-    `
+
+```
+  var i = 42;
+  alert(i++); // shows 42
+  alert(i); // shows 43
+  i = 42;
+  alert(++i); // shows 43
+  alert(i); // shows 43
+```
 
 ## 2. valueOf & toString
 
