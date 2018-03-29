@@ -10,18 +10,18 @@
 > https://www.cnblogs.com/owenChen/archive/2013/02/18/2915521.html
 
 * 2.解释下 JavaScript 中 this 是如何工作的。
-	+ 每个函数的this是在调用时绑定的，它的值取决于函数的调用位置
+	+ this是在函数运行时绑定的，它的值取决于函数的调用位置
 	+ 在全局环境使用this，它指的就是顶层对象window || module.exports。
 	+ 如果是被一个对象调用的，则指向这个对象
 	+ 可以通过call()或apply()强制绑定this
 	+ 使用new构造一个对象时，this指向新创建的实例对象
-	+ 箭头函数的this就是所在外部作用域的this
+	+ 箭头函数的this就是父函数所在作用域的this
 
 * 3.解释下原型继承的原理。
 	+ "继承"的说法不准确，因为JS没有父类、子类，类和实例的概念，只有对象
 	+ 继承的本质是委托，当要访问一个对象obj的属性时，会先在obj上查找,没有的话，再通过在原型链层层遍历的方式查找需要的属性
 	+ 例如函数Foo()在声明时,系统都会创建一个相应的Foo.prototype
-	+ 通过new Foo()，新的对象有个__proto__的不可枚举属性指向Foo.prototype
+	+ 通过new Foo()，会创建一个新的对象，并有个__proto__的不可枚举属性指向Foo.prototype
 	+ 这个新的对象实例可以直接调用Foo.prototype的属性（或者说所有new的实例对象都可以继承原型上的属性）
 	+ 原型链的尽头是Object.prototype
 	+ 化繁为简: Object.create()
@@ -51,6 +51,7 @@
 	+ 函数可以创建一个作用域
 	+ 在函数外部无法访问函数内部定义的变量
 	+ 如果在函数内部声明一个函数，这个函数可以访问父函数的作用域，当把这个子函数所引用的函数对象作为值返回时，这个子函数依然持有父函数作用域引用，这个引用就是闭包
+	+ 可以用在回调函数、高阶函数、立即执行函数、模块化；避免全局污染；
 
 * 8.请举出一个匿名函数的典型用例？
 	+ 作为回调var myPromise = new Promise(function(resolve, reject){ })
@@ -59,8 +60,16 @@
 	+ 函数表达式 var foo = function() {}
 
 * 9.解释"JavaScript模块模式"以及你在何时使用它。
-	+ 利用函数作用域和闭包的特点，把一些功能封装在一个命名空间下
-	+ 保持内部数据变量是隐藏且私有的状态，可以避免全局变量污染
+	+ 利用函数作用域和闭包的特点，把一些功能封装(使用立即执行函数)在一个命名空间下
+	+ 保持内部数据变量是隐藏且私有的状态：外部无法修改；可以避免全局变量污染
+
+	+ Node：CommonJS, require('module')
+	+ 浏览器：AMD（异步模块定义）require(['module1', 'module2'..], callback)
+		+ 模块实现js文件的异步加载，解决模块间的依懒性
+	+ AMD规范：使用特定的define()来定义：
+		+ define(function(){ // doSomething }) || define(['依赖模块a'..], function(){ })
+	> 详解JavaScript模块化开发 https://segmentfault.com/a/1190000000733959
+	> http://www.ruanyifeng.com/blog/2012/10/javascript_module.html
 
 * 10.你是如何组织自己的代码？是使用模块模式，还是使用经典继承的方法？
 	+ 模块模式用的比较多
