@@ -62,9 +62,8 @@
 * 9.解释"JavaScript模块模式"以及你在何时使用它。
 	+ 利用函数作用域和闭包的特点，把一些功能封装(使用立即执行函数)在一个命名空间下
 	+ 保持内部数据变量是隐藏且私有的状态：外部无法修改；可以避免全局变量污染
-
-	+ Node：CommonJS, require('module')
-	+ 浏览器：AMD（异步模块定义）require(['module1', 'module2'..], callback)
+	+ Node：CommonJS； require('module')
+	+ 浏览器：AMD（异步模块定义）；require(['module1', 'module2'..], callback)
 		+ 模块实现js文件的异步加载，解决模块间的依懒性
 	+ AMD规范：使用特定的define()来定义：
 		+ define(function(){ // doSomething }) || define(['依赖模块a'..], function(){ })
@@ -77,7 +76,8 @@
 
 * 11.请指出 JavaScript 宿主对象和原生对象的区别？
 	+ 宿主对象是指DOM和BOM等，是由宿主框架通过某种机制注册到JavaScript引擎中的对象
-	+ 原生对象是Object、Function、Array、String、Boolean、Number、Date、RegExp、Error、Math，实质上是构造函数。
+	+ 原生对象是Object、Function、Array、String、Boolean、Number、Date、RegExp、Error、JSON、Math(静态)...，大部分也是构造函数。
+	> https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 
 * 12.请指出以下代码的区别： function Person(){}, var person = Person(), and var person = new Person()?
 	+ 第一句声明了一个Person函数
@@ -90,7 +90,10 @@
 	+ call的执行效率高于apply，apply对参数进行一系列检验和深拷贝
 
 * 14.请解释 Function.prototype.bind 的作用？
-	+ 返回一个预绑定this的函数，这个函数调用时才把this绑定到预先给定的context上
+	+ 传入context,args参数
+	+ 返回一个函数，
+	+ 这个函数调用时：把this绑定到给定的context上, 把args和这个函数的arguments拼接成一个数组
+	> https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
 
 * ~~14.你能解释一下JavaScript中的继承是如何工作的吗？~~
 
@@ -99,7 +102,7 @@
 	+ AJAX的核心由JavaScript、XMLHTTPRequest、 DOM对象组成，通过XMLHTTPRequest对象向服务器发送请求，并监听响应情况，获取数据，并由js操作DOM更新页面。
 	`var xhr = new XMLHttpRequest(); // ie7+ 
 	 xhr.onreadystatechange = function() {
-			if(readyState === 4) {
+			if(xhr.readyState === 4) {
 				if((xhr.status >= 200 && xhr.stauts < 300) || xhr.status === 304) {
 					console.log(xhr.responseText);
 				} else {
@@ -110,12 +113,15 @@
 	 xhr.open('get', '/api/test', true)
 	 xhr.send(null)
 	`
-	> https://segmentfault.com/a/1190000004322487 
+	> https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started
+	> XMLHttpRequest Level 2 使用指南 http://www.ruanyifeng.com/blog/2012/09/xmlhttprequest_level_2.html
+	> https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest
+	> 你真的会使用XMLHttpRequest吗？ https://segmentfault.com/a/1190000004322487 
 
 * 16.请解释 JSONP 的工作原理，以及它为什么不是真正的 AJAX。
 	+ 动态创建script标签： var script = document.createElement('script');
 	+ 设置script元素的src属性为要请求的url, script.src = 'http://www.test.com/?callback=handleResponse';
-	+ 定义处理函数：function handleResponse(res){ console.log(res) }
+	+ 声明处理函数：function handleResponse(res){ console.log(res) }
 	+ 把scirpt元素插入页面中的某个位置： document.body.appendChild(script);
 	+ callback是约定好的查询query，服务器接收到请求后，用前端提供的函数名handlResponse，把json数据以参数的形式传入，然后返回给浏览器
 	+ 因为handlResponse已经声明过，资源下载以后会立即执行。
@@ -176,13 +182,13 @@
 	+ 同源：协议(http\https) 域名(www.baidu.com\map.baidu.com) 端口(80\81)
 	+ 出于安全的考虑，不允许源a访问源b的资源
 
+> 浏览器同源政策及其规避方法 http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html
 > 跨域CORS http://www.ruanyifeng.com/blog/2016/04/cors.html
-> http://harttle.land/2016/12/28/cors-with-cookie.html
-> https://segmentfault.com/a/1190000012469713
+> ajax跨域，这应该是最全的解决方案了 https://segmentfault.com/a/1190000012469713
 > https://stackoverflow.com/questions/11474336/same-origin-policy-in-layman-terms
 
 * 25.描述一种 JavaScript 中实现 memoization(避免重复运算)的策略。
-	
+	+ 参考underscore的memoize
 > http://taobaofed.org/blog/2016/07/14/performance-optimization-memoization/
 
 * 26.什么是三元表达式？“三元” 表示什么意思？
@@ -194,7 +200,7 @@
 	`var log = function() {
 		var args = Array.prototype.slice.call(arguments)
 		args.unshift('(app) ')
-		console.log(args)
+		// console.log(args)
 		console.log.apply(console,args)
 	}
 	log('sss')
@@ -216,7 +222,7 @@
 	+ 广告弹窗
 
 
-* 15.请指出浏览器特性检测，特性推断和浏览器 UA 字符串嗅探的区别？
+* 30.请指出浏览器特性检测，特性推断和浏览器 UA 字符串嗅探的区别？
 	+ 特性检测：
 		`if (window.XMLHttpRequest) {
 	    new XMLHttpRequest();
@@ -230,7 +236,7 @@
     //do something
 	}`
 
-* 17.使用 Ajax 都有哪些优劣？
+* 31.使用 Ajax 都有哪些优劣？
 	* 优势
 		+ 无刷新在页面与服务器通信，更新页面，用户体验好。
 		+ 异步与服务器通信，不需要打断用户的操作，具有更加迅速的响应能力。
@@ -252,17 +258,17 @@
 			if(i % 3 === 0 && i % 5 === 0) console.log(i + 'fizzbuzz')
 		}
 		`
-* Why is it, in general, a good idea to leave the global scope of a website as-is and never touch it?
+* 32.Why is it, in general, a good idea to leave the global scope of a website as-is and never touch it?
 	+ 安全，变量直接暴露在全局，任何人都可能修改
 	+ 减少名称冲突
 	+ 利于模块化
 	+ 优雅
 
-* Why would you use something like the load event? Does this event have disadvantages? Do you know any alternatives, and why would you use those?
+* 33.Why would you use something like the load event? Does this event have disadvantages? Do you know any alternatives, and why would you use those?
 	+ load event tells browser to do something only after everthing including frames, images, asynchronous JavaScripts are fully loaded.
 	+ If you want event function to execute before fully loaded frames, images, async scripts, use domcontentloaded instead.
 
-* Explain what a single page app is and how to make one SEO-friendly.
+* 34.Explain what a single page app is and how to make one SEO-friendly.
 * What is the extent of your experience with Promises and/or their polyfills?
 	`new Promise((resolve, reject) => {
 		if (resolve) {
@@ -275,15 +281,15 @@
 	})`
 	+ polyfill: bluebird
 
-* What are the pros and cons of using Promises instead of callbacks?
+* 35.What are the pros and cons of using Promises instead of callbacks?
 	+ 地狱回掉
 	+ 信任
 	+ 错误处理
 
-* What tools and techniques do you use debugging JavaScript code?
+* 36.What tools and techniques do you use debugging JavaScript code?
 	+	Chrome Dev Tools.
 
-* What language constructions do you use for iterating over object properties and array items?
+* 37.What language constructions do you use for iterating over object properties and array items?
 	+ Array
 		+ for
 		+ forEach
@@ -291,7 +297,7 @@
 		+ for(var key in obj) { if(obj.hasOwnProperty(key)){ // 过滤不可枚举属性 } } 
 		+ Object.keys(obj).forEach
 
-* Explain the difference between mutable and immutable objects.
+* 38.Explain the difference between mutable and immutable objects.
 	* What is an example of an immutable object in JavaScript?
 	* What are the pros and cons of immutability?
 	* How can you achieve immutability in your own code?
@@ -309,7 +315,7 @@
 > facebook immutable.js 意义何在，使用场景？ https://www.zhihu.com/question/28016223
 
 
-* Explain the difference between synchronous and asynchronous functions.
+* 39.Explain the difference between synchronous and asynchronous functions.
 	+ 同步是阻塞的，异步是非阻塞的
 		`function blocking(){
 	    console.log("1");
@@ -325,7 +331,7 @@
 > https://stackoverflow.com/questions/748175/asynchronous-vs-synchronous-execution-what-does-it-really-mean
 
 
-* What is event loop? What is the difference between call stack and task queue?
+* 40.What is event loop? What is the difference between call stack and task queue?
 
 > Event loop is how JavaScript with single-threaded performs tasks without blocking.
 
@@ -337,19 +343,19 @@
 
 > JavaScript 运行机制详解：再谈Event Loop  http://www.ruanyifeng.com/blog/2014/10/event-loop.html
 
-* Explain the differences on the usage of foo between function foo() {} and var foo = function() {}
+* 41.Explain the differences on the usage of foo between function foo() {} and var foo = function() {}
 	+ 函数声明 和 函数表达式	
 
-* What are the differences between variables created using let, var or const?
+* 42.What are the differences between variables created using let, var or const?
 	+ var、let、const 区别？ https://www.jianshu.com/p/4e9cd99ecbf5
 
-+ 箭头函数，解构赋值，字符串模版，扩展符
++ 43.箭头函数，解构赋值，字符串模版，扩展符
 
-* What is the definition of a higher-order function?
+* 44.What is the definition of a higher-order function?
 
 >  JavaScript高阶函数的应用 https://segmentfault.com/a/1190000012008266
 
-* Can you give an example of a curry function and why this syntax offers an advantage?
+* 45.Can you give an example of a curry function and why this syntax offers an advantage?
 
  > JavaScript专题之函数柯里化 https://github.com/mqyqingfeng/Blog/issues/42
 

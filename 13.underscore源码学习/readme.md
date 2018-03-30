@@ -280,3 +280,16 @@ function unique(arr) {
 }
 `
 
+## 9. 数组乱序
+`function shuffle(arr) {
+  var b = []
+  while(arr.length) {
+    var index = Math.floor(Math.random() * arr.length)
+    b.push(arr[index])
+    arr.splice(index, 1)
+  }
+  return b
+}
+`
+Fisher–Yates Shuffle : 遍历数组，将每个元素与一个随机元素交换位置。
+
