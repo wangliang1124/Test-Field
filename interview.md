@@ -170,7 +170,7 @@
 			var q = queryString.substring(1).split('&')
 			if(q == '') return {};
 			var result = {};
-			for(var i = 0; i < q.length; i++) {
+			for(var i = 0 ; i < q.length; i++) {
 				var arr = q[i].split('=');
 				result[arr[0]] = arr[1] ? decodeURIComponent(arr[1].replace(/\+/g, ' ')) : '';
 			}
@@ -209,7 +209,7 @@
 * 28.什么是 "use strict"? 使用它的好处和坏处分别是什么？
 	+ 将使 JS 代码以严格模式（strict mode）运行。使用了较为严格的错误检测条件检测。
 	+ 消除JavaScript语法的不合理不严谨的地方，减少怪异行为
-	+ 消除代码代码运行的不安全之处： eval中不允许声明变量； this始终是指定的值，func.call(null)全局下this转换为window
+	+ 消除代码运行的不安全之处： eval中不允许声明变量； this始终是指定的值，func.call(null)全局下this转换为window
 	+ 提高编译效率
 	+ 为未来的新版本做铺垫： 淘汰了with arguments.caller arguments.callee
 	+ 坏处： 估计写代码没那么随意了
@@ -238,20 +238,14 @@
 
 * 31.使用 Ajax 都有哪些优劣？
 	* 优势
-		+ 无刷新在页面与服务器通信，更新页面，用户体验好。
-		+ 异步与服务器通信，不需要打断用户的操作，具有更加迅速的响应能力。
-		+ 前端和后端负载平衡。可以把以前一些服务器负担的工作转嫁到客户端，利用客户端闲置的能力来处理，减轻服务器和带宽的负担，节约空间和宽带租用成本。并且减轻服务器的负担，ajax的原则是“按需取数据”，可以最大程度的减少冗余请求，和响应对服务器造成的负担。
-		+ 界面与应用分离
-		+ Ajax使WEB中的界面与应用分离（也可以说是数据与呈现分离），有利于分工合作、减少非技术人员对页面的修改造成的WEB应用程序错误、提高效率、也更加适用于现在的发布系统。
-		+ 基于标准化的并被广泛支持的技术，不需要下载插件或者小程序。
+		+ 异步通信，不需要打断用户的操作，具有更加迅速的响应能力。
+		+ ajax的原则是“按需取数据”，可以最大程度的减少冗余请求，和响应对服务器造成的负担。
 	* 缺点：
 		+ AJAX干掉了Back和History功能，即对浏览器机制的破坏。
-		+ AJAX的安全问题
-		+ Ajax技术就如同对企业数据建立了一个直接通道，这使得开发者在不经意间会暴露比以前更多的数据和服务器逻辑。Ajax也难以避免一些已知的安全弱点，诸如跨站点脚步攻击、SQL注入攻击和基于Credentials的安全漏洞等等
 		+ 对搜索引擎支持较弱。
-		+ 客户端过肥，太多客户端代码造成开发上的成本。
 		+ 违背URL和资源定位的初衷,采用了Ajax技术，也许你在该URL地址下面看到的和我在这个URL地址下看到的内容是不同的。
-* 请实现一个遍历至 100 的 for loop 循环，在能被 3 整除时输出 "fizz"，在能被 5 整除时输出 "buzz"，在能同时被 3 和 5 整除时输出 "fizzbuzz"。
+
+* 31. 请实现一个遍历至 100 的 for loop 循环，在能被 3 整除时输出 "fizz"，在能被 5 整除时输出 "buzz"，在能同时被 3 和 5 整除时输出 "fizzbuzz"。
 		`for(var i = 0; i <= 100; i++) {
 			if(i % 3 === 0) console.log( i + 'fizz')
 			if(i % 5 === 0) console.log(i + 'buzz')
@@ -266,10 +260,14 @@
 
 * 33.Why would you use something like the load event? Does this event have disadvantages? Do you know any alternatives, and why would you use those?
 	+ load event tells browser to do something only after everthing including frames, images, asynchronous JavaScripts are fully loaded.
-	+ If you want event function to execute before fully loaded frames, images, async scripts, use domcontentloaded instead.
+	+ If you want event function to execute before fully loaded frames, images, async scripts, use DOMContentLoaded instead.
 
 * 34.Explain what a single page app is and how to make one SEO-friendly.
-* What is the extent of your experience with Promises and/or their polyfills?
+	+ 所有的页面都在一个主页面上呈现；不用刷新整个页面
+	+ 服务器渲染
+	> https://cn.vuejs.org/v2/guide/ssr.html
+
+* 35. What is the extent of your experience with Promises and/or their polyfills?
 	`new Promise((resolve, reject) => {
 		if (resolve) {
 			resolve('success')；
@@ -280,6 +278,8 @@
 			console.log(result)
 	})`
 	+ polyfill: bluebird
+ 	> https://developers.google.com/web/fundamentals/primers/promises
+ 	> https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
 * 35.What are the pros and cons of using Promises instead of callbacks?
 	+ 地狱回掉
@@ -339,8 +339,9 @@
 
 > The difference between call stack and task queue is that task queue is a place where JavaScrip schedules async function while call stack is a place for JavaScript to trace what the current function is.
 
-> 什么是 Event Loop？ http://www.ruanyifeng.com/blog/2013/10/event_loop.html
-
+> https://segmentfault.com/a/1190000004322358
+> https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop
+> https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4
 > JavaScript 运行机制详解：再谈Event Loop  http://www.ruanyifeng.com/blog/2014/10/event-loop.html
 
 * 41.Explain the differences on the usage of foo between function foo() {} and var foo = function() {}
@@ -352,7 +353,7 @@
 + 43.箭头函数，解构赋值，字符串模版，扩展符
 
 * 44.What is the definition of a higher-order function?
-
+ + 《JavaScript设计模式与开发实践》3.2 高阶函数
 >  JavaScript高阶函数的应用 https://segmentfault.com/a/1190000012008266
 
 * 45.Can you give an example of a curry function and why this syntax offers an advantage?
@@ -369,55 +370,12 @@ http://andrewyan.logdown.com/posts/643979-front-end-job-interview-questions
 
 > http://www.cnblogs.com/coco1s/p/4029708.html
 
-## 5个典型的JavaScript面试题 √
-* 问题1：作用域: `(function() { var a = b = 5;})(); console.log(b);`, 请问控制台上会输出什么？
-	+ 5
-* 问题2：创建"内置"方法: 给String对象定义一个repeatify方法。该方法接收一个整数参数，作为字符串重复的次数，最后返回重复指定次数的字符串。
-	例如：`console.log('hello'.repeatify(3));` 输出应该是 `hellohellohello`
-	* 答：
-	`String.prototype.repeatify = String.prototype.repeatify || function(times) {
-		var str = '';
-		var times = + times
-		console.log(typeof times)
-		for(var i = 0; i < times; i++) {
-			str += this;
-		}
-		return str;
-	}
-	console.log('hello'.repeatify('3'));
-	`
-
-* 问题3：下面这段代码的结果是什么？为什么？
-	`function test() { console.log(a); console.log(foo()); var a = 1; function foo() { return 2;} }; test();`
-	+ 答： undefined, 2
-
-* 问题4：JavaScript中的this: 下面代码的运行结果是什么并做解释。?
-		`var fullname = 'John Doe';
-		var obj = {
-			fullname: 'Colin Ihrig',
-			prop: {
-				fullname: 'Aurelio De Rosa',
-				getFullname: function() {
-					return this.fullname;
-				}
-			}
-		};
-		console.log(obj.prop.getFullname());
-		var test = obj.prop.getFullname;
-		console.log(test());`
-	+ 答： 'Aurelio De Rosa', 'John Doe'
-
-* 问题5：修复前一个问题，让最后一个console.log() 打印输出'Aurelio De Rosa'.
-	+ 答： console.log(test.call(obj.prop))
-
-> http://web.jobbole.com/80564/
-
-## 再来5个JavaScript面试题
-> http://web.jobbole.com/81785/
+## 20道典型的JavaScript面试题 
+> https://segmentfault.com/a/1190000012362241
 
 ## 25个最基本的 JavaScript 面试问题及答案
-> http://web.jobbole.com/92323/?utm_source=blog.jobbole.com&utm_medium=relatedPosts
-
+> http://www.codeceo.com/25-essential-javascript-interview-questions.html
+> https://www.toptal.com/javascript/interview-questions
 ## 代码题 √
 
 * 1.问题：下面语句的返回值是什么？
