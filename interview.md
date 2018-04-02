@@ -190,7 +190,7 @@
 * 25.描述一种 JavaScript 中实现 memoization(避免重复运算)的策略。
 	+ 参考underscore的memoize
 > http://taobaofed.org/blog/2016/07/14/performance-optimization-memoization/
-
+> https://addyosmani.com/blog/faster-javascript-memoization/
 * 26.什么是三元表达式？“三元” 表示什么意思？
 	+ condition ? expr1 : expr2
 	+ 如果条件值为真值（true），运算符就会返回 expr1 的值；否则， 就会返回 expr2 的值
@@ -378,46 +378,26 @@ http://andrewyan.logdown.com/posts/643979-front-end-job-interview-questions
 > https://www.toptal.com/javascript/interview-questions
 ## 代码题 √
 
-* 1.问题：下面语句的返回值是什么？
-`~~3.14`
-> 答案：3
 
-* 2.问题：下面的语句的返回值是什么？
-`"i'm a lasagna hog".split("").reverse().join("");`
-> 答案："goh angasal a m'i"
+## Coding Questions 
+>https://github.com/utatti/Front-end-Developer-Interview-Questions-And-Answers/blob/master/answers/coding-questions.md
 
-* 3.问题：window.foo 的值是什么？
-`( window.foo || ( window.foo = "bar" ) );`
-> 答案："bar" 只有 window.foo 为假时的才是上面答案，否则就是它本身的值。
-
-* 4.问题：下面两个 alert 的结果是什么?
-`var foo = "Hello"; 
-(function() { 
-  var bar = " World";
-  alert(foo + bar);
-})();
-alert(foo + bar);`
-> 答案: "Hello World" 和 ReferenceError: bar is not defined
-
-* 5.问题：foo.length 的值是什么?
-`var foo = [];
-foo.push(1);
-foo.push(2);`
-> 答案：2
-
-* 6.问题：foo.length 的值是什么？
-`var foo = {};
-foo.bar = 'hello';`
-> 答案: undefined
-
-## 一些JS题目的解答(考察作用域和变量提升、this指向) √
+## 一些JS题目的解答(考察作用域和变量提升、this指向)
 > https://github.com/xufei/blog/blob/master/posts/2013-12-02-%E4%B8%80%E4%BA%9BJS%E9%A2%98%E7%9B%AE%E7%9A%84%E8%A7%A3%E7%AD%94.md
 
 ## 前端开发面试题
-> 前端开发面试题 https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers
-> 史上最全 前端开发面试问题及答案整理 https://github.com/allenGKC/Front-end-Interview-questions
-> 收集的前端面试题和答案 https://github.com/qiu-deqing/FE-interview
-> 前端开发面试题 https://segmentfault.com/a/1190000000465431
+> Front-end-Developer-Interview-Questions https://github.com/h5bp/Front-end-Developer-Interview-Questions
+> 前端开发面试题 https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers √
+> front-end-face-questions https://github.com/dolymood/front-end-face-questions √
+> 收集的前端面试题和答案 https://github.com/qiu-deqing/FE-interview  √
+> 我遇到的前端面试题2017 https://segmentfault.com/a/1190000011091907
+> 前端笔试题面试题记录（上）https://segmentfault.com/a/1190000013819539
+> 12个HTML和CSS必须知道的重点难点问题 https://segmentfault.com/a/1190000013375700
+> 面试前端工程师 https://github.com/paddingme/Front-end-Web-Development-Interview-Question/blob/master/interview/1.md
+> 2018年蚂蚁金服前端一面总结（面向2019届学生） https://segmentfault.com/a/1190000013591751
+
+## 2017-08面试总结 
+> https://github.com/sunyongjian/blog/issues/32
 
 ## ele面试 JavaScript 基础问题
 > https://github.com/ElemeFE/node-interview/blob/master/sections/zh-cn/common.md
@@ -433,12 +413,6 @@ foo.bar = 'hello';`
 ## 理解RESTful架构
 > http://www.ruanyifeng.com/blog/2011/09/restful.html
 
-## 面试前端工程师
-> https://github.com/paddingme/Front-end-Web-Development-Interview-Question/blob/master/interview/1.md
-
-## 2017-08面试总结 
-> https://github.com/sunyongjian/blog/issues/32
-
 ## 十大经典排序算法总结（JavaScript描述） 
 >  学习JavaScript数据结构与算法
 >  https://juejin.im/post/57dcd394a22b9d00610c5ec8
@@ -451,21 +425,35 @@ foo.bar = 'hello';`
 ## FEX 面试问题 
 > https://github.com/fex-team/interview-questions
 
-## 我遇到的前端面试题2017 
-> https://segmentfault.com/a/1190000011091907
 ## 从输入URL到页面加载发生了什么？ 
 > https://segmentfault.com/a/1190000006879700
+
 ## 更快更安全，HTTPS 优化总结 
 > https://segmentfault.com/a/1190000013380916
+
 ## 12个HTML和CSS必须知道的重点难点问题 
 > https://segmentfault.com/a/1190000013375700
+
 ## 50道CSS基础面试题（附答案） 
 > https://segmentfault.com/a/1190000013325778
+
 ## 面试的信心来源于过硬的基础  
 > https://segmentfault.com/a/1190000013331105
+
 ## 实现一个算法，寻找字符串中出现次数最少的、并且首次出现位置最前的字符。 
 > https://segmentfault.com/q/1010000008703575
+
 ## ajax跨域，这应该是最全的解决方案了 
 > https://segmentfault.com/a/1190000012469713
+
 ## 偶尔发现的一个技术博客
 > https://github.com/isLishude/blog/labels/%E5%89%8D%E7%AB%AF
+
+## 如何不择手段提升scroll事件的性能
+> https://github.com/escawn/blog/issues/5
+
+## 浏览器渲染详细过程：重绘、重排和composite只是冰山一角
+> https://chuckliu.me/#!/posts/58ea6af15dc1822fa9a57274
+
+## 从event loop规范探究javaScript异步及浏览器更新渲染时机
+> https://github.com/aooy/blog/issues/5
