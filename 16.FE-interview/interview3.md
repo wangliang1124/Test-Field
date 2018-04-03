@@ -304,7 +304,7 @@ Content-Type: text/html; charset=iso-8859-1
 ### 如何进行网站性能优化
 
 [雅虎Best Practices for Speeding Up Your Web Site](https://developer.yahoo.com/performance/rules.html)：
-
+> 雅虎前端优化35条规则翻译 https://github.com/creeperyang/blog/issues/1
 - content方面
     1. 减少HTTP请求：合并文件、CSS精灵、inline Image
     2. 减少DNS查询：DNS查询完成之前浏览器不能从这个主机下载任何任何文件。方法：DNS缓存、将资源分布到恰当数量的主机名，平衡并行下载和DNS查询
