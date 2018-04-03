@@ -386,6 +386,7 @@ http://andrewyan.logdown.com/posts/643979-front-end-job-interview-questions
 > https://github.com/xufei/blog/blob/master/posts/2013-12-02-%E4%B8%80%E4%BA%9BJS%E9%A2%98%E7%9B%AE%E7%9A%84%E8%A7%A3%E7%AD%94.md
 
 ## 前端开发面试题
+
 > Front-end-Developer-Interview-Questions https://github.com/h5bp/Front-end-Developer-Interview-Questions
 > 前端开发面试题 https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers √
 > front-end-face-questions https://github.com/dolymood/front-end-face-questions √
@@ -457,3 +458,6 @@ http://andrewyan.logdown.com/posts/643979-front-end-job-interview-questions
 
 ## 从event loop规范探究javaScript异步及浏览器更新渲染时机
 > https://github.com/aooy/blog/issues/5
+
+## 斐波那契数列求和的js方案以及优化
+> https://segmentfault.com/a/1190000007115162
