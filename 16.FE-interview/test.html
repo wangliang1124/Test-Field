@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    .outer {
+      display: inline-table;
+      float: left;
+      background: #ccc
+    }
+  </style>
+</head>
+<body>
+  <!--[if IE 6]>
+    <div>Special instructions for IE 6 here</div>
+  <![endif]-->
+  <!-->
+    <div>非IE</div>
+  <!-->
+  <!-- <script> -->
+    <div class="outer">
+      测试
+    </div>
+  </script>
+  <div id="target"><span>test</span></div>
+
+  <script type="text/javascript">
+  var target = document.getElementById('target');
+  if (target.addEventListener) {
+    target.addEventListener('mouseout', mouseoutHandler, false);
+  } else if (target.attachEvent) {
+    target.attachEvent('onmouseout', mouseoutHandler);
+  }
+
+  function mouseoutHandler(e) {
+    e = e || window.event;
+    var target = e.target || e.srcElement;
+
+    // 判断移出鼠标的元素是否为目标元素
+    if (target.id !== 'target') {
+      return;
+    }
+
+    // 判断鼠标是移出元素还是移到子元素
+    var relatedTarget = event.relatedTarget || e.toElement;
+    while (relatedTarget !== target
+      && relatedTarget.nodeName.toUpperCase() !== 'BODY') {
+      relatedTarget = relatedTarget.parentNode;
+    }
+
+    // 如果相等，说明鼠标在元素内部移动
+    if (relatedTarget === target) {
+      return;
+    }
+
+    // 执行需要操作
+    //alert('鼠标移出');
+
+  }
+  </script>
+</body>
+</html>
