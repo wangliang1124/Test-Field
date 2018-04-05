@@ -9,9 +9,21 @@
       float: left;
       background: #ccc
     }
+    #demo {
+      width: 0;
+      height: 0;
+      border-width: 100px;
+      border-style: solid;
+      border-color: transparent transparent red transparent;
+    }
   </style>
+  <script> 
+    console.log(1)
+    document.write("<h1>Main title</h1>") 
+  </script>
 </head>
 <body>
+
   <!--[if IE 6]>
     <div>Special instructions for IE 6 here</div>
   <![endif]-->
@@ -23,9 +35,10 @@
       测试
     </div>
   </script>
+  <div id="demo"></div>
   <div id="target"><span>test</span></div>
 
-  <script type="text/javascript">
+<!-- <script type="text/javascript">
   var target = document.getElementById('target');
   if (target.addEventListener) {
     target.addEventListener('mouseout', mouseoutHandler, false);
@@ -58,6 +71,26 @@
     //alert('鼠标移出');
 
   }
+</script> -->
+<script>
+  document.addEventListener("DOMContentLoaded", function(event) {
+    console.log("DOM fully loaded and parsed");
+  });
+</script>
+  <script>
+  document.write([
+    '<script src="1.js"><\/script>',
+    '<script src="2.js"><\/script>',
+    '<script src="3.js"><\/script>',
+    '<script src="4.js"><\/script>',
+    '<script src="5.js"><\/script>',
+    '<script src="6.js"><\/script>'
+  ].join('\n'));
   </script>
+<!--   <script> 
+    document.addEventListener('DOMContentLoaded', function() {
+      document.write('<h1>Title</h1>')
+    })
+  </script> -->
 </body>
 </html>

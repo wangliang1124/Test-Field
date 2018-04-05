@@ -1,6 +1,14 @@
-## 各大互联网公司2014前端笔试面试题–JavaScript篇
-
+## BAT及各大互联网公司2014前端笔试面试题--JavaScript篇
 > http://www.cnblogs.com/coco1s/p/4029708.html
+
+## BAT及各大互联网公司2014前端笔试面试题--Html,Css篇
+> http://www.cnblogs.com/coco1s/p/4034937.html
+
+## 我遇到的前端面试题2017 
+> https://segmentfault.com/a/1190000011091907
+
+## 前端笔试题面试题记录（上）
+> https://segmentfault.com/a/1190000013819539
 
 ## 20道典型的JavaScript面试题 
 > https://segmentfault.com/a/1190000012362241
@@ -24,11 +32,13 @@
 > 前端开发面试题 https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers √
 > front-end-face-questions https://github.com/dolymood/front-end-face-questions √
 > 收集的前端面试题和答案 https://github.com/qiu-deqing/FE-interview  √
-> 我遇到的前端面试题2017 https://segmentfault.com/a/1190000011091907
-> 前端笔试题面试题记录（上）https://segmentfault.com/a/1190000013819539
-> 12个HTML和CSS必须知道的重点难点问题 https://segmentfault.com/a/1190000013375700
-> 面试前端工程师 https://github.com/paddingme/Front-end-Web-Development-Interview-Question/blob/master/interview/1.md
-> 2018年蚂蚁金服前端一面总结（面向2019届学生） https://segmentfault.com/a/1190000013591751
+
+## 12个HTML和CSS必须知道的重点难点问题 
+> https://segmentfault.com/a/1190000013375700
+## 面试前端工程师 
+> https://github.com/paddingme/Front-end-Web-Development-Interview-Question/blob/master/interview/1.md
+## 2018年蚂蚁金服前端一面总结（面向2019届学生）
+> https://segmentfault.com/a/1190000013591751
 
 ## 2017-08面试总结 
 > https://github.com/sunyongjian/blog/issues/32
@@ -94,3 +104,8 @@
 
 ## 斐波那契数列求和的js方案以及优化
 > https://segmentfault.com/a/1190000007115162
+
+## 浏览器工作原理
+> How browsers work http://taligarsiel.com/Projects/howbrowserswork1.htm  https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/
+
+## 航旅无线前端团队必备技能 https://github.com/jayli/jayli.github.com/issues/16
