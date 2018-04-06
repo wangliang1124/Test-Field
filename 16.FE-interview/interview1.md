@@ -178,7 +178,7 @@
     })(window.location.search)
   `
 
-* 24.请解释一下 JavaScript 的同源策略。
+* 24.请解释一下 JavaScript 的同源策略。如何解决跨域问题? 
   + 同源：协议(http\https) 域名(www.baidu.com\map.baidu.com) 端口(80\81)
   + 出于安全的考虑，不允许源a访问源b的资源
 
@@ -209,6 +209,7 @@
 * 28.什么是 "use strict"? 使用它的好处和坏处分别是什么？
   + 将使 JS 代码以严格模式（strict mode）运行。使用了较为严格的错误检测条件检测。
   + 消除JavaScript语法的不合理不严谨的地方，减少怪异行为
+  + 全局变量的显示声明,函数必须声明在顶层
   + 消除代码运行的不安全之处： eval中不允许声明变量； this始终是指定的值，func.call(null)全局下this转换为window
   + 提高编译效率
   + 为未来的新版本做铺垫： 淘汰了with arguments.caller arguments.callee

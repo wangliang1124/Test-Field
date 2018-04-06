@@ -371,94 +371,306 @@
 	* 多数显示器默认频率是60Hz，即1秒刷新60次，所以理论上最小间隔为1/60＊1000ms ＝ 16.7ms
 
 ## 43.display:inline-block 什么时候会显示间隙？(携程)
+	* 有空格时候会有间隙 解决：移除空格
+	* margin正值的时候 解决：margin使用负值
+	* 使用font-size时候 解决：font-size:0、letter-spacing、word-spacing
+
 ## 44.overflow: scroll时不能平滑滚动的问题怎么处理？
+	`-webkit-overflow-scrolling: touch;`
+
 ## 45.有一个高度自适应的div，里面有两个div，一个高度100px，希望另一个填满剩下的高度。
+	* 外层div使用position：relative；高度要求自适应的div使用position: absolute; top: 100px; bottom: 0; left: 0
+
 ## 46.png、jpg、gif 这些图片格式解释一下，分别什么时候用。有没有了解过webp？
-## 47.什么是Cookie 隔离？（或者说：请求资源的时候不要让它带cookie怎么做）
+* png是便携式网络图片（Portable Network Graphics）是一种无损数据压缩位图文件格式.优点是：压缩比高，色彩好。 大多数地方都可以用。
+* jpg是一种针对相片使用的一种失真压缩方法，是一种破坏性的压缩，在色调及颜色平滑变化做的不错。在www上，被用来储存和传输照片的格式。
+* gif是一种位图文件格式，以8位色重现真色彩的图像。可以实现动画效果.
+* webp格式是谷歌在2010年推出的图片格式，压缩率只有jpg的2/3，大小比png小了45%。缺点是压缩的时间更久了，兼容性不好，目前谷歌和opera支持。
+参考资料： [选择正确的图片格式](http://www.yuiblog.com/blog/2008/11/04/imageopt-2/) https://www.jianshu.com/p/261cd13757ce
+
+## 47.什么是Cookie隔离？（或者说：请求资源的时候不要让它带cookie怎么做）
+	* cookie隔离技术则是通过使用多个非主要域名来请求静态文件，如果静态文件都放在主域名下，那静态文件请求的时候带有的cookie的数据提交给server是非常浪费的，还不如隔离开。
+	* 因为cookie有域的限制，因此不能跨域提交请求，故使用非主要域名的时候，请求头中就不会带有cookie数据，
+	这样可以降低请求头的大小，降低请求时间，从而达到降低整体请求延时的目的。
+	* 同时这种方式不会将cookie传入Web Server，也减少了Web Server对cookie的处理分析环节，
+	提高了webserver的http请求的解析速度。
+
 ## 48.style标签写在body后与body前有什么区别？
+* 页面加载自上而下 当然是先加载样式。
+* 写在body标签后由于浏览器以逐行方式对HTML文档进行解析，当解析到写在尾部的样式表（外联或写在style标签）会导致浏览器停止之前的渲染，等待加载且解析样式表完成之后重新渲染，在windows的IE下可能会出现FOUC现象（即样式失效导致的页面闪烁问题）
+
 ## 49.什么是CSS 预处理器 / 后处理器？
+  * - 预处理器例如：LESS、Sass、Stylus，用来预编译Sass或less，增强了css代码的复用性，
+    还有层级、mixin、变量、循环、函数等，具有很方便的UI组件模块化开发能力，极大的提高工作效率。
+  * - 后处理器例如：PostCSS，通常被视为在完成的样式表中根据CSS规范处理CSS，让其更有效；目前最常做的
+    是给CSS属性添加浏览器私有前缀，实现跨浏览器兼容性的问题。
+
 ## 50.rem布局的优缺点
+> 总结个人使用过的移动端布局方法 https://segmentfault.com/a/1190000010211016#articleHeader10
+
 ## 51.实现不使用 border 画出1px高的线，在不同浏览器的标准模式与怪异模式下都能保持一致的效果。
+	`<div style="height:1px;overflow:hidden;background:red"></div>`
+
 ## 52.如何在页面上实现一个圆形的可点击区域？
-## 6.解释下浮动和它的工作原理？清除浮动的技巧
-## 7.浮动元素引起的问题和解决办法？
-## 8.DOM操作——怎样添加、移除、移动、复制、创建和查找节点。
-## 13. 你如何对网站的文件和资源进行优化？
+`<div id="red" class="click-area" ></div>
+	#red{  
+	 cursor:pointer;
+	 background:red;  
+	 width:100px;  
+	 height:100px;  
+	 border-radius:50%;  
+	} `
+
 ## 14. 请说出三种减少页面加载时间的方法。
+> https://blog.csdn.net/xujie_0311/article/details/42421547
+
 ## 15.什么是 FOUC（无样式内容闪烁）？你如何来避免 FOUC？
+原因大致为： 1，使用import方法导入样式表。 2，将样式表放在页面底部 3，有几个样式表，放在html结构的不同位置。
+
+其实原理很清楚：当样式表晚于结构性html加载，当加载到此样式表时，页面将停止之前的渲染。此样式表被下载和解析后，将重新渲染页面，也就出现了短暂的花屏现象。
+
+解决方法： 使用LINK标签将样式表放在文档HEAD中。
 ## 17.行内元素有哪些？块级元素有哪些？ 空(void)元素有那些？
+行内元素：a、b、span、img、input、strong、select、label、em、button、textarea
+块级元素：div、ul、li、dl、dt、dd、p、h1-h6、blockquote
+空元素：即系没有内容的HTML元素，例如：br、meta、hr、link、input、img
 ## 18.页面导入样式时，使用link和@import有什么区别？
+1 老祖宗的差别。link属于XHTML标签，而@import完全是CSS提供的一种方式。
+
+link标签除了可以加载CSS外，还可以做很多其它的事情，比如定义RSS，定义rel连接属性等，@import就只能加载CSS了。
+
+2 加载顺序的差别。当一个页面被加载的时候（就是被浏览者浏览的时候），link引用的CSS会同时被加载，而@import引用的CSS会等到页面全部被下载完再被加载。所以有时候浏览@import加载CSS的页面时开始会没有样式（就是闪烁），网速慢的时候还挺明显.
+
+3 兼容性的差别。由于@import是CSS2.1提出的所以老的浏览器不支持，@import只有在IE5以上的才能识别，而link标签无此问题。
+
+4 使用dom控制样式时的差别。当使用javascript控制dom去改变样式的时候，只能使用link标签，因为@import不是dom可以控制的。
 ## 27.title与h1的区别、b与strong的区别、i与em的区别？
+1、title是网站header部分的内容是网站的标题，而h表示body内的标题、
+
+2、但从视觉上效果观看b与strong、i与em是没有区别的，唯一区别是搜索引擎检索的时候搜索引擎可以识别strong、em标签、而不能识别b与i标签
+> https://blog.csdn.net/WKY_CSDN/article/details/75315240
 
 ## 12个HTML和CSS必须知道的重点难点问题 https://segmentfault.com/a/1190000013375700#articleHeader1
 ## 12个你未必知道的CSS小知识 https://segmentfault.com/a/1190000002528855#articleHeader4
+## 移动端CSS书写注意事项 https://github.com/cssdream/css-creating/issues/8 https://segmentfault.com/a/1190000007574023 http://am-team.github.io/amg/dev-exp-doc.html
+
 # JS
 ## 1.介绍js的基本数据类型。
+	* Boolean,Null,Undefined,Number,String,Symbol (ECMAScript 6 新定义)
 ## 2.介绍js有哪些内置对象？
+	*  Object 是 JavaScript 中所有对象的父对象
+	* 数据封装类对象：Object、Array、Boolean、Number 和 String
+ 	* 其他对象：Function、Arguments、Math、Date、RegExp、Error
+> https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 ## 3.说几条写JavaScript的基本规范？
-## 4.JavaScript原型、原型链有什么特点？
+	* 使用===/！==比较true/false或数值
+	* 使用字面量代替new
+	* 不要使用全局函数
+	* for/if/while使用大括号
+	* 变量先声明再使用
+	* 变量命名以小写字母开头
+
 ## 5.JavaScript有几种类型的值？，你能画一下他们的内存图吗？
+	* 栈：原始数据类型（Undefined，Null，Boolean，Number、String）
+	* 堆：引用数据类型（对象、数组和函数）
+	* 两种类型的区别是：存储位置不同；
+	* 原始数据类型直接存储在栈(stack)中的简单数据段，占据空间小、大小固定，属于被频繁使用数据，所以放入栈中存储.
+	* 引用数据类型存储在堆(heap)中的对象,占据空间大、大小不固定,如果存储在栈中，将会影响程序运行的性能；引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址。当解释器寻找引用值时，会首先检索其在栈中的地址，取得地址后从堆中获得实体
+
 ## 6.如何将字符串转化为数字，例如'12.3b'?
+	* parseFloat('12.3b',10)
+
 ## 7.如何将浮点数点左边的数每三位添加一个逗号，如12000000.11转化为『12,000,000.11』?
+`function commafy(num){
+  	return num && num
+  		.toString()
+  		.replace(/(\d)(?=(\d{3})+\.)/g, function($1, $2){
+  			return $2 + ',';
+  		});
+  }`
+  > 千位分隔符的完整攻略 https://www.tuicool.com/articles/ArQZfui
 ## 8.如何实现数组的随机排序？
-## 9.Javascript如何实现继承？
-## 10.JavaScript继承的几种实现方式？
+	* 数组乱序 https://github.com/hanzichi/underscore-analysis/issues/15
+
+## 9.Javascript如何实现继承？10.JavaScript继承的几种实现方式？
+ * JS继承的实现方式 http://www.cnblogs.com/humin/p/4556820.html
+
 ## 11.javascript创建对象的几种方式？
+*	1、对象字面量的方式
+ 	`person={firstname:"Mark",lastname:"Yun",age:25,eyecolor:"black"};`
+* 2、用function来模拟无参的构造函数
+ 	`function Person(){}
+ 	var person=new Person();//定义一个function，如果使用new"实例化",该function可以看作是一个Class
+ 	person.name="Mark";
+ 	person.age="25";
+ 	person.work=function(){
+ 		alert(person.name+" hello...");
+ 	}
+ 	person.work();`
+ * 3、用function来模拟参构造函数来实现（用this关键字定义构造的上下文属性）
+ 	`function Pet(name,age,hobby){
+ 	   this.name=name;//this作用域：当前对象
+ 	   this.age=age;
+ 	   this.hobby=hobby;
+ 	   this.eat=function(){
+ 	      alert("我叫"+this.name+",我喜欢"+this.hobby+",是个程序员");
+ 	   }
+ 	}
+ 	var maidou =new Pet("麦兜",25,"coding");//实例化、创建对象
+ 	maidou.eat();//调用eat方法`
+ * 4、用工厂方式来创建（内置对象）
+ 	 `var wcDog =new Object();
+ 	 wcDog.name="旺财";
+ 	 wcDog.age=3;
+ 	 wcDog.work=function(){
+ 	   alert("我是"+wcDog.name+",汪汪汪......");
+ 	 }
+ 	 wcDog.work();`
+ * 5、用原型方式来创建
+ 	`function Dog(){ }
+ 	 Dog.prototype.name="旺财";
+ 	 Dog.prototype.eat=function(){
+ 	 	alert(this.name+"是个吃货");
+ 	 }
+ 	 var wangcai =new Dog();
+ 	 wangcai.eat();`
+ * 6、用混合方式来创建
+ 	`function Car(name,price){
+ 	  this.name=name;
+ 	  this.price=price;
+ 	}
+ 	 Car.prototype.sell=function(){
+ 	   alert("我是"+this.name+"，我现在卖"+this.price+"万元");
+ 	  }
+ 	var camry =new Car("凯美瑞",27);
+ 	camry.sell(); `
+
 ## 12.Javascript作用链域?
-## 13.谈谈This对象的理解。
+	* 函数创建时会建立一个预先包含全局变量对象的作用域链（保存在[[scope]]属性中），当函数被调用时，会创建一个当前活动变量和包含环境变量对象的集合，这就是执行环境的作用域链，它的开始是当前的活动对象，然后是包含环境中的变量对象，直到全局环境。（标识符所在的位置越深，访问速度越慢，因此尽量少使用全局变量。） 
 ## 14.eval是做什么的？
+* 把字符串解析成JS代码并运行；
+
 ## 15.什么是window对象? 什么是document对象?
-## 16.null，undefined 的区别？
+ * window对象--代表浏览器中的一个打开的窗口或者框架，window对象会在<body>或者<frameset> 每次出现时被自动创建，在客户端JavaScript中，Window对象是全局对象
+ * document对象--代表整个HTML文档，可以用来访问页面中的所有元素。每一个载入浏览器的HTML文档都会成为document对象。document对象使我们可以从脚本中对HTML页面中的所有元素进行访问。
+
 ## 17.写一个通用的事件侦听器函数。
+	* http://www.cnblogs.com/isaboy/p/eventJavascript.html
+	* http://www.haorooms.com/post/js_EventUtil
+
 ## 18.["1", "2", "3"].map(parseInt) 答案是多少？
+ * [1, NaN, NaN]
+
 ## 19.事件是？IE与火狐的事件机制有什么区别？ 如何阻止冒泡？
-## 20.什么是闭包（closure），为什么要用它？
-## 21.javascript 代码中的"use strict";是什么意思 ? 使用它区别是什么？
+	* IE是事件冒泡、Firefox同时支持两种事件模型，也就是：捕获型事件和冒泡型事件；
+ 	* ev.stopPropagation();（旧ie的方法 ev.cancelBubble = true;）
+
+~~ ## 20.什么是闭包（closure），为什么要用它？~~
+~~ ## 21.javascript 代码中的"use strict";是什么意思 ? 使用它区别是什么？~~
+
 ## 22.如何判断一个对象是否属于某个类？
+* instanceof 或者 constructor
+
 ## 23.new操作符具体干了什么呢?
+`var obj  = {};
+ obj.__proto__ = Base.prototype;
+ Base.call(obj)`
+
 ## 23.用原生JavaScript的实现过什么功能吗？
+
 ## 24.Javascript中，有一个函数，执行时对象查找时，永远不会去查找原型，这个函数是？
-## 25.JSON 的了解？
+ * Object.prototype.hasOwnProperty()
+
+~~ ## 25.JSON 的了解？ ~~
 ## 26.[].forEach.call($$("*"),function(a){a.style.outline="1px solid #"+(~~(Math.random()*(1<<24))).toString(16)}) 能解释一下这段代码的意思吗？
+* http://www.html-js.com/article/2315
+
 ## 27.js延迟加载的方式有哪些（异步加载JS的方式有哪些？）？
-## 28.Ajax 是什么? 如何创建一个Ajax？
+ * defer和async、动态创建DOM方式（用得最多）、按需异步载入js
+ > http://www.cnblogs.com/tiwlin/archive/2011/12/26/2302554.html
+
+~~ ## 28.Ajax 是什么? 如何创建一个Ajax？~~
+
 ## 29.Ajax 解决浏览器缓存问题？
-## 30.同步和异步的区别?
-## 31.如何解决跨域问题?
+  * 1、在ajax发送请求前加上 anyAjaxObj.setRequestHeader("If-Modified-Since","0")。
+  * 2、在ajax发送请求前加上 anyAjaxObj.setRequestHeader("Cache-Control","no-cache")。
+  * 3、在URL后面加上一个随机数： "fresh=" + Math.random(); 或 "nowtime=" + new Date().getTime();。
+
+~~ ## 30.同步和异步的区别? ~~
+~~ ## 31.如何解决跨域问题? ~~
 ## 32.页面编码和被请求的资源编码如果不一致如何处理？
 ## 33.服务器代理转发时，该如何处理cookie？
+* HTTP 代理如何正确处理 Cookie https://www.ibm.com/developerworks/cn/java/j-cookie/index.html
+
 ## 34.模块化开发怎么做？
+> 详解JavaScript模块化开发 https://segmentfault.com/a/1190000000733959
+> http://www.ruanyifeng.com/blog/2012/10/javascript_module.html
+
 ## 35.AMD（Modules/Asynchronous-Definition）、CMD（Common Module Definition）规范区别？
 ## 36.requireJS的核心原理是什么？（如何动态加载的？如何避免多次加载的？如何 缓存的？）
+> requirejs的用法和原理分析 https://github.com/HRFE/blog/issues/10
+
 ## 37.JS模块加载器的轮子怎么造，也就是如何实现一个模块加载器？
+> 如何实现一个异步模块加载器--以requireJS为例 https://github.com/youngwind/blog/issues/98
+
 ## 38.谈一谈你对ECMAScript6的了解？
 ## 39.ECMAScript6 怎么写class么，为什么会出现class这种东西?
 ## 40..call() 和 .apply() 的区别？
+
 ## 41.数组和对象有哪些原生方法，列举一下？
+> https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object
+
 ## 42.JS怎么实现一个类，怎么实例化这个类？
-## 43.JavaScript中的作用域与变量声明提升？
+> http://www.ruanyifeng.com/blog/2012/07/three_ways_to_define_a_javascript_class.html
+
+~~ ## 43.JavaScript中的作用域与变量声明提升？ ~~
+
 ## 44.如何编写高性能的Javascript？
+> http://www.alloyteam.com/2012/11/performance-writing-efficient-javascript/
+
 ## 45.那些操作会造成内存泄漏？
+> https://github.com/wengjq/Blog/issues/1
+
 ## 46.如何判断当前脚本运行在浏览器还是node环境中？
-## 47.移动端最小触控区域是多大？
+* typeof global == 'object' && global.global === global
+
 ## 48.把 Script 标签 放在页面的最底部的body封闭之前 和封闭之后有什么区别？浏览器会如何解析它们？
+
 ## 49.移动端的点击事件的有延迟，时间是多久，为什么会有？ 怎么解决这个延时？
-## 50.知道各种JS框架(Angular, Backbone, Ember, React, Meteor, Knockout...)么? 能讲出他们各自的优点和缺点么?
+> 300 毫秒点击延迟的来龙去脉 https://thx.github.io/mobile/300ms-click-delay
+
 ## 51.Underscore 对哪些 JS 原生对象进行了扩展以及提供了哪些好用的函数方法？
-## 52.哪些操作会造成内存泄漏？
 ## 53.解释一下 Backbone 的 MVC 实现方式？
 ## 54.什么是“前端路由”?什么时候适合使用“前端路由”? “前端路由”有哪些优点和缺点?
-## 55.知道什么是webkit么? 知道怎么用浏览器的各种工具来调试和debug代码么?
+> https://blog.csdn.net/crystal6918/article/details/77432004
+
 ## 56.前端templating(Mustache, underscore, handlebars)是干嘛的, 怎么用?
-## 57.用js实现千位分隔符?
+> http://blog.gejiawen.com/2015/04/08/talk-about-fontend-templates/
+
 ## 58.检测浏览器版本版本有哪些方式？
+> https://segmentfault.com/a/1190000007640795
+
 ## 59.我们给一个dom同时绑定两个点击事件，一个用捕获，一个用冒泡。会执行几次事件，会先执行冒泡还是捕获？
+> https://blog.csdn.net/qiqingjin/article/details/51387217
+
 ## 60.使用JS实现获取文件扩展名？
+>`function getFileExtension(filename) {
+    return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
+  }`
+
+> https://blog.csdn.net/zhenyu5665/article/details/72829971
+
 ## 61.Webpack热更新实现原理?
+> https://zhuanlan.zhihu.com/p/30623057
+
 ## 62.请介绍一下JS之事件节流？什么是JS的函数防抖？
 ## 63.Object.is() 与原来的比较操作符“ ===”、“ ==”的区别？
-## 64.ES6是如何实现编译成ES5的？
+> https://www.jianshu.com/p/a76dc7e0c5a1
 
+## 64.ES6是如何实现编译成ES5的？
+> https://blog.csdn.net/weiyongliang_813/article/details/73929110
+
+## 8.DOM操作——怎样添加、移除、移动、复制、创建和查找节点。
 
 # 其他
 ## 1.原来公司工作流程是怎么样的，如何与其他人协作的？如何跨部门合作的？
