@@ -670,7 +670,8 @@ link标签除了可以加载CSS外，还可以做很多其它的事情，比如�
 ## 64.ES6是如何实现编译成ES5的？
 > https://blog.csdn.net/weiyongliang_813/article/details/73929110
 
-## 8.DOM操作——怎样添加、移除、移动、复制、创建和查找节点。
+## 65.DOM操作——怎样添加、移除、移动、复制、创建和查找节点。
+> 深入浅出DOM基础——《DOM探索之基础详解篇》学习笔记 https://github.com/jawil/blog/issues/9
 
 # 其他
 ## 1.原来公司工作流程是怎么样的，如何与其他人协作的？如何跨部门合作的？

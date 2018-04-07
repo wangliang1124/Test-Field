@@ -4,6 +4,9 @@
 ## BAT及各大互联网公司2014前端笔试面试题--Html,Css篇
 > http://www.cnblogs.com/coco1s/p/4034937.html
 
+## 面试分享：一年经验初探阿里巴巴前端社招
+> https://github.com/jawil/blog/issues/22
+
 ## 我遇到的前端面试题2017 
 > https://segmentfault.com/a/1190000011091907
 
@@ -71,6 +74,7 @@
 
 ## 从输入URL到页面加载发生了什么？ 
 > https://segmentfault.com/a/1190000006879700
+> http://www.cnblogs.com/xianyulaodi/p/6547807.html
 
 ## 更快更安全，HTTPS 优化总结 
 > https://segmentfault.com/a/1190000013380916
@@ -92,6 +96,8 @@
 
 ## 偶尔发现的一个技术博客
 > https://github.com/isLishude/blog/labels/%E5%89%8D%E7%AB%AF
+## 另一个博客
+> https://github.com/jawil/blog
 
 ## 如何不择手段提升scroll事件的性能
 > https://github.com/escawn/blog/issues/5
