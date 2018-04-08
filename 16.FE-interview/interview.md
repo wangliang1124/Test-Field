@@ -38,13 +38,15 @@
 
 ## 12个HTML和CSS必须知道的重点难点问题 
 > https://segmentfault.com/a/1190000013375700
-## 面试前端工程师 
-> https://github.com/paddingme/Front-end-Web-Development-Interview-Question/blob/master/interview/1.md
-## 2018年蚂蚁金服前端一面总结（面向2019届学生）
-> https://segmentfault.com/a/1190000013591751
 
-## 2017-08面试总结 
-> https://github.com/sunyongjian/blog/issues/32
+## 12个HTML和CSS必须知道的重点难点问题 
+> https://segmentfault.com/a/1190000013375700
+
+## 50道CSS基础面试题（附答案） 
+> https://segmentfault.com/a/1190000013325778
+
+## 面试的信心来源于过硬的基础  
+> https://segmentfault.com/a/1190000013331105
 
 ## ele面试 JavaScript 基础问题
 > https://github.com/ElemeFE/node-interview/blob/master/sections/zh-cn/common.md
@@ -52,10 +54,68 @@
 ## ele面试 Network
 > https://github.com/ElemeFE/node-interview/blob/master/sections/zh-cn/network.md
 
-## HTTP 协议入门 
-> http://www.ruanyifeng.com/blog/2016/08/http.html
+## 面试前端工程师 
+> https://github.com/paddingme/Front-end-Web-Development-Interview-Question/blob/master/interview/1.md
 
-## TCP协议小结 https://segmentfault.com/a/1190000013342156
+## 2018年蚂蚁金服前端一面总结（面向2019届学生）
+> https://segmentfault.com/a/1190000013591751
+
+## 2017-08面试总结 
+> https://github.com/sunyongjian/blog/issues/32
+
+## FEX 面试问题 
+> https://github.com/fex-team/interview-questions
+
+## 航旅无线前端团队必备技能 https://github.com/jayli/jayli.github.com/issues/16
+
+## 编程
+* JavaScript常见算法面试题  https://blog.csdn.net/weixin_36185028/article/details/53967947
+* 汤姆大叔的6道javascript编程题题解 http://www.cnblogs.com/zichi/p/4362292
+* 实现一个算法，寻找字符串中出现次数最少的、并且首次出现位置最前的字符。 https://segmentfault.com/q/1010000008703575
+
+## Vue
+* Vue2.0八——相关面试题整理 https://segmentfault.com/a/1190000012315822
+* 整理前端面试题(十一): Vue面试题合集  https://www.jianshu.com/p/e54a9a34a773
+
+## 正则表达式
+* 正则表达式 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Regular_Expressions
+* javascript正则表达式 https://www.cnblogs.com/rubylouvre/archive/2010/03/09/1681222.html
+* JavaScript正则进阶之路——活学妙用奇淫正则表达式 https://github.com/jawil/blog/issues/20
+
+## 网络
+> 通俗大白话来理解TCP协议的三次握手和四次分手 https://github.com/jawil/blog/issues/14
+
+
+## HTTP协议
+> HTTP 协议入门  http://www.ruanyifeng.com/blog/2016/08/http.html
+> 一篇文章带你详解 HTTP 协议（网络协议篇一） https://www.jianshu.com/p/6e9e4156ece3
+> TCP协议小结 https://segmentfault.com/a/1190000013342156
+> 一篇文章带你熟悉 TCP/IP 协议（网络协议篇二） https://www.jianshu.com/p/9f3e879a4c9c
+
+## 更快更安全，HTTPS 优化总结 
+> https://segmentfault.com/a/1190000013380916
+
+## 浏览器工作原理
+> How browsers work http://taligarsiel.com/Projects/howbrowserswork1.htm  https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/
+
+## 浏览器渲染详细过程：重绘、重排和composite只是冰山一角
+> https://chuckliu.me/#!/posts/58ea6af15dc1822fa9a57274
+
+## 从输入URL到页面加载发生了什么？ 
+> 前端经典面试题: 从输入URL到页面加载发生了什么？ https://segmentfault.com/a/1190000006879700
+> 【原】老生常谈-从输入url到页面展示到底发生了什么 http://www.cnblogs.com/xianyulaodi/p/6547807.html
+
+## ajax跨域，这应该是最全的解决方案了 
+> https://segmentfault.com/a/1190000012469713
+
+## 如何不择手段提升scroll事件的性能
+> https://github.com/escawn/blog/issues/5
+
+## 从event loop规范探究javaScript异步及浏览器更新渲染时机
+> https://github.com/aooy/blog/issues/5
+
+## 斐波那契数列求和的js方案以及优化
+> https://segmentfault.com/a/1190000007115162
 
 ## 理解RESTful架构
 > http://www.ruanyifeng.com/blog/2011/09/restful.html
@@ -69,49 +129,10 @@
 > JavaScript设计模式与开发实践
 > https://segmentfault.com/a/1190000004568177
 
-## FEX 面试问题 
-> https://github.com/fex-team/interview-questions
-
-## 从输入URL到页面加载发生了什么？ 
-> https://segmentfault.com/a/1190000006879700
-> http://www.cnblogs.com/xianyulaodi/p/6547807.html
-
-## 更快更安全，HTTPS 优化总结 
-> https://segmentfault.com/a/1190000013380916
-
-## 12个HTML和CSS必须知道的重点难点问题 
-> https://segmentfault.com/a/1190000013375700
-
-## 50道CSS基础面试题（附答案） 
-> https://segmentfault.com/a/1190000013325778
-
-## 面试的信心来源于过硬的基础  
-> https://segmentfault.com/a/1190000013331105
-
-## 实现一个算法，寻找字符串中出现次数最少的、并且首次出现位置最前的字符。 
-> https://segmentfault.com/q/1010000008703575
-
-## ajax跨域，这应该是最全的解决方案了 
-> https://segmentfault.com/a/1190000012469713
+# 博客Blog
 
 ## 偶尔发现的一个技术博客
 > https://github.com/isLishude/blog/labels/%E5%89%8D%E7%AB%AF
+
 ## 另一个博客
 > https://github.com/jawil/blog
-
-## 如何不择手段提升scroll事件的性能
-> https://github.com/escawn/blog/issues/5
-
-## 浏览器渲染详细过程：重绘、重排和composite只是冰山一角
-> https://chuckliu.me/#!/posts/58ea6af15dc1822fa9a57274
-
-## 从event loop规范探究javaScript异步及浏览器更新渲染时机
-> https://github.com/aooy/blog/issues/5
-
-## 斐波那契数列求和的js方案以及优化
-> https://segmentfault.com/a/1190000007115162
-
-## 浏览器工作原理
-> How browsers work http://taligarsiel.com/Projects/howbrowserswork1.htm  https://www.html5rocks.com/zh/tutorials/internals/howbrowserswork/
-
-## 航旅无线前端团队必备技能 https://github.com/jayli/jayli.github.com/issues/16

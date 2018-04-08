@@ -133,7 +133,10 @@
 
 * 17.你使用过 JavaScript 模板系统吗？
   + 研究过underscore的_.template()
-
+> 前端模板技术面面观 http://leeluolee.github.io/2014/10/10/template-engine/
+> 浅谈模板引擎 http://www.cnblogs.com/dojo-lzz/p/5518474.html
+> 前端模板的原理与实现 https://segmentfault.com/a/1190000006990480
+  
 * 18.请解释变量声明提升。
   + JavaScirpt代码在被解释之前会被编译
   + 在编译阶段，编译器会找到作用域内所有的声明，初始值为undefined
