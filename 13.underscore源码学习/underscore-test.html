@@ -61,12 +61,14 @@
 			  while(nonEnumIdx--) {
 			    prop = nonEnumerableProps[nonEnumIdx];
 			    if(prop in obj && obj[prop] !== proto[prop] && !_.contains(keys, prop)) {
+			    	console.log(obj[prop], constructor === obj.__proto__); 
 			      keys.push(prop);
 			    }
 			  }
 			}
 
-			var Func = function() {}; Func.prototype.toString = null;
+			var Func = function() {}; 
+			Func.prototype.toString = null;
 			var obj = { constructor: Func };
 			var keys = []
 			collectNonEnumProps(obj, keys)
