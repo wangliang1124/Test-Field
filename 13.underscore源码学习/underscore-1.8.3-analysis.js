@@ -2808,10 +2808,12 @@
     // match 为匹配的整个串
     // escape/interpolate/evaluate 为匹配的子表达式（如果没有匹配成功则为 undefined）
     // offset 为字符匹配（match）的起始位置（偏移量）
+   
     text.replace(matcher, function(match, escape, interpolate, evaluate, offset) {
       // \n => \\n
+      // console.log(offset, text.slice(index, offset))
       source += text.slice(index, offset).replace(escaper, escapeChar);
-
+      // console.log(JSON.stringify(source))
       // 改变 index 值，为了下次的 slice
       index = offset + match.length;
 
@@ -2819,9 +2821,12 @@
         // 需要对变量进行编码（=> HTML 实体编码）
         // 避免 XSS 攻击
         source += "'+\n((__t=(" + escape + "))==null?'':_.escape(__t))+\n'";
+
       } else if (interpolate) {
         // 单纯的插入变量
         source += "'+\n((__t=(" + interpolate + "))==null?'':__t)+\n'";
+        console.log('=========================');
+        console.log(source);
       } else if (evaluate) {
         // 可以直接执行的 JavaScript 语句
         // 注意 "__p+="，__p 为渲染返回的字符串
@@ -2851,11 +2856,12 @@
     source = "var __t,__p='',__j=Array.prototype.join," +
       "print=function(){__p+=__j.call(arguments,'');};\n" +
       source + 'return __p;\n';
-
+    console.log(source)
     try {
       // render 方法，前两个参数为 render 方法的参数
       // obj 为传入的 JSON 对象，传入 _ 参数使得函数内部能用 Underscore 的函数
       var render = new Function(settings.variable || 'obj', '_', source);
+      console.log(render)
     } catch (e) {
       // 抛出错误
       e.source = source;
@@ -2890,7 +2896,6 @@
     // This mean that you compile Unserscore template on server side by some server-side script and save the result in a file.
     // Then use this file as compiled Unserscore template.
     template.source = 'function(' + argument + '){\n' + source + '}';
-
     return template;
   };
 

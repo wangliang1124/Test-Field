@@ -7,7 +7,7 @@
 	</style>
 </head>
 <body>
-	<h1>学习underscore</h1>
+	<h1>测试underscore</h1>
 	<div id="content" style="white-space: pre"></div>
 	<script src='underscore-1.8.3-analysis.js'></script>
 	<!-- <script src='underscore-min.js'></script> -->
@@ -71,6 +71,12 @@
 			var keys = []
 			collectNonEnumProps(obj, keys)
 			console.log(keys)
+
+			var compiled = _.template("he\'l\\lo: <%= name %>");
+			console.log(compiled)
+			console.log(compiled({name: 'moe'}))
+
+			console.log(_.keys(_))
 		}
 	</script>	
 </body>
