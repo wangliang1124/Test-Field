@@ -1,13 +1,20 @@
 # HTML
 ## 1.Doctype作用? 严格模式与混杂(兼容)模式如何区分？它们有何意义?
 * !DOCTYPE声明位于位于HTML文档中的第一行，处于html标签之前。告知浏览器的解析器用什么文档标准解析这个文档。DOCTYPE不存在或格式不正确会导致文档以兼容模式呈现。
-* 标准模式的排版 和JS运作模式都是以该浏览器支持的最高标准运行。在兼容模式中，页面以宽松的向后兼容的方式显示,模拟老式浏览器的行为以防止站点无法工作。
+* 如何区分：浏览器解析时到底使用严格模式还是混杂模式，与网页中的 DTD 直接相关。
+	+ 1、如果文档包含严格的 DOCTYPE ，那么它一般以严格模式呈现。（严格 DTD ——严格模式） 
+	+ 2、包含过渡 DTD 和 URI 的 DOCTYPE ，也以严格模式呈现，但有过渡 DTD 而没有 URI （统一资源标识符，就是声明最后的地址）会导致页面以混杂模式呈现。（有 URI 的过渡 DTD ——严格模式；没有 URI 的过渡 DTD ——混杂模式） 
+	+ 3、DOCTYPE 不存在或形式不正确会导致文档以混杂模式呈现。（DTD不存在或者格式不正确——混杂模式）
+	+ 4、HTML5 没有 DTD ，因此也就没有严格模式与混杂模式的区别，HTML5 有相对宽松的语法，实现时，已经尽可能大的实现了向后兼容。（ HTML5 没有严格和混杂之分）
+> Doctype作用？严格模式与混杂模式如何区分？它们有何差异？ http://www.cnblogs.com/wuqiutong/p/5986191.html
+> Doctype作用？严格模式与混杂模式如何区分？它们有何意义？ https://www.jianshu.com/p/3d64e598d27b
 
 ## 2.说说你对语义化的理解？(什么是语义化的HTML?)
 * html语义化就是让页面的内容结构化，便于对浏览器、搜索引擎解析；
 * 即使没有CSS样式也以一种文档格式显示，并且是容易阅读的。
 * 利于搜索引擎的根据标记来确定上下文和各个关键字的权重，利于 SEO。
 * 源代码更易读，便于阅读维护理解。
+> 什么是语义化的HTML?有何意义？为什么要做到语义化？ http://www.cnblogs.com/wuqiutong/p/5986220.html
 
 ## 3.你知道多少种Doctype文档类型？
 * HTML 5 <!DOCTYPE html>
@@ -16,6 +23,7 @@
 * Standards （标准）模式（也就是严格呈现模式）用于呈现遵循最新标准的网页，而 Quirks（怪癖）模式（也就是松散呈现模式或者兼容模式）用于呈现为传统浏览器而设计的网页。
 
 > DOCTYPE的作用：文档类型与浏览器模式 http://harttle.land/2016/01/22/doctype.html
+
 
 ## 4.HTML与XHTML有什么区别?
 * 1.所有的标记都必须要有一个相应的结束标记
@@ -27,12 +35,17 @@
 * 7.不要在注释内容中使"--"
 * 8.图片必须有说明文字
 
-## 5.常见兼容性问题？
+## 5.HTML5 为什么只需要写`<!DOCTYPE html>`？
+ * HTML5 不基于 SGML，因此不需要对DTD进行引用，但是需要doctype来规范浏览器的行为
+ * HTML4.01基于SGML,所以需要对DTD进行引用，才能告知浏览器文档所使用的文档类型。
+
+## 6.常见兼容性问题？
+
 > CSS常见兼容性问题总结 http://www.cnblogs.com/imwtr/p/4340010.html
+
 > IE6 浏览器常见兼容问题 大汇总（23个） http://blog.163.com/hongshaoguoguo@126/blog/static/18046981201371611543769/
 
-
-## 9.html5有哪些新特性、移除了那些元素？如何处理HTML5新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？
+## 7.html5有哪些新特性、移除了那些元素？如何处理HTML5新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？
 ### HTML5 现在已经不是 SGML 的子集，主要是关于图像，位置，存储，多任务等功能的增加。
 * 绘画 canvas
 * 用于媒介回放的 video 和 audio 元素
@@ -48,26 +61,25 @@
 * IE8/IE7/IE6支持通过document.createElement方法产生的标签，然后添加标签默认的样式：
 > HTML5 简介（一）：新的写法、元素及兼容性 https://www.renfei.org/blog/html5-introduction-1.html
 
-## 10.iframe的缺点？
+## 8.iframe的缺点？
 * iframe会阻塞主页面的Onload事件；
 * 搜索引擎的检索程序无法解读这种页面，不利于SEO;
 * iframe和主页面共享连接池，而浏览器对相同域的连接有限制，所以会影响页面的并行加载。
 * 使用iframe之前需要考虑这两个缺点。如果需要使用iframe，最好是通过javascript动态给iframe添加src属性值，这样可以绕开以上两个问题。
+> iframe异步加载技术及性能 http://www.cnblogs.com/beiyuu/archive/2011/07/18/iframe-tech-performance.html
 
-## 11.如何实现浏览器内多个标签页之间的通信?
+## 9.如何实现浏览器内多个标签页之间的通信?
+
 > 多个标签页之间的通信 https://segmentfault.com/q/1010000006664804
 
-## 12.webSocket如何兼容低浏览器？
+> Storage事件无法触发解决 https://blog.csdn.net/jlin991/article/details/55855524
+
+## 10.webSocket如何兼容低浏览器？
 * Adobe Flash Socket 、 ActiveX HTMLFile (IE) 、 基于 multipart 编码发送 XHR 、 基于长轮询的 XHR
 
 > WebSocket 教程 http://www.ruanyifeng.com/blog/2017/05/websocket.html
+
 > WebSocket兼容到低版本浏览器 https://www.web-tinker.com/article/20324.html
-
-
-## 16.HTML5 为什么只需要写 <!DOCTYPE HTML>？
- * HTML5 不基于 SGML，因此不需要对DTD进行引用，但是需要doctype来规范浏览器的行为
- * HTML4.01基于SGML,所以需要对DTD进行引用，才能告知浏览器文档所使用的文档类型。
-
 
 ## 19.介绍一下你对浏览器内核的理解？常见的浏览器内核有哪些？
 * 主要分成两部分：渲染引擎(layout engineer或Rendering Engine)和JS引擎。
@@ -84,7 +96,9 @@
 
 ## 20.HTML5的离线储存怎么使用，工作原理能不能解释一下？浏览器是怎么对HTML5的离线储存资源进行管理和加载的呢？
 > HTML5 离线缓存-manifest简介 http://yanhaijing.com/html/2014/12/28/html5-manifest/
+
 > HTML5离线存储 初探 http://www.cnblogs.com/chyingp/archive/2012/12/01/explore_html5_cache.html
+
 > 有趣的HTML5：离线存储 https://segmentfault.com/a/1190000000732617
 
 ## 22.请描述一下 cookies，sessionStorage 和 localStorage 的区别？
@@ -97,8 +111,11 @@
 > HTML5的form如何关闭自动完成功能 https://blog.csdn.net/shangazhe/article/details/74984282
 
 ## 25.页面可见性（Page Visibility API） 可以有哪些用途？
+
 > HTML5页面可见性接口应用 https://www.helloweba.net/javascript/390.html
+
 > Page Visibility(页面可见性) API介绍、微拓展  http://www.zhangxinxu.com/wordpress/2012/11/page-visibility-api-introduction-extend/
+
 > Page Visibility API https://developer.mozilla.org/zh-CN/docs/Web/API/Page_Visibility_API
 
 ## 40个重要的HTML5面试题及答案
@@ -110,7 +127,8 @@
 * 低版本IE盒子模型：宽度=内容宽度（content+border+padding）+ margin
 
 > 盒模型 https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model
-> https://github.com/ivanberry/CSS-Knowledge/issues/3
+
+> 介绍一下标准的CSS的盒子模型？与IE的盒子模型有什么不同的？ https://github.com/ivanberry/CSS-Knowledge/issues/3
 
 ## 2.CSS选择符有哪些？哪些属性可以继承？
 * CSS选择符：id选择器(#myid)、类选择器(.myclassname)、标签选择器(div, h1, p)、相邻选择器(h1 + p)、子选择器（ul > li）、后代选择器（li a）、通配符选择器（\*）、属性选择器（a[rel="external"]）、伪类选择器（a:hover, li:nth-child）
@@ -118,7 +136,9 @@
 * 不可继承的样式：border, padding, margin, width, height
 * 优先级（就近原则）：!important > [ id > class > tag ] 
 * !important 比内联优先级高
+
 > http://www.w3school.com.cn/cssref/css_selectors.asp
+
 > http://www.ruanyifeng.com/blog/2009/03/css_selectors.html
 
 ## 3.CSS优先级算法如何计算？
