@@ -1,31 +1,31 @@
 # HTML
 ## 1.Doctype作用? 严格模式与混杂(兼容)模式如何区分？它们有何意义?
-	* !DOCTYPE声明位于位于HTML文档中的第一行，处于html标签之前。告知浏览器的解析器用什么文档标准解析这个文档。DOCTYPE不存在或格式不正确会导致文档以兼容模式呈现。
-	* 标准模式的排版 和JS运作模式都是以该浏览器支持的最高标准运行。在兼容模式中，页面以宽松的向后兼容的方式显示,模拟老式浏览器的行为以防止站点无法工作。
+* !DOCTYPE声明位于位于HTML文档中的第一行，处于html标签之前。告知浏览器的解析器用什么文档标准解析这个文档。DOCTYPE不存在或格式不正确会导致文档以兼容模式呈现。
+* 标准模式的排版 和JS运作模式都是以该浏览器支持的最高标准运行。在兼容模式中，页面以宽松的向后兼容的方式显示,模拟老式浏览器的行为以防止站点无法工作。
 
 ## 2.说说你对语义化的理解？(什么是语义化的HTML?)
-	* html语义化就是让页面的内容结构化，便于对浏览器、搜索引擎解析；
-	* 即使没有CSS样式也以一种文档格式显示，并且是容易阅读的。
-	* 利于搜索引擎的根据标记来确定上下文和各个关键字的权重，利于 SEO。
-	* 源代码更易读，便于阅读维护理解。
+* html语义化就是让页面的内容结构化，便于对浏览器、搜索引擎解析；
+* 即使没有CSS样式也以一种文档格式显示，并且是容易阅读的。
+* 利于搜索引擎的根据标记来确定上下文和各个关键字的权重，利于 SEO。
+* 源代码更易读，便于阅读维护理解。
 
 ## 3.你知道多少种Doctype文档类型？
-	* HTML 5 <!DOCTYPE html>
-	* HTML 4.01 规定了三种文档类型：Strict、Transitional 以及 Frameset。
-	* XHTML 1.0 规定了三种 XML 文档类型：Strict、Transitional 以及 Frameset。
-	* Standards （标准）模式（也就是严格呈现模式）用于呈现遵循最新标准的网页，而 Quirks（怪癖）模式（也就是松散呈现模式或者兼容模式）用于呈现为传统浏览器而设计的网页。
+* HTML 5 <!DOCTYPE html>
+* HTML 4.01 规定了三种文档类型：Strict、Transitional 以及 Frameset。
+* XHTML 1.0 规定了三种 XML 文档类型：Strict、Transitional 以及 Frameset。
+* Standards （标准）模式（也就是严格呈现模式）用于呈现遵循最新标准的网页，而 Quirks（怪癖）模式（也就是松散呈现模式或者兼容模式）用于呈现为传统浏览器而设计的网页。
 
 > DOCTYPE的作用：文档类型与浏览器模式 http://harttle.land/2016/01/22/doctype.html
 
 ## 4.HTML与XHTML有什么区别?
-	* 1.所有的标记都必须要有一个相应的结束标记
-	* 2.所有标签的元素和属性的名字都必须使用小写
-	* 3.所有的XML标记都必须合理嵌套
-	* 4.所有的属性必须用引号""括起来
-	* 5.把所有<和&特殊符号用编码表示
-	* 6.给所有属性赋一个值
-	* 7.不要在注释内容中使"--"
-	* 8.图片必须有说明文字
+* 1.所有的标记都必须要有一个相应的结束标记
+* 2.所有标签的元素和属性的名字都必须使用小写
+* 3.所有的XML标记都必须合理嵌套
+* 4.所有的属性必须用引号""括起来
+* 5.把所有<和&特殊符号用编码表示
+* 6.给所有属性赋一个值
+* 7.不要在注释内容中使"--"
+* 8.图片必须有说明文字
 
 ## 5.常见兼容性问题？
 > CSS常见兼容性问题总结 http://www.cnblogs.com/imwtr/p/4340010.html
@@ -34,18 +34,18 @@
 
 ## 9.html5有哪些新特性、移除了那些元素？如何处理HTML5新标签的浏览器兼容问题？如何区分 HTML 和 HTML5？
 ### HTML5 现在已经不是 SGML 的子集，主要是关于图像，位置，存储，多任务等功能的增加。
-	* 绘画 canvas
-	* 用于媒介回放的 video 和 audio 元素
-	* 本地离线存储 localStorage 长期存储数据，浏览器关闭后数据不丢失；
-	* sessionStorage 的数据在浏览器关闭后自动删除
-	* 语意化更好的内容元素，比如 article、footer、header、nav、section
-	* 表单控件，calendar、date、time、email、url、search
-	* 新的技术webworker, websockt, Geolocation
+* 绘画 canvas
+* 用于媒介回放的 video 和 audio 元素
+* 本地离线存储 localStorage 长期存储数据，浏览器关闭后数据不丢失；
+* sessionStorage 的数据在浏览器关闭后自动删除
+* 语意化更好的内容元素，比如 article、footer、header、nav、section
+* 表单控件，calendar、date、time、email、url、search
+* 新的技术webworker, websockt, Geolocation
 ### 移除的元素
-	* 纯表现的元素：basefont，big，center，font, s，strike，tt，u；
-	* 对可用性产生负面影响的元素：frame，frameset，noframes；
+* 纯表现的元素：basefont，big，center，font, s，strike，tt，u；
+* 对可用性产生负面影响的元素：frame，frameset，noframes；
 ### 支持HTML5新标签：
-	* IE8/IE7/IE6支持通过document.createElement方法产生的标签，然后添加标签默认的样式：
+* IE8/IE7/IE6支持通过document.createElement方法产生的标签，然后添加标签默认的样式：
 > HTML5 简介（一）：新的写法、元素及兼容性 https://www.renfei.org/blog/html5-introduction-1.html
 
 ## 10.iframe的缺点？
@@ -70,16 +70,16 @@
 
 
 ## 19.介绍一下你对浏览器内核的理解？常见的浏览器内核有哪些？
-	* 主要分成两部分：渲染引擎(layout engineer或Rendering Engine)和JS引擎。
-	* 渲染引擎：负责取得网页的内容（HTML、XML、图像等等）、整理讯息（例如加入CSS等），以及计算网页的显示方式，然后会输出至显示器或打印机。浏览器的内核的不同对于网页的语法解释会有不同，所以渲染的效果也不相同。所有网页浏览器、电子邮件客户端以及其它需要编辑、显示网络内容的应用程序都需要内核。
-	* JS引擎则：解析和执行javascript来实现网页的动态效果。
-	* 最开始渲染引擎和JS引擎并没有区分的很明确，后来JS引擎越来越独立，内核就倾向于只指渲染引擎。
+* 主要分成两部分：渲染引擎(layout engineer或Rendering Engine)和JS引擎。
+* 渲染引擎：负责取得网页的内容（HTML、XML、图像等等）、整理讯息（例如加入CSS等），以及计算网页的显示方式，然后会输出至显示器或打印机。浏览器的内核的不同对于网页的语法解释会有不同，所以渲染的效果也不相同。所有网页浏览器、电子邮件客户端以及其它需要编辑、显示网络内容的应用程序都需要内核。
+* JS引擎则：解析和执行javascript来实现网页的动态效果。
+* 最开始渲染引擎和JS引擎并没有区分的很明确，后来JS引擎越来越独立，内核就倾向于只指渲染引擎。
 ### 常见内核
-	* IE: trident内核
-	* Firefox：gecko内核
-	* Safari：webkit内核
-	* Opera：以前是presto内核，Opera现已改用Google Chrome的Blink内核
-	* Chrome：Blink(基于webkit，Google与Opera Software共同开发)
+* IE: trident内核
+* Firefox：gecko内核
+* Safari：webkit内核
+* Opera：以前是presto内核，Opera现已改用Google Chrome的Blink内核
+* Chrome：Blink(基于webkit，Google与Opera Software共同开发)
 > http://www.cnblogs.com/fullhouse/archive/2011/12/19/2293455.html
 
 ## 20.HTML5的离线储存怎么使用，工作原理能不能解释一下？浏览器是怎么对HTML5的离线储存资源进行管理和加载的呢？
@@ -122,18 +122,18 @@
 > http://www.ruanyifeng.com/blog/2009/03/css_selectors.html
 
 ## 3.CSS优先级算法如何计算？
-	* !important > 内联 > id > 类 > 标签|伪类|属性 > 伪元素 > 通配符 > 继承
+* !important > 内联 > id > 类 > 标签|伪类|属性 > 伪元素 > 通配符 > 继承
 > css优先级计算规则 http://www.cnblogs.com/wangmeijian/p/4207433.html
 > 优先级是如何计算的？ https://developer.mozilla.org/zh-CN/docs/Web/CSS/Specificity
 
 ## 4.CSS3新增伪类有那些？
-	* p:first-of-type 选择属于其父元素的首个元素
-	* p:last-of-type 选择属于其父元素的最后元素
-	* p:only-of-type 选择属于其父元素唯一的元素
-	* p:only-child 选择属于其父元素的唯一子元素
-	* p:nth-child(2) 选择属于其父元素的第二个子元素
-	* :enabled :disabled 表单控件的禁用状态。
-	* :checked 单选框或复选框被选中。
+* p:first-of-type 选择属于其父元素的首个元素
+* p:last-of-type 选择属于其父元素的最后元素
+* p:only-of-type 选择属于其父元素唯一的元素
+* p:only-child 选择属于其父元素的唯一子元素
+* p:nth-child(2) 选择属于其父元素的第二个子元素
+* :enabled :disabled 表单控件的禁用状态。
+* :checked 单选框或复选框被选中。
 
 ## 5.如何居中div？
 ### 内联元素居中方案
@@ -158,31 +158,31 @@
 * c:父元素设置 position:relative 和 left:50%，子元素设置 position:relative 和 left:50%；
 
 #### 垂直居中设置：
-	* 使用position:absolute（fixed）,设置left、top、margin-left、margin-top的属性;
-	* 利用position:fixed（absolute）属性，margin:auto这个必须不要忘记了;
-	* 利用display:table-cell属性使内容垂直居中;
-	* 使用css3的新属性transform:translate(x,y)属性;
-	* 使用:before元素;
+* 使用position:absolute（fixed）,设置left、top、margin-left、margin-top的属性;
+* 利用position:fixed（absolute）属性，margin:auto这个必须不要忘记了;
+* 利用display:table-cell属性使内容垂直居中;
+* 使用css3的新属性transform:translate(x,y)属性;
+* 使用:before元素;
 
 > 盘点8种CSS实现垂直居中水平居中的绝对定位居中技术 https://blog.csdn.net/freshlover/article/details/11579669
 > css实现垂直居中6种方法 http://www.cnblogs.com/Yirannnnnn/p/4933332.html http://www.cnblogs.com/yugege/p/5246652.html
 > 六种实现元素水平居中https://www.w3cplus.com/css/elements-horizontally-center-with-css.html
 
 ## 6.display有哪些值？说明他们的作用。
-	* block       	块类型。默认宽度为父元素宽度，可设置宽高，换行显示。
-	* none        	此元素不显示
-	* inline      	行内元素类型。默认宽度为内容宽度，不可设置宽高，同行显示。
-	* inline-block  默认宽度为内容宽度，可以设置宽高，同行显示。
-	* list-item   	象块类型元素一样显示，并添加样式列表标记。
-	* table       	此元素会作为块级表格来显示。
-	* inherit     	规定应该从父元素继承 display 属性的值。
+* block       	块类型。默认宽度为父元素宽度，可设置宽高，换行显示。
+* none        	此元素不显示
+* inline      	行内元素类型。默认宽度为内容宽度，不可设置宽高，同行显示。
+* inline-block  默认宽度为内容宽度，可以设置宽高，同行显示。
+* list-item   	象块类型元素一样显示，并添加样式列表标记。
+* table       	此元素会作为块级表格来显示。
+* inherit     	规定应该从父元素继承 display 属性的值。
 > https://blog.csdn.net/sjinsa/article/details/70820204
 
 ## 7.position的值relative和absolute定位原点是？
-	* static（默认）：按照正常文档流进行排列（忽略 top, bottom, left, right z-index 声明）
-	* relative（相对定位）：不脱离文档流，参考自身静态位置通过 top, bottom, left, right 定位；
-	* absolute(绝对定位)：参考距其最近一个不为static的父级元素通过top, bottom, left, right 定位；
-	* fixed(固定定位)：所固定的参照对像是可视窗口。
+* static（默认）：按照正常文档流进行排列（忽略 top, bottom, left, right z-index 声明）
+* relative（相对定位）：不脱离文档流，参考自身静态位置通过 top, bottom, left, right 定位；
+* absolute(绝对定位)：参考距其最近一个不为static的父级元素通过top, bottom, left, right 定位；
+* fixed(固定定位)：所固定的参照对像是可视窗口。
 
 ## 8.CSS3有哪些新特性？
 > 深入了解 CSS3 新特性 https://www.ibm.com/developerworks/cn/web/1202_zhouxiang_css3/	
@@ -202,12 +202,12 @@
 
 ## 11.一个满屏'品'字布局如何设计?
 * 第一种真正的品字：
-	* 三块高宽是确定的；
-	* 上面那块用margin: 0 auto;居中；
-	* 下面两块用float或者inline-block不换行；
-	* 用margin调整位置使他们居中。
+* 三块高宽是确定的；
+* 上面那块用margin: 0 auto;居中；
+* 下面两块用float或者inline-block不换行；
+* 用margin调整位置使他们居中。
 * 第二种全屏的品字布局:
-	* 上面的div设置成100%，下面的div分别宽50%，然后使用float或者inline使其不换行。
+* 上面的div设置成100%，下面的div分别宽50%，然后使用float或者inline使其不换行。
 * 第三种用Flex布局
 > https://blog.csdn.net/sjinsa/article/details/70903940
 
@@ -250,14 +250,14 @@
 
 ## 17.CSS里的visibility属性有个collapse属性值是干嘛用的？在不同浏览器下以后什么区别？
 * 当一个元素的visibility属性被设置成collapse值后，对于一般的元素，它的表现跟hidden是一样的。
-	* chrome中，使用collapse值和使用hidden没有区别。
-	* firefox，opera和IE，使用collapse值和使用display：none没有什么区别。
+* chrome中，使用collapse值和使用hidden没有区别。
+* firefox，opera和IE，使用collapse值和使用display：none没有什么区别。
 
 ## 18.position跟display、margin collapse、overflow、float这些特性相互叠加后会怎么样？
-	* 如果元素的display为none,那么元素不被渲染,position,float不起作用,
-	* 如果元素拥有position:absolute;或者position:fixed;属性那么元素将为绝对定位,float不起作用.
-	* 如果元素float属性不是none,元素会脱离文档流,根据float属性值来显示.
-	* 有浮动,绝对定位,inline-block属性的元素,margin不会和垂直方向上的其他元素margin折叠.
+* 如果元素的display为none,那么元素不被渲染,position,float不起作用,
+* 如果元素拥有position:absolute;或者position:fixed;属性那么元素将为绝对定位,float不起作用.
+* 如果元素float属性不是none,元素会脱离文档流,根据float属性值来显示.
+* 有浮动,绝对定位,inline-block属性的元素,margin不会和垂直方向上的其他元素margin折叠.
 
 ## 19.对BFC规范(块级格式化上下文：block formatting context)的理解？
 > BFC原理详解 https://segmentfault.com/a/1190000006740129
@@ -293,36 +293,36 @@
 > CSS选择器从右向左的匹配规则 http://www.cnblogs.com/zhaodongyu/p/3341080.html
 
 ## 28.在网页中的应该使用奇数还是偶数的字体？为什么呢？
-	* 使用偶数字体。偶数字号相对更容易和 web 设计的其他部分构成比例关系。
-	* Windows 自带的点阵宋体（中易宋体）从 Vista 开始只提供 12、14、16 px 这三个大小的点阵，而 13、15、17 px时用的是小一号的点。（即每个字占的空间大了 1 px，但点阵没变），于是略显稀疏。
-	* 习惯的延续
+* 使用偶数字体。偶数字号相对更容易和 web 设计的其他部分构成比例关系。
+* Windows 自带的点阵宋体（中易宋体）从 Vista 开始只提供 12、14、16 px 这三个大小的点阵，而 13、15、17 px时用的是小一号的点。（即每个字占的空间大了 1 px，但点阵没变），于是略显稀疏。
+* 习惯的延续
 
 ## 29.margin和padding分别适合什么场景使用？
-	* margin是用来隔开元素与元素的间距；padding是用来隔开元素与内容的间隔。
-	* margin用于布局分开元素使元素与元素互不相干；
-	* padding用于元素与内容之间的间隔，让内容（文字）与（包裹）元素之间有一段
-	* 何时使用margin：	
+* margin是用来隔开元素与元素的间距；padding是用来隔开元素与内容的间隔。
+* margin用于布局分开元素使元素与元素互不相干；
+* padding用于元素与内容之间的间隔，让内容（文字）与（包裹）元素之间有一段
+* 何时使用margin：	
 		+ 需要在border外侧添加空白
 		+ 空白处不需要背景色
 		+ 上下相连的两个盒子之间的空白，需要相互抵消时。
-	* 何时使用padding：
-		* 需要在border内侧添加空白
-		* 空白处需要背景颜色
-		* 上下相连的两个盒子的空白，希望为两者之和。
-	* 兼容性的问题：在IE5\IE6中，为float的盒子指定margin时，左侧的margin可能会变成两倍的宽度。通过改变padding或者指定盒子的display：inline解决。
+* 何时使用padding：
+	* 需要在border内侧添加空白
+	* 空白处需要背景颜色
+	* 上下相连的两个盒子的空白，希望为两者之和。
+* 兼容性的问题：在IE5\IE6中，为float的盒子指定margin时，左侧的margin可能会变成两倍的宽度。通过改变padding或者指定盒子的display：inline解决。
 
 ## 30.元素竖向的百分比设定是相对于容器的高度吗？
-	* 当按百分比设定一个元素的宽度时，它是相对于父容器的宽度计算的，但是，对于一些表示竖向距离的属性，例如 padding-top , padding-bottom , margin-top , margin-bottom 等，当按百分比设定它们时，依据的也是父容器的宽度，而不是高度。
+* 当按百分比设定一个元素的宽度时，它是相对于父容器的宽度计算的，但是，对于一些表示竖向距离的属性，例如 padding-top , padding-bottom , margin-top , margin-bottom 等，当按百分比设定它们时，依据的也是父容器的宽度，而不是高度。
 
 > https://segmentfault.com/a/1190000012955996
 
 ## 31.全屏滚动的原理是什么？用到了CSS的那些属性？
-	* 原理：有点类似于轮播，整体的元素一直排列下去，假设有5个需要展示的全屏页面，那么高度是500%，只是展示100%，剩下的可以通过transform进行y轴定位，也可以通过margin-top实现
-	* overflow：hidden；transition：all 1000ms ease；
+* 原理：有点类似于轮播，整体的元素一直排列下去，假设有5个需要展示的全屏页面，那么高度是500%，只是展示100%，剩下的可以通过transform进行y轴定位，也可以通过margin-top实现
+* overflow：hidden；transition：all 1000ms ease；
 > H5全屏滑动 https://segmentfault.com/a/1190000003691168
 
 ## 32.什么是响应式设计？响应式设计的基本原理是什么？如何兼容低版本的IE？
-	* 响应式网站设计(Responsive Web design)是一个网站能够兼容多个终端，而不是为每一个终端做一个特定的版本。
+* 响应式网站设计(Responsive Web design)是一个网站能够兼容多个终端，而不是为每一个终端做一个特定的版本。
 	基本原理是通过媒体查询检测不同的设备屏幕尺寸做处理。
 	页面头部必须有meta声明的viewport。
 `<meta name=’viewport’ content=”width=device-width, initial-scale=1. maximum-scale=1,user-scalable=no”>`
@@ -334,9 +334,9 @@
 > 视差滚动(Parallax Scrolling)效果的原理和实现 http://www.cnblogs.com/JoannaQ/archive/2013/02/08/2909111.html
 
 ## 34.::before 和 :after中双冒号和单冒号 有什么区别？解释一下这2个伪元素的作用。
-	* 单冒号(:)用于CSS3伪类，双冒号(::)用于CSS3伪元素。
-	* ::before就是以一个子元素的存在，定义在元素主体内容之前的一个伪元素。并不存在于dom之中，只存在在页面之中。
-	* :before 和 :after 这两个伪元素，是在CSS2.1里新出现的。起初，伪元素的前缀使用的是单冒号语法，但随着Web的进化，在CSS3的规范里，伪元素的语法被修改成使用双冒号，成为::before ::after
+* 单冒号(:)用于CSS3伪类，双冒号(::)用于CSS3伪元素。
+* ::before就是以一个子元素的存在，定义在元素主体内容之前的一个伪元素。并不存在于dom之中，只存在在页面之中。
+* :before 和 :after 这两个伪元素，是在CSS2.1里新出现的。起初，伪元素的前缀使用的是单冒号语法，但随着Web的进化，在CSS3的规范里，伪元素的语法被修改成使用双冒号，成为::before ::after
   * 双冒号是在CSS3规范中引入的，用于区分伪类和伪元素。不过浏览器需要同时支持旧的已经存在的伪元素写法，比如:first-line、:first-letter、:before、:after等，而新的在CSS3中引入的伪元素则不允许再支持旧的单冒号的写法。
 
 ## 35.如何修改chrome记住密码后自动填充表单的黄色背景？
@@ -359,28 +359,28 @@
 	`p{font-size:10px;-webkit-transform:scale(0.8);} //0.8是缩放比例`
 
 ## 39.让页面里的字体变清晰，变细用CSS怎么做？
-	* -webkit-font-smoothing只在Mac OS X/macOS上起作用-webkit-font-smoothing：antialiased是最佳的，灰度平滑。
+* -webkit-font-smoothing只在Mac OS X/macOS上起作用-webkit-font-smoothing：antialiased是最佳的，灰度平滑。
 
 ## 40.font-style属性可以让它赋值为“oblique” oblique是什么意思？
-	* 正常版本的倾斜 
+* 正常版本的倾斜 
 ## 41.position:fixed;在android下无效怎么处理？
-	* fixed的元素是相对整个页面固定位置的，你在屏幕上滑动只是在移动这个所谓的viewport，
-	* 并不是不支持fixed，只是fixed的元素不是相对手机屏幕固定的。
+* fixed的元素是相对整个页面固定位置的，你在屏幕上滑动只是在移动这个所谓的viewport，
+* 并不是不支持fixed，只是fixed的元素不是相对手机屏幕固定的。
 `<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>`
 
 ## 42.如果需要手动写动画，你认为最小时间间隔是多久，为什么？（阿里）
-	* 多数显示器默认频率是60Hz，即1秒刷新60次，所以理论上最小间隔为1/60＊1000ms ＝ 16.7ms
+* 多数显示器默认频率是60Hz，即1秒刷新60次，所以理论上最小间隔为1/60＊1000ms ＝ 16.7ms
 
 ## 43.display:inline-block 什么时候会显示间隙？(携程)
-	* 有空格时候会有间隙 解决：移除空格
-	* margin正值的时候 解决：margin使用负值
-	* 使用font-size时候 解决：font-size:0、letter-spacing、word-spacing
+* 有空格时候会有间隙 解决：移除空格
+* margin正值的时候 解决：margin使用负值
+* 使用font-size时候 解决：font-size:0、letter-spacing、word-spacing
 
 ## 44.overflow: scroll时不能平滑滚动的问题怎么处理？
 	`-webkit-overflow-scrolling: touch;`
 
 ## 45.有一个高度自适应的div，里面有两个div，一个高度100px，希望另一个填满剩下的高度。
-	* 外层div使用position：relative；高度要求自适应的div使用position: absolute; top: 100px; bottom: 0; left: 0
+* 外层div使用position：relative；高度要求自适应的div使用position: absolute; top: 100px; bottom: 0; left: 0
 
 ## 46.png、jpg、gif 这些图片格式解释一下，分别什么时候用。有没有了解过webp？
 * png是便携式网络图片（Portable Network Graphics）是一种无损数据压缩位图文件格式.优点是：压缩比高，色彩好。 大多数地方都可以用。
@@ -390,10 +390,10 @@
 参考资料： [选择正确的图片格式](http://www.yuiblog.com/blog/2008/11/04/imageopt-2/) https://www.jianshu.com/p/261cd13757ce
 
 ## 47.什么是Cookie隔离？（或者说：请求资源的时候不要让它带cookie怎么做）
-	* cookie隔离技术则是通过使用多个非主要域名来请求静态文件，如果静态文件都放在主域名下，那静态文件请求的时候带有的cookie的数据提交给server是非常浪费的，还不如隔离开。
-	* 因为cookie有域的限制，因此不能跨域提交请求，故使用非主要域名的时候，请求头中就不会带有cookie数据，
+* cookie隔离技术则是通过使用多个非主要域名来请求静态文件，如果静态文件都放在主域名下，那静态文件请求的时候带有的cookie的数据提交给server是非常浪费的，还不如隔离开。
+* 因为cookie有域的限制，因此不能跨域提交请求，故使用非主要域名的时候，请求头中就不会带有cookie数据，
 	这样可以降低请求头的大小，降低请求时间，从而达到降低整体请求延时的目的。
-	* 同时这种方式不会将cookie传入Web Server，也减少了Web Server对cookie的处理分析环节，
+* 同时这种方式不会将cookie传入Web Server，也减少了Web Server对cookie的处理分析环节，
 	提高了webserver的http请求的解析速度。
 
 ## 48.style标签写在body后与body前有什么区别？
@@ -451,35 +451,38 @@ link标签除了可以加载CSS外，还可以做很多其它的事情，比如�
 2、但从视觉上效果观看b与strong、i与em是没有区别的，唯一区别是搜索引擎检索的时候搜索引擎可以识别strong、em标签、而不能识别b与i标签
 > https://blog.csdn.net/WKY_CSDN/article/details/75315240
 
-## 12个HTML和CSS必须知道的重点难点问题 https://segmentfault.com/a/1190000013375700#articleHeader1
-## 12个你未必知道的CSS小知识 https://segmentfault.com/a/1190000002528855#articleHeader4
-## 移动端CSS书写注意事项 https://github.com/cssdream/css-creating/issues/8 https://segmentfault.com/a/1190000007574023 http://am-team.github.io/amg/dev-exp-doc.html
+## 12个HTML和CSS必须知道的重点难点问题 
+> https://segmentfault.com/a/1190000013375700#articleHeader1
+## 12个你未必知道的CSS小知识 
+> https://segmentfault.com/a/1190000002528855#articleHeader4
+## 移动端CSS书写注意事项 
+> https://github.com/cssdream/css-creating/issues/8 https://segmentfault.com/a/1190000007574023 http://am-team.github.io/amg/dev-exp-doc.html
 
 # JS
 ## 1.介绍js的基本数据类型。
-	* Boolean,Null,Undefined,Number,String,Symbol (ECMAScript 6 新定义)
+* Boolean,Null,Undefined,Number,String,Symbol (ECMAScript 6 新定义)
 ## 2.介绍js有哪些内置对象？
-	*  Object 是 JavaScript 中所有对象的父对象
-	* 数据封装类对象：Object、Array、Boolean、Number 和 String
- 	* 其他对象：Function、Arguments、Math、Date、RegExp、Error
+*  Object 是 JavaScript 中所有对象的父对象
+* 数据封装类对象：Object、Array、Boolean、Number 和 String
+ * 其他对象：Function、Arguments、Math、Date、RegExp、Error
 > https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 ## 3.说几条写JavaScript的基本规范？
-	* 使用===/！==比较true/false或数值
-	* 使用字面量代替new
-	* 不要使用全局函数
-	* for/if/while使用大括号
-	* 变量先声明再使用
-	* 变量命名以小写字母开头
+* 使用===/！==比较true/false或数值
+* 使用字面量代替new
+* 不要使用全局函数
+* for/if/while使用大括号
+* 变量先声明再使用
+* 变量命名以小写字母开头
 
 ## 5.JavaScript有几种类型的值？，你能画一下他们的内存图吗？
-	* 栈：原始数据类型（Undefined，Null，Boolean，Number、String）
-	* 堆：引用数据类型（对象、数组和函数）
-	* 两种类型的区别是：存储位置不同；
-	* 原始数据类型直接存储在栈(stack)中的简单数据段，占据空间小、大小固定，属于被频繁使用数据，所以放入栈中存储.
-	* 引用数据类型存储在堆(heap)中的对象,占据空间大、大小不固定,如果存储在栈中，将会影响程序运行的性能；引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址。当解释器寻找引用值时，会首先检索其在栈中的地址，取得地址后从堆中获得实体
+* 栈：原始数据类型（Undefined，Null，Boolean，Number、String）
+* 堆：引用数据类型（对象、数组和函数）
+* 两种类型的区别是：存储位置不同；
+* 原始数据类型直接存储在栈(stack)中的简单数据段，占据空间小、大小固定，属于被频繁使用数据，所以放入栈中存储.
+* 引用数据类型存储在堆(heap)中的对象,占据空间大、大小不固定,如果存储在栈中，将会影响程序运行的性能；引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址。当解释器寻找引用值时，会首先检索其在栈中的地址，取得地址后从堆中获得实体
 
 ## 6.如何将字符串转化为数字，例如'12.3b'?
-	* parseFloat('12.3b',10)
+* parseFloat('12.3b',10)
 
 ## 7.如何将浮点数点左边的数每三位添加一个逗号，如12000000.11转化为『12,000,000.11』?
 `function commafy(num){
@@ -491,7 +494,7 @@ link标签除了可以加载CSS外，还可以做很多其它的事情，比如�
   }`
   > 千位分隔符的完整攻略 https://www.tuicool.com/articles/ArQZfui
 ## 8.如何实现数组的随机排序？
-	* 数组乱序 https://github.com/hanzichi/underscore-analysis/issues/15
+* 数组乱序 https://github.com/hanzichi/underscore-analysis/issues/15
 
 ## 9.Javascript如何实现继承？10.JavaScript继承的几种实现方式？
  * JS继承的实现方式 http://www.cnblogs.com/humin/p/4556820.html
@@ -547,7 +550,7 @@ link标签除了可以加载CSS外，还可以做很多其它的事情，比如�
  	camry.sell(); `
 
 ## 12.Javascript作用链域?
-	* 函数创建时会建立一个预先包含全局变量对象的作用域链（保存在[[scope]]属性中），当函数被调用时，会创建一个当前活动变量和包含环境变量对象的集合，这就是执行环境的作用域链，它的开始是当前的活动对象，然后是包含环境中的变量对象，直到全局环境。（标识符所在的位置越深，访问速度越慢，因此尽量少使用全局变量。） 
+* 函数创建时会建立一个预先包含全局变量对象的作用域链（保存在[[scope]]属性中），当函数被调用时，会创建一个当前活动变量和包含环境变量对象的集合，这就是执行环境的作用域链，它的开始是当前的活动对象，然后是包含环境中的变量对象，直到全局环境。（标识符所在的位置越深，访问速度越慢，因此尽量少使用全局变量。） 
 ## 14.eval是做什么的？
 * 把字符串解析成JS代码并运行；
 
@@ -556,18 +559,18 @@ link标签除了可以加载CSS外，还可以做很多其它的事情，比如�
  * document对象--代表整个HTML文档，可以用来访问页面中的所有元素。每一个载入浏览器的HTML文档都会成为document对象。document对象使我们可以从脚本中对HTML页面中的所有元素进行访问。
 
 ## 17.写一个通用的事件侦听器函数。
-	* http://www.cnblogs.com/isaboy/p/eventJavascript.html
-	* http://www.haorooms.com/post/js_EventUtil
+* http://www.cnblogs.com/isaboy/p/eventJavascript.html
+* http://www.haorooms.com/post/js_EventUtil
 
 ## 18.["1", "2", "3"].map(parseInt) 答案是多少？
  * [1, NaN, NaN]
 
 ## 19.事件是？IE与火狐的事件机制有什么区别？ 如何阻止冒泡？
-	* IE是事件冒泡、Firefox同时支持两种事件模型，也就是：捕获型事件和冒泡型事件；
- 	* ev.stopPropagation();（旧ie的方法 ev.cancelBubble = true;）
+* IE是事件冒泡、Firefox同时支持两种事件模型，也就是：捕获型事件和冒泡型事件；
+ * ev.stopPropagation();（旧ie的方法 ev.cancelBubble = true;）
 
-~~ ## 20.什么是闭包（closure），为什么要用它？~~
-~~ ## 21.javascript 代码中的"use strict";是什么意思 ? 使用它区别是什么？~~
+~~## 20.什么是闭包（closure），为什么要用它？~~
+~~## 21.javascript 代码中的"use strict";是什么意思 ? 使用它区别是什么？~~
 
 ## 22.如何判断一个对象是否属于某个类？
 * instanceof 或者 constructor

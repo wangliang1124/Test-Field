@@ -67,3 +67,8 @@
 	 Flexbox详解 https://segmentfault.com/a/1190000002910324
 
 	前端基础进阶目录 https://segmentfault.com/a/1190000012646488
+
+## 学习日志：
+
+### 2018-4-10
+* 学习浏览器工作原理(how browsers work)

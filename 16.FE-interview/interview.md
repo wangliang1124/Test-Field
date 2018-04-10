@@ -39,9 +39,6 @@
 ## 12个HTML和CSS必须知道的重点难点问题 
 > https://segmentfault.com/a/1190000013375700
 
-## 12个HTML和CSS必须知道的重点难点问题 
-> https://segmentfault.com/a/1190000013375700
-
 ## 50道CSS基础面试题（附答案） 
 > https://segmentfault.com/a/1190000013325778
 
