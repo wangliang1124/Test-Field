@@ -496,6 +496,10 @@ link标签除了可以加载CSS外，还可以做很多其它的事情，比如�
 ## 移动端CSS书写注意事项 
 > https://github.com/cssdream/css-creating/issues/8 https://segmentfault.com/a/1190000007574023 http://am-team.github.io/amg/dev-exp-doc.html
 
+## sticky footer
+
+## 移动适配方案及相关概念
+
 # JS
 ## 1.介绍js的基本数据类型。
 * Boolean,Null,Undefined,Number,String,Symbol (ECMAScript 6 新定义)
