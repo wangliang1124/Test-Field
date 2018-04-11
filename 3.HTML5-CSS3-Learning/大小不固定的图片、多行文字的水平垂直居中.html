@@ -5,115 +5,41 @@
     <meta charset="UTF-8">
     <title>大小不固定的图片、多行文字的水平垂直居中</title>
     <meta name="viewport" content="width=device-width, initial-scale=3">
+    <link rel="stylesheet" type="text/css" href="css/center.css">
     <style>
-    * {
-        padding: 0;
-        margin: 0
-    }
 
-    .wrapper {
-        background: #ccc;
-        padding: 100px
-    }
-
-    .content-a {
-        border: 1px dashed #00f;
-        text-align: center;
-        line-height: 30px;
-        font-size: 20px
-    }
-
-    .content-a .text {
-        font-size: 10px;
-        line-height: 0;
-    }
-
-    .content-b {
-        margin: 36px 0;
-        border: 1px dashed #00f;
-        margin-top: 20px;
-        line-height: 200px;
-        /*      font-size: 0*/
-    }
-
-    .content-b span {
-        display: inline-block;
-        line-height: 1.5;
-        vertical-align: middle;
-        background-color: #999;
-    }
-
-    .content-b i {
-        display: inline-block;
-        width: 2px;
-        font-size: 0px;
-        vertical-align: middle;
-        background-color: #ff0
-    }
-
-    .box {
-        margin: 36px 0;
-        border: 1px dashed blue;
-        font-size: 60px;
-        color: white;
-        background: red;
-        /*height: 80px; */
-        line-height:36px; 
-    }
-
-    .box .dot {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        /*line-height:50px;*/
-        background: white;
-        vertical-align: middle;
-    }
-
-    .box .text {
-        /*display: inline-block;*/
-        border: 1px solid #999;
-        vertical-align: middle;
-        /*line-height:180px; */
-        font-size: 72px;
-    }
-
-    .content-c {
-        margin: 36px 0;
-        border: 1px dashed #00f;
-        font-size: 300px
-    }
-
-    .content-c img {
-        vertical-align: top;
-    }
-
-    .content-c .text {
-        border: 1px dashed #f0f;
-        vertical-align: middle;
-        line-height: 40px;
-        font-size: 24px;
-    }
     </style>
 </head>
 
 <body>
     <div class="wrapper">
-        <div class="content-a">
-            这是高度为30像素的单行文字
+        <div class="inline-center-1">
+            1. inline单行水平垂直居中
         </div>
-        <p class="content-b">
-            <span style="font-size:12px;">这里是高度为150像素的标签内的多行文字，文字大小为12像素。<br>这里是第二行，用来测试多行的显示效果。</span>
-            <i>&nbsp;</i>
+        <p class="inline-center-2">
+            <span class="text">2.inline多行水平垂直居中。<br>这里是高度为150像素的标签内的多行文字，文字大小为12像素。</span>
+            <!-- <img src="./img/grayscale.jpg" width="100" height="100" class="img"> -->
+            <!-- <i>&nbsp;</i> -->
         </p>
-        <span class="box">
+        <div class="box">
             <span class="dot"></span>
-            x文
+            x
             <span class="text"> 一段文字</span>
-        </span>
+        </div>
         <div class="content-c">
             <img src="./img/grayscale.jpg">x<span class="text">我是文字</span>
-            <!-- <i>&nbsp;</i> -->
+            <i>&nbsp;</i>
+        </div>
+        <div class="block-center">
+            <div class="block-center-1">
+                1. 已知高度的block元素垂直居中
+            </div>
+        </div>
+        <div class="absolute-center">
+            <span class="absolute-center-content">
+                1. 绝对居中
+                内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+            </span>
         </div>
     </div>
 </body>

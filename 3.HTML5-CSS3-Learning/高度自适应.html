@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>高度自适应</title>
+</head>
+  <style>
+    .outer {
+      position: relative;
+      height: 300px;
+      /*padding-top: 100px;*/
+    }
+    .A {
+      position: absolute;
+      /*margin: -100px 0 0;*/
+      top: 0;
+      left: 0;
+      height: 100px;
+      width: 100%;
+      background: #ddd;
+    }
+    .B {
+      height: 100%;
+      background: #ccc;
+    }
+/*    .A {
+      height: 100px;
+    }
+    .B {
+      position: absolute;
+      top: 100px;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #ccc;
+    }*/
+  </style>
+<body>
+    <div class="outer">
+        <div class="A">
+          A
+        </div>
+        <div class="B">B</div>
+    </div>
+</body>
+
+</html>

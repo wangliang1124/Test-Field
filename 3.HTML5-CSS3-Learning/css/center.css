@@ -1,0 +1,129 @@
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    .wrapper {
+        padding: 100px;
+    }
+
+    .inline-center-1 {
+        border: 1px dashed #00f;
+        text-align: center;
+        line-height: 30px;
+        font-size: 20px
+    }
+
+    .inline-center-2 {
+        width: 200px;
+        margin: 24px 0;
+        border: 1px dashed #00f;
+        margin-top: 20px;
+        font-size: 0;
+        /* height: 120px; */ /* 非必须 */
+        line-height: 120px;
+    }
+
+    .inline-center-2 .text {
+        display: inline-block;  /* 转换成inline-block*/
+        /* max-width: calc(100% -0.25em); */
+        line-height: 1; /* 必须设置，否则继承line-height: 200px; */
+        vertical-align: middle;
+        font-size: 12px;
+        background-color: #ccc;
+    }
+    .inline-center-2::after {  
+      content: '';  
+      height: 100%;  
+      margin-left: -0.25em; /* To offset spacing. May vary by font */  
+    }  
+    .inline-center-2 .img {
+        vertical-align: middle
+    }
+    .inline-center-2 i { 
+        display: inline-block;
+        /* width: 1px; */
+        /* line-height: 100px; */
+        height: 100%;
+        /* margin-left: -0.25em;  */
+        font-size: 0px;
+        vertical-align: middle;
+        background-color: #f00
+    }
+
+    .box {
+        border: 1px dashed blue;
+        font-size: 34px;
+        color: white;
+        background: red;
+     /*    height: 80px;  */
+        line-height:60px; 
+    }
+
+    .box .dot {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        /*line-height:50px;*/
+        background: white;
+        vertical-align: middle;
+    }
+
+    .box .text {
+        /*display: inline-block;*/
+        border: 1px solid #999;
+        vertical-align: middle;
+        /*line-height:180px; */
+        font-size: 36px;
+    }
+
+    .content-c {
+        margin: 36px 0;
+        border: 1px dashed #00f;
+        font-size: 300px
+    }
+
+    .content-c img {
+        vertical-align: top;
+    }
+
+    .content-c .text {
+        border: 1px dashed #f0f;
+        vertical-align: middle;
+        line-height: 40px;
+        font-size: 24px;
+    }
+    .block-center {
+        position: relative;
+        height: 120px;
+        background: #ddd;
+    }
+    .block-center-1 {
+        position: absolute;
+        width: 100px;
+        height:  100px;
+        top: 50%;
+        left: 50%;
+        margin-top: -50px;
+        margin-left: -50px;
+        background: #ccc;
+    }
+    .absolute-center {
+        position: relative;
+        height:  120px;
+        width: 50%;
+        background: #eee;
+    }
+    .absolute-center-content {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        margin:  auto;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        text-align: center;
+        overflow: hidden;
+        background: #ccc
+    }

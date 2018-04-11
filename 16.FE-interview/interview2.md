@@ -130,6 +130,8 @@
 
 > 介绍一下标准的CSS的盒子模型？与IE的盒子模型有什么不同的？ https://github.com/ivanberry/CSS-Knowledge/issues/3
 
+> css3 box-sizing详解 https://www.cnblogs.com/iflygofy/p/6323275.html
+
 ## 2.CSS选择符有哪些？哪些属性可以继承？
 * CSS选择符：id选择器(#myid)、类选择器(.myclassname)、标签选择器(div, h1, p)、相邻选择器(h1 + p)、子选择器（ul > li）、后代选择器（li a）、通配符选择器（\*）、属性选择器（a[rel="external"]）、伪类选择器（a:hover, li:nth-child）
 * 可继承的属性：font-size, font-family, color
@@ -137,9 +139,11 @@
 * 优先级（就近原则）：!important > [ id > class > tag ] 
 * !important 比内联优先级高
 
-> http://www.w3school.com.cn/cssref/css_selectors.asp
+> CSS 选择器参考手册 http://www.w3school.com.cn/cssref/css_selectors.asp
 
-> http://www.ruanyifeng.com/blog/2009/03/css_selectors.html
+> CSS选择器笔记 http://www.ruanyifeng.com/blog/2009/03/css_selectors.html
+
+> css中可以和不可以继承的属性  http://blog.163.com/yhwwen@126/blog/static/170468853201326421822/
 
 ## 3.CSS优先级算法如何计算？
 * !important > 内联 > id > 类 > 标签|伪类|属性 > 伪元素 > 通配符 > 继承
@@ -162,11 +166,11 @@
 2. Flex布局: 设置display:flex;justify-content:center;(灵活运用,支持Chroime，Firefox，IE9+)
 
 #### 垂直居中设置：
-1. 父元素高度确定的单行文本（内联元素）
-* 设置 height = line-height；
-2. 父元素高度确定的多行文本（内联元素）
-* a:插入table （插入方法和水平居中一样），然后设置 vertical-align:middle；
-* b:先设置 display:table-cell 再设置 vertical-align:middle；
+1. 单行文本
+* 如果父元素有height，设置line-height与height相等即可。 如果没有height, 设置一个line-height即可。
+2. 多行文本或图片
+* a:父元素设置line-height，子元素display: inline-block，vertical-align:middle；line-height: 1
+* b:添加一个空标签用于撑开父元素，子元素同上。
 
 ### 块级元素居中方案
 #### 水平居中设置：
@@ -174,18 +178,20 @@
 * 设置 左右 margin 值为 auto；
 2. 不定宽块状元素
 * a:在元素外加入 table 标签（完整的，包括 table、tbody、tr、td），该元素写在 td 内，然后设置 margin 的值为 auto；
-* b:给该元素设置 displa:inine 方法；
-* c:父元素设置 position:relative 和 left:50%，子元素设置 position:relative 和 left:50%；
+* b:给该元素设置 display:inline-block, 注意空白间距问题 letter-spacing: -4px;
+* c:利用Transforms，top: 50%; left: 50%; transform: translate(-50%,-50%)
 
 #### 垂直居中设置：
-* 使用position:absolute（fixed）,设置left、top、margin-left、margin-top的属性;
-* 利用position:fixed（absolute）属性，margin:auto这个必须不要忘记了;
-* 利用display:table-cell属性使内容垂直居中;
+* 使用position:absolute（fixed）,父元素postion:relative, 子元素设置 margin: auto;  position: absolute;  top: 0; left: 0; bottom: 0; right: 0;  
+* 定宽高，负外边距margin
 * 使用css3的新属性transform:translate(x,y)属性;
-* 使用:before元素;
+* 利用display:table-cell属性使内容垂直居中;
+* 当做行内元素处理display:inline-block,使用:before元素;
 
 > 盘点8种CSS实现垂直居中水平居中的绝对定位居中技术 https://blog.csdn.net/freshlover/article/details/11579669
+
 > css实现垂直居中6种方法 http://www.cnblogs.com/Yirannnnnn/p/4933332.html http://www.cnblogs.com/yugege/p/5246652.html
+
 > 六种实现元素水平居中https://www.w3cplus.com/css/elements-horizontally-center-with-css.html
 
 ## 6.display有哪些值？说明他们的作用。
@@ -400,7 +406,10 @@
 	`-webkit-overflow-scrolling: touch;`
 
 ## 45.有一个高度自适应的div，里面有两个div，一个高度100px，希望另一个填满剩下的高度。
-* 外层div使用position：relative；高度要求自适应的div使用position: absolute; top: 100px; bottom: 0; left: 0
+* `.outer { posstion:relative; height: 600px } .header{ hieght:100px; } .content{ position: absolute; top:100px;left:0; bottom:0 }`
+* `.outer{ height:600px;padding-top: 100px } .header{ height:100px;margin-top:-100px } .content { height:100% }`
+* `.outer{ position:relative;height:600px;padding-top: 100px } .header{ position: absolute;top:0;left:0;width:100%;height:100px; } .content { height:100% }`
+* `.outer { display:flex; flex-direction:column; height:600px;} .header {height:100px} .content{ flex: 1}`
 
 ## 46.png、jpg、gif 这些图片格式解释一下，分别什么时候用。有没有了解过webp？
 * png是便携式网络图片（Portable Network Graphics）是一种无损数据压缩位图文件格式.优点是：压缩比高，色彩好。 大多数地方都可以用。
