@@ -237,6 +237,14 @@
 * 第三种用Flex布局
 > https://blog.csdn.net/sjinsa/article/details/70903940
 
+> CSS布局解决方案（终结版） https://segmentfault.com/a/1190000013565024?utm_source=channel-hottest#articleHeader2
+
+> CSS布局说——可能是最全的 https://segmentfault.com/a/1190000011358507#articleHeader0
+
+> CSS布局十八般武艺都在这里了 http://web.jobbole.com/90844/
+
+> CSS常见布局代码整理 http://blog.leanote.com/post/code.zhangrui@gmail.com/CSS%E5%B8%B8%E8%A7%81%E5%B8%83%E5%B1%80%E6%95%B4%E7%90%86
+
 ## 12.css多列等高如何实现？
 > CSS：多列等高布局 https://codepen.io/yangbo5207/post/equh
 
