@@ -271,21 +271,22 @@
 * 因为浏览器的兼容问题，不同浏览器对有些标签的默认值是不同的，如果没对CSS初始化往往会出现浏览器之间的页面显示差异。
 
 ## 16.absolute的containing block(容器块)计算方式跟正常流有什么不同？
-* 0.先找到其祖先元素中最近的 position 值不为 static 的元素
-* 1.若此元素为 inline 元素,则 containing block 为能够包含这个元素生成的第一个和最后一个 inline box 的 padding box (除 * margin, border 外的区域) 的最小矩形；
-* 2.否则,则由这个祖先元素的 padding box 构成。
-* 3.如果都找不到,则为 initial containing block。
-* 补充：
-* 1. static(默认的)/relative：简单说就是它的父元素的内容框(即去掉 padding 的部分)
-* 2. absolute: 向上找最近的定位为 absolute/relative 的元素
-* 3. fixed: 它的 containing block 一律为根元素(html/body),根元素也是 initialcontaining block
+1. 如果position属性是static或relative，包含块是最近的块级祖先(例如 inline-block, block, list-item)，此元素的百分比值计算方式为包含块的content-box的width、height
+2. 如果position: absolute, 包含块是最近的position值为非static元素(fixed,absolute,relative,sticky)，如果都找不到,则为 initial containing block, 百分比计算依据包含块的padding-box;
+3. 如果position: fixed, 包含块是初始包含块即根元素
+4. 如果position: absolute | fixed，包含块也可以是最近包含以下设置: transform,perspective,will-change: transform | perspective, filter(只在firefox起作用)
 
-> All about the containing block https://developer.mozilla.org/zh-CN/docs/Web/CSS/All_About_The_Containing_Block
+> Layout and the containing block https://developer.mozilla.org/en-US/docs/Web/CSS/Containing_block
+> KB008: 包含块( Containing block ) http://w3help.org/zh-cn/kb/008/
 
 ## 17.CSS里的visibility属性有个collapse属性值是干嘛用的？在不同浏览器下以后什么区别？
-* 当一个元素的visibility属性被设置成collapse值后，对于一般的元素，它的表现跟hidden是一样的。
-* chrome中，使用collapse值和使用hidden没有区别。
-* firefox，opera和IE，使用collapse值和使用display：none没有什么区别。
+* 对于表格元素：完全隐藏不占用空间，和display:none效果一样
+* 对于其他元素： 和visibility: hidden一样，使元素不可见但仍然占用空间。
+
+> MDN visibility https://developer.mozilla.org/en-US/docs/Web/CSS/visibility
+
+> Difference between Visibility.Collapsed and Visibility.Hidden
+ https://stackoverflow.com/questions/886742/difference-between-visibility-collapsed-and-visibility-hidden
 
 ## 18.position跟display、margin collapse、overflow、float这些特性相互叠加后会怎么样？
 * 如果元素的display为none,那么元素不被渲染,position,float不起作用,
@@ -313,6 +314,7 @@
 * 触发hasLayout, 当设置了zoom的值之后，所设置的元素就会就会扩大或者缩小，高度宽度就会重新计算了，这里一旦改变zoom值时其实也会发生重新渲染，运用这个原理，也就解决了ie下子元素浮动时候父元素不随着自动扩大的问题。
 
 > 详说清除浮动 http://kayosite.com/remove-floating-style-in-detail.html
+> RM8002: 不能同时在 IE6 IE7 IE8(Q) 中触发 hasLayout 并在其他浏览器中创建 Block Formatting Context 的元素在各浏览器中的表现会有差异 http://www.w3help.org/zh-cn/causes/RM8002
 
 ## 25.使用 CSS 预处理器吗？喜欢那个？
  * Stylus
