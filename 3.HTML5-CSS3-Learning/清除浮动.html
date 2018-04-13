@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>清除浮动</title>
+    <style>
+    .main {
+        /*display: inline-block;*/
+        /*方法五*/
+        /*position: absolute;*/
+        height: 200px;
+        border: solid 1px black;
+        background: #ddd;
+        /*方法四*/
+        /*float: left;*/
+        /*方法二*/
+        overflow: hidden; 
+        /*兼容ie6*/
+        /**zoom: 1;*/
+    }
+
+    .main .left,
+    .main .right {
+        float: left;
+        width: 100px;
+        height: 100px;
+        background: green;
+    }
+
+    .main .right {
+        background: yellow
+    }
+
+    .clear::after {
+        /*方法六*/
+        content: '';
+        display: block;
+        height: 0;
+        visibility: hidden;
+        clear: both;
+    }
+
+    .clear {
+        *zoom: 1;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <!-- <div class="left"></div> -->
+        <span>1我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容</span>
+        <span>2我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容</span>
+        <span>3我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容</span>
+        <span>4我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容</span>
+        <span>5我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容我是内容</span>
+        <!-- <div class="right"></div> -->
+        <!-- 方法一 clear:both -->
+        <!-- <div class="clear"></div> -->
+    </div>
+</body>
+
+</html>

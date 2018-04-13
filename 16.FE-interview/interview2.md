@@ -118,6 +118,30 @@
 
 > Page Visibility API https://developer.mozilla.org/zh-CN/docs/Web/API/Page_Visibility_API
 
+## Web Worker
+> web worker详解 http://xgfe.github.io/2017/05/03/LexHuang/web-worker/
+
+> 深入 HTML5 Web Worker 应用实践：多线程编程 https://www.ibm.com/developerworks/cn/web/1112_sunch_webworker/
+
+> Web Worker 是什么鬼？ http://www.cnblogs.com/zichi/p/4954328.html
+
+## PostMessage
+> html5 API postMessage跨域详解 http://blog.xieliqun.com/2016/08/25/postMessage-cross-domain/
+> HTML5 postMessage 跨域交换数据 http://www.cnblogs.com/zichi/p/4638096.html
+
+## 更好的逐帧动画函数 — requestAnimationFrame 简介
+> http://www.cnblogs.com/zichi/p/5208171.html
+> 浅析 requestAnimationFrame https://taobaofed.org/blog/2017/03/02/thinking-in-request-animation-frame/
+
+## HTML5 File API — 让前端操作文件变的可能
+> http://www.cnblogs.com/zichi/p/html5-file-api.html
+
+## 浏览器缓存知识小结及应用
+> https://www.cnblogs.com/lyzg/p/5125934.html
+
+## 使用css实现一个持续的动画效果
+> http://www.cnblogs.com/gaoxuerong123/p/8540554.html
+
 ## 40个重要的HTML5面试题及答案
 > http://blog.jobbole.com/78346/#q2
 
@@ -301,7 +325,14 @@
 > 我对BFC的理解 http://www.cnblogs.com/dojo-lzz/p/3999013.html
 
 ## 21.请解释一下为什么需要清除浮动？清除浮动的方式
+* 添加一个无意义标签`<div style="clear:both"></div>`
+* 触发包含块的BFC, overflow:hidden , position:absolute | fixed, display: inline-block;...
+* 伪元素::after, `clear::after { content: ''; display:block; height:0; visibility:hidden; clear:both }`
+
 > CSS-清除浮动 https://segmentfault.com/a/1190000004865198
+
+> 浮动从何而来 我们为何要清除浮动 清除浮动的原理是什么 http://www.jb51.net/css/67471.html
+
 > 理解为何需要清除浮动及清除浮动的方法 https://blog.csdn.net/qq_31915745/article/details/72524465
 
 ## 22.什么是外边距合并？
@@ -339,9 +370,9 @@
 * margin用于布局分开元素使元素与元素互不相干；
 * padding用于元素与内容之间的间隔，让内容（文字）与（包裹）元素之间有一段
 * 何时使用margin：	
-		+ 需要在border外侧添加空白
-		+ 空白处不需要背景色
-		+ 上下相连的两个盒子之间的空白，需要相互抵消时。
+	+ 需要在border外侧添加空白
+	+ 空白处不需要背景色
+	+ 上下相连的两个盒子之间的空白，需要相互抵消时。
 * 何时使用padding：
 	* 需要在border内侧添加空白
 	* 空白处需要背景颜色
@@ -364,7 +395,10 @@
 	页面头部必须有meta声明的viewport。
 `<meta name=’viewport’ content=”width=device-width, initial-scale=1. maximum-scale=1,user-scalable=no”>`
 > 关于移动布局的系列文章 https://anotherleon.github.io/2017/11/05/%E4%BB%8Eline-height%E5%92%8Cvertical-align%E7%9A%84%E5%85%B3%E7%B3%BB%E5%BC%80%E5%A7%8B%E7%90%86%E8%A7%A3css%E5%B8%83%E5%B1%80/v
+
 > 响应式设计总结 https://www.zybuluo.com/JRuiCoder/note/303046
+
+> [CSS] 详细解释 @media 属性与 (max-width:) and (min-width) 之间的关系及用法 https://www.tuicool.com/articles/FFn632q
 
 ## 33.视差滚动效果，如何给每页做不同的动画？（回到顶部，向下滑动要再次出现，和只出现一次分别怎么做？）
 > 小tip: 纯CSS实现视差滚动效果 http://www.zhangxinxu.com/wordpress/2015/03/css-only-parallax-effect/
@@ -399,7 +433,9 @@
 * -webkit-font-smoothing只在Mac OS X/macOS上起作用-webkit-font-smoothing：antialiased是最佳的，灰度平滑。
 
 ## 40.font-style属性可以让它赋值为“oblique” oblique是什么意思？
-* 正常版本的倾斜 
+* oblique: 倾斜的文字； italic: 斜体字 ；上
+* oblique基本上是一种模仿的斜体，而不是真正的斜体。
+
 ## 41.position:fixed;在android下无效怎么处理？
 * fixed的元素是相对整个页面固定位置的，你在屏幕上滑动只是在移动这个所谓的viewport，
 * 并不是不支持fixed，只是fixed的元素不是相对手机屏幕固定的。
@@ -427,7 +463,10 @@
 * jpg是一种针对相片使用的一种失真压缩方法，是一种破坏性的压缩，在色调及颜色平滑变化做的不错。在www上，被用来储存和传输照片的格式。
 * gif是一种位图文件格式，以8位色重现真色彩的图像。可以实现动画效果.
 * webp格式是谷歌在2010年推出的图片格式，压缩率只有jpg的2/3，大小比png小了45%。缺点是压缩的时间更久了，兼容性不好，目前谷歌和opera支持。
-参考资料： [选择正确的图片格式](http://www.yuiblog.com/blog/2008/11/04/imageopt-2/) https://www.jianshu.com/p/261cd13757ce
+
+> 参考资料： [Image Optimization Part 2: Selecting the Right File Format](http://www.yuiblog.com/blog/2008/11/04/imageopt-2/) 
+
+> 图像压缩技术：选择正确的图片格式 https://www.jianshu.com/p/261cd13757ce
 
 ## 47.什么是Cookie隔离？（或者说：请求资源的时候不要让它带cookie怎么做）
 * cookie隔离技术则是通过使用多个非主要域名来请求静态文件，如果静态文件都放在主域名下，那静态文件请求的时候带有的cookie的数据提交给server是非常浪费的，还不如隔离开。
@@ -498,7 +537,13 @@ link标签除了可以加载CSS外，还可以做很多其它的事情，比如�
 ## 移动端CSS书写注意事项 
 > https://github.com/cssdream/css-creating/issues/8 https://segmentfault.com/a/1190000007574023 http://am-team.github.io/amg/dev-exp-doc.html
 
-## sticky footer
+## Sticky Footer
+> Sticky Footer，完美的绝对底部 https://aotu.io/notes/2017/04/13/Sticky-footer/index.html
+> CSS秘密花园： Sticky footers https://www.w3cplus.com/css3/css-secrets/sticky-footers.html
+> Sticky Footer, Five Ways https://css-tricks.com/couple-takes-sticky-footer/
+
+## CSS3 Transform的perspective属性
+> http://www.alloyteam.com/2012/10/the-css3-transform-perspective-property/
 
 ## 移动适配方案及相关概念
 
