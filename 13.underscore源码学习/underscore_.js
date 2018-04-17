@@ -106,5 +106,57 @@
   };
 
   // Collection Functions
-  
+  _.each = function(obj, iteratee, context) {
+    iteratee = optimizeCb(iteratee, context);
+    var i, length;
+    if(isArrayLike(obj)) {
+      for(i = 0, length = obj.length; i < length; i++){
+        iteratee(obj[i], i, obj)
+      }
+    } else{
+      var keys = _.keys(obj)
+      for(i = 0, length = keys.length; i < length; i++){
+        iteratee(obj[keys[i]], keys[i], obj);
+      }
+    }
+    return obj;
+  };
+
+  _.map = function(obj, iteratee, context) {
+    iteratee = cb(iteratee, context);
+    var keys = !isArrayLike(obj) && _.keys(obj);
+    var length = (keys || obj).length;
+    var results = Array(length);
+
+    for(var i = 0; i < length; i++){
+      var currentKey = keys ? keys[i]: i;
+      results[i] = iteratee(obj[currentKey], currentKey, obj);
+    }
+    return results;
+  }
+
+  function createReduce(dir) {
+    function iterator(obj ,iteratee, memo, keys, index, length) {
+      for(; index >= 0 && index < length; index += dir){
+        var currentKey = keys? keys[index]: index;
+        memo = iteratee(memo, obj[currentKey], currentKey, obj);
+      }
+      return memo;
+    }
+
+    return function(obj, iteratee, memo, context) {
+      iteratee = optimizeCb(iteratee, context, 4)
+      var keys = !isArrayLike(obj) && _.keys(obj),
+          length = (keys || obj).length,
+          index = dir > 0 ? 0 : length -1;
+      if (arguments.length < 3) {
+        memo = obj[keys? keys[index]: index];
+        index += dir;
+      }
+      return iterator(obj, iteratee, memo, keys, index, length);
+    }
+  }
+
+  _.reduce = _.foldl = _.inject = createReduce(1);
+  _.reduceRight = _.foldr = createReduce(-1);
 }.call(this));

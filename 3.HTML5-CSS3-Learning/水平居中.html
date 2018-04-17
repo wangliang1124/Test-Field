@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>水平居中</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    html,
+    body {
+        height: 100%;
+    }
+
+    .center1 {
+        margin: 0 auto;
+        width: 50%;
+        background: #ccc;
+    }
+
+    .section2 {
+        text-align: center;
+    }
+
+    .center2 {
+        display: inline-block;
+        width: 50%;
+        background: #ddd;
+        text-align: left;
+    }
+
+    .section3 {
+        display: table;
+        margin: 0 auto;
+        width: 50%;
+        height: 36px;
+    }
+
+    .center3 {
+        display: table-cell;
+        vertical-align: middle;
+        background: #eee;
+    }
+
+    .section4,
+    .section5 {
+        position: relative;
+        height: 72px;
+        overflow: hidden;
+        background: #ccc;
+    }
+    .section5{
+         background: #ddd;
+    }
+    .center4 {
+        position: absolute;
+        left: 50%;
+        width: 50%;
+        transform: translateX(-50%);
+        /* width: 600px; */
+        /* margin-left: -300px; */
+        background: #bbb;
+    }
+    .center5 {
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 200px;
+        height: 48px;
+        margin: auto;
+        overflow: hidden;
+        background: #ccc
+    }
+
+    .section6 {
+        display: flex;
+        justify-content: center;
+        background: #ccc
+    }
+
+    .center6 {
+        flex: 0 0 50%;
+        background: #aaa
+    }
+
+    .section7 {
+        width: -webkit-fit-content;
+        width: -moz-fit-content;
+        width: fit-content;
+        margin: 0 auto;
+        background: #ddd;
+    }
+
+    .section.
+    </style>
+</head>
+
+<body>
+    <div class="section1">
+        <p class="center1">水平居中1 margin: 0 auto</p>
+    </div>
+    <div class="section2">
+        <p class="center2">水平居中2 text-align:center + display:inline-block</p>
+    </div>
+    <div class="section3">
+        <p class="center3">水平居中3 display:table + display:table-cell</p>
+    </div>
+    <div class="section4">
+        <p class="center4">水平居中4 position: absolute + left:50% + transform:translateX(-50%) </p>
+    </div>
+    <div class="section5">
+        <p class="center5">水平居中5 绝对定位居中</p>
+    </div>
+    <div class="section6">
+        <p class="center6">水平居中6 flex</p>
+    </div>
+    <div class="section7">
+        <p class="center7">水平居中7 width: fit-content </p>
+    </div>
+</body>
+
+</html>

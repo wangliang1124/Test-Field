@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>垂直居中</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    html,
+    body {
+        height: 100%;
+    }
+
+    .wrapper {
+        margin: 0 auto;
+        width: 50%;
+    }
+
+    .center1 {
+        line-height: 36px;
+        background: #ccc;
+    }
+
+    .center2 {
+        height: 72px;
+        background: #ddd;
+        overflow: hidden;
+    }
+
+    .center2::after {
+        content: '';
+        display: inline-block;
+        vertical-align: middle;
+        height: 100%;
+    }
+
+    .center2 .text,
+    .img {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .center3 {
+        display: table;
+        height: 72px;
+        width: 100%;
+        background: #ccc;
+        overflow: hidden;
+    }
+
+    .block1 {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .center4 {
+        display: flex;
+        height: 72px;
+        align-items: center;
+        background: #ddd;
+    }
+
+    .center5 {
+        position: relative;
+        height: 120px;
+        background: #ccc;
+    }
+
+    .center5::after {
+        content: '';
+        display: block;
+        height: 0;
+        clear: both;
+    }
+    
+    .block5 {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 100%;
+        transform: translate(-50%, -50%);
+         overflow:auto
+    }
+    .center6{
+        position: relative;
+        height:  120px;
+        width: 100%;
+        padding: 30px;
+        box-sizing: border-box;
+        border: 10px solid red;
+        background: #ddd;
+    }
+    .block6{
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        width: 50%;
+        height: 50%;
+        overflow: hidden;
+        margin: auto;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="center1">
+            1. inline单行水平垂直居中 设置line-height
+        </div>
+        <p class="center2">
+            <span class="text">2.inline多行水平垂直居中,把文字层display:inline-block <br>第二行：这里是高度为150像素的标签内的多行文字，文字大小为12像素。</span>
+            <img src="./img/grayscale.jpg" width="48" height="48" class="img">
+        </p>
+        <div class="center3">
+            <div class="block1">
+                3. 已知高度的block元素垂直居中 父：display: table 子：display:table-cell 不兼容ie6、7
+            </div>
+        </div>
+        <div class="center4">
+            <div class="block4">
+                4. 不定高度的block元素垂直居中 父：display: flex; align-items: center 不兼容ie8+
+                <br> 第二行
+            </div>
+        </div>
+        <div class="center5">
+            <div class="block5">
+                5. 不定高度的block元素垂直居中, left: 50%; top: 50%; transform: translate(-50%, -50%)
+                <br> 优点:代码量少。 缺点:IE8不支持, 属性需要追加浏览器厂商前缀, 可能干扰其他 transform 效果, 某些情形下会出现文本或元素边界渲染模糊的现象.
+                <br> 高度固定时，可以是使用-margin, margin-top:-height/2;
+            </div>
+        </div>
+        <div class="center6">
+            <span class="block6">
+                6. 绝对居中 内容的height计算, 包含块的padding-box，即(120(width)-10(border)*2) * 50%
+                内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
+            </span>
+        </div>
+    </div>
+</body>
+
+</html>

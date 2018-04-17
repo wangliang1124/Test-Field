@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>品字布局</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    html,
+    body {
+        height: 100%;
+        /*此设置非常关键，因为默认的body，HTML高度为0，所以后面设置的div的高度无法用百分比显示*/
+    }
+
+    .wrapper {
+        display: flex;
+        flex-direction: column;
+        height: 100%
+    }
+
+    .header {
+        flex: 1;
+        width: 50%;
+        margin: 0 auto;
+        background: #ccc;
+    }
+
+    .main {
+        flex: 1;
+        display: flex;
+        background: #ddd;
+    }
+
+    .main .left,
+    .main .right {
+        flex: 1;
+    }
+
+    .main .left {
+        background: green
+    }
+
+    .main .right {
+        background: yellow
+    }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="header">
+            <span class="text">header</span>
+        </div>
+        <div class="main">
+            <div class="left">left</div>
+            <div class="right">right</div>
+        </div>
+    </div>
+</body>
+
+</html>
