@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>transform&transition&animation</title>
+    <style>
+    .transform,
+    .animation {
+        width: 100px;
+        height: 100px;
+        margin: 0 auto;
+        background: #ccc;
+        transition: all 1s ease;
+    }
+
+    .transform:hover {
+        transform: rotate(720deg);
+        background: #666
+    }
+
+    @keyframes animation {
+        0% {
+            -webkit-box-shadow: 0 0 12px rgba(72, 106, 170, 0.5);
+            border-color: rgba(160, 179, 214, 0.5);
+        }
+        100% {
+            -webkit-box-shadow: 0 0 12px rgba(72, 106, 170, 1.0), 0 0 18px rgba(0, 140, 255, 1.0);
+            border-color: rgba(160, 179, 214, 1.0);
+        }
+    }
+
+    .animation:hover {
+        animation: animation 1s ease-in alternate infinite
+    }
+    </style>
+</head>
+
+<body>
+    <h1 style="text-align: center">    
+      <a  target="_blank" href="http://www.zhangxinxu.com/wordpress/2010/11/css3-transitions-transforms-animation-introduction/">
+      CSS3 Transitions, Transforms和Animation使用简介与应用展示 </a> 
+    </h1>
+    <div class="transform">
+    </div>
+    <div class="animation"></div>
+</body>
+
+</html>

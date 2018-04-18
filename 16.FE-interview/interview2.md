@@ -259,7 +259,10 @@
 * 第二种全屏的品字布局:
 * 上面的div设置成100%，下面的div分别宽50%，然后使用float或者inline使其不换行。
 * 第三种用Flex布局
-> https://blog.csdn.net/sjinsa/article/details/70903940
+
+> 一个满屏品字布局怎么设计？ https://blog.csdn.net/sjinsa/article/details/70903940
+
+> CSS 常见布局方式 https://juejin.im/post/599970f4518825243a78b9d5  CSS常见布局解决方案 http://www.imooc.com/article/17719
 
 > CSS布局解决方案（终结版） https://segmentfault.com/a/1190000013565024?utm_source=channel-hottest#articleHeader2
 
