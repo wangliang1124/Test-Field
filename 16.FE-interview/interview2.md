@@ -408,6 +408,7 @@
 ## 33.视差滚动效果，如何给每页做不同的动画？（回到顶部，向下滑动要再次出现，和只出现一次分别怎么做？）
 > 小tip: 纯CSS实现视差滚动效果 http://www.zhangxinxu.com/wordpress/2015/03/css-only-parallax-effect/
 > 视差滚动(Parallax Scrolling)效果的原理和实现 http://www.cnblogs.com/JoannaQ/archive/2013/02/08/2909111.html
+> Alloy Team的《视差滚动的爱情故事》 http://www.alloyteam.com/2014/01/parallax-scrolling-love-story/
 
 ## 34.::before 和 :after中双冒号和单冒号 有什么区别？解释一下这2个伪元素的作用。
 * 单冒号(:)用于CSS3伪类，双冒号(::)用于CSS3伪元素。

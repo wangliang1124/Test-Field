@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>position&display&float</title>
+</head>
+<body>
+		<script type="text/javascript">
+		    function getStyle(obj, style) {
+		       var _style = (style == "float") ? "styleFloat" : style;
+		       return document.defaultView ? document.defaultView.getComputedStyle(obj, null).getPropertyValue(style) : obj.currentStyle[_style.replace(/-[a-z]/g, function() {
+		           return arguments[0].charAt(1).toUpperCase();
+		       })];
+		    }
+		    // window.onload = function() {
+		    //    document.getElementById("info").innerHTML = "float : " + getStyle(document.getElementById("test"), "float") +
+		    //            "<br/>display : " + getStyle(document.getElementById("test"), "display");
+		    // }
+		    window.onload = function() {
+		       document.getElementById("info").innerHTML = "display : " + getStyle(document.getElementById("test"), "display");
+		    }
+		</script>
+		<!-- <div id="test" style="position:absolute; float:left;display:inline;"></div>
+		<div id="info"></div> -->
+<!-- 		<span id="test" style="width:100px; height:100px; border:1px solid red;float:left;">float span</span>
+		<div id="info"></div> -->
+		<!-- <div style="height:50px;overflow: hidden;background: #ccc">分割</div> -->
+		<div style="border:1px solid red; width:100px;">
+		    <div style="margin:50px 0; background-color:green; height:50px; width:50px;">
+		       <div style="margin:20px 0;">
+		           <div style="margin:100px 0;">B</div>
+		       </div>
+		    </div>
+		</div>
+
+		<div style="margin:50px 0;background-color:green; width:50px;">
+		    <div style="margin:-60px 0;">
+		           <div style="margin:150px 0;">A</div>
+		    </div>
+		</div>
+		<div style="margin:-100px 0;background-color:green; width:50px;">
+		    <div style="margin:-120px 0;>
+		           <div style="margin:200px 0;">B</div>
+		    </div>
+		</div>
+</body>
+</html>
