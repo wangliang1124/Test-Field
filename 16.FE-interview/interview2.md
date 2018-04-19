@@ -238,7 +238,8 @@
 > 深入了解 CSS3 新特性 https://www.ibm.com/developerworks/cn/web/1202_zhouxiang_css3/	
 
 ## 9.请解释一下CSS3的Flexbox（弹性盒布局模型）,以及适用场景？
->Flex 布局教程：语法篇 http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html
+> Flex 布局教程：语法篇 http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html
+> Flex 布局教程：实例篇 http://www.ruanyifeng.com/blog/2015/07/flex-examples.html
 
 ## 10.用纯CSS创建一个三角形的原理是什么？
 * 把元素的宽度、高度设为0。设置边框样式。 上、左、右三条边隐藏掉（颜色设为 transparent）
@@ -262,7 +263,7 @@
 
 > 一个满屏品字布局怎么设计？ https://blog.csdn.net/sjinsa/article/details/70903940
 
-> CSS 常见布局方式 https://juejin.im/post/599970f4518825243a78b9d5  CSS常见布局解决方案 http://www.imooc.com/article/17719
+> CSS 常见布局方式 https://juejin.im/post/599970f4518825243a78b9d5
 
 > CSS布局解决方案（终结版） https://segmentfault.com/a/1190000013565024?utm_source=channel-hottest#articleHeader2
 
@@ -320,6 +321,7 @@
 * 如果元素拥有position:absolute;或者position:fixed;属性那么元素将为绝对定位,float不起作用.
 * 如果元素float属性不是none,元素会脱离文档流,根据float属性值来显示.
 * 有浮动,绝对定位,inline-block属性的元素,margin不会和垂直方向上的其他元素margin折叠.
+> position跟display、margin collapse、overflow、float这些特性相互叠加后会怎么样？ http://www.cnblogs.com/jackyWHJ/p/3756087.html
 
 ## 19.对BFC规范(块级格式化上下文：block formatting context)的理解？
 > BFC原理详解 https://segmentfault.com/a/1190000006740129

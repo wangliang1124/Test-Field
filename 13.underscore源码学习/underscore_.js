@@ -172,6 +172,56 @@
     }
   };
   
+  _.filter = _.select = function(obj, predicate, context) {
+    var results = [];
+    predicate = cb(predicate, context);
+    _.each(obj, function(value, index, list) {
+      if(predicate(value, index, list)) results.push(value);
+    })
+    return results;
+  };
+
+  _.reject = function(obj, predicate, context) {
+    return _.filter(obj, _.negate(predicate), context);
+  };
+
+  _.every = _.all = function(obj, predicate, context) {
+    predicate = cb(predicate, context)
+    var keys = !isArrayLike(obj) && _.keys(obj),
+        length = (keys || obj).length;
+    for(var index = 0; index < length; index++){
+      var currentKey = keys ? keys[index] : index;
+      if(!predicate(obj[currentKey], currentKey, obj)) return false;
+    }
+    return true;
+  }
+
+  _.some = _.any = function(obj, predicate, context) {
+    predicate = cb(predicate, context)
+    var keys = !isArrayLike(ojb) && _.keys(obj),
+        length = (keys || obj).length;
+    for(var index = 0; index < length; index ++) {
+      var currentKey = keys ? keys[index] :index;
+      if(predicate(obj[currentKey], currentKey, obj)) return true;
+    }
+    return false;
+  }
+
+  _.contains = _.includes = _.include = function(obj, item, fromIndex, guard) {
+    if(!isArrayLike(obj)) obj = _.values(obj);
+    if(typeof fromIndex  != 'number' || guard) fromIndex = 0;
+    return _.indexOf(obj, item, fromIndex) >= 0;
+  }
+
+  _.invoke = function(obj, method) {
+    var args = slice.call(arguments, 2);
+    var isFunc = _.isFunction(method);
+    return _.map(obj, function(value) {
+      var func = isFunc ? method : value[method];
+      return func == null ? func : func.apply(value, args);
+    });
+  };
+
   function createPredicateIndexFinder(dir) {
     return function(array, predicate, context) {
       predicate = cb(predicate, context)
@@ -194,5 +244,6 @@
       if(predicate(obj[key], key, obj)) return key;
     }
   }
+
 
 }.call(this));

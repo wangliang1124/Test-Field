@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>CSS布局</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .first {
+        width: 600px;
+        /*margin: 0 auto;*/
+        border: 1px solid black;
+    }
+
+    .first .aside {
+        width: 150px;
+        height: 100px;
+        float: left;
+        background: #ddd;
+    }
+
+    .first .main {
+        width: 450px;
+        min-height: 100px;
+        float: left;
+        background: #ccc;
+        overflow: hidden;
+    }
+
+    .second .left {
+        float: left;
+        width: 200px;
+        height: 100px;
+        background: green;
+    }
+
+    .second .right {
+        /* margin-left: 210px; */
+        height: 120px;
+        background: #ccc;
+        overflow: hidden; /* 形成bfc */
+    }
+
+    .third .left {
+        float: left;
+        width: 30%;
+        height: 100px;
+        background: green;
+    }
+
+    .third .right {
+        /*margin-left: 210px;*/
+        height: 100px;
+        background: #ccc;
+        overflow: hidden;
+    }
+
+    .four {
+        position: relative;
+        overflow: hidden;
+    }
+
+    .four .left {
+        position: absolute;
+        left: 0;
+        width: 200px;
+        height: 100px;
+        background: green;
+    }
+
+    .four .right {
+        height: 100px;
+        margin-left: 210px;
+        background: #ccc;
+        overflow: hidden;
+    }
+
+    .five {
+        position: relative;
+        width: 820px;
+        border: 1px solid black;
+    }
+
+    .five .left,
+    .five .right {
+        background: green;
+        min-height: 100px;
+        width: 200px;
+        float: left;
+    }
+
+    .five .middle {
+        margin-left: 210px;
+        margin-right: 210px;
+        height: 100px;
+        width: 400px;
+        background: #ccc;
+    }
+
+    .five .right {
+        float: right;
+    }
+
+    .six {
+        padding: 0 210px;
+    }
+
+    .six .middle {
+        float: left;
+        width: 100%;
+        height: 100px;
+        background: #ccc;
+        overflow: hidden;
+    }
+
+    .six .left,
+    .six .right {
+        position: relative;
+        float: left;
+        width: 200px;
+        min-height: 100px;
+        background: green;
+    }
+
+    .six .left {
+        margin-left: -100%;
+        left: -210px;
+    }
+
+    .six .right {
+        margin-left: -200px;
+        left: 210px;
+        background: yellow;
+    }
+
+    .seven .middle-wrapper {
+        float: left;
+        width: 100%;
+        height: 100px;
+        background: #ccc;
+        overflow: hidden;
+    }
+
+    .seven .middle {
+        margin: 0 210px;
+    }
+
+    .seven .left,
+    .seven .right {
+        float: left;
+        width: 200px;
+        min-height: 100px;
+        background: green;
+    }
+
+    .seven .left {
+        margin-left: -100%;
+    }
+
+    .seven .right {
+        margin-left: -200px;
+        background: yellow;
+    }
+
+    .eight {
+        display: flex;
+        display: -webkit-flex;
+        display: -moz-flex;
+        display: -ms-flex;
+        display: -o-flex;
+        height: 100px;
+    }
+
+    .eight .left {
+        width: 200px;
+        background: green;
+    }
+
+    .eight .middle {
+        flex: 1;
+        background: #ccc;
+        overflow: hidden;
+    }
+
+    .eight .right {
+        width: 200px;
+        background: yellow;
+    }
+    
+    .ten {
+        max-width: 960px;
+        margin: 0 auto;
+        background: #ccc;
+    }
+    .eleven {
+        width: 100%;
+    }
+    .eleven .layout{
+        max-width: 960px;
+        margin: 0 auto;
+    }
+
+    .clearfix:after {
+        content: '';
+        display: block;
+        height: 0;
+        visibility: hidden;
+        clear: both;
+    }
+    </style>
+</head>
+
+<body>
+    <h2> 两栏布局：两栏都定宽</h2>
+    <h3> 1. float + float</h3>
+    <div class="first clearfix">
+        <div class="main">mainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmain</div>
+        <div class="aside">aside</div>
+    </div>
+    <h2> 两栏布局：一栏定宽，一栏自适应。</h2>
+    <h3> 2. float + margin</h3>
+    <div class="second">
+        <div class="left">Left定宽</div>
+        <div class="right">Right自适应mainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmain</div>
+    </div>
+    <h3> 3. float + margin</h3>
+    <div class="third">
+        <div class="left">Left 30%</div>
+        <div class="right">Right自适应mainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmain</div>
+    </div>
+    <h3>4. right用margin-left推出一定空间，然后left绝对定位在该空间上</h3>
+    <div class="four">
+        <div class="left">Left position:absolute</div>
+        <div class="right">Right自适应mainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmainmain</div>
+    </div>
+    <h2>三栏布局</h2>
+    <h3>5. 固定宽度： float + margin, 两侧栏放前面</h3>
+    <div class="five clearfix">
+        <aside class="left">left</aside>
+        <aside class="right">right</aside>
+        <section class="middle">middle 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 </section>
+    </div>
+    <h3>6. 两边定宽，中间自适应：圣杯布局; 缺点：缩小到一定程度(middle的宽度小于两边的宽度)时，两侧无法正确定位</h3>
+    <div class="six clearfix">
+        <section class="middle">middle 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 </section>
+        <aside class="left">left</aside>
+        <aside class="right">right</aside>
+    </div>
+    <h3>7. 双飞翼布局</h3>
+    <div class="seven clearfix">
+        <section class="middle-wrapper">
+            <article class="middle">middle 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 </article>
+        </section>
+        <aside class="left">left</aside>
+        <aside class="right">right</aside>
+    </div>
+    <h3>8. Flex布局</h3>
+    <div class="eight">
+        <aside class="left">left</aside>
+        <section class="middle">middle 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 内容 </section>
+        <aside class="right">right</aside>
+    </div>
+    <h2>单列布局</h2>
+    <h3>9. header、content、footer宽度都相同，其一般不会占满浏览器的最宽宽度，但当浏览器宽度缩小低于其最大宽度时，宽度会自适应。</h3>
+    <div class="ten">
+        <div class="header" style="background: #ddd">头部</div>
+        <div class="content" style="background: #ccc">内容</div>
+        <div class="footer" style="background: #ddd">尾部</div>
+    </div>
+    <h3>10. header、footer宽度为浏览器宽度，但content以及header和footer里的内容却不会占满浏览器宽度。</h3>
+    <div class="eleven">
+        <header style="background: #ccc">
+            <section class="layout" style="background: #ddd">头部</section>
+        </header>
+        <section class="content layout" style="background: #ccc">内容</section>
+        <footer style="background: #ccc">
+            <section class="layout" style="background: #ddd" >footer</section>
+        </footer>
+    </div>
+</body>
+
+</html>
