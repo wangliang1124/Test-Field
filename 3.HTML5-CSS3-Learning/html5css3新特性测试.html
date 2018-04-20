@@ -9,28 +9,30 @@
 </head>
 
 <body>
-	<div class="autowidth">
-		<div class="left"></div>
-		<div class="right"></div>
-		<div>dddddddddddddddddddddddddddd</div>
-	</div>
-	<div>
-	  <div style='position: relative; left: 50%; transform: translateX(-50%); display: inline-block;background-color: #00f'>transform</div>
-	</div>
+    <div class="flexbox">
+        <div class="left">100px</div>
+        <div class="right">flex:1</div>
+        <div>我是flexbox</div>
+    </div>
+    <div style="height: 60px;background: #eee">
+        <div style='position: relative; left: 50%; top:50%; display:inline-block;transform: translate(-50%, -50%);background-color: #aaa'>利用transform水平垂直居中</div>
+    </div>
     <div class="container">
-        <article>
-            this is a loooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooog word!
+        <h2>长单词断行word-wrap</h2>
+        <article class="word-wrap">
+            This is a looooooooooossooooooooooooooosoooooossssssoooooooossssoooooooooossooooooooooooooooooooooooooooooooooooooooooooosssooooooooog word!
         </article>
-        <article class="sometext">
+        <h2>文章分栏&选中文字部分为红色</h2>
+        <article class="column">
             先帝创业未半而中道崩殂，今天下三分，益州疲弊，此诚危急存亡之秋也。然侍卫之臣不懈于内，忠志之士忘身于外者，盖追先帝之殊遇，欲报之于陛下也。诚宜开张圣听，以光先帝遗德，恢弘志士之气，不宜妄自菲薄，引喻失义，以塞忠谏之路也。 宫中府中，俱为一体，陟罚臧否，不宜异同。若有作奸犯科及为忠善者，宜付有司论其刑赏，以昭陛下平明之理，不宜偏私，使内外异法也。 侍中、侍郎郭攸之、费祎、董允等，此皆良实，志虑忠纯，是以先帝简拔以遗陛下。愚以为宫中之事，事无大小，悉以咨之，然后施行，必得裨补阙漏，有所广益。
         </article>
-        <a href="http://www.questpond.com">ASP.NET interview questions</a>
-        <a href="http://www.questpond.com" target="_blank">c# interview questions</a>
-        <a href="http://www.questpond.org" target="_top">.NET interview questions with answers</a>
+        <h2>圆角按钮</h2>
         <button class="radius">我是按钮</button>
-        <span class="test">
-        	动画
-        </span>
+        <h2>动画</h2>
+        <div class="animation">
+            我是动画Animation
+        </div>
+        <h2>audio&video</h2>
         <audio controls>
             <source src="audio/Gettysburg Address.mp3" type="audio/mpeg"> Your browser doesn't support audio feature.
         </audio>
@@ -63,21 +65,26 @@
             <form action="">表单</form>
         </fieldset>
         <blockquote cite="www.baidu.com">
-        	<time datetime="2008-02-14">情人节</time><time>9:00</time>
+            <time datetime="2008-02-14">情人节</time>
+            <time>9:00</time>
             <mark>WEB标准</mark>不是某一个标准，而是一系列标准的集合。网页主要由三部分组成：结构（Structure）、表现（Presentation）和行为（Behavior）。对应的标准也分三方面：结构化标准语言主要包括XHTML和XML，表现标准语言主要包括CSS，行为标准主要包括对象模型（如W3C DOM）、ECMAScript等。这些标准大部分由W3C起草和发布，也有一些是其他标准组织制订的标准，比如ECMA（European Computer Manufacturers Association）的ECMAScript标准。
         </blockquote>
         <q>引用</q>
         <progress value="60" max="100"></progress>
         <meter value="0.6"></meter>
-        <figure><img src="img/border.png" alt=""><figcaption>插图1.1</figcaption><figcaption>picture</figcaption></figure>
+        <figure><img src="img/border.png" alt="">
+            <figcaption>插图1.1</figcaption>
+            <figcaption>picture</figcaption>
+        </figure>
         <pre>
-		for(var i=0; i<9; i++){
-		  	i++;
-		};
+        for(var i=0; i<9; i++){
+            i++;
+        };
         </pre>
         <a href="http://ww.baidu.com"><img src="img/border.png" alt="" style="border: 0"><img src="img/border.png" alt="" style="border: 0">
         <img src="img/border.png" alt="" style="border: 0"></a>
-        <textarea><h1>h1</h1></textarea>
+        <textarea>
+            <h1>h1</h1></textarea>
     </div>
     <footer>@ by Leon</footer>
     <script type="text/javascript">
@@ -90,14 +97,14 @@
     var country = {};
     country.name = 'India';
     country.code = 'I001';
-    localStorage.setItem('I001', country);
+    localStorage.setItem('I002', country);
     var country1 = localStorage.getItem('I001');
     //localStorage.setItem('Key001','India');
     var test = localStorage.getItem('Key001');
     document.getElementById('localStorage').innerHTML = country1;
     //    var worker = new Worker("js/worker.js");
     // worker.onmessage=function(e) {
-    // 	document.getElementById('worker').value=e.data;
+    //  document.getElementById('worker').value=e.data;
     // }
     </script>
 </body>

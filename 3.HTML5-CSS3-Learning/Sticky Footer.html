@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Sticky Footer</title>
+  <style>
+    * {margin: 0;padding: 0}
+    html, body{
+      height: 100%;
+    }
+    .wrapper{
+      position: relative;
+      width: 960px;
+      /* min-height: 100%; */
+      margin: 0 auto;
+      /* padding-bottom: 60px; */
+      /* box-sizing: border-box; */
+      background: #eee;
+    }
+    .footer{
+      /* position: absolute; */
+      /* bottom: 0; */
+      width: 100%;
+      height: 60px;
+      background: #ccc;
+    }
+    .content {
+      min-height: calc(100vh - 60px)
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+    <div class="content" style="white-space: pre;">
+      实现方案一：absolute
+        html, body {
+            height: 100%;
+        }
+        .wrapper {
+            position: relative;
+            min-height: 100%;
+            padding-bottom: 50px;
+            box-sizing: border-box;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            height: 50px;
+        }
+      实现方案二：calc
+        .content {
+            min-height: calc(100vh - 50px);
+        }
+        .footer {
+            height: 50px;
+        }
+      方案三：flex
+        html {
+            height: 100%;
+        }
+        body {
+            min-height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .content {
+            flex: 1;
+        }
+    </div>
+    <div class="footer">sticky footer</div>
+  </div>
+</body>
+</html>

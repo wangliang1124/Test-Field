@@ -222,6 +222,62 @@
     });
   };
 
+  _.pluck = function(obj, key) {
+    return _.map(obj, _.property(key));
+  };
+
+  _.where = function(obj, attrs) {
+    return _.filter(obj, _.matcher(attrs));
+  };
+
+  _.findWhere = function(obj, attrs) {
+    return _.find(obj, _.matcher(attrs));
+  }
+
+  _.max = function(obj, iteratee, context) {
+    var result = -Infinity, lastComputed = -Infinity,
+        value, computed;
+    if (iteratee == null && obj != null){
+      obj = isArrayLike(obj) ? obj : _.values(obj);
+      for (var i = 0, length = obj.length; i < length; i++) {
+        value = obj[i];
+        if(value > result) result = value;
+      }
+    } else {
+      iteratee = cb(iteratee);
+      _.each(obj, function(value, index, list){
+        computed = iteratee(value);
+        if (computed > lastComputed || computed === -Infinity && result === -Infinity){
+          result = value;
+          lastComputed = computed;
+        }
+      })
+    }
+    return result;
+  };
+
+  _.min = function(obj, iteratee, context) {
+    var result = Infinity, lastComputed = Infinity,
+        value, computed;
+    if (iteratee == null && obj != null) {
+      obj = isArrayLike(obj) ? obj : _.values(obj);
+      for(var i = 0, length = obj.length; i < length; i++){
+        value = obj[i]
+        if(value < result)result = value
+      }
+    } else {
+      iteratee = cb(iteratee);
+      _.each(obj, function(value, index, list) {
+        computed = iteratee(value);
+        if(computed < lastComputed || computed === Infinity && result === Infinity) {
+          result = value;
+          lastComputed = computed;
+        }
+      })
+    }
+    return result;
+  }
+
   function createPredicateIndexFinder(dir) {
     return function(array, predicate, context) {
       predicate = cb(predicate, context)
@@ -244,6 +300,7 @@
       if(predicate(obj[key], key, obj)) return key;
     }
   }
+
 
 
 }.call(this));

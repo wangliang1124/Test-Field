@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Sticky Footer</title>
+    <style>
+    * {
+        margin: 0;
+        padding: 0
+    }
+
+    html,
+    body {
+        height: 100%;
+        margin: 0;
+    }
+
+    .wrapper {
+        min-height: 100%;
+        width: 960px;
+        margin: 0 auto;
+        /* Equal to height of footer */
+        /* But also accounting for potential margin-bottom of last child */
+        margin-bottom: -50px;
+        padding-bottom: 50px; /* 可以代替一个空的div标签 */
+        box-sizing: border-box;
+        background: #eee
+    }
+
+    .footer,
+    .push {
+        height: 50px;
+    }
+    footer {
+      background: #42A5F5;
+      color: white;
+      line-height: 50px;
+      padding: 0 20px;
+    }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper" style="line-height: 2">
+      <pre>
+        .wrapper {
+            min-height: 100%;
+            width: 960px;
+            margin: 0 auto;
+            /* Equal to height of footer */
+            /* But also accounting for potential margin-bottom of last child */
+            margin-bottom: -50px;
+            padding-bottom: 50px; /* 可以代替一个空的div标签 */
+            box-sizing: border-box;
+            background: #eee
+        }
+
+        .footer,
+        .push {
+            height: 50px;
+        }
+      </pre>
+        <!-- <div class="push"></div> -->
+    </div>
+    <footer class="footer"></footer>
+</body>
+
+</html>

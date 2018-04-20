@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>视差滚动 Parallax Scrolling</title>
+    <style>
+    .spring,
+    .summer,
+    .autumn,
+    .winter {
+        width: 960px;
+        height: 680px;
+        margin: 0 auto;
+        padding: 40px;
+        text-align: center;
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+    }
+
+    .spring {
+        background-image: url('./img/spring.jpg');
+    }
+
+    .summer {
+        background-image: url('./img/summer.jpg');
+    }
+
+    .autumn {
+        background-image: url('./img/autumn.jpg');
+    }
+
+    .winter {
+        background-image: url('./img/winter.jpg');
+    }
+
+    .content {
+        font: 30px/1.5 '微软雅黑';
+        line-height: 680px;
+        color: #fff;
+    }
+    </style>
+    <style>
+    .scene{ position: absolute; width: 100%; height: 100%; }
+    img {
+        position: absolute;
+    }
+
+    #pokemon1{
+      width: 150px;
+      top: 200px;
+      left: 50px;
+    }
+    #pokemon2{
+      width: 300px;
+      left: 800px;
+      top: 450px;
+    }
+    #pokemon3{
+      top: 600px;
+      left: 150px;
+    }
+
+    #pokemon4{
+      width: 200px;
+      left: 800px;
+      top: 400px;
+    }
+    #pokemon5{
+      width: 300px;
+      left: 500px;
+      top: 500px;
+    }
+    #pokemon6{
+      top: 1200px;
+    }
+
+    #pokemon7{
+      width: 150px;
+      left: 250px;
+      top: 550px;
+    }
+    #pokemon8{
+      width: 300px;
+      left: 100px;
+      top: 900px;
+    }
+    #pokemon9{
+      top: 1400px;
+      left: 400px;
+    }
+
+    </style>
+
+ 
+
+</head>
+
+<body>
+      <div class="wrapper">
+        <div id="scene_back" class="scene">
+            <img id="pokemon1" src="./img/parallax/001.png">
+            <img id="pokemon4" src="./img/parallax/004.png">
+            <img id="pokemon7" src="./img/parallax/007.png">
+        </div>
+        <div id="scene_center" class="scene">
+            <img id="pokemon2" src="./img/parallax/002.png">
+            <img id="pokemon5" src="./img/parallax/005.png">
+            <img id="pokemon8" src="./img/parallax/008.png">
+        </div>
+        <div id="scene_front" class="scene">
+            <img id="pokemon3" src="./img/parallax/003.png">
+            <img id="pokemon6" src="./img/parallax/006.png">
+            <img id="pokemon9" src="./img/parallax/009.png">
+        </div>
+    </div>
+    <div id='article1' class="spring"><span id='content1' class="content"> 胜日寻芳泗水滨，无边光景一时新。等闲识得东风面，万紫千红总是春。 </span></div>
+    <div class="summer"><span id='content2' class="content"> 绿树浓阴夏日长，楼台倒影入池塘。水晶帘动微风起，满架蔷薇一院香。 </span></div>
+    <div class="autumn"><span id='content3' class="content"> 解落三秋叶，能开二月花。过江千尺浪，入竹万竿斜。 </span></div>
+    <div class="winter"><span id='content4' class="content"> 绿蚁新醅酒，红泥小火炉。晚来天欲雪，能饮一杯无！ </span></div>
+
+</body>
+<script>
+/* eslint-disable */
+var sceneBack = document.getElementById('scene_back'),
+    sceneCenter = document.getElementById('scene_center'),
+    sceneFront = document.getElementById('scene_front');
+var old_top1 = 0,
+    old_top2 = 200,
+    old_top3 = 700;
+
+addEvent(window, 'scroll', onScroll);
+onScroll();
+
+function onScroll(e) {
+    var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+    sceneBack.style.top = old_top1 + scrollTop * .9 + 'px';
+    sceneCenter.style.top = old_top2 + scrollTop * .7 + 'px';
+    sceneFront.style.top = old_top3 + scrollTop * .3 + 'px';
+}
+
+function addEvent(eventTarget, eventType, eventHandler) {
+    if (eventTarget.addEventListener) {
+        eventTarget.addEventListener(eventType, eventHandler, false);
+    } else {
+        if (eventTarget.attachEvent) {
+            eventTarget.attachEvent("on" + eventType, eventHandler);
+        } else {
+            eventTarget["on" + eventType] = eventHandler;
+        }
+    }
+}
+</script>
+
+</html>
