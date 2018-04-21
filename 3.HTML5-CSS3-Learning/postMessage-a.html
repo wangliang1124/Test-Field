@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>postMessage测试</title>
+</head>
+<body>
+		
+	<iframe src="http://localhost:8081/postMessage-b.html" name="postIframe" onload="messageLoad()"></iframe>
+	<script>
+		function messageLoad() {
+			var url = 'http://localhost:8081/'
+			window.postIframe.postMessage('我是来自8080的消息', url)
+		}
+
+		// var popup = window.open("http://localhost:8081/postMessage-b.html", '测试')
+		// popup.postMessage('8080：你好8081', 'http://localhost:8081/')
+
+		window.onmessage = function(e) {
+			if (e.origin !== 'http://localhost:8081')return
+			console.log('aaaaaaaaaaaaaa')
+			console.log(e)
+		}
+	</script>
+</body>
+</html>

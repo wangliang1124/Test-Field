@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Page Visibility API</title>
+</head>
+
+<body>
+    <video id="video" src="video/mov_bbb.mp4" controls width="600" height="400"></video>
+    <script>
+    var video = document.getElementById('video')
+
+    var hidden, visibilityChange
+    if(typeof document.hidden !== 'undefined' && typeof document.webkitHidden === 'undefined') {
+      console.log(document.webkitHidden)
+      hidden = 'hidden'
+      visibilityChange = 'visibilityChange'
+    } else if(typeof document.msHidden !== 'undefined') {
+      hidden = 'msHidden'
+      visibilityChange = 'msvisibilitychange'
+    } else if(typeof document.webkitHidden !== 'undefined') {
+      console.log('xxxxx')
+      hidden = 'webkitHidden'
+      visibilityChange = 'webkitvisibilitychange'
+    }
+
+    function handler() {
+        if (document[hidden]) {
+            video.pause()
+        } else {
+            video.play()
+        }
+    }
+
+    document.addEventListener(visibilityChange, handler, false)
+
+    video.addEventListener('pause', function() {
+        document.title = 'Paused'
+    }, false)
+
+    video.addEventListener('play', function() {
+        document.title = 'Playing'
+    }, false)
+    </script>
+</body>
+
+</html>

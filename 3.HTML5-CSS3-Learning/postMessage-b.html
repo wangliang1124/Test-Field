@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>postMessage测试</title>
+</head>
+
+<body>
+    我是postMessage-b.html
+    <script>
+    window.onmessage = function(e) {
+        e = e || event;
+        if (e.origin !== 'http://localhost:8080') return;
+        console.log(e); //立即弹出a发送过来的数据
+
+        console.log('我是postMessage-b')
+        e.source.postMessage('我是postMessage-b:' + "好的，请稍等三秒！", e.origin); //立即回复a
+        var postData = { name: "我是data", age: 24 };
+        var strData = JSON.stringify(postData); //json对象转化为字符串
+        setTimeout(function() {
+            e.source.postMessage(postData, e.origin);
+        }, 3000); //3秒后向a发送数据
+    }
+    </script>
+</body>
+
+</html>
