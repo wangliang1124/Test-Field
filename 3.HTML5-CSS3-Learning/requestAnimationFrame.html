@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>requestAnimationFrame</title>
+</head>
+<body>
+	<div id="anim" style="position:relative;width: 100px; height: 100px; top:100px;background: #ccc"></div>
+	<script>
+		window.requestAnimFrame = (function() {  
+		  return  window.requestAnimationFrame ||   
+		    window.webkitRequestAnimationFrame ||   
+		    window.mozRequestAnimationFrame    ||   
+		    window.oRequestAnimationFrame      ||   
+		    window.msRequestAnimationFrame     ||   
+		    function(callback){  
+		      window.setTimeout(callback, 1000 / 60);  
+		    }; 
+		})();  
+
+		var anim = document.getElementById('anim')
+		var flag = true
+		var left = 0
+		var t = 0
+		function render() {
+			left == 0 ?  flag = true : left == 200 && t == 200 ? flag = false : '';
+			if(flag){
+				anim.style.left = `${left++}px`
+				anim.style.top = `${t++}px`
+				console.log(t)
+			} else {
+				anim.style.left = `${left--}px`
+				anim.style.top = `${t--}px`
+				// console.log(anim.style.top)
+			}
+		}
+		(function animloop(){
+			render()
+			requestAnimFrame(animloop)
+		}())
+	</script>
+</body>
+</html>
