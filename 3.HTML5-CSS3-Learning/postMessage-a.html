@@ -6,19 +6,22 @@
 </head>
 <body>
 		
-	<iframe src="http://localhost:8081/postMessage-b.html" name="postIframe" onload="messageLoad()"></iframe>
+	<iframe id='iframe1' src="http://localhost:8081/postMessage-b.html" name="postIframe"></iframe>
 	<script>
 		function messageLoad() {
 			var url = 'http://localhost:8081/'
-			window.postIframe.postMessage('我是来自8080的消息', url)
+			iframe1.contentWindow.postMessage('我是来自8080的消息', url)
 		}
+
+		var iframe1 = document.getElementById('iframe1')
+		iframe1.onload = messageLoad
 
 		// var popup = window.open("http://localhost:8081/postMessage-b.html", '测试')
 		// popup.postMessage('8080：你好8081', 'http://localhost:8081/')
 
 		window.onmessage = function(e) {
 			if (e.origin !== 'http://localhost:8081')return
-			console.log('aaaaaaaaaaaaaa')
+			console.log('收到消息')
 			console.log(e)
 		}
 	</script>

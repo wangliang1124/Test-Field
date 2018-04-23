@@ -7,5 +7,33 @@
 <body>
 	<!-- http://xgfe.github.io/2017/05/03/LexHuang/web-worker/ -->
 	<!-- https://www.ibm.com/developerworks/cn/web/1301_jiangjj_html5message/index.html -->
+  <input type="text" id="first"> + <input type="text" id="second"> = <span id="result"></span>
+  <script>
+    /**main.js**/
+    var first = document.getElementById('first')
+    var second = document.getElementById('second')
+    var result = document.getElementById('result')
+
+    var myWorker = new Worker('js/worker.js')
+
+    first.onchange = function() {
+      myWorker.postMessage([first.value, second.value])
+      // console.log('Message post to worker')
+    }
+    second.onchange = function() {
+      myWorker.postMessage([first.value, second.value])
+      // console.log('Message post to worker')
+    }
+
+    myWorker.onmessage = function(e) {
+      console.log(e.data)
+      result.textContent = e.data
+      console.log('Message received from worker')
+    }
+
+    // myWorker.terminate()
+
+  </script>
+
 </body>
 </html>
