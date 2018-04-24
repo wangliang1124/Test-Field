@@ -72,9 +72,10 @@
     function scrollTo(i) {
         isScroll = true
         main.style.top = -i * height + 'px'
-        setTimeout(function() {
+        var timer = setTimeout(function() {
             isScroll = false
-        }, 300)
+            clearTimeout(timer)
+        }, 1000)
     }
     </script>
 </body>
