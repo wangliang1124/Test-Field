@@ -384,8 +384,9 @@
 > https://segmentfault.com/a/1190000012955996
 
 ## 31.全屏滚动的原理是什么？用到了CSS的那些属性？
-* 原理：有点类似于轮播，整体的元素一直排列下去，假设有5个需要展示的全屏页面，那么高度是500%，只是展示100%，剩下的可以通过transform进行y轴定位，也可以通过margin-top实现
-* overflow：hidden；transition：all 1000ms ease；
+* 原理：有点类似于轮播，方法一是整体的元素一直排列下去，假设有5个需要展示的全屏页面，那么高度是500% ，只是展示100%，剩下的可以通过transform进行y轴定位，也可以通过margin-top实现
+* overflow：hidden；transition：all 1000ms ease
+
 > H5全屏滑动 https://segmentfault.com/a/1190000003691168
 
 ## 32.什么是响应式设计？响应式设计的基本原理是什么？如何兼容低版本的IE？

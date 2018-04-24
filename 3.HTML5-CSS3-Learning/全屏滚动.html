@@ -1,74 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-  <title>全屏滚动</title>
-  <style>
-    html,body{
-      padding: 0;
-      margin: 0;
-      overflow: hidden;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>全屏滚动</title>
+    <style>
+    html,
+    body {
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
     }
-    section {
-      width: 100vw;
-      height: 100vh;
-      /* border: 10px solid #eee; */
-      font-size: 36px;
-      text-align: center;
-/*       box-sizing: border-box; */
-    }
+
     .wrapper {
-      width: 100vw;
-      height: 100vh;
-      overflow: hidden;
-      position: relative;
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden;
+        position: relative;
     }
+
     .main {
-      position: absolute;
-      top: 0px;
-      left: 0px;
-      transition: 0.5s cubic-bezier(0.86, 0, 0.07, 1);
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        transition: 0.5s cubic-bezier(0.86, 0, 0.07, 1);
     }
-  </style>
+
+    .page {
+        width: 100vw;
+        height: 100vh;
+        /* border: 10px solid #eee; */
+        font-size: 36px;
+        text-align: center;
+        /*       box-sizing: border-box; */
+    }
+    </style>
 </head>
+
 <body>
-  <div class="wrapper">
-    <div class="main" id="main">
-      <section class="a">第一屏</section>
-      <section class="b">第二屏</section>
-      <section class="b">第三屏</section>
+    <div class="wrapper">
+        <div class="main" id="main">
+            <section class="page">第一屏</section>
+            <section class="page">第二屏</section>
+            <section class="page">第三屏</section>
+        </div>
     </div>
-  </div>
-  <script>
+    <script>
     var main = document.getElementById('main')
-    var height = document.querySelector('.a').clientHeight
+    var height = document.querySelector('.page').clientHeight
     console.log(height)
-    var num = document.querySelectorAll('section').length
-    var index = 0, isScroll = false
+    var num = document.querySelectorAll('.page').length
+    var index = 0,
+        isScroll = false
 
     document.onmousewheel = function(e) {
 
-      if(!isScroll){
-        if(e.wheelDelta > 0){
-          if(index === 0){ return }
-          index--
-          scrollTo(index)
-        } else {
-          if(index === num - 1) { return }
-          index++
-          scrollTo(index)
+        if (!isScroll) {
+            if (e.wheelDelta > 0) {
+                if (index === 0) { return }
+                index--
+                scrollTo(index)
+            } else {
+                if (index === num - 1) { return }
+                index++
+                scrollTo(index)
+            }
         }
-      }
     }
 
     function scrollTo(i) {
-      isScroll = true
-      main.style.top = -i * height + 'px'
-      setTimeout(function(){
-        isScroll = false
-      }, 300)
+        isScroll = true
+        main.style.top = -i * height + 'px'
+        setTimeout(function() {
+            isScroll = false
+        }, 300)
     }
-  </script>
+    </script>
 </body>
+
 </html>

@@ -1,4 +1,4 @@
-
+/* eslint-disable */
 
 (function (root, factory) {
 	'use strict';
@@ -169,6 +169,7 @@
 				methods.runAnimation.call(this, index);
 			}
 			for (var i = 0, item; item = this.items[i]; i++) {
+				// console.log(i)
 				if (i === index) {
 					item.style.transform = 'translate3d(0, 0, 0)';
 				} else {
