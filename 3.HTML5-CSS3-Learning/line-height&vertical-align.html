@@ -8,7 +8,6 @@
     .box {
         background: black;
         color: white;
-        padding-left: 20px;
         margin-top: 24px;
         line-height: 100px;
         font-size: 12px;
@@ -19,26 +18,41 @@
         height: 4px;
         width: 4px;
         line-height: 200px;
-        vertical-align: text-top;
+        vertical-align: middle;
+        font-size: 12px;
         background-color: red;
+    }
+
+    .inlinebox {
+        display: inline-block;
+        line-height: 100px;
+        width: 10px;
     }
 
     .text {
         display: inline-block;
-        height: 20px;
+        line-height: 1;/* font-size x 1 */
         width: 100px;
-        /*vertical-align: middle;*/
-        background-color: rgb(240, 20, 20)
+        font-size: 12px;
+        vertical-align: middle;
+        background-color: blue
     }
     </style>
 </head>
 
 <body>
-    <span class="box">
-        <span class="dot"></span> 我是文字
-    <!-- <span class="text">我是文字</span>  -->
-    </span>
-    <div class="box"><span class="dot"></span>我是文字</div>
+    <h2>line-height只对文字和inline-block起作用</h2>
+    <h3>不管是inline inline-block block元素(没有设置height时)，只有包含文字时（否则高度为0），文字的line-height将撑起包裹层的高度</h3>
+    <h3>inline-block元素也可以响应line-height</h3>
+    <div class="wrapper" style="border: 1px dashed blue">
+        <span class="box"><span class="dot"></span> 
+        box是inline时,line-height为元素占用高度，实际高度由文字撑开, 在这里inline-block表现的行为有点像文字，比如box里设置font-size为0时，dot为box撑起的高度为0
+        <!-- <span class="text">xxxx</span> -->
+        </span>
+    </div>
+    <span class="box"><span class="inlinebox"></span></span>
+    <div class="box"><span class="dot"></span>box是block时，撑开的是块的高度</div>
+    <div class="dot">xxxx</div>
     <div>
         <h2 style="font-size: 12px">vertical-align:middle属性的表现与否，仅仅与其父标签有关，至于我们通常看到的与后面的文字垂直居中显示那都是假象！</h2>
     </div>
