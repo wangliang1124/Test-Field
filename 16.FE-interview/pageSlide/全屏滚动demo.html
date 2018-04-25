@@ -20,6 +20,7 @@
         width: 100%;
         height: 100%;
         overflow: hidden;
+        color: white;
         /*transition: 0.5s cubic-bezier(0.86, 0, 0.07, 1);*/
     }
 
@@ -32,30 +33,42 @@
         font-size: 36px;
         text-align: center;
         transform: translate3d(0,100%,0);
+        -webkit-overflow-scrolling: touch;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-position: center center;
+        background-attachment: fixed;
     }
 
     .page1 {
-        background: lightcoral;
+        background-image: url('./img/spring.jpg');
+        /* background: lightcoral; */
     }
 
     .page2 {
-        background: green;
+      background-image: url('./img/summer.jpg');
+        /* background: green; */
     }
 
     .page3 {
-        background: lightblue;
+      background-image: url('./img/autumn.jpg');
+        /* background: lightblue; */
+    }
+    .page4 {
+      background-image: url('./img/winter.jpg');
     }
     .transition {
-      transition: all 0.6s cubic-bezier(0.550, 0.085, 0.000, 0.990);
+      transition: all 0.3s cubic-bezier(0.550, 0.085, 0.000, 0.990);
     }
     </style>
 </head>
 
 <body>
     <div class="slide">
-        <section class="slide-page page1">第一屏</section>
-        <section class="slide-page page2">第二屏</section>
-        <section class="slide-page page3">第三屏</section>
+        <section class="slide-page page1">Page 1</section>
+        <section class="slide-page page2">Page 2</section>
+        <section class="slide-page page3">Page 3</section>
+        <section class="slide-page page4">Page 4</section>
     </div>
     <script src="./pageSlide.js"></script>
     <script>      

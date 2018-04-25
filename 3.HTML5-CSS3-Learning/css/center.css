@@ -20,8 +20,8 @@
         border: 1px dashed #00f;
         margin-top: 20px;
         font-size: 0;
-        /* height: 120px; */ /* 非必须 */
-        line-height: 120px;
+        height: 120px; /* 非必须 */
+        line-height: 120px; /* 必须 */
     }
 
     .inline-center-2 .text {
@@ -34,7 +34,9 @@
     }
     .inline-center-2::after {  
       content: '';  
-      height: 100%;  
+      width: 0px;
+      font-size: 0;
+      /* vertical-align: middle; */
       margin-left: -0.25em; /* To offset spacing. May vary by font */  
     }  
     .inline-center-2 .img {
@@ -51,40 +53,15 @@
         background-color: #f00
     }
 
-    .box {
-        border: 1px dashed blue;
-        font-size: 34px;
-        color: white;
-        background: red;
-     /*    height: 80px;  */
-        line-height:60px; 
-    }
-
-    .box .dot {
-        display: inline-block;
-        width: 16px;
-        height: 16px;
-        /*line-height:50px;*/
-        background: white;
-        vertical-align: middle;
-    }
-
-    .box .text {
-        /*display: inline-block;*/
-        border: 1px solid #999;
-        vertical-align: middle;
-        /*line-height:180px; */
-        font-size: 36px;
-    }
-
     .content-c {
         margin: 36px 0;
+        padding: 24px;
         border: 1px dashed #00f;
         font-size: 300px
     }
 
     .content-c img {
-        vertical-align: top;
+        vertical-align: middle;
     }
 
     .content-c .text {

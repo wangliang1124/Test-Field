@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>line-height&vertical-align</title>
+    <style>
+    .box {
+        background: black;
+        color: white;
+        padding-left: 20px;
+        margin-top: 24px;
+        line-height: 100px;
+        font-size: 12px;
+    }
+
+    .dot {
+        display: inline-block;
+        height: 4px;
+        width: 4px;
+        line-height: 200px;
+        vertical-align: text-top;
+        background-color: red;
+    }
+
+    .text {
+        display: inline-block;
+        height: 20px;
+        width: 100px;
+        /*vertical-align: middle;*/
+        background-color: rgb(240, 20, 20)
+    }
+    </style>
+</head>
+
+<body>
+    <span class="box">
+        <span class="dot"></span> 我是文字
+    <!-- <span class="text">我是文字</span>  -->
+    </span>
+    <div class="box"><span class="dot"></span>我是文字</div>
+    <div>
+        <h2 style="font-size: 12px">vertical-align:middle属性的表现与否，仅仅与其父标签有关，至于我们通常看到的与后面的文字垂直居中显示那都是假象！</h2>
+    </div>
+</body>
+
+</html>

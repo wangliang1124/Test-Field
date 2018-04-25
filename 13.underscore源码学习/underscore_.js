@@ -278,6 +278,93 @@
     return result;
   }
 
+  _.shuffle = function(obj) {
+    var set = isArrayLike(obj) ? obj : _.values(obj);
+    var length = set.length;
+    var shuffled = Array(length);
+    for (var index = 0, rand; index < length; index++) {
+      rand = _.random(0, index);
+      if (rand !== index) shuffled[index] = shuffled[rand];
+      shuffled[rand] = set[index];
+    }
+    return shuffled;
+  }
+  
+  _.sample = function(obj, n, guard) {
+    if (n == null || guard) {
+      if(!isArrayLike(obj)) obj = _.values(obj);
+      return obj[_.random(obj.length - 1)];
+    }
+    return _.shuffle(obj).slice(0, Math.max(0, n))
+  }
+
+  _.sortBy = function(obj, iteratee, context) {
+    iteratee = cb(iteratee, context);
+    return _.pluck(_map(obj, function(value, index, list){
+      return {
+        value: value,
+        index: index,
+        criteria: iteratee(value, index, list)
+      }
+    }).sort(function(left, right) {
+      var a = left.criteria;
+      var b = right.criteria;
+      if(a !==b) {
+        if(a > b || a === void 0) return 1
+        if(a < b || b === void 0) return -1
+      }
+      return left.index - right.index;
+    }), 'value');
+  };
+
+  var group = function(behavior) {
+    return function(obj, iteratee, context) {
+      var result = {};
+      iteratee = cb(iteratee, context);
+      _.each(obj, function(value, index) {
+        var key = iteratee(value, index, obj)
+        behavior(result, value, key)
+      })
+    }
+  }
+
+  _.groupBy = group(function(result, value, key) {
+    if(_.has(result, key)) result[key].push(value); else result[key] = [value];
+  })
+
+  _.indexBy = group(function(result, value, key) {
+    result[key] = value;
+  })
+
+  _.countBy = group(function(result, value, key) {
+    if(_.has(result, key))result[key]++;else result[key] = 1;
+  })
+
+  _.toArray = function(obj) {
+    if(!obj) return [];
+    if(_.isArray(obj)) return slice.call(obj)
+    if(isArrayLike(obj)) return _.map(obj, _.identity);
+    return _.values(obj);
+  };
+
+  _.size = function(obj) {
+    if(obj == null) return 0;
+    return isArrayLike(obj) ? obj.length : _.keys(obj).length;
+  };
+
+  _.partition = function(obj, predicate, context) {
+    predicate = cb(predicate, context)
+    var pass = [], fail = [];
+    _.each(obj, function(value, index, obj) {
+      (predicate(value) ? pass : fail).push(value)
+    })
+    return [pass, fail]
+  };
+
+  // Array Functions
+
+
+
   function createPredicateIndexFinder(dir) {
     return function(array, predicate, context) {
       predicate = cb(predicate, context)
@@ -300,6 +387,7 @@
       if(predicate(obj[key], key, obj)) return key;
     }
   }
+
 
 
 

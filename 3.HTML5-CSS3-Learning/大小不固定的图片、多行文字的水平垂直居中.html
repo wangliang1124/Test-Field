@@ -5,41 +5,95 @@
     <meta charset="UTF-8">
     <title>大小不固定的图片、多行文字的水平垂直居中</title>
     <meta name="viewport" content="width=device-width, initial-scale=3">
-    <link rel="stylesheet" type="text/css" href="css/center.css">
     <style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
 
+    .wrapper {
+        padding: 100px;
+    }
+
+    .inline-1 {
+        border: 1px dashed #00f;
+        text-align: center;
+        line-height: 30px;
+        font-size: 20px
+    }
+
+    .inline-2 {
+        margin: 24px 0;
+        border: 1px dashed #00f;
+        margin-top: 20px;
+        font-size: 0;
+        /* 为了图片 */
+        height: 120px;
+        /* 非必须 */
+        line-height: 120px;
+        /* 必须 */
+    }
+
+    .inline-2 .text {
+        display: inline-block;
+        /* 转换成inline-block*/
+        /* max-width: calc(100% -0.25em); */
+        line-height: 1.5;
+        /* 必须设置，否则继承line-height: 200px; */
+        vertical-align: middle;
+        font-size: 16px;
+        background-color: #ccc;
+    }
+
+    .inline-2::after {
+        content: '';
+        width: 0px;
+        font-size: 0;
+        /* vertical-align: middle; */
+        margin-left: -0.25em;
+        /* To offset spacing. May vary by font */
+    }
+
+    .inline-2 .img {
+        margin-left: 10px;
+        vertical-align: middle
+    }
+
+    .inline-3 {
+        margin: 36px 0;
+        border: 1px dashed #00f;
+        line-height: 500px;
+        font-size: 300px
+    }
+
+    .inline-3 img {
+        display: inline-block;
+        vertical-align: middle;
+    }
+
+    .inline-3::after {
+        content: '';
+        width: 0;
+        font-size: 0;
+    }
     </style>
 </head>
 
 <body>
     <div class="wrapper">
-        <div class="inline-center-1">
-            1. inline单行水平垂直居中
+        <div class="inline-1">
+            1. inline单行文字水平垂直居中，设置line-height
         </div>
-        <p class="inline-center-2">
-            <span class="text">2.inline多行水平垂直居中。<br>这里是高度为150像素的标签内的多行文字，文字大小为12像素。</span>
-            <!-- <img src="./img/grayscale.jpg" width="100" height="100" class="img"> -->
+        <p class="inline-2">
+            <span class="text">2.多行文字水平垂直居中。<br>3. 固定高度图片水平垂直居中</span>
+            <img src="./img/grayscale.jpg" width="100" height="100" class="img">
             <!-- <i>&nbsp;</i> -->
         </p>
-        <div class="box">
-            <span class="dot"></span>
-            x
-            <span class="text"> 一段文字</span>
-        </div>
-        <div class="content-c">
-            <img src="./img/grayscale.jpg">x<span class="text">我是文字</span>
-            <i>&nbsp;</i>
-        </div>
-        <div class="block-center">
-            <div class="block-center-1">
-                1. 已知高度的block元素垂直居中
-            </div>
-        </div>
-        <div class="absolute-center">
-            <span class="absolute-center-content">
-                1. 绝对居中
-                内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容
-            </span>
+        <h2>4. 高度不固定图片垂直居中</h2>
+        <a href="http://www.zhangxinxu.com/wordpress/2009/08/%E5%A4%A7%E5%B0%8F%E4%B8%8D%E5%9B%BA%E5%AE%9A%E7%9A%84%E5%9B%BE%E7%89%87%E3%80%81%E5%A4%9A%E8%A1%8C%E6%96%87%E5%AD%97%E7%9A%84%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD/" target="_blank">大小不固定的图片、多行文字的水平垂直居中</a>
+        <div class="inline-3">
+            <img src="./img/grayscale.jpg">x
+            <!-- <i>&nbsp;</i> -->
         </div>
     </div>
 </body>
