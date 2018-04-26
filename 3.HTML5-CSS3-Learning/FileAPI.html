@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>File API</title>
+</head>
+<body>
+  <input type='file' multiple />
+  <img />
+  <script>
+      var input = document.querySelector('input')
+      var handler = function(e) {
+        console.log(e.target.files)
+        var reader = new FileReader()
+        // var url = window.URL.createObjectURL(e.target.files)
+        var file = e.target.files[0]
+        reader.readAsText(file)
+        reader.onload  = function() {
+          console.log(reader.result)
+        }
+        document.querySelector("img").src = window.URL.createObjectURL(e.target.files[0])
+      }
+      input.addEventListener('change', handler, false)
+  </script>
+</body>
+</html>

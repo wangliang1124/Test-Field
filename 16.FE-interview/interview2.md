@@ -132,7 +132,7 @@
 
 > HTML5 postMessage 跨域交换数据 http://www.cnblogs.com/zichi/p/4638096.html
 
-> Window.postMessage() https://developer.mozilla.org/en-US/docs/Web/API/Window/
+> Window.postMessage() https://developer.mozilla.org/en-US/docs/Web/API/Window
 
 ## 更好的逐帧动画函数 — requestAnimationFrame 简介
 > http://www.cnblogs.com/zichi/p/5208171.html
@@ -140,6 +140,10 @@
 
 ## HTML5 File API — 让前端操作文件变的可能
 > http://www.cnblogs.com/zichi/p/html5-file-api.html
+> HTML5 — 让拖放变的流行起来 http://www.cnblogs.com/zichi/p/5080147.html
+
+## 让 HTML5 来为你定位
+> http://www.cnblogs.com/zichi/p/4975788.html
 
 ## 浏览器缓存知识小结及应用
 > https://www.cnblogs.com/lyzg/p/5125934.html
@@ -388,6 +392,7 @@
 * overflow：hidden；transition：all 1000ms ease
 
 > H5全屏滑动 https://segmentfault.com/a/1190000003691168
+> iSlider https://github.com/be-fe/iSlider
 
 ## 32.什么是响应式设计？响应式设计的基本原理是什么？如何兼容低版本的IE？
 * 响应式网站设计(Responsive Web design)是一个网站能够兼容多个终端，而不是为每一个终端做一个特定的版本。
@@ -420,6 +425,7 @@
 
 ## 36.你对line-height是如何理解的？
 * 具体来说是指两行文字间基线之间的距离
+* 深入理解CSS中的行高 http://www.cnblogs.com/rainman/archive/2011/08/05/2128068.html
 * 我对line-height及vertical-align的一点理解 https://segmentfault.com/a/1190000013031367
 > https://anotherleon.github.io/2017/11/05/%E5%85%B3%E4%BA%8Eline-height&vertical-align/#more
 > css行高line-height的一些深入理解及应用 http://www.zhangxinxu.com/wordpress/2009/11/css%E8%A1%8C%E9%AB%98line-height%E7%9A%84%E4%B8%80%E4%BA%9B%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E5%8F%8A%E5%BA%94%E7%94%A8/
@@ -536,13 +542,16 @@ link标签除了可以加载CSS外，还可以做很多其它的事情，比如�
 ## 12个你未必知道的CSS小知识 
 > https://segmentfault.com/a/1190000002528855#articleHeader4
 ## 移动端CSS书写注意事项 
-> https://github.com/cssdream/css-creating/issues/8 https://segmentfault.com/a/1190000007574023 http://am-team.github.io/amg/dev-exp-doc.html
+> 移动端CSS书写注意事项  https://github.com/cssdream/css-creating/issues/8 
+> 第六天 移动端Web开发注意事项 https://segmentfault.com/a/1190000007574023 
+> 无线Web开发经验谈 http://am-team.github.io/amg/dev-exp-doc.html
 
 ## Sticky Footer
 > Sticky Footer, Five Ways https://css-tricks.com/couple-takes-sticky-footer/
 
 ## CSS3 Transform的perspective属性
 > http://www.alloyteam.com/2012/10/the-css3-transform-perspective-property/
+> css3实践之摩天轮式图片轮播+3D正方体+3D标签云（perspective、transform-style、perspective-origin）http://www.cnblogs.com/zichi/p/4318780.html
 
 ## 移动适配方案及相关概念
 
@@ -806,3 +815,10 @@ link标签除了可以加载CSS外，还可以做很多其它的事情，比如�
 ## 38.你的优点是什么？缺点是什么？
 ## 39.如何管理前端团队?
 ## 40.最近在学什么？能谈谈你未来3，5年给自己的规划吗？
+
+
+## 45个JavaScript小技巧 
+> http://www.cnblogs.com/zichi/p/5094902.html
+
+## 汤姆大叔的6道javascript编程题题解 
+> http://www.cnblogs.com/zichi/p/4362292.html

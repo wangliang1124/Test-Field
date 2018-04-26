@@ -9,32 +9,33 @@
         background: black;
         color: white;
         margin-top: 24px;
-        line-height: 100px;
+        line-height: 60px;
         font-size: 12px;
     }
 
     .dot {
         display: inline-block;
         height: 4px;
-        width: 4px;
-        line-height: 200px;
+        width: 114px;
+        line-height: 14px;
+        color: blue;
         vertical-align: middle;
-        font-size: 12px;
+        font-size: 20px;
         background-color: red;
     }
 
     .inlinebox {
         display: inline-block;
-        line-height: 100px;
-        width: 10px;
+        /* line-height: 100px; */
+        width: 100%;
     }
 
     .text {
         display: inline-block;
-        line-height: 1;/* font-size x 1 */
+        line-height: 20px;/* font-size x 1 */
         width: 100px;
         font-size: 12px;
-        vertical-align: middle;
+        vertical-align: top;
         background-color: blue
     }
     </style>
@@ -44,9 +45,13 @@
     <h2>line-height只对文字和inline-block起作用</h2>
     <h3>不管是inline inline-block block元素(没有设置height时)，只有包含文字时（否则高度为0），文字的line-height将撑起包裹层的高度</h3>
     <h3>inline-block元素也可以响应line-height</h3>
-    <div class="wrapper" style="border: 1px dashed blue">
-        <span class="box"><span class="dot"></span> 
-        box是inline时,line-height为元素占用高度，实际高度由文字撑开, 在这里inline-block表现的行为有点像文字，比如box里设置font-size为0时，dot为box撑起的高度为0
+    <h3>box是inline时,line-height为元素占用高度，实际高度由文字撑开, 在这里inline-block表现的行为有点像文字(高由font-size决定)，比如box里设置font-size为0时，dot为box撑起的高度为0</h3>
+    <h3>实际上.dot似乎会产生一个匿名inline-box框，这个框的高度跟父元素的字体大小相关，并可以撑起box的高度</h3>
+    <h3>line boxes高度由inline-box中的最高者决定，inline-box的line-height起作用的前提是1.有内容(形成content aera) 2.不能有固定高度</h3>
+    <div class="wrapper" style="margin: 24px 0;border: 1px dashed blue">
+        <span class="box">
+            <span class="dot"></span> 
+        <!-- box是inline时,line-height为元素占用高度 -->
         <!-- <span class="text">xxxx</span> -->
         </span>
     </div>

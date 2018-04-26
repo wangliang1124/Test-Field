@@ -174,6 +174,7 @@ const pageSlide = (function(){
     this.isSliding = true
     this.pages[this.index].style.transform = 'translate3d(0, -100%, 0)'
     this.pages[++this.index].style.transform = 'translate3d(0, 0, 0)'
+    // this.pages[this.index].style.opacity = '1'
     !this.opts.isTransition && methods.setSliding.call(this)
     
   }
