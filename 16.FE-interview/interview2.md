@@ -589,18 +589,20 @@ link标签除了可以加载CSS外，还可以做很多其它的事情，比如�
 * parseFloat('12.3b',10)
 
 ## 7.如何将浮点数点左边的数每三位添加一个逗号，如12000000.11转化为『12,000,000.11』?
-```function commafy(num){
+```javascript
+function commafy(num){
   	return num && num
   		.toString()
   		.replace(/(\d)(?=(\d{3})+\.)/g, function($1, $2){
   			return $2 + ',';
   		});
-  }```
-```let milliFormat = (input) => {
+  }
+let milliFormat = (input) => {
   return input && input.toString()
       .replace(/(^|\s)\d+/g, (m) => m.replace(/(?=(?!\b)(\d{3})+$)/g, ','))
 }
-console.log(milliFormat(1200000123123.223))```
+console.log(milliFormat(1200000123123.223))
+```
 
   > 千位分隔符的完整攻略 https://www.tuicool.com/articles/ArQZfui
   
@@ -612,18 +614,23 @@ console.log(milliFormat(1200000123123.223))```
 
 ## 11.javascript创建对象的几种方式？
 *	1、对象字面量的方式
- 	```person={firstname:"Mark",lastname:"Yun",age:25,eyecolor:"black"};```
+ 	```javascript
+ 	person={firstname:"Mark",lastname:"Yun",age:25,eyecolor:"black"};
+ 	```
 * 2、用function来模拟无参的构造函数
- 	```function Person(){}
+ 	```javascript
+ 	function Person(){}
  	var person=new Person();//定义一个function，如果使用new"实例化",该function可以看作是一个Class
  	person.name="Mark";
  	person.age="25";
  	person.work=function(){
  		alert(person.name+" hello...");
  	}
- 	person.work();```
+ 	person.work();
+ 	```
  * 3、用function来模拟参构造函数来实现（用this关键字定义构造的上下文属性）
- 	```function Pet(name,age,hobby){
+ 	```javascript
+ 	function Pet(name,age,hobby){
  	   this.name=name;//this作用域：当前对象
  	   this.age=age;
  	   this.hobby=hobby;
@@ -634,7 +641,8 @@ console.log(milliFormat(1200000123123.223))```
  	var maidou =new Pet("麦兜",25,"coding");//实例化、创建对象
  	maidou.eat();//调用eat方法```
  * 4、用工厂方式来创建（内置对象）
- 	 ```var wcDog =new Object();
+ 	 ```javascript
+ 	 var wcDog =new Object();
  	 wcDog.name="旺财";
  	 wcDog.age=3;
  	 wcDog.work=function(){
@@ -642,7 +650,8 @@ console.log(milliFormat(1200000123123.223))```
  	 }
  	 wcDog.work();```
  * 5、用原型方式来创建
- 	```function Dog(){ }
+ 	```javascript
+ 	function Dog(){ }
  	 Dog.prototype.name="旺财";
  	 Dog.prototype.eat=function(){
  	 	alert(this.name+"是个吃货");
@@ -650,7 +659,8 @@ console.log(milliFormat(1200000123123.223))```
  	 var wangcai =new Dog();
  	 wangcai.eat();```
  * 6、用混合方式来创建
- 	```function Car(name,price){
+ 	```javascript
+ 	function Car(name,price){
  	  this.name=name;
  	  this.price=price;
  	}
