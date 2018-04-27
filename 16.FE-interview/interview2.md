@@ -553,7 +553,14 @@ link标签除了可以加载CSS外，还可以做很多其它的事情，比如�
 > http://www.alloyteam.com/2012/10/the-css3-transform-perspective-property/
 > css3实践之摩天轮式图片轮播+3D正方体+3D标签云（perspective、transform-style、perspective-origin）http://www.cnblogs.com/zichi/p/4318780.html
 
+## JavaScript学习笔记：视口宽高、位置与滚动高度
+> https://www.w3cplus.com/javascript/offset-scroll-client.html
+
 ## 移动适配方案及相关概念
+> 移动端适配方案(上下)  https://github.com/riskers/blog/issues/17
+
+## 无线Web开发经验谈
+> http://am-team.github.io/amg/dev-exp-doc.html
 
 # JS
 ## 1.介绍js的基本数据类型。
@@ -589,7 +596,14 @@ link标签除了可以加载CSS外，还可以做很多其它的事情，比如�
   			return $2 + ',';
   		});
   }`
+`let milliFormat = (input) => {
+  return input && input.toString()
+      .replace(/(^|\s)\d+/g, (m) => m.replace(/(?=(?!\b)(\d{3})+$)/g, ','))
+}
+console.log(milliFormat(1200000123123.223))`
+
   > 千位分隔符的完整攻略 https://www.tuicool.com/articles/ArQZfui
+  
 ## 8.如何实现数组的随机排序？
 * 数组乱序 https://github.com/hanzichi/underscore-analysis/issues/15
 
