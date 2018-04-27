@@ -639,7 +639,8 @@ console.log(milliFormat(1200000123123.223))
  	   }
  	}
  	var maidou =new Pet("麦兜",25,"coding");//实例化、创建对象
- 	maidou.eat();//调用eat方法```
+ 	maidou.eat();//调用eat方法
+ 	```
  * 4、用工厂方式来创建（内置对象）
  	 ```javascript
  	 var wcDog =new Object();
@@ -648,7 +649,8 @@ console.log(milliFormat(1200000123123.223))
  	 wcDog.work=function(){
  	   alert("我是"+wcDog.name+",汪汪汪......");
  	 }
- 	 wcDog.work();```
+ 	 wcDog.work();
+ 	 ```
  * 5、用原型方式来创建
  	```javascript
  	function Dog(){ }
@@ -657,7 +659,8 @@ console.log(milliFormat(1200000123123.223))
  	 	alert(this.name+"是个吃货");
  	 }
  	 var wangcai =new Dog();
- 	 wangcai.eat();```
+ 	 wangcai.eat();
+ 	 ```
  * 6、用混合方式来创建
  	```javascript
  	function Car(name,price){
@@ -668,7 +671,8 @@ console.log(milliFormat(1200000123123.223))
  	   alert("我是"+this.name+"，我现在卖"+this.price+"万元");
  	  }
  	var camry =new Car("凯美瑞",27);
- 	camry.sell(); ```
+ 	camry.sell(); 
+ 	```
 
 ## 12.Javascript作用链域?
 * 函数创建时会建立一个预先包含全局变量对象的作用域链（保存在[[scope]]属性中），当函数被调用时，会创建一个当前活动变量和包含环境变量对象的集合，这就是执行环境的作用域链，它的开始是当前的活动对象，然后是包含环境中的变量对象，直到全局环境。（标识符所在的位置越深，访问速度越慢，因此尽量少使用全局变量。） 
@@ -706,23 +710,32 @@ console.log(milliFormat(1200000123123.223))
 ## 24.Javascript中，有一个函数，执行时对象查找时，永远不会去查找原型，这个函数是？
  * Object.prototype.hasOwnProperty()
 
-~~ ## 25.JSON 的了解？ ~~
-## 26.[].forEach.call($$("*"),function(a){a.style.outline="1px solid #"+(~~(Math.random()*(1<<24))).toString(16)}) 能解释一下这段代码的意思吗？
-* http://www.html-js.com/article/2315
+## 25.JSON 的了解？
+> JSON：如果你愿意一层一层剥开我的心，你会发现...这里水很深——深入理解JSON https://segmentfault.com/a/1190000008832185
 
-## 27.js延迟加载的方式有哪些（异步加载JS的方式有哪些？）？
+## 26.能解释一下这段代码的意思吗？
+```javascript
+[].forEach.call($$("*"),function(a){a.style.outline="1px solid #"+(~~(Math.random()*(1<<24))).toString(16)}) 
+```
+* $$: 等价querySelectorAll() 或 document.all(非正式)
+* ~~：等价Math.floor 或 parseInt
+* 1<<24: 等价 1000000000000000000000000 2^24
+> 从一行代码里面学点JavaScript http://www.html-js.com/article/2315
+
+## 27.JS延迟加载的方式有哪些（异步加载JS的方式有哪些？）？
  * defer和async、动态创建DOM方式（用得最多）、按需异步载入js
- > http://www.cnblogs.com/tiwlin/archive/2011/12/26/2302554.html
 
-~~ ## 28.Ajax 是什么? 如何创建一个Ajax？~~
+ > Javascript 异步加载详解 http://www.cnblogs.com/tiwlin/archive/2011/12/26/2302554.html
+
+~~## 28.Ajax 是什么? 如何创建一个Ajax~~
 
 ## 29.Ajax 解决浏览器缓存问题？
   * 1、在ajax发送请求前加上 anyAjaxObj.setRequestHeader("If-Modified-Since","0")。
   * 2、在ajax发送请求前加上 anyAjaxObj.setRequestHeader("Cache-Control","no-cache")。
   * 3、在URL后面加上一个随机数： "fresh=" + Math.random(); 或 "nowtime=" + new Date().getTime();。
 
-~~ ## 30.同步和异步的区别? ~~
-~~ ## 31.如何解决跨域问题? ~~
+~~## 30.同步和异步的区别?~~  ~~## 31.如何解决跨域问题?~~
+
 ## 32.页面编码和被请求的资源编码如果不一致如何处理？
 ## 33.服务器代理转发时，该如何处理cookie？
 * HTTP 代理如何正确处理 Cookie https://www.ibm.com/developerworks/cn/java/j-cookie/index.html
