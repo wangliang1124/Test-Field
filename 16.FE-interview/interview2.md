@@ -740,16 +740,17 @@ console.log(milliFormat(1200000123123.223))
 ## 33.服务器代理转发时，该如何处理cookie？
 * HTTP 代理如何正确处理 Cookie https://www.ibm.com/developerworks/cn/java/j-cookie/index.html
 
-## 34.模块化开发怎么做？
+## 34.模块化开发怎么做？ 35.AMD（Modules/Asynchronous-Definition）、CMD（Common Module Definition）规范区别？
 > 详解JavaScript模块化开发 https://segmentfault.com/a/1190000000733959
 > http://www.ruanyifeng.com/blog/2012/10/javascript_module.html
 
-## 35.AMD（Modules/Asynchronous-Definition）、CMD（Common Module Definition）规范区别？
 ## 36.requireJS的核心原理是什么？（如何动态加载的？如何避免多次加载的？如何 缓存的？）
 > requirejs的用法和原理分析 https://github.com/HRFE/blog/issues/10
 
 ## 37.JS模块加载器的轮子怎么造，也就是如何实现一个模块加载器？
 > 如何实现一个异步模块加载器--以requireJS为例 https://github.com/youngwind/blog/issues/98
+> AMD加载器分析与实现 https://github.com/creeperyang/blog/issues/17
+> 如何实现一个 CMD 模块加载器 http://annn.me/how-to-realize-cmd-loader/
 
 ## 38.谈一谈你对ECMAScript6的了解？
 ## 39.ECMAScript6 怎么写class么，为什么会出现class这种东西?
@@ -761,7 +762,7 @@ console.log(milliFormat(1200000123123.223))
 ## 42.JS怎么实现一个类，怎么实例化这个类？
 > http://www.ruanyifeng.com/blog/2012/07/three_ways_to_define_a_javascript_class.html
 
-~~ ## 43.JavaScript中的作用域与变量声明提升？ ~~
+~~## 43.JavaScript中的作用域与变量声明提升？~~
 
 ## 44.如何编写高性能的Javascript？
 > http://www.alloyteam.com/2012/11/performance-writing-efficient-javascript/
@@ -789,14 +790,15 @@ console.log(milliFormat(1200000123123.223))
 > https://segmentfault.com/a/1190000007640795
 
 ## 59.我们给一个dom同时绑定两个点击事件，一个用捕获，一个用冒泡。会执行几次事件，会先执行冒泡还是捕获？
+* 绑定在被点击元素的事件是按照代码顺序发生，其他元素通过冒泡或者捕获“感知”的事件，按照W3C的标准，先发生捕获事件，后发生冒泡事件。所有事件的顺序是：其他元素捕获阶段事件 -> 本元素代码顺序事件 -> 其他元素冒泡阶段事件 。
+
 > https://blog.csdn.net/qiqingjin/article/details/51387217
 
 ## 60.使用JS实现获取文件扩展名？
 >`function getFileExtension(filename) {
     return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
   }`
-
-> https://blog.csdn.net/zhenyu5665/article/details/72829971
+> [译]如何更有效的获取文件扩展名 https://segmentfault.com/a/1190000004993946
 
 ## 61.Webpack热更新实现原理?
 > https://zhuanlan.zhihu.com/p/30623057
@@ -806,10 +808,14 @@ console.log(milliFormat(1200000123123.223))
 > https://www.jianshu.com/p/a76dc7e0c5a1
 
 ## 64.ES6是如何实现编译成ES5的？
-> https://blog.csdn.net/weiyongliang_813/article/details/73929110
+> Babel是如何读懂JS代码的 https://zhuanlan.zhihu.com/p/27289600
+> 深入理解Babel原理及其使用，babel把ES6转成ES5的原理是什么？ http://www.fly63.com/article/detial/197
 
 ## 65.DOM操作——怎样添加、移除、移动、复制、创建和查找节点。
 > 深入浅出DOM基础——《DOM探索之基础详解篇》学习笔记 https://github.com/jawil/blog/issues/9
+
+## 细说 webpack 之流程篇
+> http://taobaofed.org/blog/2016/09/09/webpack-flow/
 
 # 其他
 ## 1.原来公司工作流程是怎么样的，如何与其他人协作的？如何跨部门合作的？

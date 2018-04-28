@@ -1,17 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>视口宽高、位置与滚动高度</title>
-</head>
-<body>
-  <!DOCTYPE html>
-<html lang="en">
-
-<head>
     <meta charset="UTF-8">
-    <title>大小不固定的图片、多行文字的水平垂直居中</title>
-    <meta name="viewport" content="width=device-width, initial-scale=3">
+    <title>视口宽高、位置与滚动高度</title>
     <style>
     * {
         padding: 0;
@@ -23,14 +14,15 @@
     }
 
     .inline-1 {
-      /* width: 250px; */
-        border: 1px dashed #00f;        
+        /* width: 250px; */
+        border: 1px dashed #00f;
         /* text-align: center; */
         line-height: 30px;
         font-size: 20px
     }
+
     .text1 {
-      border: 2px solid red
+        border: 2px solid red
     }
 
     .inline-2 {
@@ -89,7 +81,6 @@
     }
     </style>
 </head>
-
 <body>
     <div class="wrapper">
         <div class="inline-1">
@@ -108,7 +99,7 @@
         </div>
     </div>
     <script>
-      window.addEventListener('load', function() {
+    window.addEventListener('load', function() {
         var text1 = document.querySelector('.text1')
         console.log(text1.getClientRects())
         console.log(text1.getBoundingClientRect())
@@ -120,11 +111,10 @@
         var y = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop
         var z = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft
         console.log(x, y, z)
-      })
-
+    })
     </script>
 </body>
+<script type="text/javascript" src="js/worker.js"></script>
+<div id="test"></div>
 
-</html>
-</body>
 </html>

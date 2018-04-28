@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>event</title>
+</head>
+
+<body>
+    <div>
+        <h1>事件发生顺序: 捕获阶段-->目标阶段-->冒泡阶段，注意在目标阶段不区分冒泡和捕获，按照监听代码的顺序执行<br>
+        绑定在被点击元素的事件是按照代码顺序发生，其他元素通过冒泡或者捕获“感知”的事件，按照W3C的标准，先发生捕获事件，后发生冒泡事件。所有事件的顺序是：其他元素捕获阶段事件 -> 本元素代码顺序事件 -> 其他元素冒泡阶段事件 。
+      </h1>
+      我在div里<br>
+       <button>target</button>
+    </div>
+     
+    <script>
+    var btn = document.querySelector('button');
+    var div = document.querySelector('div');
+
+
+
+
+    btn.addEventListener('click', function() {
+        console.log('bubble', 'btn');
+    }, false);
+    btn.addEventListener('click', function() {
+        console.log('capture', 'btn');
+    }, true);
+
+
+    div.addEventListener('click', function() {
+        console.log('bubble', 'div');
+    }, false);
+    
+
+    div.addEventListener('click', function() {
+        console.log('capture', 'div');
+    }, true);
+
+
+    </script>
+</body>
+
+</html>
