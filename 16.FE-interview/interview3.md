@@ -996,7 +996,7 @@ z轴上的默认层叠顺序如下（从下到上）：
 
 ## $javascript概念部分
 
-### DOM元素e的e.getAttribute(propName)和e.propName有什么区别和联系
+### DOM元素e的e.getAttribute(propName)和e.propName 有什么区别和联系  [基础]
 
 - e.getAttribute()，是标准DOM操作文档元素属性的方法，具有通用性可在任意文档上使用，返回元素在源文件中**设置的属性**
 - e.propName通常是在HTML文档中访问特定元素的**特性**，浏览器解析元素后生成对应对象（如a标签生成HTMLAnchorElement），这些对象的特性会根据特定规则结合属性设置得到，对于没有对应特性的属性，只能使用getAttribute进行访问
@@ -1007,7 +1007,7 @@ z轴上的默认层叠顺序如下（从下到上）：
 - 像`<a href="../index.html">link</a>`中href属性，转换成property的时候需要通过转换得到完整URL
 - 一些attribute和property不是一一对应如：form控件中`<input value="hello"/>`对应的是defaultValue，修改或设置value property修改的是控件当前值，setAttribute修改value属性不会改变value property
 
-### offsetWidth/offsetHeight,clientWidth/clientHeight与scrollWidth/scrollHeight的区别
+### offsetWidth/offsetHeight,clientWidth/clientHeight与scrollWidth/scrollHeight的区别？ [基础]
 
 - offsetWidth/offsetHeight返回值包含**content + padding + border**，效果与e.getBoundingClientRect()相同
 - clientWidth/clientHeight返回值只包含**content + padding**，如果有滚动条，也**不包含滚动条**
@@ -1018,7 +1018,7 @@ z轴上的默认层叠顺序如下（从下到上）：
 
 ![元素尺寸](img/element-size.png)
 
-### XMLHttpRequest通用属性和方法
+### XMLHttpRequest通用属性和方法 [基础]
 
 1. `readyState`:表示请求状态的整数，取值：
   - UNSENT（0）：对象已创建
@@ -1038,7 +1038,7 @@ z轴上的默认层叠顺序如下（从下到上）：
 11. `setRequestHeader(name, value)`:设置HTTP报头
 12. `send(body)`:对服务器请求进行初始化。参数body包含请求的主体部分，对于POST请求为键值对字符串；对于GET请求，为null
 
-### focus/blur与focusin/focusout的区别与联系
+### focus/blur与focusin/focusout的区别与联系 [基础]
 
 1. focus/blur不冒泡，focusin/focusout冒泡
 2. focus/blur兼容性好，focusin/focusout在除FireFox外的浏览器下都保持良好兼容性，如需使用事件托管，可考虑在FireFox下使用事件捕获elem.addEventListener('focus', handler, true)
@@ -1048,7 +1048,7 @@ z轴上的默认层叠顺序如下（从下到上）：
     3. 表单空间被点击或键盘操作
     4. 设置`tabindex`属性的元素被点击或键盘操作
 
-### mouseover/mouseout与mouseenter/mouseleave的区别与联系
+### mouseover/mouseout与mouseenter/mouseleave的区别与联系 [基础]
 
 1. mouseover/mouseout是标准事件，**所有浏览器都支持**；mouseenter/mouseleave是IE5.5引入的特有事件后来被DOM3标准采纳，现代标准浏览器也支持
 2. mouseover/mouseout是**冒泡**事件；mouseenter/mouseleave**不冒泡**。需要为**多个元素监听鼠标移入/出事件时，推荐mouseover/mouseout托管，提高性能**
@@ -1105,7 +1105,7 @@ z轴上的默认层叠顺序如下（从下到上）：
 7. cookie有secure属性要求HTTPS传输
 8. 浏览器不能保存超过300个cookie，单个服务器不能超过20个，每个cookie不能超过4k。web storage大小支持能达到5M
 
-### javascript跨域通信
+### javascript跨域通信  [基础]
 同源：两个文档同源需满足
 
 1. 协议相同
@@ -1120,7 +1120,7 @@ z轴上的默认层叠顺序如下（从下到上）：
 - 内部服务器代理请求跨域url，然后返回数据
 - 跨域请求数据，现代浏览器可使用HTML5规范的CORS功能，只要目标服务器返回HTTP头部**``Access-Control-Allow-Origin: *``**即可像普通ajax一样访问跨域资源
 
-### javascript有哪几种数据类型
+### javascript有哪几种数据类型  [基础]
 六种基本数据类型
 
 - undefined
@@ -1134,7 +1134,7 @@ z轴上的默认层叠顺序如下（从下到上）：
 
 - Object
 
-### 什么闭包,闭包有什么用
+### 什么闭包,闭包有什么用  [基础]
 **闭包是在某个作用域内定义的函数，它可以访问这个作用域内的所有变量**。闭包作用域链通常包括三个部分：
 
 1. 函数本身作用域。
@@ -1146,8 +1146,13 @@ z轴上的默认层叠顺序如下（从下到上）：
 1. 创建特权方法用于访问控制
 2. 事件处理程序及回调
 
-### javascript有哪几种方法定义函数
-
+### javascript有哪几种方法定义函数  [基础]
++ function sum (num1, num2) { return num1 + num2; } 
++ var sum = function(num1, num2) { return num1 + num2 }
++ var sum = new Function('num1', 'num2', 'return num1 + num2')
++ var sum = (num1, num2) => num1 + num2
++ 函数是对象，函数名是指针
++ 解析器会率先读取函数声明，并使其在执行任何代码之前可用; 至于函数表达式，则必须等到解析器执行到它所在的代码行，才会真正被解释执行。
 1. [函数声明表达式](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function)
 2. [function操作符](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/function)
 3. [Function 构造函数](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function)
@@ -1155,7 +1160,7 @@ z轴上的默认层叠顺序如下（从下到上）：
 
 重要参考资料：[MDN:Functions_and_function_scope](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions_and_function_scope)
 
-### 应用程序存储和离线web应用
+### 应用程序存储和离线web应用  [基础]
 HTML5新增应用程序缓存，允许web应用将应用程序自身保存到用户浏览器中，用户离线状态也能访问。
 1.为html元素设置manifest属性:``<html manifest="myapp.appcache">``，其中后缀名只是一个约定，真正识别方式是通过``text/cache-manifest``作为MIME类型。所以需要配置服务器保证设置正确
 2.manifest文件首行为``CACHE MANIFEST``，其余就是要缓存的URL列表，每个一行，相对路径都相对于manifest文件的url。注释以#开头
@@ -1176,7 +1181,7 @@ NETWORK:
 cgi/
 ```
 
-### 客户端存储localStorage和sessionStorage
+### 客户端存储localStorage和sessionStorage  [基础]
 
 - localStorage有效期为永久，sessionStorage有效期为顶层窗口关闭前
 - 同源文档可以读取并修改localStorage数据，sessionStorage只允许同一个窗口下的文档访问，如通过iframe引入的同源文档。
@@ -1196,7 +1201,7 @@ localStorage.removeItem('x'); // remove x
 localStorage.clear();  // remove all data
 ```
 
-### cookie及其操作
+### cookie及其操作  [基础]
 
 - cookie是web浏览器存储的少量数据，最早设计为服务器端使用，作为HTTP协议的扩展实现。cookie数据会自动在浏览器和服务器之间传输。
 - 通过读写cookie检测是否支持
@@ -1221,13 +1226,13 @@ document.cookie = 'name=aaa; path=/; domain=domain; secure';
 
 [cookieUtil.js](https://github.com/qiu-deqing/google/blob/master/module/js/cookieUtil.js)：自己写的cookie操作工具
 
-### javascript有哪些方法定义对象
+### javascript有哪些方法定义对象  [基础]
 
 1. 对象字面量： `var obj = {};`
 2. 构造函数： `var obj = new Object();`
 3. Object.create(): `var obj = Object.create(Object.prototype);`
 
-### ===运算符判断相等的流程是怎样的
+### ===运算符判断相等的流程是怎样的  [基础]
 
 1. 如果两个值不是相同类型，它们不相等
 2. 如果两个值都是null或者都是undefined，它们相等
@@ -1237,7 +1242,7 @@ document.cookie = 'name=aaa; path=/; domain=domain; secure';
 6. 如果他们都是字符串并且在相同位置包含相同的16位值，他它们相等；如果在长度或者内容上不等，它们不相等；两个字符串显示结果相同但是编码不同==和===都认为他们不相等
 7. 如果他们指向相同对象、数组、函数，它们相等；如果指向不同对象，他们不相等
 
-### ==运算符判断相等的流程是怎样的
+### ==运算符判断相等的流程是怎样的  [基础]
 
 1. 如果两个值类型相同，按照===比较方法进行比较
 2. 如果类型不同，使用如下规则进行比较
@@ -1247,32 +1252,32 @@ document.cookie = 'name=aaa; path=/; domain=domain; secure';
   4. 如果一个值是对象，另一个是数字或字符串，将对象转换为原始值然后用==规则继续比较
   5. **其他所有情况都认为不相等**
 
-### 对象到字符串的转换步骤
+### 对象到字符串的转换步骤  [基础]
 
 1. 如果对象有toString()方法，javascript调用它。如果返回一个原始值（primitive value如：string number boolean）,将这个值转换为字符串作为结果
 2. 如果对象没有toString()方法或者返回值不是原始值，javascript寻找对象的valueOf()方法，如果存在就调用它，返回结果是原始值则转为字符串作为结果
 3. 否则，javascript不能从toString()或者valueOf()获得一个原始值，此时throws a TypeError
 
 
-### 对象到数字的转换步骤
+### 对象到数字的转换步骤  [基础]
 
     1. 如果对象有valueOf()方法并且返回元素值，javascript将返回值转换为数字作为结果
     2. 否则，如果对象有toString()并且返回原始值，javascript将返回结果转换为数字作为结果
     3. 否则，throws a TypeError
 
-### <,>,<=,>=的比较规则
+### <,>,<=,>=的比较规则  [基础]
 
 所有比较运算符都支持任意类型，但是**比较只支持数字和字符串**，所以需要执行必要的转换然后进行比较，转换规则如下:
 1. 如果操作数是对象，转换为原始值：如果valueOf方法返回原始值，则使用这个值，否则使用toString方法的结果，如果转换失败则报错
 2. 经过必要的对象到原始值的转换后，如果两个操作数都是字符串，按照字母顺序进行比较（他们的16位unicode值的大小）
 3. 否则，如果有一个操作数不是字符串，**将两个操作数转换为数字**进行比较
 
-### +运算符工作流程
+### +运算符工作流程  [基础]
 1. 如果有操作数是对象，转换为原始值
 2. 此时如果有**一个操作数是字符串**，其他的操作数都转换为字符串并执行连接
 3. 否则：**所有操作数都转换为数字并执行加法**
 
-### 函数内部arguments变量有哪些特性,有哪些属性,如何将它转换为数组
+### 函数内部arguments变量有哪些特性,有哪些属性,如何将它转换为数组 
 
 - arguments所有函数中都包含的一个局部变量，是一个类数组对象，对应函数调用时的实参。如果函数定义同名参数会在调用时覆盖默认对象
 - arguments[index]分别对应函数调用时的实参，并且通过arguments修改实参时会同时修改实参
@@ -1281,7 +1286,7 @@ document.cookie = 'name=aaa; path=/; domain=domain; secure';
 - arguments.caller为调用当前函数的函数（已被遗弃）
 - 转换为数组：<code>var args = Array.prototype.slice.call(arguments, 0);</code>
 
-### DOM事件模型是如何的,编写一个EventUtil工具类实现事件管理兼容
+### DOM事件模型是如何的,编写一个EventUtil工具类实现事件管理兼容 
 
 - DOM事件包含捕获（capture）和冒泡（bubble）两个阶段：捕获阶段事件从window开始触发事件然后通过祖先节点一次传递到触发事件的DOM元素上；冒泡阶段事件从初始元素依次向祖先节点传递直到window
 - 标准事件监听elem.addEventListener(type, handler, capture)/elem.removeEventListener(type, handler, capture)：handler接收保存事件信息的event对象作为参数，event.target为触发事件的对象，handler调用上下文this为绑定监听器的对象，event.preventDefault()取消事件默认行为，event.stopPropagation()/event.stopImmediatePropagation()取消事件传递
@@ -1355,7 +1360,7 @@ var EventUtil = {
 };
 ```
 
-### 评价一下三种方法实现继承的优缺点,并改进
+### 评价一下三种方法实现继承的优缺点,并改进 [基础]
 
 ```
 function Shape() {}

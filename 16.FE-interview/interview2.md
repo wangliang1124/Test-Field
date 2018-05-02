@@ -563,13 +563,15 @@ link标签除了可以加载CSS外，还可以做很多其它的事情，比如�
 > http://am-team.github.io/amg/dev-exp-doc.html
 
 # JS
-## 1.介绍js的基本数据类型。
+## 1.介绍js的基本数据类型。[基础]
 * Boolean,Null,Undefined,Number,String,Symbol (ECMAScript 6 新定义)
-## 2.介绍js有哪些内置对象？
+
+## 2.介绍js有哪些内置对象？[基础]
 *  Object 是 JavaScript 中所有对象的父对象
 * 数据封装类对象：Object、Array、Boolean、Number 和 String
  * 其他对象：Function、Arguments、Math、Date、RegExp、Error
 > https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
+
 ## 3.说几条写JavaScript的基本规范？
 * 使用===/！==比较true/false或数值
 * 使用字面量代替new
@@ -578,7 +580,10 @@ link标签除了可以加载CSS外，还可以做很多其它的事情，比如�
 * 变量先声明再使用
 * 变量命名以小写字母开头
 
-## 5.JavaScript有几种类型的值？，你能画一下他们的内存图吗？
+> JavaScript编码规范 https://github.com/fex-team/styleguide/blob/master/javascript.md
+> Airbnb JavaScript Style Guide https://github.com/airbnb/javascript
+
+## 5.JavaScript有几种类型的值？，你能画一下他们的内存图吗？[基础]
 * 栈：原始数据类型（Undefined，Null，Boolean，Number、String）
 * 堆：引用数据类型（对象、数组和函数）
 * 两种类型的区别是：存储位置不同；
@@ -609,10 +614,10 @@ console.log(milliFormat(1200000123123.223))
 ## 8.如何实现数组的随机排序？
 * 数组乱序 https://github.com/hanzichi/underscore-analysis/issues/15
 
-## 9.Javascript如何实现继承？10.JavaScript继承的几种实现方式？
+## 9.Javascript如何实现继承？10.JavaScript继承的几种实现方式？ [基础]
  * JS继承的实现方式 http://www.cnblogs.com/humin/p/4556820.html
 
-## 11.javascript创建对象的几种方式？
+## 11.javascript创建对象的几种方式？ [基础]
 *	1、对象字面量的方式
  	```javascript
  	person={firstname:"Mark",lastname:"Yun",age:25,eyecolor:"black"};
@@ -674,43 +679,43 @@ console.log(milliFormat(1200000123123.223))
  	camry.sell(); 
  	```
 
-## 12.Javascript作用链域?
+## 12.Javascript作用链域? [基础]
 * 函数创建时会建立一个预先包含全局变量对象的作用域链（保存在[[scope]]属性中），当函数被调用时，会创建一个当前活动变量和包含环境变量对象的集合，这就是执行环境的作用域链，它的开始是当前的活动对象，然后是包含环境中的变量对象，直到全局环境。（标识符所在的位置越深，访问速度越慢，因此尽量少使用全局变量。） 
 ## 14.eval是做什么的？
 * 把字符串解析成JS代码并运行；
 
-## 15.什么是window对象? 什么是document对象?
+## 15.什么是window对象? 什么是document对象? [基础]
  * window对象--代表浏览器中的一个打开的窗口或者框架，window对象会在<body>或者<frameset> 每次出现时被自动创建，在客户端JavaScript中，Window对象是全局对象
  * document对象--代表整个HTML文档，可以用来访问页面中的所有元素。每一个载入浏览器的HTML文档都会成为document对象。document对象使我们可以从脚本中对HTML页面中的所有元素进行访问。
 
-## 17.写一个通用的事件侦听器函数。
+## 17.写一个通用的事件侦听器函数。 [基础]
 * http://www.cnblogs.com/isaboy/p/eventJavascript.html
 * http://www.haorooms.com/post/js_EventUtil
 
 ## 18.["1", "2", "3"].map(parseInt) 答案是多少？
  * [1, NaN, NaN]
 
-## 19.事件是？IE与火狐的事件机制有什么区别？ 如何阻止冒泡？
+## 19.事件是？IE与火狐的事件机制有什么区别？ 如何阻止冒泡？ [基础]
 * IE是事件冒泡、Firefox同时支持两种事件模型，也就是：捕获型事件和冒泡型事件；
  * ev.stopPropagation();（旧ie的方法 ev.cancelBubble = true;）
 
 ~~## 20.什么是闭包（closure），为什么要用它？~~
 ~~## 21.javascript 代码中的"use strict";是什么意思 ? 使用它区别是什么？~~
 
-## 22.如何判断一个对象是否属于某个类？
+## 22.如何判断一个对象是否属于某个类？ [基础]
 * instanceof 或者 constructor
 
-## 23.new操作符具体干了什么呢?
+## 23.new操作符具体干了什么呢? [基础]
 `var obj  = {};
  obj.__proto__ = Base.prototype;
  Base.call(obj)`
 
 ## 23.用原生JavaScript的实现过什么功能吗？
 
-## 24.Javascript中，有一个函数，执行时对象查找时，永远不会去查找原型，这个函数是？
+## 24.Javascript中，有一个函数，执行时对象查找时，永远不会去查找原型，这个函数是？ [基础] 
  * Object.prototype.hasOwnProperty()
 
-## 25.JSON 的了解？
+## 25.JSON 的了解？ [基础]
 > JSON：如果你愿意一层一层剥开我的心，你会发现...这里水很深——深入理解JSON https://segmentfault.com/a/1190000008832185
 
 ## 26.能解释一下这段代码的意思吗？
@@ -729,14 +734,14 @@ console.log(milliFormat(1200000123123.223))
 
 ~~## 28.Ajax 是什么? 如何创建一个Ajax~~
 
-## 29.Ajax 解决浏览器缓存问题？
+## 29.Ajax解决浏览器缓存问题？
   * 1、在ajax发送请求前加上 anyAjaxObj.setRequestHeader("If-Modified-Since","0")。
   * 2、在ajax发送请求前加上 anyAjaxObj.setRequestHeader("Cache-Control","no-cache")。
   * 3、在URL后面加上一个随机数： "fresh=" + Math.random(); 或 "nowtime=" + new Date().getTime();。
 
 ~~## 30.同步和异步的区别?~~  ~~## 31.如何解决跨域问题?~~
 
-## 32.页面编码和被请求的资源编码如果不一致如何处理？
+## 32.页面编码和被请求的资源编码如果不一致如何处理？ 
 ## 33.服务器代理转发时，该如何处理cookie？
 * HTTP 代理如何正确处理 Cookie https://www.ibm.com/developerworks/cn/java/j-cookie/index.html
 
@@ -752,20 +757,22 @@ console.log(milliFormat(1200000123123.223))
 > AMD加载器分析与实现 https://github.com/creeperyang/blog/issues/17
 > 如何实现一个 CMD 模块加载器 http://annn.me/how-to-realize-cmd-loader/
 
-## 38.谈一谈你对ECMAScript6的了解？
-## 39.ECMAScript6 怎么写class么，为什么会出现class这种东西?
-## 40..call() 和 .apply() 的区别？
+## 38.谈一谈你对ECMAScript6的了解？ [基础]
+## 39.ECMAScript6 怎么写class么，为什么会出现class这种东西? [基础]
+## 40..call() 和 .apply() 的区别？ [基础]
 
-## 41.数组和对象有哪些原生方法，列举一下？
+## 41.数组和对象有哪些原生方法，列举一下？ [基础]
 > https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object
 
-## 42.JS怎么实现一个类，怎么实例化这个类？
+## 42.JS怎么实现一个类，怎么实例化这个类？ [基础]
 > http://www.ruanyifeng.com/blog/2012/07/three_ways_to_define_a_javascript_class.html
 
 ~~## 43.JavaScript中的作用域与变量声明提升？~~
 
 ## 44.如何编写高性能的Javascript？
-> http://www.alloyteam.com/2012/11/performance-writing-efficient-javascript/
+
+> 编写高性能的Javascript http://www.alloyteam.com/2012/11/performance-writing-efficient-javascript/
+> 吹毛求疵的追求优雅高性能JavaScript https://github.com/jawil/blog/issues/2
 
 ## 45.那些操作会造成内存泄漏？
 > https://github.com/wengjq/Blog/issues/1
@@ -773,7 +780,7 @@ console.log(milliFormat(1200000123123.223))
 ## 46.如何判断当前脚本运行在浏览器还是node环境中？
 * typeof global == 'object' && global.global === global
 
-## 48.把 Script 标签 放在页面的最底部的body封闭之前 和封闭之后有什么区别？浏览器会如何解析它们？
+## 48.把 Script 标签放在页面的最底部的body封闭之前 和封闭之后有什么区别？浏览器会如何解析它们？
 
 ## 49.移动端的点击事件的有延迟，时间是多久，为什么会有？ 怎么解决这个延时？
 > 300 毫秒点击延迟的来龙去脉 https://thx.github.io/mobile/300ms-click-delay
@@ -786,7 +793,7 @@ console.log(milliFormat(1200000123123.223))
 ## 56.前端templating(Mustache, underscore, handlebars)是干嘛的, 怎么用?
 > http://blog.gejiawen.com/2015/04/08/talk-about-fontend-templates/
 
-## 58.检测浏览器版本版本有哪些方式？
+## 58.检测浏览器版本版本有哪些方式？  [基础]
 > https://segmentfault.com/a/1190000007640795
 
 ## 59.我们给一个dom同时绑定两个点击事件，一个用捕获，一个用冒泡。会执行几次事件，会先执行冒泡还是捕获？
@@ -798,20 +805,27 @@ console.log(milliFormat(1200000123123.223))
 >`function getFileExtension(filename) {
     return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
   }`
+* '>>>'把数字转换成无无符号整数
 > [译]如何更有效的获取文件扩展名 https://segmentfault.com/a/1190000004993946
 
 ## 61.Webpack热更新实现原理?
 > https://zhuanlan.zhihu.com/p/30623057
 
-## 62.请介绍一下JS之事件节流？什么是JS的函数防抖？
+## 62.请介绍一下JS之事件节流？什么是JS的函数防抖？ 
+> JavaScript 函数节流和函数去抖应用场景辨析  https://github.com/hanzichi/underscore-analysis/issues/20
+> underscore 函数去抖的实现  https://github.com/hanzichi/underscore-analysis/issues/21
+> underscore 函数节流的实现 https://github.com/hanzichi/underscore-analysis/issues/22
+
 ## 63.Object.is() 与原来的比较操作符“ ===”、“ ==”的区别？
-> https://www.jianshu.com/p/a76dc7e0c5a1
+* Object.is: Object.is(-0, +0) === false, Object.is(NaN, NaN) === true
+* -0 === +0, NaN !== NaN; -0 == +0, NaN != NaN 
+> 详解Object.is()与比较操作符===、== https://www.jianshu.com/p/a76dc7e0c5a1
 
 ## 64.ES6是如何实现编译成ES5的？
 > Babel是如何读懂JS代码的 https://zhuanlan.zhihu.com/p/27289600
 > 深入理解Babel原理及其使用，babel把ES6转成ES5的原理是什么？ http://www.fly63.com/article/detial/197
 
-## 65.DOM操作——怎样添加、移除、移动、复制、创建和查找节点。
+## 65.DOM操作——怎样添加、移除、移动、复制、创建和查找节点。 [基础]
 > 深入浅出DOM基础——《DOM探索之基础详解篇》学习笔记 https://github.com/jawil/blog/issues/9
 
 ## 细说 webpack 之流程篇
@@ -865,3 +879,6 @@ console.log(milliFormat(1200000123123.223))
 
 ## 汤姆大叔的6道javascript编程题题解 
 > http://www.cnblogs.com/zichi/p/4362292.html
+
+## 从一道前端笔试题分析 javascript 中 this 的使用陷阱
+> https://github.com/wengjq/Blog/issues/21

@@ -1,6 +1,6 @@
 # JS
 
-* 1.解释下事件代理(事件委托delegation)
+* 1.解释下事件代理(事件委托delegation)  [基础]
   + 解释：利用事件冒泡的原理，把多个子元素的事件及事件处理函数，委托给父元素统一处理。
   + 用处：减少了事件绑定和删除，减少dom交互，减少内存占用，提高性能。
   + 比喻：类似于公司前台代收快递
@@ -17,7 +17,7 @@
   + 使用new构造一个对象时，this指向新创建的实例对象
   + 箭头函数的this就是父函数所在作用域的this
 
-* 3.解释下原型继承的原理。
+* 3.解释下原型继承的原理。 [基础]
   + "继承"的说法不准确，因为JS没有父类、子类，类和实例的概念，只有对象
   + 继承的本质是委托，当要访问一个对象obj的属性时，会先在obj上查找,没有的话，再通过在原型链层层遍历的方式查找需要的属性
   + 例如函数Foo()在声明时,系统都会创建一个相应的Foo.prototype
@@ -39,7 +39,7 @@
   + 改成表达式才能运行，(function foo(){ }()) 或者 (function foo(){ })()
   + 可以传参,(function foo(global, undefined){ })(window)
 
-* 6.描述以下变量的区别：null，undefined 或 undeclared？
+* 6.描述以下变量的区别：null，undefined 或 undeclared？ [基础]
   + null：声明了并赋值为null
   + undefined: 声明了但未赋值
   + 比如声明一个变量a，如果还未赋值则表示a引用的值未定义，a = null表示a的值是null，而null表示一个空值
@@ -47,7 +47,7 @@
   + null 和 undefined 转换为数字的结果不同: +null => 0, +undefined => NaN
   + undeclared: 变量未声明，作用域里找不到
 
-* 7.什么是闭包，如何使用它，为什么要使用它？
+* 7.什么是闭包，如何使用它，为什么要使用它？ [基础]
   + 函数可以创建一个作用域
   + 在函数外部无法访问函数内部定义的变量
   + 如果在函数内部声明一个函数，这个函数可以访问父函数的作用域，当把这个子函数所引用的函数对象作为值返回时，这个子函数依然持有父函数作用域引用，这个引用就是闭包
@@ -74,7 +74,7 @@
   + 模块模式用的比较多
   + 一个组件或者插件，通过es6的import ...from...方式引入
 
-* 11.请指出 JavaScript 宿主对象和原生对象的区别？
+* 11.请指出 JavaScript 宿主对象和原生对象的区别？ [基础]
   + 宿主对象是指DOM和BOM等，是由宿主框架通过某种机制注册到JavaScript引擎中的对象
   + 原生对象是Object、Function、Array、String、Boolean、Number、Date、RegExp、Error、JSON、Math(静态)...，大部分也是构造函数。
   > https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
@@ -84,12 +84,12 @@
   + 第二句执行Person函数并把结果返回给变量person(在编译时会先声明person)
   + 第三句调用Person作为构造函数,new一个新的对象实例，赋值给person
 
-* 13.call 和 .apply 的区别是什么？
+* 13.call 和 .apply 的区别是什么？  [基础]
   + call参数是一个个传递的 func.call(obj, arg1, arg2, arg3....)
   + apply第二个参数是数组形式 func.apply(obj, [arg1,arg2,arg3..])
   + call的执行效率高于apply，apply对参数进行一系列检验和深拷贝
 
-* 14.请解释 Function.prototype.bind 的作用？
+* 14.请解释 Function.prototype.bind 的作用？ [基础]
   + 传入context,args参数
   + 返回一个函数，
   + 这个函数调用时：把this绑定到给定的context上, 把args和这个函数的arguments拼接成一个数组
@@ -97,7 +97,7 @@
 
 * ~~14.你能解释一下JavaScript中的继承是如何工作的吗？~~
 
-* 15.请尽可能详尽的解释AJAX的工作原理。
+* 15.请尽可能详尽的解释AJAX的工作原理。 [基础]
   + AJAX是一种异步的无须刷新整个页面就可以响应用户交互的技术，也就是说它可以只更新或重载部分页面。
   + AJAX的核心由JavaScript、XMLHTTPRequest、 DOM对象组成，通过XMLHTTPRequest对象向服务器发送请求，并监听响应情况，获取数据，并由js操作DOM更新页面。
   `var xhr = new XMLHttpRequest(); // ie7+ 
@@ -118,7 +118,7 @@
   > https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest
   > 你真的会使用XMLHttpRequest吗？ https://segmentfault.com/a/1190000004322487 
 
-* 16.请解释 JSONP 的工作原理，以及它为什么不是真正的 AJAX。
+* 16.请解释 JSONP 的工作原理，以及它为什么不是真正的 AJAX。 [基础]
   + 动态创建script标签： var script = document.createElement('script');
   + 设置script元素的src属性为要请求的url, script.src = 'http://www.test.com/?callback=handleResponse';
   + 声明处理函数：function handleResponse(res){ console.log(res) }
@@ -137,30 +137,30 @@
 > 浅谈模板引擎 http://www.cnblogs.com/dojo-lzz/p/5518474.html
 > 前端模板的原理与实现 https://segmentfault.com/a/1190000006990480
   
-* 18.请解释变量声明提升。
+* 18.请解释变量声明提升。 [基础]
   + JavaScirpt代码在被解释之前会被编译
   + 在编译阶段，编译器会找到作用域内所有的声明，初始值为undefined
   + 也就是说即使某个变量看起来即使是先赋值后声明的，在内部实际上是在编译阶段声明，在执行阶段赋值
   + 就好像变量或函数声明从它们在代码中的位置被移动到了最上面，这个过程就叫提升
 
-* 19.请描述下事件冒泡机制。
+* 19.请描述下事件冒泡机制。 [基础]
   + DOM事件流有三个阶段：捕获阶段、目标阶段、冒泡阶段
   + 事件触发是会从根元素由外向内的传播，直到目标元素
   + 然后事件又从最里层的目标元素，逐层冒泡到最外层，在每层都会触发事件
   + 如果要禁止事件的冒泡，可以在目标元素的事件方法里调用event.stopPropagation()方法
 
-* 20."attribute" 和 "property" 的区别是什么？
+* 20."attribute" 和 "property" 的区别是什么？ [基础]
   + attribute是指HTML标签上的属性，attribute只能是字符串
   + property是指DOM对象的属性
   + 标准的 DOM properties 与 attributes 是同步的
 
-* 21.Difference between document load event and document DOMContentLoaded event?
+* 21.Difference between document load event and document DOMContentLoaded event? [基础]
   + window.onload是网页上所以资源加载完毕才执行，只能有一个
   + DOMContentLoaded: dom标签加载完毕后即可执行（关联资源还没有加载玩）
   > The DOMContentLoaded event is fired when the document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading (the load event can be used to detect a fully-loaded page).
   > https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded
 
-* 22.== 和 === 有什么不同？
+* 22.== 和 === 有什么不同？ [基础]
   + '==' 宽松相等，允许在相等比较中进行强制类型转换
   + '===' 是严格相等，不允许强制类型转换，注意：+0 === -0
   + 使用'=='时要注意一些坑：
@@ -181,7 +181,7 @@
     })(window.location.search)
   `
 
-* 24.请解释一下 JavaScript 的同源策略。如何解决跨域问题? 
+* 24.请解释一下 JavaScript 的同源策略。如何解决跨域问题?  [基础]
   + 同源：协议(http\https) 域名(www.baidu.com\map.baidu.com) 端口(80\81)
   + 出于安全的考虑，不允许源a访问源b的资源
 
@@ -209,7 +209,7 @@
   log('sss')
   `
 
-* 28.什么是 "use strict"? 使用它的好处和坏处分别是什么？
+* 28.什么是 "use strict"? 使用它的好处和坏处分别是什么？ [基础]
   + 将使 JS 代码以严格模式（strict mode）运行。使用了较为严格的错误检测条件检测。
   + 消除JavaScript语法的不合理不严谨的地方，减少怪异行为
   + 全局变量的显示声明,函数必须声明在顶层
@@ -228,7 +228,7 @@
 
   > document.write 的痛 https://zhuanlan.zhihu.com/p/33983842
 
-* 30.请指出浏览器特性检测，特性推断和浏览器 UA 字符串嗅探的区别？
+* 30.请指出浏览器特性检测，特性推断和浏览器 UA 字符串嗅探的区别？ [基础]
   + 特性检测：
     `if (window.XMLHttpRequest) {
       new XMLHttpRequest();
@@ -242,7 +242,7 @@
     //do something
   }`
 
-* 31.使用 Ajax 都有哪些优劣？
+* 31.使用 Ajax 都有哪些优劣？ [基础]
   * 优势
     + 异步通信，不需要打断用户的操作，具有更加迅速的响应能力。
     + ajax的原则是“按需取数据”，可以最大程度的减少冗余请求，和响应对服务器造成的负担。
@@ -273,7 +273,7 @@
   + 服务器渲染
   > https://cn.vuejs.org/v2/guide/ssr.html
 
-* 35. What is the extent of your experience with Promises and/or their polyfills?
+* 35. What is the extent of your experience with Promises and/or their polyfills?  [基础]
   `new Promise((resolve, reject) => {
     if (resolve) {
       resolve('success')；
@@ -287,7 +287,7 @@
   > https://developers.google.com/web/fundamentals/primers/promises
   > https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
-* 35.What are the pros and cons of using Promises instead of callbacks?
+* 35.What are the pros and cons of using Promises instead of callbacks?  [基础]
   + 地狱回掉
   + 信任
   + 错误处理
@@ -295,10 +295,10 @@
 * 36.What tools and techniques do you use debugging JavaScript code?
   + Chrome Dev Tools.
 
-* 37.What language constructions do you use for iterating over object properties and array items?
+* 37.What language constructions do you use for iterating over object properties and array items? [基础]
   + Array
     + for
-    + forEach
+    + forEach\every\some\filter\map
   + Object
     + for(var key in obj) { if(obj.hasOwnProperty(key)){ // 过滤不可枚举属性 } } 
     + Object.keys(obj).forEach
@@ -350,15 +350,18 @@
 > https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4
 > JavaScript 运行机制详解：再谈Event Loop  http://www.ruanyifeng.com/blog/2014/10/event-loop.html
 
-* 41.Explain the differences on the usage of foo between function foo() {} and var foo = function() {}
-  + 函数声明 和 函数表达式  
+* 41.Explain the differences on the usage of foo between function foo() {} and var foo = function() {}  [基础]
+  + function sum (num1, num2) { return num1 + num2; } 
+  + var sum = function(num1, num2) { return num1 + num2 }
+  + var sum = new Function('num1', 'num2', 'return num1 + num2')
 
-* 42.What are the differences between variables created using let, var or const?
-  + var、let、const 区别？ https://www.jianshu.com/p/4e9cd99ecbf5
+* 42.What are the differences between variables created using let, var or const? [基础]
+  + var、let、const 区别？ 
+  > https://www.jianshu.com/p/4e9cd99ecbf5
 
-+ 43.箭头函数，解构赋值，字符串模版，扩展符
++ 43.箭头函数，解构赋值，字符串模版，扩展符  [基础]
 
-* 44.What is the definition of a higher-order function?
+* 44.What is the definition of a higher-order function? [基础]
  + 《JavaScript设计模式与开发实践》3.2 高阶函数
 >  JavaScript高阶函数的应用 https://segmentfault.com/a/1190000012008266
 
