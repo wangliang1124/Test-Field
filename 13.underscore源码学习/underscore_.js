@@ -363,7 +363,133 @@
 
   // Array Functions
 
+  _.first = _.head = _.take = function(array, n, guard) {
+    if (array == null) return void 0;
+    if (n == null || guard) return array[0];
+    return _.initial(array, array.length - 1)
+  }
 
+  // return everything but the last entry of the array.
+  _.initial = function(array, n, guard) {
+    return slice.call(array, 0, Math.max(0, array.length - (n == null || guard ? 1 : n)));
+  }
+
+  _.last = function(array, n, guard) {
+    if (array == null) return void 0;
+    if (n == null || guard) return array[array.length -1];
+    return _.rest(array, Math.max(0, array.length - n));
+  }
+
+  _.rest = _.tail = _.drop = function(array, n, guard) {
+    return slice.call(array,  n == null || grard ? 1 : n)
+  }
+
+  _.compact = function(array) {
+    return _.filter(array, _.identity);
+  }
+
+  var flatten = function(input, shallow, strict, startIndex) {
+    var output = [], idx = 0;
+    for (var i = startIndex || 0, length = getLength(input); i < length; i++) {
+      var value = input[i];
+      if (isArrayLike(value) && (_.isArray(value) || _.isArguments(value))) {
+        if (!shallow)  value = flatten(value, shallow, strict);
+        var j = 0, len = value.length;
+        output.length += len;
+        while (j < len) {
+          output[idx++] = value[j++];
+        }
+      } else if(!strict) {
+        output[idx++] = value;
+      }
+    }
+    return output;
+  }
+  _.flatten = function(array, shallow) {
+    return flatten(array, shallow, false);
+  };
+
+  _.without = function(array) {
+    return _.difference(array, slice.call(arguments, 1));
+  };
+
+  _.uniq = _.unique = function(array, isSorted, iteratee, context) {
+    if (!_.isBoolean(isSorted)) {
+      context = iteratee;
+      iteratee = isSorted;
+      isSorted = false;
+    }
+    if (iteratee != null) iteratee = cb(iteratee, context);
+    var result = [];
+    var seen = [];
+    for (var i = 0, length = array.length; i < length; i++) {
+      var value = array[i],
+          computed = iteratee ? iteratee(value, i, array) : value;
+      if (isSorted) {
+        if (!i || seen !== computed) result.push(value);
+        seen = computed
+      } else if (iteratee) {
+        if (!_.contains(seen, computed)) {
+          seen.push(computed);
+          result.push(value);
+        }
+      } else if(!_.contains(result, value)) {
+        result.push(value);
+      }
+    }
+    return result;
+  }
+
+  _.union = function() {
+    return _.uniq(flatten(arguments, true, true))
+  }
+
+  _.intersection = function(array) {
+    var result = [];
+    var argsLength = arguments.length;
+    for (var i = 0, length = getLength(array); i < length; i++) {
+      var item = array[i];
+      if (_.contains(result, item)) continue;
+      for (var j = 1; j < argsLength; j++) {
+        if (!_.contains(arguments[j], item)) break;
+      }
+      if(j === args.length) result.push(item);
+    }
+    return result;
+  };
+
+  _.difference = function(array) {
+    var rest = flatten(arguments, true, true, 1)
+    return _.filter(array, function(value) {
+      return !_.contains(rest, value);
+    });
+  };
+
+  _.zip = function() {
+    return _.unzip(arguments)
+  }
+
+  _.unzip = function(array) {
+    var length = array && _.max(array, getLength).length || 0;
+    var result = Array(length);
+
+    for(var index = 0; index < length; index++) {
+      result[index] = _.pluck(array, index);
+    }
+    return result;
+  }
+
+  _.object = function(list, values) {
+    var result = {};
+    for (var i = 0, length = getLength(list); i < length; i++) {
+      if(values) {
+        result[list[i]] = values[i]
+      } else {
+        result[list[i][0]] = list[i][1]
+      }
+    }
+    return result;
+  }
 
   function createPredicateIndexFinder(dir) {
     return function(array, predicate, context) {
@@ -371,14 +497,54 @@
       var length = getLength(array)
       var index = dir > 0 ? 0 : length -1;
 
-      for(;index > 0 && index < length; index++) {
+      for(;index > 0 && index < length; index += dir) {
         if(predicate(array[index], index, array)) return index;
       }
       return -1
     }
   }
+
   _.findIndex = createPredicateIndexFinder(1);
   _.findLastIndex = createPredicateIndexFinder(-1);
+
+  _.sortedIndex = function(array, obj, iteratee, context) {
+    iteratee = cb(iteratee, context, 1);
+    var value = iteratee(obj);
+    var low = 0, high = getLength(array);
+    while(low < high) {
+      var mid = Math.floor((low + high) /2)
+      if(iteratee(array[mid]) < value) low = mid + 1; else high = mid;
+    }
+    return low;
+  };
+
+  function createIndexFinder(dir, predicateFind, sortedIndex) {
+    return function(array, item, idx) {
+      var i = 0, length = getLength(array);
+      if (typeof idx == 'number') {
+        if (dir > 0) {
+          i = idx >= 0 ? idx: Math.max(idx + length, i);
+        } else {
+          length = idx >= 0 ? Math.min(idx + 1, length) : idx + length + 1;
+        }
+      } else if (sortedIndex && idx && length) {
+        idx = sortedIndex(array, item);
+        return array[idx] === item ? idx : -1;
+      }
+      if (item !== item) {
+        idx = predicateFind(slice.call(array, i, length), _.isNaN);
+        return idx > 0 ? idx + i : -1
+      }
+      for (idx = dir > 0 ? i : length -1; idx >= 0 && idx < length; idx += dir) {
+        if (array[idx] === item) return idx;
+      }
+      return -1;
+    };
+  }
+
+  _.indexOf = createIndexFinder(1, _.findIndex, _.sortedIndex)
+  _.lastIndexOf = createIndexFinder(-1, _.findLastIndex)
+
   _.findKey = function(obj, predicate, context) {
     predicate = cb(predicate, context)
     var keys = _.keys(obj), key;
@@ -387,6 +553,9 @@
       if(predicate(obj[key], key, obj)) return key;
     }
   }
+
+
+
 
 
 

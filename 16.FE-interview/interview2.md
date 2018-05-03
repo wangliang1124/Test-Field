@@ -703,7 +703,7 @@ console.log(milliFormat(1200000123123.223))
 ~~## 21.javascript 代码中的"use strict";是什么意思 ? 使用它区别是什么？~~
 
 ## 22.如何判断一个对象是否属于某个类？ [基础]
-* instanceof 或者 constructor
+* obj instanceof func, obj.constructor === func, func.prototype.isPrototypeOf(obj)
 
 ## 23.new操作符具体干了什么呢? [基础]
 `var obj  = {};
