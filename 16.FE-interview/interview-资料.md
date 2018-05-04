@@ -140,3 +140,12 @@
 ## webpack
 > Webpack 配置详解及实现过程 https://segmentfault.com/a/1190000010654308
 > 细说 webpack 之流程篇 https://taobaofed.org/blog/2016/09/09/webpack-flow/
+
+## JavaScript 是如何工作的：引擎，运行时和调用堆栈的概述
+> http://tcatche.site/2017/08/how-javascript-work-part-1-overview/
+
+## JavaScript 是如何工作的：V8 引擎内部机制及5个诀窍编写优化代码的技巧
+> http://tcatche.site/2017/08/how-javascript-work-part-2-v8-engine-and-5-tips-optimized/
+
+## JavaScript是如何工作的：内存管理 + 如何处理4个常见的内存泄露
+> https://zcfy.cc/article/how-javascript-works-memory-management-how-to-handle-4-common-memory-leaks
