@@ -545,6 +545,99 @@
   _.indexOf = createIndexFinder(1, _.findIndex, _.sortedIndex)
   _.lastIndexOf = createIndexFinder(-1, _.findLastIndex)
 
+  _.range = function(start, stop, step) {
+    if (stop == null) {
+      start = 0;
+      stop = start || 0;
+    }
+    step = step || 1;
+
+    var length = Math.max(Math.ceil((stop - start) / step), 0);
+    var range = Array(length);
+    
+    for(var idx = 0; idx < length; idx++, start += step){
+      result[idx] = start;
+    }
+    return range;
+  }
+
+  // Function Functions
+  
+  var executeBound = function(sourceFunc, boundFunc, context, callingContext, args) {
+    if (!(callingContext instanceof boundFunc)) return sourceFunc.apply(context, args);
+    var self = baseCreate(sourceFunc.prototype);
+    var result = sourceFunc.apply(self, args);
+    if(_.isObject(result)) return result;
+    return self;
+  }
+
+  _.bind = function(func, context) {
+    if(nativeBind && func.bind === nativeBind) return nativeBind.apply(func, slice.call(arguments, 1));
+    if(!_.isFunction(func)) throw new TypeError('Bind must be called on a function');
+    var args = slice.call(arguments, 2)
+    var bound = function() {
+      return executeBound(func, bound, context, this, args.concat(slice.call(arguments)))
+    } 
+    return bound;
+  }
+
+  _.partial = function(func) {
+    var boundArgs = slice.call(arguments, 1);
+    var bound = function() {
+      var position = 0, length = boundArgs.length;
+      var args = Array(length);
+      for (var i = 0; i< length; i++) {
+        args[i] = boundArgs[i] === '_' ? arguments[position++] : boundArgs[i];
+      }
+      while (position < arguments.length) args.push(arguments[positon++]);
+      return executeBound(func, bound, this, this, args)
+    }
+    return bound;
+  }
+
+  _.bindAll = function(obj) {
+    var i, length = arguments.length, key;
+    if (length <= 1) throw new Error('bindAll must be passed function names');
+    for (i = 1; i < length; i++){
+      key = arguments[i];
+      obj[key] = _.bind(obj[key], obj);
+    }
+    return obj;
+  };
+
+  _.memoize = function(func, hasher) {
+    var memoize = function(key) {
+      var cache = memoize.cache;
+      var address = '' + (hasher ? hasher.apply(this, arguments) : key);
+      if (!_.has(cache, address)) cache[address] = func.apply(this, arguments);
+      return cache[address];
+    }
+    memoize.cache = {}
+    return memoize;
+  }
+
+  _.delay = function(func, wait) {
+    var args = slice.call(arguments, 2);
+    return setTimeout(function() {
+      return func.apply(null, args);
+    }, wait)
+  }
+
+  _.defer = _.partial(_.delay, _, 1);
+
+  _.throttle = function(func, wait, options) {
+    var context, args, result;
+    var timeout = null;
+    var previous = 0;
+    if (!options) options = {};
+    var later = function() {
+
+    }
+    return function() {
+      
+    }
+  }
+
   _.findKey = function(obj, predicate, context) {
     predicate = cb(predicate, context)
     var keys = _.keys(obj), key;

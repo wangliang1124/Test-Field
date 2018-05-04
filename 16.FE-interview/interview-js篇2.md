@@ -9,14 +9,10 @@
 > https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 
 ## 3.说几条写JavaScript的基本规范？
-* 使用===/！==比较true/false或数值
-* 使用字面量代替new
-* 不要使用全局函数
-* for/if/while使用大括号
-* 变量先声明再使用
-* 变量命名以小写字母开头
+* 格式、注释、语言特性
 
 > JavaScript编码规范 https://github.com/fex-team/styleguide/blob/master/javascript.md
+
 > Airbnb JavaScript Style Guide https://github.com/airbnb/javascript
 
 ## 5.JavaScript有几种类型的值？，你能画一下他们的内存图吗？[基础]
