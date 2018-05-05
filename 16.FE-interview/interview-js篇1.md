@@ -9,7 +9,7 @@
 > https://github.com/yonyouyc/blog/issues/25
 > https://www.cnblogs.com/owenChen/archive/2013/02/18/2915521.html
 
-* 2.解释下 JavaScript 中 this 是如何工作的。
+* 2.解释下 JavaScript 中 this 是如何工作的。[基础]
   + this是在函数运行时绑定的，它的值取决于函数的调用位置
   + 在全局环境使用this，它指的就是顶层对象window || module.exports。
   + 如果是被一个对象调用的，则指向这个对象
@@ -20,19 +20,23 @@
 * 3.解释下原型继承的原理。 [基础]
   + "继承"的说法不准确，因为JS没有父类、子类，类和实例的概念，只有对象
   + 继承的本质是委托，当要访问一个对象obj的属性时，会先在obj上查找,没有的话，再通过在原型链层层遍历的方式查找需要的属性
-  + 例如函数Foo()在声明时,系统都会创建一个相应的Foo.prototype
+  + 例如函数Foo()在声明时,会创建一个prototype属性
   + 通过new Foo()，会创建一个新的对象，并有个__proto__的不可枚举属性指向Foo.prototype
   + 这个新的对象实例可以直接调用Foo.prototype的属性（或者说所有new的实例对象都可以继承原型上的属性）
   + 原型链的尽头是Object.prototype
   + 化繁为简: Object.create()
   > 《你不知道的JavaScript上卷，第二部分第5章原型》
   
-* 4.什么是哈希表？
-  * 哈希表就是把Key通过一个固定的算法函数即哈希函数转换成一个整型数字，然后就将该数字对数组长度进行取余，取余结果就当作数组的下标，将value存储在以该数字为下标的数组空间里。
+* 4.什么是哈希表？[进阶]
+  * 哈希表就是把Key通过一个特定的算法函数即哈希函数转换成一个整型数字，然后就将该数字对数组长度进行取余，取余结果就当作数组的下标，将value存储在以该数字为下标的数组空间里。
   * 当使用哈希表进行查询的时候，就是再次使用哈希函数将key转换为对应的数组下标，并定位到该地址获取value
   * 优点：速度快，时间复杂度为O(1)。
-  > http://blog.csdn.net/v_july_v/article/details/6256463
-  > https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-implemented
+  
+  > How is a JavaScript hash map implemented?
+ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-implemented
+  > 从头到尾彻底解析哈希表算法 https://blog.csdn.net/c602273091/article/details/54799452
+  > 浅谈算法和数据结构: 十一 哈希表 http://www.cnblogs.com/yangecnu/p/Introduce-Hashtable.html
+
 
 * 5.解释下为什么接下来这段代码不是 IIFE(立即调用的函数表达式)：function foo(){ }();要做哪些改动使它变成 IIFE？
   + function关键字开头，函数声明, 无法立即运行
@@ -43,7 +47,7 @@
   + null：声明了并赋值为null
   + undefined: 声明了但未赋值
   + 比如声明一个变量a，如果还未赋值则表示a引用的值未定义，a = null表示a的值是null，而null表示一个空值
-  + null 是一个特殊关键字，不是标识符，我们不能将其当作变量来使用和赋值。undefined是一个标识符，可以被当作变量来使用和赋值。
+  + null是一个特殊关键字，不是标识符，我们不能将其当作变量来使用和赋值。undefined是一个标识符，可以被当作变量来使用和赋值。
   + null 和 undefined 转换为数字的结果不同: +null => 0, +undefined => NaN
   + undeclared: 变量未声明，作用域里找不到
 
@@ -54,8 +58,8 @@
   + 可以用在回调函数、高阶函数、立即执行函数、模块化；避免全局污染；
 
 * 8.请举出一个匿名函数的典型用例？
-  + 作为回调var myPromise = new Promise(function(resolve, reject){ })
-  + 高阶函数：作为返回值function foo(){ return function() {} }
+  + 函数的参数(用作回调) var myPromise = new Promise(function(resolve, reject){ })
+  + 高阶函数的返回值 function foo(){ return function() {} }
   + 立即执行函数 (function(){ })()
   + 函数表达式 var foo = function() {}
 
@@ -71,51 +75,69 @@
   > http://www.ruanyifeng.com/blog/2012/10/javascript_module.html
 
 * 10.你是如何组织自己的代码？是使用模块模式，还是使用经典继承的方法？
-  + 模块模式用的比较多
-  + 一个组件或者插件，通过es6的import ...from...方式引入
+  + 都有，各有各的适用情境（比如组件、插件）
 
 * 11.请指出 JavaScript 宿主对象和原生对象的区别？ [基础]
   + 宿主对象是指DOM和BOM等，是由宿主框架通过某种机制注册到JavaScript引擎中的对象
-  + 原生对象是Object、Function、Array、String、Boolean、Number、Date、RegExp、Error、JSON、Math(静态)...，大部分也是构造函数。
+  + 原生对象是Object、Function、Array、String、Boolean、Number、Date、RegExp、Error、JSON，Global、Math(内置对象)...，就是ECMA-262定义的引用类型
+  + 宿主对象是厂家定义的，可能不会继承Object(因此不会继承相应的属性和方法)
+
   > https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
 
-* 12.请指出以下代码的区别： function Person(){}, var person = Person(), and var person = new Person()?
+* 12.请指出以下代码的区别： function Person(){}, var person = Person(), and var person = new Person()? [基础]
   + 第一句声明了一个Person函数
-  + 第二句执行Person函数并把结果返回给变量person(在编译时会先声明person)
+  + 第二句调用Person函数并把结果返回给变量person
   + 第三句调用Person作为构造函数,new一个新的对象实例，赋值给person
 
-* 13.call 和 .apply 的区别是什么？  [基础]
+* 13. .call 和 .apply 的区别是什么？  [基础]
   + call参数是一个个传递的 func.call(obj, arg1, arg2, arg3....)
   + apply第二个参数是数组形式 func.apply(obj, [arg1,arg2,arg3..])
   + call的执行效率高于apply，apply对参数进行一系列检验和深拷贝
 
 * 14.请解释 Function.prototype.bind 的作用？ [基础]
-  + 传入context,args参数
-  + 返回一个函数，
-  + 这个函数调用时：把this绑定到给定的context上, 把args和这个函数的arguments拼接成一个数组
+  + 传入context,args参数, 返回一个函数。这个函数调用时: 把this绑定到给定的context上(闭包的用处), 把args和返回函数的arguments拼接成一个新的数组作为被绑定函数的参数, 相当于 func.apply(context, 新args)
   > https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
 
-* ~~14.你能解释一下JavaScript中的继承是如何工作的吗？~~
-
-* 15.请尽可能详尽的解释AJAX的工作原理。 [基础]
+* 15.请尽可能详尽的解释AJAX的工作原理。 [进阶]
   + AJAX是一种异步的无须刷新整个页面就可以响应用户交互的技术，也就是说它可以只更新或重载部分页面。
-  + AJAX的核心由JavaScript、XMLHTTPRequest、 DOM对象组成，通过XMLHTTPRequest对象向服务器发送请求，并监听响应情况，获取数据，并由js操作DOM更新页面。
-  `var xhr = new XMLHttpRequest(); // ie7+ 
-   xhr.onreadystatechange = function() {
-      if(xhr.readyState === 4) {
-        if((xhr.status >= 200 && xhr.stauts < 300) || xhr.status === 304) {
-          console.log(xhr.responseText);
-        } else {
-          console.log('request was failed:' + xhr.status);
+  + AJAX的核心由JavaScript、XMLHTTPRequest、 DOM对象组成，通过XMLHTTPRequest对象向服务器发送HTTP request请求，并监听响应情况，获取数据，并由JS操作DOM更新页面。
+  ```javascript
+    (function() {
+        var httpRequest = new XMLHttpRequest()
+        httpRequest.onreadystatechange = handler
+        httpRequest.open('get', 'https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started')
+        // httpRequest.setRequestHeader('Content-Type', 'text/html;charset=UTF-8')
+        httpRequest.send()
+        console.log('发送请求')
+        function handler() {
+          console.log('xxxxxx', httpRequest.readyState, httpRequest.status)
+            if (httpRequest.readyState === 4) { // XMLHttpRequest.DONE
+                if (httpRequest.status === 200) {
+                    try {
+                      var iframe = document.createElement('<iframe name="ajax">')
+                      console.log('bbbbbb')
+                    } catch (e) {
+                      iframe = document.createElement('iframe')
+                    }
+                    iframe.name = 'ajax'
+                    iframe.width = '600'
+                    iframe.height = '400'
+                    document.body.appendChild(iframe)
+                    var iframeDocument = iframe.contentDocument || iframe.document
+                    iframeDocument.open()
+                    iframeDocument.write(httpRequest.responseText)
+                    console.log(httpRequest.getAllResponseHeaders())
+                    console.log('接收响应')
+                }
+            }
         }
-      }
-   }
-   xhr.open('get', '/api/test', true)
-   xhr.send(null)
-  `
-  > https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started
+    })()
+    // 以上代码在ie11下有问题
+  ```
+
+  > What's AJAX? https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started
   > XMLHttpRequest Level 2 使用指南 http://www.ruanyifeng.com/blog/2012/09/xmlhttprequest_level_2.html
-  > https://developer.mozilla.org/zh-CN/docs/Web/API/XMLHttpRequest
+  > XMLHttpRequest https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
   > 你真的会使用XMLHttpRequest吗？ https://segmentfault.com/a/1190000004322487 
 
 * 16.请解释 JSONP 的工作原理，以及它为什么不是真正的 AJAX。 [基础]
@@ -190,11 +212,14 @@
 > ajax跨域，这应该是最全的解决方案了 https://segmentfault.com/a/1190000012469713
 > https://stackoverflow.com/questions/11474336/same-origin-policy-in-layman-terms
 
-* 25.描述一种 JavaScript 中实现 memoization(避免重复运算)的策略。
-  + 参考underscore的memoize
-> http://taobaofed.org/blog/2016/07/14/performance-optimization-memoization/
-> https://addyosmani.com/blog/faster-javascript-memoization/
-* 26.什么是三元表达式？“三元” 表示什么意思？
+* 25.描述一种 JavaScript 中实现 memoization(避免重复运算)的策略。[进阶]
+
+> 从斐波那契数列求值优化谈 _.memoize 方法 https://github.com/hanzichi/underscore-analysis/issues/23
+> 斐波那契数列求和的js方案以及优化 https://segmentfault.com/a/1190000007115162
+> 性能优化：memoization http://taobaofed.org/blog/2016/07/14/performance-optimization-memoization/
+> Faster JavaScript Memoization For Improved Application Performance https://addyosmani.com/blog/faster-javascript-memoization/
+
+* 26.什么是三元表达式？“三元” 表示什么意思？[基础]
   + condition ? expr1 : expr2
   + 如果条件值为真值（true），运算符就会返回 expr1 的值；否则， 就会返回 expr2 的值
 

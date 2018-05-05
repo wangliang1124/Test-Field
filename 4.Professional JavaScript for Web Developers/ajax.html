@@ -1,30 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <title>ajax</title>
+    <meta charset="UTF-8">
+    <title>ajax</title>
 </head>
+
 <body>
-  <script>
+    <script>
     (function() {
-      var httpRequest = new XMLHttpRequest()
-      httpRequest.onreadystatechange = handler
-      httpRequest.open('get', 'https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started')
-      httpRequest.send()
-      console.log('异步1')
-      function handler() {
-        if(httpRequest.readyState === XMLHttpRequest.DONE) {
-          if(httpRequest.status === 200) {
-            console.log('异步2')
-            // console.log(httpRequest.responseText)
-            var el = document.createElement('ifream')
-            el.innerHTML = httpRequest.responseText
-            document.body.appendChild(el)
-            console.log(httpRequest.getAllResponseHeaders())
-          }
+        var httpRequest = new XMLHttpRequest()
+        httpRequest.onreadystatechange = handler
+        httpRequest.open('get', 'https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started')
+        // httpRequest.setRequestHeader('Content-Type', 'text/html;charset=UTF-8')
+        httpRequest.send()
+        console.log('发送请求')
+        function handler() {
+          console.log('xxxxxx', httpRequest.readyState, httpRequest.status)
+            if (httpRequest.readyState === 4) { // XMLHttpRequest.DONE
+                if (httpRequest.status === 200) {
+                    try {
+                      var iframe = document.createElement('<iframe name="ajax">')
+                      console.log('bbbbbb')
+                    } catch (e) {
+                      iframe = document.createElement('iframe')
+                    }
+                    iframe.name = 'ajax'
+                    iframe.width = '600'
+                    iframe.height = '400'
+                    document.body.appendChild(iframe)
+                    var iframeDocument = iframe.contentDocument || iframe.document
+                    iframeDocument.open()
+                    iframeDocument.write(httpRequest.responseText)
+                    console.log(httpRequest.getAllResponseHeaders())
+                    console.log('接收响应')
+                }
+            }
         }
-      }
     })()
-  </script>
+    </script>
 </body>
+
 </html>
