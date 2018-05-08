@@ -70,13 +70,13 @@
     return function(obj) {
       var length = arguments.length;
       if(length < 2 || obj == null) return obj;
-      for(var index = 1; index < length; index ++) {
+      for(var index = 1; index < length; index++) {
         var source = arguments[index],
             keys = keysFunc(source),
             l = keys.length;
         for(var i = 0; i < l; i++) {
           var key = keys[i];
-          if(!undefinedOnly || obj[key] ==- void 0) obj[key] = source[key];
+          if(!undefinedOnly || obj[key] == void 0) obj[key] = source[key];
         }
       }
       return obj;
@@ -200,7 +200,7 @@
     predicate = cb(predicate, context)
     var keys = !isArrayLike(ojb) && _.keys(obj),
         length = (keys || obj).length;
-    for(var index = 0; index < length; index ++) {
+    for(var index = 0; index < length; index++) {
       var currentKey = keys ? keys[index] :index;
       if(predicate(obj[currentKey], currentKey, obj)) return true;
     }
@@ -631,12 +631,192 @@
     var previous = 0;
     if (!options) options = {};
     var later = function() {
-
+      var previous = options.leading === false ? 0 : _.now();
+      timeout = null;
+      result = func.apply(context, args);
+      if (!timeout) context = args = null;
     }
     return function() {
-      
+      var now = _.now();
+      if (!previous && options.leading === false) previous = now;
+      var remaining = wait - (now - previous);
+      context = this;
+      args = arguments;
+      if (remaining <= 0 || remaining > wait) {
+        if (timeout) {
+          clearTimeout(timeout);
+          timeout = null;
+        }
+        previous = now;
+        result = func.apply(context, args);
+        if(!timeout) context = args = null;
+      } else if (!timeout && options.trailing !== false) {
+        timeout = setTimeout(later, remaining);
+      }
+      return result;
     }
   }
+
+  _.debounce = function(func, wait, immediate) {
+    var timeout, args, context, timestamp, result;
+    var later = function() {
+      var last = _.now - timestamp;
+      if (last < wait && last >=0) {
+        timeout = setTimeout(later, wait - last);
+      } else {
+        timeout = null;
+        if (!immediate) {
+          result = func.apply(context, args);
+          if (!timeout) context = args = null;
+        }
+      }
+    }
+    return function () {
+      context = this;
+      args = arguments;
+      timestamp = _.now();
+      var callNow = immediate && !timeout;
+      if (!timeout) timeout = setTimeout(later, wait);
+      if (callNow) {
+        result = func.apply(context, args);
+        context = args = null;
+      }
+      return result;
+    }
+  }
+
+  _.wrap = function(func, wrapper) {
+    return _.partial(wrapper, func);
+  }
+
+  _.negate = function(predicate) {
+    return function() {
+      !predicate.apply(this, arguments);
+    }
+  }
+
+  _.compose = function() {
+    var args = arguments;
+    var start = args.length - 1;
+    return function () {
+      var i = start;
+      var result = args[start].apply(this, arguments);
+      while(i--) result = args[i].call(this, result);
+      return result;
+    };
+  }
+
+  _.after = function(times, func) {
+    return function() {
+      if (--times < 1) {
+        func.apply(this, arguments)
+      }
+    }
+  }
+
+  _.before = function(times, func) {
+    var memo;
+    return function() {
+      if (--times > 0) {
+        memo = func.apply(this, arguments)
+      }
+      if (time <=1) func = null;
+      return memo;
+    }
+  }
+
+  _.once = _.partial(_.before, 2)
+
+  // Object Functions
+  var hasEnumBug = !{toString: null}.propertyIsEnumerable('toString');
+  var nonEnumerableProps = ['valueOf', 'isPrototypeOf', 'hasOwnProperty', 'toString', 'toLocalString', 'propertyIsEnumerable']
+
+  function collectNonEnumProps(obj, keys) {
+    var nonEnumIdx = nonEnumerableProps.length;
+    var constructor = obj.constructor;
+    var proto = (_.isFunction(constructor) && constructor.prototype) || ObjProto;
+
+    var prop = 'constructor';
+    if (_.has(obj, prop) && !_.contains(keys, prop)) keys.push(prop);
+
+    while(nonEnumIdx--) {
+      prop = collectNonEnumProps[nonEnumIdx];
+      if (prop in obj && obj[prop] !== proto[prop] && !_contains(keys, prop)){
+        keys.push(prop);
+      }
+    }
+  }
+
+  _.keys = function(obj) {
+    if (!_.isObject(obj)) return [];
+    if (nativeKeys) return nativeKeys(obj);
+    var keys = [];
+    for (var key in obj) if(_.has(obj, key)) keys.push(key);
+    if (hasEnumBug) collectNonEnumProps(obj, keys);
+    return keys;
+  }
+
+  _.allKeys = function(obj) {
+    if (!isObject(obj)) return [];
+    var keys = []
+    for (var key in obj) keys.push(key);
+    if (hasEnumBug) collectNonEnumProps(obj, keys);
+    return keys;
+  }
+
+  _.values = function(obj) {
+    var keys = _.keys(obj);
+    var length = keys.length;
+    var values = Array(length);
+    for (var i = 0; i < length; i++) {
+      values.push(obj[keys[i]]);
+    }
+    return values;
+  }
+
+  _.mapObject = function(obj, iteratee, context) {
+    iteratee = cb(iteratee, context);
+    var keys = _.keys(obj),
+        length = keys.length,
+        results = {},
+        currentKey;
+    for (var index = 0; index < length; index++) {
+      currentKey = keys[index];
+      results[currentKey] = iteratee(obj[currentKey], currentKey, obj)
+    }
+    return results;
+  }
+
+  _.pairs = function(obj) {
+    var keys = _.keys(obj);
+    var length = keys.length;
+    var pairs = Array(length);
+    for(var i = 0; i < length; i++) {
+      pairs[i] = [keys[i], obj[keys[i]]];
+    }
+    return pairs;
+  }
+
+  _.invert = function(obj) {
+    var keys = _.keys(obj)
+    var result = {}
+    for (var i = 0, length = keys.length; i < length; i++) {
+      results[obj[keys[i]]] = keys[i]
+    }
+    return result;
+  }
+
+  _.functions = function(obj) {
+    var names = [];
+    for (var key in obj) {
+      if(_.isFunction(obj[key])) names.push(key);
+    }
+    return names.sort();
+  }
+
+  _.extend = createAssigner(_.allKeys);
+  _.extendOwn = _.assign = createAssigner(_.keys);
+  _.defaults = createAssigner(_allKeys, true);
 
   _.findKey = function(obj, predicate, context) {
     predicate = cb(predicate, context)
@@ -645,6 +825,10 @@
       key = keys[i]
       if(predicate(obj[key], key, obj)) return key;
     }
+  }
+
+  _.pick = function(object, oiteratee, context) {
+    var result = {}, obj = object, iteratee, keys;
   }
 
 

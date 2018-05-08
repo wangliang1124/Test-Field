@@ -6,8 +6,8 @@
   + 比喻：类似于公司前台代收快递
   + 例如：为父节ul点添加一个click事件监听，当子节点li被点击的时候，click事件会从子节点开始向上冒泡。   父节点捕获到事件之后，通过判断(e.target || e.srcElement(兼容ie)).nodeName来判断是否为我们需要处理的节点。    并且通过e.target拿到了被点击的节点。从而可以获取到相应的信息，并作处理。
   + 适合用事件委托的事件：click，mousedown，mouseup，keydown，keyup，keypress。
-> https://github.com/yonyouyc/blog/issues/25
-> https://www.cnblogs.com/owenChen/archive/2013/02/18/2915521.html
+> JS中的事件委托或是事件代理详解 https://github.com/yonyouyc/blog/issues/25 <br>
+>JavaScript事件代理和委托（Delegation） https://www.cnblogs.com/owenChen/archive/2013/02/18/2915521.html
 
 * 2.解释下 JavaScript 中 this 是如何工作的。[基础]
   + this是在函数运行时绑定的，它的值取决于函数的调用位置
@@ -31,11 +31,10 @@
   * 哈希表就是把Key通过一个特定的算法函数即哈希函数转换成一个整型数字，然后就将该数字对数组长度进行取余，取余结果就当作数组的下标，将value存储在以该数字为下标的数组空间里。
   * 当使用哈希表进行查询的时候，就是再次使用哈希函数将key转换为对应的数组下标，并定位到该地址获取value
   * 优点：速度快，时间复杂度为O(1)。
-  
-  > How is a JavaScript hash map implemented?
- https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-implemented
-  > 从头到尾彻底解析哈希表算法 https://blog.csdn.net/c602273091/article/details/54799452
-  > 浅谈算法和数据结构: 十一 哈希表 http://www.cnblogs.com/yangecnu/p/Introduce-Hashtable.html
+> How is a JavaScript hash map implemented?
+https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-implemented <br>
+> 从头到尾彻底解析哈希表算法 https://blog.csdn.net/c602273091/article/details/54799452 <br>
+> 浅谈算法和数据结构: 十一 哈希表 http://www.cnblogs.com/yangecnu/p/Introduce-Hashtable.html
 
 
 * 5.解释下为什么接下来这段代码不是 IIFE(立即调用的函数表达式)：function foo(){ }();要做哪些改动使它变成 IIFE？
@@ -66,13 +65,29 @@
 * 9.解释"JavaScript模块模式"以及你在何时使用它。
   + 利用函数作用域和闭包的特点，把一些功能封装(使用立即执行函数)在一个命名空间下
   + 保持内部数据变量是隐藏且私有的状态：外部无法修改；可以避免全局变量污染
-  + Node：CommonJS； require('module')
-  + 浏览器：AMD（异步模块定义）；require(['module1', 'module2'..], callback)
-    + 模块实现js文件的异步加载，解决模块间的依懒性
-  + AMD规范：使用特定的define()来定义：
-    + define(function(){ // doSomething }) || define(['依赖模块a'..], function(){ })
-  > 详解JavaScript模块化开发 https://segmentfault.com/a/1190000000733959
-  > http://www.ruanyifeng.com/blog/2012/10/javascript_module.html
+  + CommonJS是服务器端模块的规范，Node.js采用了这个规范。Node.JS首先采用了js模块化的概念。根据CommonJS规范，一个单独的文件就是一个模块。每一个模块都是一个单独的作用域，也就是说，在该模块内部定义的变量，无法被其他模块读取，除非定义为global对象的属性。
+  + 输出模块变量的最好方法是使用module.exports对象。
+  ```javascript
+    var i = 1;
+    var max = 30;
+
+    module.exports = function () {
+      for (i -= 1; i++ < max; ) {
+        console.log(i);
+      }
+      max *= 1.1;
+    };
+  ```
+  + 浏览器模块规范：AMD（异步模块定义），require.js采用的是AMD规范
+  + RequireJS解决了两个问题：
+   + （1）实现js文件的异步加载，避免网页失去响应；
+   + （2）管理模块之间的依赖性，便于代码的编写和维护。
+
+  > 详解JavaScript模块化开发 https://segmentfault.com/a/1190000000733959 <br>
+  > CommonJS规范 http://javascript.ruanyifeng.com/nodejs/module.html <br>
+  > AMD规范 https://github.com/amdjs/amdjs-api/wiki/AMD-(%E4%B8%AD%E6%96%87%E7%89%88) <br>
+  > CMD 模块定义规范 https://github.com/seajs/seajs/issues/242 <br>
+  > Javascript模块化编程（一）：模块的写法 http://www.ruanyifeng.com/blog/2012/10/javascript_module.html
 
 * 10.你是如何组织自己的代码？是使用模块模式，还是使用经典继承的方法？
   + 都有，各有各的适用情境（比如组件、插件）
@@ -86,10 +101,10 @@
 
 * 12.请指出以下代码的区别： function Person(){}, var person = Person(), and var person = new Person()? [基础]
   + 第一句声明了一个Person函数
-  + 第二句调用Person函数并把结果返回给变量person
+  + 第二句声明变量person，调用Person函数并把执行的结果赋值给person
   + 第三句调用Person作为构造函数,new一个新的对象实例，赋值给person
 
-* 13. .call 和 .apply 的区别是什么？  [基础]
+* 13..call 和 .apply 的区别是什么？  [基础]
   + call参数是一个个传递的 func.call(obj, arg1, arg2, arg3....)
   + apply第二个参数是数组形式 func.apply(obj, [arg1,arg2,arg3..])
   + call的执行效率高于apply，apply对参数进行一系列检验和深拷贝
@@ -110,14 +125,12 @@
         httpRequest.send()
         console.log('发送请求')
         function handler() {
-          console.log('xxxxxx', httpRequest.readyState, httpRequest.status)
             if (httpRequest.readyState === 4) { // XMLHttpRequest.DONE
                 if (httpRequest.status === 200) {
                     try {
-                      var iframe = document.createElement('<iframe name="ajax">')
-                      console.log('bbbbbb')
+                      var iframe = document.createElement('<iframe name="ajax">') // 兼容ie
                     } catch (e) {
-                      iframe = document.createElement('iframe')
+                      iframe = document.createElement('iframe') // 非ie
                     }
                     iframe.name = 'ajax'
                     iframe.width = '600'
@@ -126,7 +139,6 @@
                     var iframeDocument = iframe.contentDocument || iframe.document
                     iframeDocument.open()
                     iframeDocument.write(httpRequest.responseText)
-                    console.log(httpRequest.getAllResponseHeaders())
                     console.log('接收响应')
                 }
             }
@@ -135,9 +147,9 @@
     // 以上代码在ie11下有问题
   ```
 
-  > What's AJAX? https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started
-  > XMLHttpRequest Level 2 使用指南 http://www.ruanyifeng.com/blog/2012/09/xmlhttprequest_level_2.html
-  > XMLHttpRequest https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest
+  > What's AJAX? https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started <br>
+  > XMLHttpRequest Level 2 使用指南 http://www.ruanyifeng.com/blog/2012/09/xmlhttprequest_level_2.html <br>
+  > XMLHttpRequest https://developer.mozilla.org/en-US/docs/Web/API/XMLHttpRequest <br>
   > 你真的会使用XMLHttpRequest吗？ https://segmentfault.com/a/1190000004322487 
 
 * 16.请解释 JSONP 的工作原理，以及它为什么不是真正的 AJAX。 [基础]
@@ -155,8 +167,8 @@
 
 * 17.你使用过 JavaScript 模板系统吗？
   + 研究过underscore的_.template()
-> 前端模板技术面面观 http://leeluolee.github.io/2014/10/10/template-engine/
-> 浅谈模板引擎 http://www.cnblogs.com/dojo-lzz/p/5518474.html
+> 前端模板技术面面观 http://leeluolee.github.io/2014/10/10/template-engine/ <br>
+> 浅谈模板引擎 http://www.cnblogs.com/dojo-lzz/p/5518474.html <br>
 > 前端模板的原理与实现 https://segmentfault.com/a/1190000006990480
   
 * 18.请解释变量声明提升。 [基础]
