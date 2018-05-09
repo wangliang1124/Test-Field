@@ -184,26 +184,47 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
   + 如果要禁止事件的冒泡，可以在目标元素的事件方法里调用event.stopPropagation()方法
 
 * 20."attribute" 和 "property" 的区别是什么？ [基础]
-  + attribute是指HTML标签上的属性，attribute只能是字符串
-  + property是指DOM对象的属性
-  + 标准的 DOM properties 与 attributes 是同步的
+  + 创建
+    + DOM对象初始化时会在创建默认的基本property；
+    + 只有在HTML标签中定义的attribute才会被保存在property的attributes属性中；
+    + attribute会初始化property中的同名属性，但自定义的attribute不会出现在property中；
+    + attribute的值都是字符串；
+  + 数据绑定
+    + attributes的数据会同步到property上，然而property的更改不会改变attribute；
+    + 对于value，class这样的属性/特性，数据绑定的方向是单向的，attribute->property；
+    + 对于id而言，数据绑定是双向的，attribute<=>property；
+    + 对于disabled而言，property上的disabled为false时，attribute上的disabled必定会并存在，此时数据绑定可以认为是双向的；
+  + 使用
+    + 可以使用DOM的setAttribute方法来同时更改attribute；
+    + 直接访问attributes上的值会得到一个Attr对象，而通过getAttribute方法访问则会直接得到attribute的值；
+
+> DOM 中 Property 和 Attribute 的区别 https://www.cnblogs.com/elcarim5efil/p/4698980.html
 
 * 21.Difference between document load event and document DOMContentLoaded event? [基础]
-  + window.onload是网页上所以资源加载完毕才执行，只能有一个
-  + DOMContentLoaded: dom标签加载完毕后即可执行（关联资源还没有加载玩）
-  > The DOMContentLoaded event is fired when the document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading (the load event can be used to detect a fully-loaded page).
-  > https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded
+  + load event是网页上所以资源加载完毕才执行，只能有一个
+  + DOMContentLoaded: dom标签加载完毕后即可执行（css、image、iframe还没有加载完）
+  + The DOMContentLoaded event is fired when the document has been completely loaded and parsed, without waiting for stylesheets, images, and subframes to finish loading (the load event can be used to detect a fully-loaded page).
+
+  > DOMContentLoaded https://developer.mozilla.org/en-US/docs/Web/Events/DOMContentLoaded <br>
+  > DOMContentLoaded与load的区别 https://www.cnblogs.com/caizhenbo/p/6679478.html
 
 * 22.== 和 === 有什么不同？ [基础]
   + '==' 宽松相等，允许在相等比较中进行强制类型转换
   + '===' 是严格相等，不允许强制类型转换，注意：+0 === -0
-  + 使用'=='时要注意一些坑：
-    + 其他类型和布尔类型之间的相等比较（避免使用），如： '42' == true // => false 原因：true => 1，1 == '42' => 1 == 42 => false 
-    + null == undefined // => true，除此之外其他值都不存在这种情况。 即 null == false // => false
+  + '=='转换规则：
+    + 1. 字符串和数字之间的相等比较，字符串转换为数字
+    + 2. 其他类型和布尔类型之间的相等比较，布尔值会先被转换成数字，true => 1, false => 0
+    + 3. null 和undefined 之间的相等比较, null == undefined // =>true, 除此之外其他值都不存在这种情况。
+    + 4. 对象和非对象之间的相等比较, 把对象转换为原始值(valueOf(), toString())
     + NaN不等于任何值，包括自己 NaN == NaN // => false
-
+    + 两个对象指向同一个值时即视为相等，不发生强制类型转换。
+  + 两个原则：
+    + 如果两边的值中有true 或者false，千万不要使用==。
+    + 如果两边的值中有[]、"" 或者0，尽量不要使用==。
+    
 * 23.你如何从浏览器的 URL 中获取查询字符串参数。
-  `var qs = (function(queryString){
+  ```javascript
+    var qs = (function(queryString){
       var q = queryString.substring(1).split('&')
       if(q == '') return {};
       var result = {};
@@ -213,16 +234,16 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
       }
       return result;
     })(window.location.search)
-  `
+  ```
 
-* 24.请解释一下 JavaScript 的同源策略。如何解决跨域问题?  [基础]
-  + 同源：协议(http\https) 域名(www.baidu.com\map.baidu.com) 端口(80\81)
+* 24.请解释一下 JavaScript 的同源策略。如何解决跨域问题?  [进阶]
+  + 同源：同协议、 同域名、 同端口
   + 出于安全的考虑，不允许源a访问源b的资源
 
-> 浏览器同源政策及其规避方法 http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html
-> 跨域CORS http://www.ruanyifeng.com/blog/2016/04/cors.html
-> ajax跨域，这应该是最全的解决方案了 https://segmentfault.com/a/1190000012469713
-> https://stackoverflow.com/questions/11474336/same-origin-policy-in-layman-terms
+> 浏览器同源政策及其规避方法 http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html <br>
+> 跨域CORS http://www.ruanyifeng.com/blog/2016/04/cors.html <br>
+> ajax跨域，这应该是最全的解决方案了 https://segmentfault.com/a/1190000012469713 <br>
+> https://stackoverflow.com/questions/11474336/same-origin-policy-in-layman-terms <br>
 
 * 25.描述一种 JavaScript 中实现 memoization(避免重复运算)的策略。[进阶]
 

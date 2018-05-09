@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>ScopeTest</title>
+</head>
+
+<body>
+    <script>
+    var log = console.log.bind(console)
+    var a = function() {
+        log('a')
+        log(this === window)
+        var b = function() {
+            log('b')
+            log(this === window)
+        }
+        b()
+    }
+    a()
+
+    var obj = {
+        name: 'obj',
+        getName: function() {
+            log('name:' + this.name)
+            var b = function() {
+                log('b')
+                log('this === window:' + (this === window))
+            }
+            b.call(obj)
+        }
+    };
+    (obj.getName)()
+    var name = 'The Window'
+    var object = {
+        name: 'My Object',
+        getName: function() {
+          log(this.name)
+        }
+    }
+    object.getName(); //"My Object"
+    (object.getName)(); //"My Object"
+    (object.getName = object.getName)(); //"The Window"，在非严格模式下
+    </script>
+</body>
+
+</html>
