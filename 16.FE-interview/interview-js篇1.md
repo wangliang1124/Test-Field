@@ -256,7 +256,7 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
   + condition ? expr1 : expr2 ，三个操作数
   + 如果条件值为真值（true），运算符就会返回expr1的值；否则，返回 expr2 的值
 
-* 27.函数的参数元是什么？
+* 27.函数的参数元是什么？[基础]
   + arguments对象
   ```javascript
   var log = function() {
@@ -277,7 +277,7 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
   + 为未来的新版本做铺垫： 淘汰了with arguments.caller arguments.callee
   + 坏处： 估计写代码没那么随意了
 
-> 参考： 高程三附录B
+  > 参考： 高程三附录B
 
 * 29.在什么时候你会使用 document.write()？
   + 会重绘整个页面
