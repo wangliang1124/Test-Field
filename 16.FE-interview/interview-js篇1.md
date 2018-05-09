@@ -216,13 +216,13 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
     + 2. 其他类型和布尔类型之间的相等比较，布尔值会先被转换成数字，true => 1, false => 0
     + 3. null 和undefined 之间的相等比较, null == undefined // =>true, 除此之外其他值都不存在这种情况。
     + 4. 对象和非对象之间的相等比较, 把对象转换为原始值(valueOf(), toString())
-    + NaN不等于任何值，包括自己 NaN == NaN // => false
-    + 两个对象指向同一个值时即视为相等，不发生强制类型转换。
+    + 5. NaN不等于任何值，包括自己 NaN == NaN // => false
+    + 6. 两个对象指向同一个值时即视为相等，不发生强制类型转换。
   + 两个原则：
     + 如果两边的值中有true 或者false，千万不要使用==。
     + 如果两边的值中有[]、"" 或者0，尽量不要使用==。
-    
-* 23.你如何从浏览器的 URL 中获取查询字符串参数。
+
+* 23.你如何从浏览器的 URL 中获取查询字符串参数。 [进阶]
   ```javascript
     var qs = (function(queryString){
       var q = queryString.substring(1).split('&')
@@ -247,25 +247,26 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
 
 * 25.描述一种 JavaScript 中实现 memoization(避免重复运算)的策略。[进阶]
 
-> 从斐波那契数列求值优化谈 _.memoize 方法 https://github.com/hanzichi/underscore-analysis/issues/23
-> 斐波那契数列求和的js方案以及优化 https://segmentfault.com/a/1190000007115162
-> 性能优化：memoization http://taobaofed.org/blog/2016/07/14/performance-optimization-memoization/
-> Faster JavaScript Memoization For Improved Application Performance https://addyosmani.com/blog/faster-javascript-memoization/
+> 从斐波那契数列求值优化谈 _.memoize 方法 https://github.com/hanzichi/underscore-analysis/issues/23 <br>
+> 斐波那契数列求和的js方案以及优化 https://segmentfault.com/a/1190000007115162 <br>
+> 性能优化：memoization http://taobaofed.org/blog/2016/07/14/performance-optimization-memoization/  <br>
+> Faster JavaScript Memoization For Improved Application Performance https://addyosmani.com/blog/faster-javascript-memoization/ <br>
 
 * 26.什么是三元表达式？“三元” 表示什么意思？[基础]
-  + condition ? expr1 : expr2
-  + 如果条件值为真值（true），运算符就会返回 expr1 的值；否则， 就会返回 expr2 的值
+  + condition ? expr1 : expr2 ，三个操作数
+  + 如果条件值为真值（true），运算符就会返回expr1的值；否则，返回 expr2 的值
 
 * 27.函数的参数元是什么？
   + arguments对象
-  `var log = function() {
-    var args = Array.prototype.slice.call(arguments)
+  ```javascript
+  var log = function() {
+    var args = Array.prototype.slice.call(arguments) // 转换为真正的数组
     args.unshift('(app) ')
-    // console.log(args)
     console.log.apply(console,args)
   }
   log('sss')
-  `
+  ```
+  > Arguments 对象 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/arguments
 
 * 28.什么是 "use strict"? 使用它的好处和坏处分别是什么？ [基础]
   + 将使 JS 代码以严格模式（strict mode）运行。使用了较为严格的错误检测条件检测。
