@@ -286,6 +286,8 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
   + 带条件的资源文件的同步加载，比如为了兼容不支持某些特性的浏览器需要加载对应的 Polyfill，但是又考虑到自身本就支持的浏览器，所以要做兼容性检测，只针对不支持的浏览器加载 Polyfill。
 
   > document.write 的痛 https://zhuanlan.zhihu.com/p/33983842
+  > document.write知多少 https://segmentfault.com/a/1190000006197157
+  > 闲扯 『 document.write 』 http://www.cnblogs.com/zichi/p/5303541.html
 
 * 30.请指出浏览器特性检测，特性推断和浏览器 UA 字符串嗅探的区别？ [基础]
   + 特性检测：
