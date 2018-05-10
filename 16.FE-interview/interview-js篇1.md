@@ -339,7 +339,7 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
   + load event tells browser to do something only after everthing including frames, images, asynchronous JavaScripts are fully loaded.
   + If you want event function to execute before fully loaded frames, images, async scripts, use DOMContentLoaded instead.
 
-* 34.Explain what a single page app is and how to make one SEO-friendly. [基础]
+* 34.Explain what a single page app is and how to make one SEO-friendly. [进阶]
   + 所有的页面都在一个主页面上呈现；不用刷新整个页面
   + 服务器渲染
 
@@ -359,7 +359,7 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
   ```
   + polyfill: bluebird
 
-  > JavaScript Promise：简介 https://developers.google.com/web/fundamentals/primers/promises
+  > JavaScript Promise：简介 https://developers.google.com/web/fundamentals/primers/promises <br>
   > Promise https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
 * 36.What tools and techniques do you use debugging JavaScript code?  [基础
@@ -418,9 +418,9 @@ https://stackoverflow.com/questions/748175/asynchronous-vs-synchronous-execution
 
   + The difference between call stack and task queue is that task queue is a place where JavaScript schedules async function while call stack is a place for JavaScript to trace what the current function is.
 
-> JavaScript：彻底理解同步、异步和事件循环(Event Loop) https://segmentfault.com/a/1190000004322358
-> Concurrency model and Event Loop https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop
-> JavaScript Event Loop Explained https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4
+> JavaScript：彻底理解同步、异步和事件循环(Event Loop) https://segmentfault.com/a/1190000004322358 <br>
+> Concurrency model and Event Loop https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop <br>
+> JavaScript Event Loop Explained https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4 <br>
 > JavaScript 运行机制详解：再谈Event Loop  http://www.ruanyifeng.com/blog/2014/10/event-loop.html
 
 * 41.Explain the differences on the usage of foo between function foo() {} and var foo = function() {}  [基础]
