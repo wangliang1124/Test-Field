@@ -299,7 +299,7 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
     }
     ```
   + 特性推断(不可靠):
-  ```javascript
+    ```javascript
     function getWindowWidth(){
       if (document.all){ //假设是IE, 实际上，也可能是Opera；Opera 支持document.all
         return document.documentElement.clientWidth; //错误的用法！！！
@@ -307,7 +307,7 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
         return window.innerWidth;
       }
     }
-  ```
+    ```
   + UA字符串嗅探:
     ```javascript
     if (navigator.userAgent.indexOf("MSIE 7") > -1){
@@ -317,11 +317,11 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
 
 * 31.使用 Ajax 都有哪些优劣？ [基础]
   * 优势
-    +无刷新在页面与服务器通信，更新页面，用户体验好。
-    +异步与服务器通信，不需要打断用户的操作，具有更加迅速的响应能力。
-    +前端和后端负载平衡。可以把以前一些服务器负担的工作转嫁到客户端，利用客户端闲置的能力来处理，减轻服务器和带宽的负担，节约空间和宽带租用成本。并且减轻服务器的负担，ajax的原则是“按需取数据”，可以最大程度的减少冗余请求，和响应对服务器造成的负担。
-    +界面与应用分离：Ajax使WEB中的界面与应用分离（也可以说是数据与呈现分离），有利于分工合作、减少非技术人员对页面的修改造成的WEB应用程序错误、提高效率、也更加适用于现在的发布系统。
-    +基于标准化的并被广泛支持的技术，不需要下载插件或者小程序。
+    + 无刷新在页面与服务器通信，更新页面，用户体验好。
+    + 异步与服务器通信，不需要打断用户的操作，具有更加迅速的响应能力。
+    + 前端和后端负载平衡。可以把以前一些服务器负担的工作转嫁到客户端，利用客户端闲置的能力来处理，减轻服务器和带宽的负担，节约空间和宽带租用成本。并且减轻服务器的负担，ajax的原则是“按需取数据”，可以最大程度的减少冗余请求，和响应对服务器造成的负担。
+    + 界面与应用分离：Ajax使WEB中的界面与应用分离（也可以说是数据与呈现分离），有利于分工合作、减少非技术人员对页面的修改造成的WEB应用程序错误、提高效率、也更加适用于现在的发布系统。
+    + 基于标准化的并被广泛支持的技术，不需要下载插件或者小程序。
   * 缺点：
     + AJAX干掉了Back和History功能，即对浏览器机制的破坏。
     + AJAX的安全问题:Ajax技术就如同对数据建立了一个直接通道，使得开发者在不经意间会暴露比以前更多的数据和服务器逻辑。Ajax也难以避免一些已知的安全弱点，诸如跨站点脚步攻击、SQL注入攻击和基于Credentials的安全漏洞等等
