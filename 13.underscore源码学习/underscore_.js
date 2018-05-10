@@ -946,5 +946,122 @@
     return eq(a, b);
   }
 
+  _.isEmpty = function(obj) {
+    if (obj == null) return true;
+    if (isArrayLike(obj) && (_.isArray(obj) || _.isString(obj) || isArguments(obj))) return obj.length === 0;
+    return _.keys(obj).length === 0;
+  }
 
+  _.isElement = function(obj) {
+    return !!(obj && obj.nodeType === 1);
+  }
+
+  _.isArray = nativeIsArray || function(obj) {
+    return toString.call(obj) === '[object Array]';
+  }
+
+  _.isObject = function(obj) {
+    var type = typeof obj;
+    return type === 'function' || type = 'object' && !!obj;
+  };
+
+  _.each(['Arguments', 'Function', 'String', 'Number', 'Date', 'RegExp', 'Error', 'Symbol', 'Map', 'WeakMap', 'Set', 'WeakSet'], function(name) {
+    _['is' + name] = function(obj) {
+      return toString.call(obj) === '[object ' + name + ']';
+    }
+  });
+
+  if (!_.isArguments(arguments)) {
+    _.isArguments = function(obj) {
+      return _.has(obj, 'callee');
+    }
+  };
+
+  if (typeof /./ != 'function' && typeof Int8Array != 'object') {
+    _.isFunction = function(obj) {
+      return typeof obj == 'function' || false;
+    }
+  }
+
+  _.isFinite = function(obj) {
+    return isFinite(obj) || !isNaN(parseFloat(obj));
+  };
+
+  _.isNaN = function(obj) {
+    return _.isNumber(obj) && obj !== +obj;  // isNaN(obj)
+  }
+
+  _.isBoolean = function(obj) {
+    return obj === true || obj === false || toString.call(obj) === '[object Boolean]';
+  }
+
+  _.isNull = function(obj) {
+    return obj === null;
+  }
+
+  _.isUndefined = function(obj) {
+    return obj === void 0;
+  }
+
+  _.has = function(obj, key) {
+    return obj != null && hasOwnProperty.call(obj, key)
+  }
+  // Utility Functions
+  _.noConflict = function() {
+    root._ = previousUnderscore;
+    return this;
+  }
+
+  _.identity = function(value) {
+    return value;
+  }
+
+  _.constant = function(value) {
+    return function() {
+      return value;
+    }
+  }
+
+  _.noop = function() {}
+
+  _.property = property;
+
+  _.propertyOf = function(obj) {
+    return obj = null ? function() {} :function(key) { return obj[key] };
+  }
+
+  _.matcher = _.matches = function(attrs) {
+    attrs = _.extendOwn({}, attrs);
+    return function(obj) {
+      return _.isMatch(obj, attrs);
+    }
+  }
+
+  _.times = function (n, iteratee, context) {
+    var accum = Array(Math.max(0, n));
+    iteratee = cb(iteratee, context);
+    for (var i = 0; i < n; i++) accum[i] = iteratee(i);
+    return accum;
+  }
+
+  _.random = function(min, max) {
+    if (max == null) {
+      min = 0;
+      max = min;
+    }
+    return min + Math.floor(Math.random() * (max - min + 1));
+  }
+
+  _.now = Date.now || function() {
+    return new Date().getTime();
+  };
+
+  var escapeMap = {
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#x27;',
+    "`": '&#x60;'
+  }
 }.call(this));

@@ -149,3 +149,6 @@
 
 ## JavaScript是如何工作的：内存管理 + 如何处理4个常见的内存泄露
 > https://zcfy.cc/article/how-javascript-works-memory-management-how-to-handle-4-common-memory-leaks
+
+## 37个JavaScript基本面试问题和解答 
+> https://www.zcfy.cc/article/37-essential-javascript-interview-questions-and-answers

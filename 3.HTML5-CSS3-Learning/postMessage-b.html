@@ -10,7 +10,7 @@
     我是postMessage-b.html
     <script>
     window.onmessage = function(e) {
-        e = e || event;
+        e = e || window.event;
         if (e.origin !== 'http://localhost:8080') return;
         console.log(e); //立即弹出a发送过来的数据
 

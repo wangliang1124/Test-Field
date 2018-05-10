@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>document.write</title>
+    <script>
+    document.write('hello <br>')
+    document.write('<script src="./js/write.js"><\/script>')
+    </script>
+    <script src="./js/write.js" async>
+      // 异步引入，document.write因安全原因是无法工作的
+    </script>
+</head>
+
+<body>
+    <div id="test"></div>
+    <script>
+    document.write('world')
+    var s = document.createElement('script');
+    s.text = 'document.write("!!!")'
+    document.getElementById('test').appendChild(s)
+    </script>
+    <!-- <script src="http://cucygh.github.io/post.js" charset="utf-8"></script> -->
+    <script src="http://cucygh.github.io/post.js" async charset="utf-8"></script>
+    <script type="text/javascript">
+    // window.onload = function() {
+    //   document.write('页面在loaded状态，即使没有调用document.open,document.write操作也会自动调用document.open方法从而将页面清空了。有的同学说将document.open=function(){}是不是可以避免，结论是No。')
+    // }
+    </script>
+</body>
+
+</html>

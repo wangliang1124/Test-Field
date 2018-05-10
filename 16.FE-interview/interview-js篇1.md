@@ -238,12 +238,12 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
 
 * 24.请解释一下 JavaScript 的同源策略。如何解决跨域问题?  [进阶]
   + 同源：同协议、 同域名、 同端口
-  + 出于安全的考虑，不允许源a访问源b的资源
+  + 同源政策的目的，是为了保证用户信息的安全，防止恶意的网站窃取数据。
+  + 限制范围:(1)Cookie、LocalStorage 和 IndexDB 无法读取。(2)DOM 无法获得。(3)AJAX 请求不能发送。
 
 > 浏览器同源政策及其规避方法 http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html <br>
-> 跨域CORS http://www.ruanyifeng.com/blog/2016/04/cors.html <br>
 > ajax跨域，这应该是最全的解决方案了 https://segmentfault.com/a/1190000012469713 <br>
-> https://stackoverflow.com/questions/11474336/same-origin-policy-in-layman-terms <br>
+> 两种跨站攻击方式——XSS和CSRF https://blog.csdn.net/u013736932/article/details/78805397 
 
 * 25.描述一种 JavaScript 中实现 memoization(避免重复运算)的策略。[进阶]
 
@@ -251,6 +251,7 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
 > 斐波那契数列求和的js方案以及优化 https://segmentfault.com/a/1190000007115162 <br>
 > 性能优化：memoization http://taobaofed.org/blog/2016/07/14/performance-optimization-memoization/  <br>
 > Faster JavaScript Memoization For Improved Application Performance https://addyosmani.com/blog/faster-javascript-memoization/ <br>
+
 
 * 26.什么是三元表达式？“三元” 表示什么意思？[基础]
   + condition ? expr1 : expr2 ，三个操作数
@@ -269,91 +270,99 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
   > Arguments 对象 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/arguments
 
 * 28.什么是 "use strict"? 使用它的好处和坏处分别是什么？ [基础]
-  + 将使 JS 代码以严格模式（strict mode）运行。使用了较为严格的错误检测条件检测。
-  + 消除JavaScript语法的不合理不严谨的地方，减少怪异行为
-  + 全局变量的显示声明,函数必须声明在顶层
-  + 消除代码运行的不安全之处： eval中不允许声明变量； this始终是指定的值，func.call(null)全局下this转换为window
-  + 提高编译效率
-  + 为未来的新版本做铺垫： 淘汰了with arguments.caller arguments.callee
-  + 坏处： 估计写代码没那么随意了
+  + 严格模式消除了一些 JavaScript的静默错误，通过改变它们来抛出错误。
+  + 严格的模式修复了 JavaScript引擎难以执行优化的错误：有时候，严格模式代码可以比非严格模式的相同的代码运行得更快。
+  + 严格模式禁用了在ECMAScript的未来版本中可能会定义的一些语法。
 
-  > 参考： 高程三附录B
+  > 严格模式 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Strict_mode
 
 * 29.在什么时候你会使用 document.write()？
-  + 会重绘整个页面
-  + 很少使用，首页loading的时候使用过
-  + 广告弹窗
-  + 带条件的资源文件的同步加载，比如为了兼容不支持某些特性的浏览器需要加载对应的 Polyfill，但是又考虑到自身本就支持的浏览器，所以要做兼容性检测，只针对不支持的浏览器加载 Polyfill。
+  + 加载脚本，相比document.createElement('script')，少几行代码，也更快
+  + 加载第三方广告
+  + document.write() 接收一个字符串作为参数，将该字符串写入文档流中。一旦文档流已经关闭（document.close()），那么 document.write 就会重新利用 document.open() 打开新的文档流并写入，此时原来的文档流会被清空，已渲染好的页面就会被清除，浏览器将重新构建 DOM 并渲染新的页面。
 
-  > document.write 的痛 https://zhuanlan.zhihu.com/p/33983842
-  > document.write知多少 https://segmentfault.com/a/1190000006197157
+  > document.write 的痛 https://zhuanlan.zhihu.com/p/33983842 <br>
+  > document.write知多少 https://segmentfault.com/a/1190000006197157 <br>
   > 闲扯 『 document.write 』 http://www.cnblogs.com/zichi/p/5303541.html
 
 * 30.请指出浏览器特性检测，特性推断和浏览器 UA 字符串嗅探的区别？ [基础]
   + 特性检测：
-    `if (window.XMLHttpRequest) {
-      new XMLHttpRequest();
-    }`
-  + 特征推断:
-  `if (document.getElementsByTagName) {
-      element = document.getElementById(id);
-  }`
+    ```javascript
+    function getElement(id){
+      if (document.getElementById){
+        return document.getElementById(id);
+      } else if (document.all){
+        return document.all[id];
+      } else {
+        throw new Error("No way to retrieve element!");
+      }
+    }
+    ```
+  + 特性推断(不可靠):
+  ```javascript
+    function getWindowWidth(){
+      if (document.all){ //假设是IE, 实际上，也可能是Opera；Opera 支持document.all
+        return document.documentElement.clientWidth; //错误的用法！！！
+      } else {
+        return window.innerWidth;
+      }
+    }
+  ```
   + UA字符串嗅探:
-  `if (navigator.userAgent.indexOf("MSIE 7") > -1){
-    //do something
-  }`
+    ```javascript
+    if (navigator.userAgent.indexOf("MSIE 7") > -1){
+      //do something
+    }
+    ```
 
 * 31.使用 Ajax 都有哪些优劣？ [基础]
   * 优势
-    + 异步通信，不需要打断用户的操作，具有更加迅速的响应能力。
-    + ajax的原则是“按需取数据”，可以最大程度的减少冗余请求，和响应对服务器造成的负担。
+    +无刷新在页面与服务器通信，更新页面，用户体验好。
+    +异步与服务器通信，不需要打断用户的操作，具有更加迅速的响应能力。
+    +前端和后端负载平衡。可以把以前一些服务器负担的工作转嫁到客户端，利用客户端闲置的能力来处理，减轻服务器和带宽的负担，节约空间和宽带租用成本。并且减轻服务器的负担，ajax的原则是“按需取数据”，可以最大程度的减少冗余请求，和响应对服务器造成的负担。
+    +界面与应用分离：Ajax使WEB中的界面与应用分离（也可以说是数据与呈现分离），有利于分工合作、减少非技术人员对页面的修改造成的WEB应用程序错误、提高效率、也更加适用于现在的发布系统。
+    +基于标准化的并被广泛支持的技术，不需要下载插件或者小程序。
   * 缺点：
     + AJAX干掉了Back和History功能，即对浏览器机制的破坏。
+    + AJAX的安全问题:Ajax技术就如同对数据建立了一个直接通道，使得开发者在不经意间会暴露比以前更多的数据和服务器逻辑。Ajax也难以避免一些已知的安全弱点，诸如跨站点脚步攻击、SQL注入攻击和基于Credentials的安全漏洞等等
     + 对搜索引擎支持较弱。
-    + 违背URL和资源定位的初衷,采用了Ajax技术，也许你在该URL地址下面看到的和我在这个URL地址下看到的内容是不同的。
+    + 客户端过肥，太多客户端代码造成开发上的成本。
+    + 违背URL和资源定位的初衷,采用了Ajax技术，也许你在该URL地址下面看到的和我在这个URL地址下看到的内容是不同的
 
-* 31. 请实现一个遍历至 100 的 for loop 循环，在能被 3 整除时输出 "fizz"，在能被 5 整除时输出 "buzz"，在能同时被 3 和 5 整除时输出 "fizzbuzz"。
-    `for(var i = 0; i <= 100; i++) {
-      if(i % 3 === 0) console.log( i + 'fizz')
-      if(i % 5 === 0) console.log(i + 'buzz')
-      if(i % 3 === 0 && i % 5 === 0) console.log(i + 'fizzbuzz')
-    }
-    `
-* 32.Why is it, in general, a good idea to leave the global scope of a website as-is and never touch it?
+* 32.Why is it, in general, a good idea to leave the global scope of a website as-is and never touch it? [基础]
   + 安全，变量直接暴露在全局，任何人都可能修改
   + 减少名称冲突
   + 利于模块化
   + 优雅
 
-* 33.Why would you use something like the load event? Does this event have disadvantages? Do you know any alternatives, and why would you use those?
+* 33.Why would you use something like the load event? Does this event have disadvantages? Do you know any alternatives, and why would you use those? [基础]
   + load event tells browser to do something only after everthing including frames, images, asynchronous JavaScripts are fully loaded.
   + If you want event function to execute before fully loaded frames, images, async scripts, use DOMContentLoaded instead.
 
-* 34.Explain what a single page app is and how to make one SEO-friendly.
+* 34.Explain what a single page app is and how to make one SEO-friendly. [基础]
   + 所有的页面都在一个主页面上呈现；不用刷新整个页面
   + 服务器渲染
-  > https://cn.vuejs.org/v2/guide/ssr.html
 
-* 35. What is the extent of your experience with Promises and/or their polyfills?  [基础]
-  `new Promise((resolve, reject) => {
-    if (resolve) {
-      resolve('success')；
-    } else {
-      reject('failed')
-    }
-  }).then((result) => {
-      console.log(result)
-  })`
+  > Vue.js 服务器端渲染指 https://ssr.vuejs.org/zh/
+
+* 35.What is the extent of your experience with Promises and/or their polyfills?  [基础]
+  ```javascript
+    new Promise((resolve, reject) => {
+      if (resolve) {
+        resolve('success')；
+      } else {
+        reject('failed')
+      }
+    }).then((result) => {
+        console.log(result)
+    })
+  ```
   + polyfill: bluebird
-  > https://developers.google.com/web/fundamentals/primers/promises
-  > https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
-* 35.What are the pros and cons of using Promises instead of callbacks?  [基础]
-  + 地狱回掉
-  + 信任
-  + 错误处理
+  > JavaScript Promise：简介 https://developers.google.com/web/fundamentals/primers/promises
+  > Promise https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise
 
-* 36.What tools and techniques do you use debugging JavaScript code?
+* 36.What tools and techniques do you use debugging JavaScript code?  [基础
   + Chrome Dev Tools.
 
 * 37.What language constructions do you use for iterating over object properties and array items? [基础]
@@ -364,7 +373,7 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
     + for(var key in obj) { if(obj.hasOwnProperty(key)){ // 过滤不可枚举属性 } } 
     + Object.keys(obj).forEach
 
-* 38.Explain the difference between mutable and immutable objects.
+* 38.Explain the difference between mutable and immutable objects. [进阶]
   * What is an example of an immutable object in JavaScript?
   * What are the pros and cons of immutability?
   * How can you achieve immutability in your own code?
@@ -382,323 +391,85 @@ https://stackoverflow.com/questions/8877666/how-is-a-javascript-hash-map-impleme
 > facebook immutable.js 意义何在，使用场景？ https://www.zhihu.com/question/28016223
 
 
-* 39.Explain the difference between synchronous and asynchronous functions.
+* 39.Explain the difference between synchronous and asynchronous functions. [基础]
   + 同步是阻塞的，异步是非阻塞的
-    `function blocking(){
-      console.log("1");
+  ```javascript
+  function blocking(){
+    console.log("1");
+    console.log("2");
+  }
+  function nonBlocking(){
+      setTimeout(function(){
+          console.log("1");
+      }, 1000);
       console.log("2");
-    }
-    function nonBlocking(){
-        setTimeout(function(){
-            console.log("1");
-        }, 1000);
-        console.log("2");
-    }`
+  }
+  ```
 
-> https://stackoverflow.com/questions/748175/asynchronous-vs-synchronous-execution-what-does-it-really-mean
+> Asynchronous vs synchronous execution, what does it really mean?
+https://stackoverflow.com/questions/748175/asynchronous-vs-synchronous-execution-what-does-it-really-mean
 
 
-* 40.What is event loop? What is the difference between call stack and task queue?
+* 40.What is event loop? What is the difference between call stack and task queue? [进阶]
 
-> Event loop is how JavaScript with single-threaded performs tasks without blocking.
+  + Event loop is how JavaScript with single-threaded performs tasks without blocking.
 
-> Event loop is a queue of callback functions. When a asynchronous function executes, it is pushed into task queue and JavaScript will only start processing task queue after codes after async function are executed.
+  + Event loop is a queue of callback functions. When a asynchronous function executes, it is pushed into task queue and JavaScript will only start processing task queue after codes after async function are executed.
 
-> The difference between call stack and task queue is that task queue is a place where JavaScrip schedules async function while call stack is a place for JavaScript to trace what the current function is.
+  + The difference between call stack and task queue is that task queue is a place where JavaScript schedules async function while call stack is a place for JavaScript to trace what the current function is.
 
-> https://segmentfault.com/a/1190000004322358
-> https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop
-> https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4
+> JavaScript：彻底理解同步、异步和事件循环(Event Loop) https://segmentfault.com/a/1190000004322358
+> Concurrency model and Event Loop https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop
+> JavaScript Event Loop Explained https://medium.com/front-end-hacking/javascript-event-loop-explained-4cd26af121d4
 > JavaScript 运行机制详解：再谈Event Loop  http://www.ruanyifeng.com/blog/2014/10/event-loop.html
 
 * 41.Explain the differences on the usage of foo between function foo() {} and var foo = function() {}  [基础]
-  + function sum (num1, num2) { return num1 + num2; } 
-  + var sum = function(num1, num2) { return num1 + num2 }
-  + var sum = new Function('num1', 'num2', 'return num1 + num2')
+  + 函数声明在JS解析时进行函数提升，因此在同一个作用域内，不管函数声明在哪里定义，该函数都可以进行调用。而函数表达式的值是在JS运行时确定，并且在表达式赋值完成后，该函数才能调用。
+  + 创建函数的三种方式：
+    + function sum (num1, num2) { return num1 + num2; } 
+    + var sum = function(num1, num2) { return num1 + num2 }
+    + var sum = new Function('num1', 'num2', 'return num1 + num2')
+  > 前端程序员经常忽视的一个JavaScript面试题 https://github.com/Wscats/Good-Text-Share/issues/85
 
 * 42.What are the differences between variables created using let, var or const? [基础]
-  + var、let、const 区别？ 
-  > https://www.jianshu.com/p/4e9cd99ecbf5
-
-+ 43.箭头函数，解构赋值，字符串模版，扩展符  [基础]
-
-* 44.What is the definition of a higher-order function? [基础]
- + 《JavaScript设计模式与开发实践》3.2 高阶函数
->  JavaScript高阶函数的应用 https://segmentfault.com/a/1190000012008266
-
-* 45.Can you give an example of a curry function and why this syntax offers an advantage?
-
-# JS
-## 1.介绍js的基本数据类型。[基础]
-* Boolean,Null,Undefined,Number,String,Symbol (ECMAScript 6 新定义)
-
-## 2.介绍js有哪些内置对象？[基础]
-*  Object 是 JavaScript 中所有对象的父对象
-* 数据封装类对象：Object、Array、Boolean、Number 和 String
- * 其他对象：Function、Arguments、Math、Date、RegExp、Error
-> https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects
-
-## 3.说几条写JavaScript的基本规范？
-* 使用===/！==比较true/false或数值
-* 使用字面量代替new
-* 不要使用全局函数
-* for/if/while使用大括号
-* 变量先声明再使用
-* 变量命名以小写字母开头
-
-> JavaScript编码规范 https://github.com/fex-team/styleguide/blob/master/javascript.md
-> Airbnb JavaScript Style Guide https://github.com/airbnb/javascript
-
-## 5.JavaScript有几种类型的值？，你能画一下他们的内存图吗？[基础]
-* 栈：原始数据类型（Undefined，Null，Boolean，Number、String）
-* 堆：引用数据类型（对象、数组和函数）
-* 两种类型的区别是：存储位置不同；
-* 原始数据类型直接存储在栈(stack)中的简单数据段，占据空间小、大小固定，属于被频繁使用数据，所以放入栈中存储.
-* 引用数据类型存储在堆(heap)中的对象,占据空间大、大小不固定,如果存储在栈中，将会影响程序运行的性能；引用数据类型在栈中存储了指针，该指针指向堆中该实体的起始地址。当解释器寻找引用值时，会首先检索其在栈中的地址，取得地址后从堆中获得实体
-
-## 6.如何将字符串转化为数字，例如'12.3b'?
-* parseFloat('12.3b',10)
-
-## 7.如何将浮点数点左边的数每三位添加一个逗号，如12000000.11转化为『12,000,000.11』?
-```javascript
-function commafy(num){
-    return num && num
-      .toString()
-      .replace(/(\d)(?=(\d{3})+\.)/g, function($1, $2){
-        return $2 + ',';
-      });
-  }
-let milliFormat = (input) => {
-  return input && input.toString()
-      .replace(/(^|\s)\d+/g, (m) => m.replace(/(?=(?!\b)(\d{3})+$)/g, ','))
-}
-console.log(milliFormat(1200000123123.223))
-```
-
-  > 千位分隔符的完整攻略 https://www.tuicool.com/articles/ArQZfui
   
-## 8.如何实现数组的随机排序？
-* 数组乱序 https://github.com/hanzichi/underscore-analysis/issues/15
+  > var、let、const 区别？ https://www.jianshu.com/p/4e9cd99ecbf5
 
-## 9.Javascript如何实现继承？10.JavaScript继承的几种实现方式？ [基础]
- * JS继承的实现方式 http://www.cnblogs.com/humin/p/4556820.html
+* 43.箭头函数，解构赋值，字符串模版，扩展符  [基础]
 
-## 11.javascript创建对象的几种方式？ [基础]
-* 1、对象字面量的方式
-  ```javascript
-  person={firstname:"Mark",lastname:"Yun",age:25,eyecolor:"black"};
-  ```
-* 2、用function来模拟无参的构造函数
-  ```javascript
-  function Person(){}
-  var person=new Person();//定义一个function，如果使用new"实例化",该function可以看作是一个Class
-  person.name="Mark";
-  person.age="25";
-  person.work=function(){
-    alert(person.name+" hello...");
-  }
-  person.work();
-  ```
- * 3、用function来模拟参构造函数来实现（用this关键字定义构造的上下文属性）
-  ```javascript
-  function Pet(name,age,hobby){
-     this.name=name;//this作用域：当前对象
-     this.age=age;
-     this.hobby=hobby;
-     this.eat=function(){
-        alert("我叫"+this.name+",我喜欢"+this.hobby+",是个程序员");
-     }
-  }
-  var maidou =new Pet("麦兜",25,"coding");//实例化、创建对象
-  maidou.eat();//调用eat方法
-  ```
- * 4、用工厂方式来创建（内置对象）
-   ```javascript
-   var wcDog =new Object();
-   wcDog.name="旺财";
-   wcDog.age=3;
-   wcDog.work=function(){
-     alert("我是"+wcDog.name+",汪汪汪......");
-   }
-   wcDog.work();
-   ```
- * 5、用原型方式来创建
-  ```javascript
-  function Dog(){ }
-   Dog.prototype.name="旺财";
-   Dog.prototype.eat=function(){
-    alert(this.name+"是个吃货");
-   }
-   var wangcai =new Dog();
-   wangcai.eat();
-   ```
- * 6、用混合方式来创建
-  ```javascript
-  function Car(name,price){
-    this.name=name;
-    this.price=price;
-  }
-   Car.prototype.sell=function(){
-     alert("我是"+this.name+"，我现在卖"+this.price+"万元");
-    }
-  var camry =new Car("凯美瑞",27);
-  camry.sell(); 
-  ```
+  > ECMAScript 6 入门 http://es6.ruanyifeng.com/
 
-## 12.Javascript作用链域? [基础]
-* 函数创建时会建立一个预先包含全局变量对象的作用域链（保存在[[scope]]属性中），当函数被调用时，会创建一个当前活动变量和包含环境变量对象的集合，这就是执行环境的作用域链，它的开始是当前的活动对象，然后是包含环境中的变量对象，直到全局环境。（标识符所在的位置越深，访问速度越慢，因此尽量少使用全局变量。） 
-## 14.eval是做什么的？
-* 把字符串解析成JS代码并运行；
+* 44.What is the definition of a higher-order function?  [进阶]
+  + 《JavaScript设计模式与开发实践》3.2 高阶函数
+  
+  > JavaScript高阶函数的应用 https://segmentfault.com/a/1190000012008266
 
-## 15.什么是window对象? 什么是document对象? [基础]
- * window对象--代表浏览器中的一个打开的窗口或者框架，window对象会在<body>或者<frameset> 每次出现时被自动创建，在客户端JavaScript中，Window对象是全局对象
- * document对象--代表整个HTML文档，可以用来访问页面中的所有元素。每一个载入浏览器的HTML文档都会成为document对象。document对象使我们可以从脚本中对HTML页面中的所有元素进行访问。
-
-## 17.写一个通用的事件侦听器函数。 [基础]
-* http://www.cnblogs.com/isaboy/p/eventJavascript.html
-* http://www.haorooms.com/post/js_EventUtil
-
-## 18.["1", "2", "3"].map(parseInt) 答案是多少？
- * [1, NaN, NaN]
-
-## 19.事件是？IE与火狐的事件机制有什么区别？ 如何阻止冒泡？ [基础]
-* IE是事件冒泡、Firefox同时支持两种事件模型，也就是：捕获型事件和冒泡型事件；
- * ev.stopPropagation();（旧ie的方法 ev.cancelBubble = true;）
-
-~~## 20.什么是闭包（closure），为什么要用它？~~
-~~## 21.javascript 代码中的"use strict";是什么意思 ? 使用它区别是什么？~~
-
-## 22.如何判断一个对象是否属于某个类？ [基础]
-* obj instanceof func, obj.constructor === func, func.prototype.isPrototypeOf(obj)
-
-## 23.new操作符具体干了什么呢? [基础]
-`var obj  = {};
- obj.__proto__ = Base.prototype;
- Base.call(obj)`
-
-## 23.用原生JavaScript的实现过什么功能吗？
-
-## 24.Javascript中，有一个函数，执行时对象查找时，永远不会去查找原型，这个函数是？ [基础] 
- * Object.prototype.hasOwnProperty()
-
-## 25.JSON 的了解？ [基础]
-> JSON：如果你愿意一层一层剥开我的心，你会发现...这里水很深——深入理解JSON https://segmentfault.com/a/1190000008832185
-
-## 26.能解释一下这段代码的意思吗？
-```javascript
-[].forEach.call($$("*"),function(a){a.style.outline="1px solid #"+(~~(Math.random()*(1<<24))).toString(16)}) 
-```
-* $$: 等价querySelectorAll() 或 document.all(非正式)
-* ~~：等价Math.floor 或 parseInt
-* 1<<24: 等价 1000000000000000000000000 2^24
-> 从一行代码里面学点JavaScript http://www.html-js.com/article/2315
-
-## 27.JS延迟加载的方式有哪些（异步加载JS的方式有哪些？）？
- * defer和async、动态创建DOM方式（用得最多）、按需异步载入js
-
- > Javascript 异步加载详解 http://www.cnblogs.com/tiwlin/archive/2011/12/26/2302554.html
-
-~~## 28.Ajax 是什么? 如何创建一个Ajax~~
-
-## 29.Ajax解决浏览器缓存问题？
-  * 1、在ajax发送请求前加上 anyAjaxObj.setRequestHeader("If-Modified-Since","0")。
-  * 2、在ajax发送请求前加上 anyAjaxObj.setRequestHeader("Cache-Control","no-cache")。
-  * 3、在URL后面加上一个随机数： "fresh=" + Math.random(); 或 "nowtime=" + new Date().getTime();。
-
-~~## 30.同步和异步的区别?~~  ~~## 31.如何解决跨域问题?~~
-
-## 32.页面编码和被请求的资源编码如果不一致如何处理？ 
-## 33.服务器代理转发时，该如何处理cookie？
-* HTTP 代理如何正确处理 Cookie https://www.ibm.com/developerworks/cn/java/j-cookie/index.html
-
-## 34.模块化开发怎么做？ 35.AMD（Modules/Asynchronous-Definition）、CMD（Common Module Definition）规范区别？
-> 详解JavaScript模块化开发 https://segmentfault.com/a/1190000000733959
-> http://www.ruanyifeng.com/blog/2012/10/javascript_module.html
-
-## 36.requireJS的核心原理是什么？（如何动态加载的？如何避免多次加载的？如何 缓存的？）
-> requirejs的用法和原理分析 https://github.com/HRFE/blog/issues/10
-
-## 37.JS模块加载器的轮子怎么造，也就是如何实现一个模块加载器？
-> 如何实现一个异步模块加载器--以requireJS为例 https://github.com/youngwind/blog/issues/98
-> AMD加载器分析与实现 https://github.com/creeperyang/blog/issues/17
-> 如何实现一个 CMD 模块加载器 http://annn.me/how-to-realize-cmd-loader/
-
-## 38.谈一谈你对ECMAScript6的了解？ [基础]
-## 39.ECMAScript6 怎么写class么，为什么会出现class这种东西? [基础]
-## 40..call() 和 .apply() 的区别？ [基础]
-
-## 41.数组和对象有哪些原生方法，列举一下？ [基础]
-> https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Object
-
-## 42.JS怎么实现一个类，怎么实例化这个类？ [基础]
-> http://www.ruanyifeng.com/blog/2012/07/three_ways_to_define_a_javascript_class.html
-
-~~## 43.JavaScript中的作用域与变量声明提升？~~
-
-## 44.如何编写高性能的Javascript？
-
-> 编写高性能的Javascript http://www.alloyteam.com/2012/11/performance-writing-efficient-javascript/
-> 吹毛求疵的追求优雅高性能JavaScript https://github.com/jawil/blog/issues/2
-
-## 45.那些操作会造成内存泄漏？
-> 4种JavaScript内存泄漏浅析及如何用谷歌工具查内存泄露 https://github.com/wengjq/Blog/issues/1
-> 4 Types of Memory Leaks in JavaScript and How to Get Rid Of Them https://mp.weixin.qq.com/s/MCmlbI2Z5TAvkCgpqDN4iA
-
-## 46.如何判断当前脚本运行在浏览器还是node环境中？
-* typeof global == 'object' && global.global === global
-
-## 48.把 Script 标签放在页面的最底部的body封闭之前 和封闭之后有什么区别？浏览器会如何解析它们？
-
-## 49.移动端的点击事件的有延迟，时间是多久，为什么会有？ 怎么解决这个延时？
-> 300 毫秒点击延迟的来龙去脉 https://thx.github.io/mobile/300ms-click-delay
-
-## 51.Underscore 对哪些 JS 原生对象进行了扩展以及提供了哪些好用的函数方法？
-## 53.解释一下 Backbone 的 MVC 实现方式？
-## 54.什么是“前端路由”?什么时候适合使用“前端路由”? “前端路由”有哪些优点和缺点?
-> https://blog.csdn.net/crystal6918/article/details/77432004
-
-## 56.前端templating(Mustache, underscore, handlebars)是干嘛的, 怎么用?
-> http://blog.gejiawen.com/2015/04/08/talk-about-fontend-templates/
-
-## 58.检测浏览器版本版本有哪些方式？  [基础]
-> https://segmentfault.com/a/1190000007640795
-
-## 59.我们给一个dom同时绑定两个点击事件，一个用捕获，一个用冒泡。会执行几次事件，会先执行冒泡还是捕获？
-* 绑定在被点击元素的事件是按照代码顺序发生，其他元素通过冒泡或者捕获“感知”的事件，按照W3C的标准，先发生捕获事件，后发生冒泡事件。所有事件的顺序是：其他元素捕获阶段事件 -> 本元素代码顺序事件 -> 其他元素冒泡阶段事件 。
-
-> https://blog.csdn.net/qiqingjin/article/details/51387217
-
-## 60.使用JS实现获取文件扩展名？
->`function getFileExtension(filename) {
-    return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
-  }`
-* '>>>'把数字转换成无无符号整数
-> [译]如何更有效的获取文件扩展名 https://segmentfault.com/a/1190000004993946
-
-## 61.Webpack热更新实现原理?
-> https://zhuanlan.zhihu.com/p/30623057
-
-## 62.请介绍一下JS之事件节流？什么是JS的函数防抖？ 
-> JavaScript 函数节流和函数去抖应用场景辨析  https://github.com/hanzichi/underscore-analysis/issues/20
-> underscore 函数去抖的实现  https://github.com/hanzichi/underscore-analysis/issues/21
-> underscore 函数节流的实现 https://github.com/hanzichi/underscore-analysis/issues/22
-
-## 63.Object.is() 与原来的比较操作符“ ===”、“ ==”的区别？
-* Object.is: Object.is(-0, +0) === false, Object.is(NaN, NaN) === true
-* -0 === +0, NaN !== NaN; -0 == +0, NaN != NaN 
-> 详解Object.is()与比较操作符===、== https://www.jianshu.com/p/a76dc7e0c5a1
-
-## 64.ES6是如何实现编译成ES5的？
-> Babel是如何读懂JS代码的 https://zhuanlan.zhihu.com/p/27289600
-> 深入理解Babel原理及其使用，babel把ES6转成ES5的原理是什么？ http://www.fly63.com/article/detial/197
-
-## 65.DOM操作——怎样添加、移除、移动、复制、创建和查找节点。 [基础]
-> 深入浅出DOM基础——《DOM探索之基础详解篇》学习笔记 https://github.com/jawil/blog/issues/9
+* 45.Can you give an example of a curry function and why this syntax offers an advantage? [进阶]
 
  > JavaScript专题之函数柯里化 https://github.com/mqyqingfeng/Blog/issues/42
 
-> https://github.com/paddingme/Front-end-Web-Development-Interview-Question/blob/master/questions/7.md
-> 答案： https://github.com/infp/Front-end-Interview/blob/master/faq/javascript.md
-https://github.com/sunyongjian/blog/issues/23
-http://andrewyan.logdown.com/posts/643979-front-end-job-interview-questions
-我遇到的前端面试题2017 https://segmentfault.com/a/1190000011091907
+* 46.请实现一个遍历至 100 的 for loop 循环，在能被 3 整除时输出 "fizz"，在能被 5 整除时输出 "buzz"，在能同时被 3 和 5 整除时输出 "fizzbuzz"。 [基础]
+ ```javascript
+ for(var i = 0; i <= 100; i++) {
+   if(i % 3 === 0) console.log( i + 'fizz')
+   if(i % 5 === 0) console.log(i + 'buzz')
+   if(i % 3 === 0 && i % 5 === 0) console.log(i + 'fizzbuzz')
+ }
+ ```
+
+* 47.What are the pros and cons of using Promises instead of callbacks?  [进阶]
+ + 地狱回掉
+ + 信任
+ + 错误处理
+
+> Promise原理浅析 http://imweb.io/topic/565af932bb6a753a136242b0
+> 解读Promise内部实现原理 https://juejin.im/post/5a30193051882503dc53af3c#heading-0
+
+
+## 参考资料
+> JS 相关问题 https://github.com/h5bp/Front-end-Developer-Interview-Questions/blob/master/Translations/Chinese/README.md#js-questions
+> JS Questions https://github.com/h5bp/Front-end-Developer-Interview-Questions/blob/master/questions/javascript-questions.md <br>
+> 答案： https://github.com/infp/Front-end-Interview/blob/master/faq/javascript.md <br>
+> JS面试题答案整理 https://github.com/sunyongjian/blog/issues/23 <br>
+> 答案：Front-end Job Interview Questions http://andrewyan.logdown.com/posts/643979-front-end-job-interview-questions <br>
+
