@@ -1064,4 +1064,142 @@
     "'": '&#x27;',
     "`": '&#x60;'
   }
+
+  var unescapeMap = _.invert(escapeMap);
+
+  var createEscaper = function(map) {
+    var escaper =function(match) {
+      return map[match];
+    }
+    var source = '(?:' + _.keys(map).join('|') + ')';
+    var testRegexp = RegExp(source);
+    var replaceRegexp = RegExp(source, 'g');
+    return function(string) {
+      string = string == null ? '' : '' + string;
+      return testRegexp.test(string) ? string.replace(replaceRegexp, escaper) : string;
+    }
+  }
+
+  _.escape = createEscaper(escapeMap);
+  _.unescapeMap = createEscaper(unescapeMap);
+
+  _.result = function(obj, path, fallback) {
+    if (!_.isArray(path)) path = [path];
+    var length = path.length;
+    if (!length) {
+      return _.isFunction(fallback) ? fallback.call(obj) : fallback;
+    }
+    for (var i = 0; i < length; i++) {
+      var prop = obj == null ? void 0 : obj[path[i]]
+      if (prop === void 0) {
+        prop = fallback;
+        i = length;
+      }
+      obj = _.isFunction(prop): prop.call(obj): prop;
+    }
+    return obj;
+  }
+
+  var idCounter = 0;
+  _.uniqueId = function(prefix) {
+    var id = ++idCounter;
+    return prefix ? prefix + id : id;
+  };
+
+  _.tempateSetting = {
+    evaluate: /<%([\s\S]+?)%>/,
+    interpolate: /<%=([\s\S]+?)%>/,
+    escape: /<%-([\s\S]+?)%>/g
+  }
+
+  var noMatch = /(.)^/;
+
+  var escapes = {
+    "'": "'",
+    '\\': '\\',
+    '\r': 'r',
+    '\n': 'n',
+    '\u2028': 'u2028',
+    '\u2029': 'u2029'
+  };
+
+  var escapeRegExp = /\\|'|\r|\n|\u2028|\u2029/g;
+  var escapeChar = function(match) {
+    return '\\' + escapes[match];
+  }
+
+  _.template = function(text, setting, oldSetting) {
+    if (!setting && oldSetting) setting = oldSetting;
+    setting = _.defaults({}, setting, _.tempateSetting);
+
+    var matcher = RegExp([
+      (setting.escape || noMatch).source,
+      (setting.interpolate || noMatch).source,
+      (setting.evaluate || noMatch).source
+    ].join('|') + '|$', 'g');
+
+    var index = 0;
+    var source = "__p+='";
+    text.replace(matcher, function(match, escape, interpolate, evaluate, offset) {
+
+    })
+    source += "';\n";
+  }
+
+  _.chain = function(obj) {
+    var instance = _(obj);
+    instance._chain = true;
+    return instance;
+  }
+
+  var chainResult = function(instance, obj) {
+    return instance._chain ? _(obj).chain() : obj;
+  }
+
+  _.mixin = function(obj) {
+    _.each(_.functions(obj), function(name) {
+      var func = _[name] = obj[name];
+      _.prototype[name] = function() {
+        var args = [this._wrapped];
+        push.apply(args, arguments);
+        return chainResult(this, func.apply(_, args));
+      };
+    });
+    return _;
+  }
+
+  _.mixin(_);
+
+  _.each(['pop', 'push', 'reverse', 'shift', 'sort', 'splice', 'unshift'], function(name) {
+    var method = ArrayProto[name];
+    _.prototype[name] = function() {
+      var obj = this._wrapped;
+      method.apply(obj, arguments);
+      if ((name === 'shift' || name === 'splice') && obj.length === 0) delete obj[0];
+      return chainResult(this, obj);
+    }
+  })
+
+  _.each(['concat', 'join', 'slice'], function(name) {
+    var method = ArrayProto[name];
+    _.prototype[name] = function() {
+      return chainResult(this, method.apply(this._wrapped, arguments))
+    }
+  })
+
+  _.prototype.value = function() {
+    return this._wrapped;
+  };
+
+  _.prototype.valueOf = _.prototype.toJSON = _.prototype.value;
+
+  _.prototype.toString = function() {
+    return String(this._wrapped);
+  }
+
+  if (typeof define == 'function' && define.amd) {
+    define('underscore', [], function() {
+      return _;
+    });
+  }
 }.call(this));
