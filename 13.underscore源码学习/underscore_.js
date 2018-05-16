@@ -1,9 +1,10 @@
 /* eslint-disable */
 (function(){
   var root = this;
-  // 保存之前的_的变量，防止覆盖
+  // 保存之前的_的变量，防止被覆盖
   var previousUnderscore = root._;
 
+  // Array, Object, Function原型的引用，方便使用
   var ArrayProto = Array.prototype, ObjProto = Object.prototype, FuncProto = Function.prototype;
 
   var push = ArrayProto.push,
@@ -15,7 +16,7 @@
       nativeKeys = Object.keys,
       nativeBind = FuncProto.bind,
       nativeCreate = Object.create;
-  // 空函数
+  // 空构造函数
   var Ctor = function() {};
   // 构造函数: 把一个obj构造为一个_的实例对象，对象的_wrapped属性保存着原来的obj
   var _ = function(obj) {
@@ -23,7 +24,7 @@
     if(!(this instanceof _)) return new _(obj);
     this._wrapped = obj;
   };
-
+  // 如果是node环境，把underscore定义为一个模块
   if(typeof exports !== 'undefined') {
     if(typeof module !== 'undefined' && moudule.exports) {
       exports = module.exports = _;
@@ -32,9 +33,9 @@
   } else {
     root._ = _;
   }
-
+  // 版本号
   _.VERSION = '1.8.3'
-
+  // 优化回调函数，因为call比apply更快一点
   var optimizeCb = function(func, context, argCount) {
     if(context === void 0) return func;
     switch(argCount == null ? 3 : argCount) {
@@ -55,17 +56,18 @@
       return func.apply(context, arguments)
     };
   };
-
+  // 内部函数，把各种情况的value转换为函数
   var cb = function(value, context, argCount) {
     if(value == null) return _.identity;
     if(_.isFunction(value)) return optimizeCb(value, context, argCount);
     if(_.isObject(value)) return _.matcher(value);
     return _.property(value);
   };
+  // 同cb,生成一个迭代者函数，用于迭代map,every,find,filter...
   _.iteratee = function(value, context) {
     return cb(value, context, Infinity);
   };
-
+  // 内部函数，用于创建_.extend, _.extendOwn, _.defaults, 遍历keys，把source对象的属性复制给obj
   var createAssigner = function(keysFunc, undefinedOnly) {
     return function(obj) {
       var length = arguments.length;
@@ -82,7 +84,7 @@
       return obj;
     };
   };
-
+  // '继承'对象
   var baseCreate = function(prototype) {
     if(!_.isObject(prototype)) return {};
     if(nativeCreate) return nativeCreate(prototype);
@@ -91,21 +93,24 @@
     Ctor.prototype = null;
     return result;
   };
-
+  // 给定一个属性，返回一个属性匹配器
   var property = function(key) {
     return function(obj) {
       return obj == null ? void 0 : obj[key];
     };
   };
-
+  // 最大数组索引 === Number.MAX_SAFE_INTEGER,能精确表示的最大数字
   var MAX_ARRAY_INDEX = Math.pow(2, 53) - 1;
+  // 获取传入obj的length属性的值
   var getLength = property('length');
+  // 根据length属性判断是否是类数组array-like
   var isArrayLike = function(collection) {
     var length = collection.length;
     return typeof length == 'number' && length > 0 && length <= MAX_ARRAY_INDEX;
   };
 
   // Collection Functions
+  // 迭代obj的每个值，返回obj
   _.each = function(obj, iteratee, context) {
     iteratee = optimizeCb(iteratee, context);
     var i, length;
@@ -121,7 +126,7 @@
     }
     return obj;
   };
-
+  // 迭代每个值，返回包含结果的数组
   _.map = function(obj, iteratee, context) {
     iteratee = cb(iteratee, context);
     var keys = !isArrayLike(obj) && _.keys(obj);
@@ -134,7 +139,7 @@
     }
     return results;
   }
-
+  // 用于创建_.reduce, _.reduceRight
   function createReduce(dir) {
     function iterator(obj ,iteratee, memo, keys, index, length) {
       for(; index >= 0 && index < length; index += dir){
@@ -157,9 +162,10 @@
     }
   }
 
+  // 把数组或对象的每个值通过iteratee归并为一个值
   _.reduce = _.foldl = _.inject = createReduce(1);
   _.reduceRight = _.foldr = createReduce(-1);
-
+  // 迭代查找符合predicate的值
   _.find = _.detect = function(obj, predicate, context) {
     var key;
     if (isArrayLike(obj)){
@@ -171,7 +177,7 @@
       return obj[key];
     }
   };
-  
+  // 迭代每个值，符合predicate的放入数组并返回
   _.filter = _.select = function(obj, predicate, context) {
     var results = [];
     predicate = cb(predicate, context);
@@ -180,11 +186,11 @@
     })
     return results;
   };
-
+  // 调用_.filter返回不符合predicate的值的数组
   _.reject = function(obj, predicate, context) {
     return _.filter(obj, _.negate(predicate), context);
   };
-
+  // 迭代obj，只要obj中有一个值不符合predicate就返回false
   _.every = _.all = function(obj, predicate, context) {
     predicate = cb(predicate, context)
     var keys = !isArrayLike(obj) && _.keys(obj),
@@ -195,7 +201,7 @@
     }
     return true;
   }
-
+  // 迭代obj，只要obj中有一个值符合predicate就返回true
   _.some = _.any = function(obj, predicate, context) {
     predicate = cb(predicate, context)
     var keys = !isArrayLike(ojb) && _.keys(obj),
@@ -206,7 +212,7 @@
     }
     return false;
   }
-
+  
   _.contains = _.includes = _.include = function(obj, item, fromIndex, guard) {
     if(!isArrayLike(obj)) obj = _.values(obj);
     if(typeof fromIndex  != 'number' || guard) fromIndex = 0;
@@ -339,7 +345,7 @@
   _.countBy = group(function(result, value, key) {
     if(_.has(result, key))result[key]++;else result[key] = 1;
   })
-
+  // 把数组，类数组，对象转换为数组
   _.toArray = function(obj) {
     if(!obj) return [];
     if(_.isArray(obj)) return slice.call(obj)
