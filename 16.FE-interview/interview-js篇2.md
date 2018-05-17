@@ -47,7 +47,13 @@ console.log(milliFormat(1200000123123.223))
 * 数组乱序 https://github.com/hanzichi/underscore-analysis/issues/15
 
 ## 9.Javascript如何实现继承？10.JavaScript继承的几种实现方式？ [基础]
+ * 原型链继承
+ * 构造函数继承
+ * 组合继承（原型链+构造函数）
+ * 寄生组合继承
  * JS继承的实现方式 http://www.cnblogs.com/humin/p/4556820.html
+
+> Javascript高级程序设计第三版. 6.3 继承 
 
 ## 11.javascript创建对象的几种方式？ [基础]
 * 1、对象字面量的方式
@@ -122,10 +128,10 @@ console.log(milliFormat(1200000123123.223))
 
 ## 17.写一个通用的事件侦听器函数。 [基础]
 * http://www.cnblogs.com/isaboy/p/eventJavascript.html
-* http://www.haorooms.com/post/js_EventUtil
+* [EventUtil](./code/EventUtil.js)
 
 ## 18.["1", "2", "3"].map(parseInt) 答案是多少？
- * [1, NaN, NaN]
+ * [1, NaN, NaN], 相当于["1", "2", "3"].map(parseInt(value, index)), index为0时，用10进制解析
 
 ## 19.事件是？IE与火狐的事件机制有什么区别？ 如何阻止冒泡？ [基础]
 * IE是事件冒泡、Firefox同时支持两种事件模型，也就是：捕获型事件和冒泡型事件；
@@ -135,12 +141,14 @@ console.log(milliFormat(1200000123123.223))
 ~~## 21.javascript 代码中的"use strict";是什么意思 ? 使用它区别是什么？~~
 
 ## 22.如何判断一个对象是否属于某个类？ [基础]
-* obj instanceof func, obj.constructor === func, func.prototype.isPrototypeOf(obj)
+* obj instanceof Func, obj.constructor === Func, Func.prototype.isPrototypeOf(obj)
 
 ## 23.new操作符具体干了什么呢? [基础]
-`var obj  = {};
- obj.__proto__ = Base.prototype;
- Base.call(obj)`
+```javascript
+  var obj  = {};
+  obj.__proto__ = Base.prototype;
+  Base.call(obj)
+```
 
 ## 23.用原生JavaScript的实现过什么功能吗？
 
@@ -160,7 +168,7 @@ console.log(milliFormat(1200000123123.223))
 > 从一行代码里面学点JavaScript http://www.html-js.com/article/2315
 
 ## 27.JS延迟加载的方式有哪些（异步加载JS的方式有哪些？）？
- * defer和async、动态创建DOM方式（用得最多）、按需异步载入js
+ * defer和async、动态创建DOM方式（用得最多）、模块化
 
  > Javascript 异步加载详解 http://www.cnblogs.com/tiwlin/archive/2011/12/26/2302554.html
 

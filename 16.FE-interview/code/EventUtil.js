@@ -67,7 +67,7 @@ var EventUtil = {
         if (event.wheelDelta){
             return (client.engine.opera && client.engine.opera < 9.5 ? -event.wheelDelta : event.wheelDelta);
         } else {
-            return -event.detail * 40;
+            return -event.detail * 40; // firefox
         }
     },
     
