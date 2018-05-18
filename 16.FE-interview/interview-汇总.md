@@ -23,18 +23,8 @@
 ## JavaScript题目（附解析答案）
 > http://mp.weixin.qq.com/s?__biz=MjM5OTk4MDE2MA==&mid=2655112244&idx=2&sn=f5e04dea37e97aa5b4ef5f32bc77c3ef&mpshare=1&scene=1&srcid=0603He2pNVBLqNnj2OPRDawr#rd
 
-## Coding Questions 
-> https://github.com/utatti/Front-end-Developer-Interview-Questions-And-Answers/blob/master/answers/coding-questions.md
-
 ## 一些JS题目的解答(考察作用域和变量提升、this指向)
 > https://github.com/xufei/blog/blob/master/posts/2013-12-02-%E4%B8%80%E4%BA%9BJS%E9%A2%98%E7%9B%AE%E7%9A%84%E8%A7%A3%E7%AD%94.md
-
-## 前端开发面试题
-
-> Front-end-Developer-Interview-Questions https://github.com/h5bp/Front-end-Developer-Interview-Questions
-> 前端开发面试题 https://github.com/markyun/My-blog/tree/master/Front-end-Developer-Questions/Questions-and-Answers √
-> front-end-face-questions https://github.com/dolymood/front-end-face-questions √
-> 收集的前端面试题和答案 https://github.com/qiu-deqing/FE-interview  √
 
 ## 12个HTML和CSS必须知道的重点难点问题 
 > https://segmentfault.com/a/1190000013375700
