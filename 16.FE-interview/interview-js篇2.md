@@ -165,6 +165,7 @@ console.log(milliFormat(1200000123123.223))
 * $$: 等价querySelectorAll() 或 document.all(非正式)
 * ~~：等价Math.floor 或 parseInt
 * 1<<24: 等价 1000000000000000000000000 2^24
+
 > 从一行代码里面学点JavaScript http://www.html-js.com/article/2315
 
 ## 27.JS延迟加载的方式有哪些（异步加载JS的方式有哪些？）？
@@ -180,19 +181,19 @@ console.log(milliFormat(1200000123123.223))
   * 3、在URL后面加上一个随机数： "fresh=" + Math.random(); 或 "nowtime=" + new Date().getTime();。
 
 ~~## 30.同步和异步的区别?~~  ~~## 31.如何解决跨域问题?~~
+~~## 32.页面编码和被请求的资源编码如果不一致如何处理？~~ 
 
-## 32.页面编码和被请求的资源编码如果不一致如何处理？ 
 ## 33.服务器代理转发时，该如何处理cookie？
 * HTTP 代理如何正确处理 Cookie https://www.ibm.com/developerworks/cn/java/j-cookie/index.html
 
-## 34.模块化开发怎么做？ 35.AMD（Modules/Asynchronous-Definition）、CMD（Common Module Definition）规范区别？
+## 34.模块化开发怎么做？ 35.AMD（Modules/Asynchronous-Definition）、CMD（Common Module Definition）规范区别？ [基础]
 > 详解JavaScript模块化开发 https://segmentfault.com/a/1190000000733959
 > http://www.ruanyifeng.com/blog/2012/10/javascript_module.html
 
-## 36.requireJS的核心原理是什么？（如何动态加载的？如何避免多次加载的？如何 缓存的？）
+## 36.requireJS的核心原理是什么？（如何动态加载的？如何避免多次加载的？如何 缓存的？）[进阶]
 > requirejs的用法和原理分析 https://github.com/HRFE/blog/issues/10
 
-## 37.JS模块加载器的轮子怎么造，也就是如何实现一个模块加载器？
+## 37.JS模块加载器的轮子怎么造，也就是如何实现一个模块加载器？ [进阶]
 > 如何实现一个异步模块加载器--以requireJS为例 https://github.com/youngwind/blog/issues/98
 > AMD加载器分析与实现 https://github.com/creeperyang/blog/issues/17
 > 如何实现一个 CMD 模块加载器 http://annn.me/how-to-realize-cmd-loader/
@@ -209,60 +210,62 @@ console.log(milliFormat(1200000123123.223))
 
 ~~## 43.JavaScript中的作用域与变量声明提升？~~
 
-## 44.如何编写高性能的Javascript？
-
-> 编写高性能的Javascript http://www.alloyteam.com/2012/11/performance-writing-efficient-javascript/
+## 44.如何编写高性能的Javascript？ [进阶]
+> 雅虎前端优化的35条军规 http://www.cnblogs.com/xianyulaodi/p/5755079.html <br>
+> 编写高性能的Javascript http://www.alloyteam.com/2012/11/performance-writing-efficient-javascript/ <br>
 > 吹毛求疵的追求优雅高性能JavaScript https://github.com/jawil/blog/issues/2
 
-## 45.那些操作会造成内存泄漏？
+## 45.哪些操作会造成内存泄漏？ [进阶]
 > 4种JavaScript内存泄漏浅析及如何用谷歌工具查内存泄露 https://github.com/wengjq/Blog/issues/1
 > 4 Types of Memory Leaks in JavaScript and How to Get Rid Of Them https://mp.weixin.qq.com/s/MCmlbI2Z5TAvkCgpqDN4iA
 
-## 46.如何判断当前脚本运行在浏览器还是node环境中？
+## 46.如何判断当前脚本运行在浏览器还是node环境中？ [基础]
 * typeof global == 'object' && global.global === global
 
-## 48.把 Script 标签放在页面的最底部的body封闭之前 和封闭之后有什么区别？浏览器会如何解析它们？
+## 48.把 Script 标签放在页面的最底部的body封闭之前 和封闭之后有什么区别？浏览器会如何解析它们？ [基础]
 
-## 49.移动端的点击事件的有延迟，时间是多久，为什么会有？ 怎么解决这个延时？
+## 49.移动端的点击事件的有延迟，时间是多久，为什么会有？ 怎么解决这个延时？ [基础]
 > 300 毫秒点击延迟的来龙去脉 https://thx.github.io/mobile/300ms-click-delay
 
-## 51.Underscore 对哪些 JS 原生对象进行了扩展以及提供了哪些好用的函数方法？
-## 53.解释一下 Backbone 的 MVC 实现方式？
-## 54.什么是“前端路由”?什么时候适合使用“前端路由”? “前端路由”有哪些优点和缺点?
+## 51.Underscore 对哪些 JS 原生对象进行了扩展以及提供了哪些好用的函数方法？  [进阶]
+
+~~## 53.解释一下 Backbone 的 MVC 实现方式？~~
+
+## 54.什么是“前端路由”?什么时候适合使用“前端路由”? “前端路由”有哪些优点和缺点? [基础]
 > 什么是前端路由 http://www.cnblogs.com/yuqing6/p/6731980.html
 
-## 56.前端templating(Mustache, underscore, handlebars)是干嘛的, 怎么用?
-> http://blog.gejiawen.com/2015/04/08/talk-about-fontend-templates/
+## 56.前端templating(Mustache, underscore, handlebars)是干嘛的, 怎么用? 
+> 浅谈前端模版 http://blog.gejiawen.com/2015/04/08/talk-about-fontend-templates/
 
 ## 58.检测浏览器版本版本有哪些方式？  [基础]
-> https://segmentfault.com/a/1190000007640795
+> JS 获得浏览器类型和版本 https://segmentfault.com/a/1190000007640795
 
-## 59.我们给一个dom同时绑定两个点击事件，一个用捕获，一个用冒泡。会执行几次事件，会先执行冒泡还是捕获？
+## 59.我们给一个dom同时绑定两个点击事件，一个用捕获，一个用冒泡。会执行几次事件，会先执行冒泡还是捕获？ [基础]
 * 绑定在被点击元素的事件是按照代码顺序发生，其他元素通过冒泡或者捕获“感知”的事件，按照W3C的标准，先发生捕获事件，后发生冒泡事件。所有事件的顺序是：其他元素捕获阶段事件 -> 本元素代码顺序事件 -> 其他元素冒泡阶段事件 。
 
 > https://blog.csdn.net/qiqingjin/article/details/51387217
 
-## 60.使用JS实现获取文件扩展名？
+## 60.使用JS实现获取文件扩展名？ [基础]
 >`function getFileExtension(filename) {
     return filename.slice((filename.lastIndexOf(".") - 1 >>> 0) + 2);
   }`
 * '>>>'把数字转换成无无符号整数
 > [译]如何更有效的获取文件扩展名 https://segmentfault.com/a/1190000004993946
 
-## 61.Webpack热更新实现原理?
+## 61.Webpack热更新实现原理? [进阶]
 > https://zhuanlan.zhihu.com/p/30623057
 
-## 62.请介绍一下JS之事件节流？什么是JS的函数防抖？ 
+## 62.请介绍一下JS之事件节流？什么是JS的函数防抖？  [进阶]
 > JavaScript 函数节流和函数去抖应用场景辨析  https://github.com/hanzichi/underscore-analysis/issues/20
 > underscore 函数去抖的实现  https://github.com/hanzichi/underscore-analysis/issues/21
 > underscore 函数节流的实现 https://github.com/hanzichi/underscore-analysis/issues/22
 
-## 63.Object.is() 与原来的比较操作符“ ===”、“ ==”的区别？
+## 63.Object.is() 与原来的比较操作符“ ===”、“ ==”的区别？ [基础]
 * Object.is: Object.is(-0, +0) === false, Object.is(NaN, NaN) === true
 * -0 === +0, NaN !== NaN; -0 == +0, NaN != NaN 
 > 详解Object.is()与比较操作符===、== https://www.jianshu.com/p/a76dc7e0c5a1
 
-## 64.ES6是如何实现编译成ES5的？
+## 64.ES6是如何实现编译成ES5的？ [进阶]
 > Babel是如何读懂JS代码的 https://zhuanlan.zhihu.com/p/27289600
 > 深入理解Babel原理及其使用，babel把ES6转成ES5的原理是什么？ http://www.fly63.com/article/detial/197
 
