@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>编程题</title>
+</head>
+<body>
+  <input type="text" id="id1">
+  <input type="checkbox" name="checkbox1">
+  <input type="checkbox" name="checkbox2">
+  <div id="div1"></div>
+  <ul id="test">
+    <li>这是第一条</li>
+    <li>这是第二条</li>
+    <li>这是第三条</li>
+  </ul>
+
+  <script>
+    var log = console.log.bind(console)
+    // 如何判断某变量是否为数组数据类型？
+    var arr = []
+    Object.prototype.toString.call(arr) === '[Object Array]' // 最靠谱
+    arr instanceof Array
+    arr.constructor === Array
+    Array.prototype.isPrototypeOf(arr)
+    Object.getPrototypeOf(arr) === Array.prototype
+    Array.isArray(arr)
+
+    // 已知ID的Input输入框，希望获取这个输入框的输入值，怎么做？(不使用第三方框架)
+    var id1 = document.getElementById('id1')
+    id1.value = 'test'
+
+    // 希望获取到页面中所有的checkbox怎么做？(不使用第三方框架)
+    console.log(document.querySelector('[type="checkbox"]').checked='checked')
+    var input = document.getElementsByTagName('input')
+    var length = input.length,
+        result = [],
+        item
+    while(length--) {
+      item = input[length]
+      if(item.type === 'checkbox')result.push(item)
+    }
+    console.log(result)
+
+    // 设置一个已知ID的DIV的html内容为xxxx，字体颜色设置为黑色
+    var div1 = document.getElementById('div1')
+    div1.innerText = '我是innerText'
+    div1.innerHTML = 'i am innerHTML'
+    div1.style.color = '#ccc'
+
+    // 当一个DOM节点被点击时候，我们希望能够执行一个函数，应该怎么做？
+    var handler = function() {
+      alert('i am div1')
+    }
+    if (window.addEventListener) {
+      div1.addEventListener('click', handler, false)
+    } else if (window.attachEvent) {
+      div1.attachEvent('onclick', handler)
+    } else {
+      div1.onclick = handler
+    }
+
+    // 什么是Ajax和JSON，它们的优缺点。
+    var http = new XMLHttpRequest()
+    http.open('get', 'https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started', true)
+    // http.setRequestHeader('isFromMP', 'true')
+    http.onreadystatechange = function() {
+      if (http.readyState === 4) {
+        if (http.status >= 200 && http.status < 300 || http.status === 304) {
+          // console.log(http.responseText, http.responseType, http.responseURL)
+        }
+      }
+    }
+    http.send(null)
+    // ajax: 不刷新发送请求的的一种方式，用XMLHttpRequest发送异步请求，用javascript操纵数据和DOM
+    // json: 轻量级数据交换格式，便于阅读和解析，支持复合数据类型
+     
+    //已知有字符串foo="get-element-by-id",写一个function将其转化成驼峰表示法"getElementById"。
+    function convert(msg) {
+      var arr = msg.split('-')
+      for (var i = 0, len = arr.length; i < len; i++) {
+        arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].slice(1)
+      }
+      return arr.join('')
+    }
+    log(convert("get-element-by-id"))
+
+    //13.var numberArray = [3,6,2,4,1,5]; （考察基础API）1) 实现对该数组的倒排，输出[5,1,4,2,6,3] 2) 实现对该数组的降序排列，输出[6,5,4,3,2,1]
+    var numberArray = [3,6,2,4,1,5]
+    log(numberArray.reverse())
+    log(numberArray.sort(function(a,b) { return b - a}))
+
+    // 14.输出今天的日期，以YYYY-MM-DD的方式，比如今天是2014年9月26日，则输出2014-09-26
+    var date = new Date()
+    log(date)
+    var y = date.getFullYear()
+    var m = date.getMonth() + 1
+    m =  m < 10 ? '0' + m  : m
+    var d = date.getDate()
+    d = d < 10 ? '0' + d : d
+    log(y + '-' + m + '-' + d)
+
+    // 15.将字符串”<tr><td>{id}</td><td>{name}</td></tr>”中的{id}替换成10，{name}替换成Tony （使用正则表达式）
+    var str = '<tr><td>{id}</td><td>{$name}</td></tr>'
+    var newStr = str.replace(/{id}/g, '10').replace(/{\$name}/g, 'Tony')
+    log(newStr)
+
+    // 为了保证页面输出安全，我们经常需要对一些特殊的字符进行转义，请写一个函数escapeHtml，将<, >, &, “进行转义
+    var escapeMap = {
+      '<': '&lt;',
+      '>': '&gt;',
+      '&': '&amp;',
+      '"': '&quot;',
+      "'": '&#x27;',
+      '`': '&#x60;'
+    }
+
+    var escapeHtml = function(htmlStr) {
+      // var source = '[<|>|&|\'|\"|\`]'
+      var source = '(?:' + Object.keys(escapeMap).join('|') + ')'
+      var reg = RegExp(source, 'g')
+      return htmlStr.replace(reg, function(match) {
+        return escapeMap[match]
+      })
+    }
+    log(escapeHtml('<html> inner: & \"  \'  \` </html>'))
+
+    // 19.用js实现随机选取10--100之间的10个数字，存入一个数组，并排序。
+    var random = function(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min)
+    }
+    var ranArr = []
+    for (var i = 0; i < 10; i++) {
+      ranArr.push(random(10, 100))
+    }
+    log(ranArr.sort())     
+
+    // 20.把两个数组合并，并删除第二个元素。
+    var arr1 = [1, 2 ,3], arr2 = [4,5,6]
+    var arr3 = arr1.concat(arr2)
+    arr3.splice(1,1)
+    log(arr3)
+
+    // 怎样添加、移除、移动、复制、创建和查找节点（原生JS，实在基础，没细写每一步）
+    // createDocumentFragment createTextNode
+    var div2 = document.createElement('div')
+    var div3 = document.createElement('div')
+    div2.innerHTML = 'div2'
+    div3.innerHTML = 'div3'
+    document.body.insertBefore(div2, div1)
+    // document.body.replaceChild(div3, div1)
+    // document.body.appendChild document.body.removeChild
+    //22.有这样一个URL：http://item.taobao.com/item.htm?a=1&b=2&c=&d=xxx&e，请写一段JS程序提取URL中的各个GET参数(参数名和参数个数不确定)，将其按key-value形式返回到一个json结构中，如{a:'1', b:'2', c:'', d:'xxx', e:undefined}。
+    var q = function(url) {
+      var query = decodeURIComponent(url).split('?')[1]
+      var pairs = query.split('&')
+      if (pairs == '') return {}
+      var result = {}
+      for(var i = 0, length = pairs.length; i < length; i++) {
+        var arr = pairs[i].split('=')
+        result[arr[0]] = arr[1] ? arr[1].replace(/\+/g, ' ') : ''
+      }
+      return result
+    }
+    log(q('http%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fa%3D1%26b%3D2%26c%3D%26d%3Dxxx%26e'))
+
+    // 23.正则表达式构造函数var reg=new RegExp("xxx")与正则表达字面量var reg=//有什么不同？匹配邮箱的正则表达式？
+    var reg = /^[a-zA-Z1-9_-]+@[a-zA-Z1-9_-]+(?:\.[a-zA-Z]{2,4}){1,63}$/
+    log(reg.test('wangliang@163.com.cn'))
+
+    // 24.看下面代码，给出输出结果。
+    for(var i = 1;i <= 3;i++){
+      // (function(i){
+      //   setTimeout(function() {
+      //     log(i + 10)
+      //   })
+      // })(i)
+      // setTimeout((function(i){
+      //   log(i + 100)
+      // })(i), 2000)
+    }
+    // 25.写一个function，清除字符串前后的空格。（兼容所有浏览器）
+    if (!String.prototype.trim) {
+      String.prototype.trim = function() {
+        return this.replace(/^\s+|\s+$/g, '')
+      }
+    }
+    var str = " \t\n test string ".trim()
+    log(str)
+    // 26.Javascript中callee和caller的作用？如果一对兔子每月生一对兔子；一对新生兔，从第二个月起就开始生兔子；假定每对兔子都是一雌一雄，试问一对兔子，第n个月能繁殖成多少对兔子？
+    var cache = {}
+    var func = function(n) {
+      if (cache[n]) return cache[n]
+      return cache[n] = n <= 2 ? n : arguments.callee(n-1) + arguments.callee(n-2)
+    }
+    log(func(10))
+
+    // 1.实现一个函数clone，可以对JavaScript中的5种主要的数据类型（包括Number、String、Object、Array、Boolean）进行值复制
+    var clone = function(obj) {
+      var isObject = Object.prototype.toString.call(obj) === '[object Object]'
+      var isArray = Array.isArray(obj)
+
+      if (isObject) return Object.assign({}, obj)
+      if (isArray) return obj.slice()
+      return obj
+    }
+    var test = function(){ log('cloned') }
+    log(clone(test))
+
+    var deepClone = function(obj) {
+      var isObject = Object.prototype.toString.call(obj) === '[object Object]'
+      var isArray = Array.isArray(obj)
+      var result
+      if (isObject) {
+        result = {}
+        for(var key in obj) {
+          result[key] = deepClone(obj[key])
+        } 
+        return result
+      } else if (isArray) {
+        result = []
+        for (var i = 0, length = obj.length; i < length; i++) {
+          result[i] = deepClone(obj[i])
+        }
+        return result
+      } else {
+        return obj
+      } 
+    }
+    var testObj = {name: 'test', score: [222,333], obj: {hello: 'world'}, date: new Date(), reg: /./ , func: function() {console.log('testObj func')}, nll: null }
+    log(deepClone(testObj))
+
+    // 2.如何消除一个数组里面重复的元素？
+    var arrarr = [1, 2, 3, 3, 4, 4, 5, 5, 6, 1, 9, 3, 25, 4]
+
+    var unique = function(arr) {
+      var result = []
+      for(var i = 0, length = arr.length; i < length; i++) {
+        if(result.indexOf(arr[i]) >= 0) continue
+        result.push(arr[i])  
+      }
+      return result
+    }
+    log(unique(arrarr))
+
+    // 3.小贤是一条可爱的小狗(Dog)，它的叫声很好听(wow)，每次看到主人的时候就会乖乖叫一声(yelp)。从这段描述可以得到以下对象：
+    var dog = {
+      name: '小贤',
+      wow: function() { alert('wow') },
+      yelp: function() { this.wow() }
+    }
+    // 小芒和小贤一样，原来也是一条可爱的小狗，可是突然有一天疯了(MadDog)，一看到人就会每隔半秒叫一声(wow)地不停叫唤(yelp)。请根据描述，按示例的形式用代码来实
+    var madDog = Object.create(dog)
+    madDog.name = '小芒'
+    madDog.yelp = function() {
+      var self = this
+      setInterval(function() {
+        self.wow
+      }, 500)
+    }
+    // madDog.yelp()
+    
+    // 4.下面这个ul，如何点击每一列的时候alert其index?（闭包）
+    var ul = document.getElementById('test')
+    var li = ul.getElementsByTagName('li')
+    var handler2 = function(event) {
+      var len = li.length
+      while(len >= 0) {
+        len--
+        if(event.target === li[len]) alert(len)
+      }
+    }
+    // ul.addEventListener('click', handler2, false)
+    // 方法二
+    
+    for (var i = 0, len = li.length; i < len; i++) {
+      li[i].onclick = (function(i) {
+        return function() {
+          alert(i)
+        }
+      })(i)
+    }
+
+    // 5.编写一个JavaScript函数，输入指定类型的选择器(仅需支持id，class，tagName三种简单CSS选择器，无需兼容组合选择器)可以返回匹配的DOM节点，需考虑浏览器兼容性和性能。
+    var querySelector = document.querySelectorAll.bind(document) || function(selector) {
+      var s = selector.charAt(0)
+      switch(s) {
+        case '#':
+          return document.getElementById(selector.substr(1))
+        case '.':
+          selector = selector.substr(1)
+          return document.getElementsByClass(selector) || function(selector) {
+            
+          }
+        default: 
+          return document.getElementsByTagName(selector)
+      }
+    }
+
+    log(querySelector('LI'))
+  </script>
+</body>
+</html>

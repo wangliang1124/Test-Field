@@ -16,6 +16,9 @@
 ## 前端笔试题面试题记录（上）
 > https://segmentfault.com/a/1190000013819539
 
+## 2017、2018面试分享（js面试题记录）
+> https://segmentfault.com/a/1190000013827826#articleHeader73
+
 ## 20道典型的JavaScript面试题 
 > https://segmentfault.com/a/1190000012362241
 
