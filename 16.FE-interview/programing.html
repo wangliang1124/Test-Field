@@ -10,9 +10,9 @@
   <input type="checkbox" name="checkbox2">
   <div id="div1"></div>
   <ul id="test">
-    <li>这是第一条</li>
-    <li>这是第二条</li>
-    <li>这是第三条</li>
+    <li class="test test1">这是第一条</li>
+    <li class="test test1">这是第二条</li>
+    <li class="test test1">这是第三条</li>
   </ul>
 
   <script>
@@ -289,15 +289,46 @@
           return document.getElementById(selector.substr(1))
         case '.':
           selector = selector.substr(1)
-          return document.getElementsByClass(selector) || function(selector) {
-            
-          }
+          return document.getElementsByClass(selector) || (function(selector) {
+            var eles = document.getElementsByTagName('*')
+            var result = []
+            for (var i = 0, l = eles.length; i < l; i++) {
+              if (eles[i].className.indexOf(selector) >= 0) result.push(eles[i])
+            }
+            return result
+          })()
         default: 
           return document.getElementsByTagName(selector)
       }
     }
+    log(querySelector('.test1'))
 
-    log(querySelector('LI'))
+    var addListener = (function() {
+      if (window.addEventListener) {
+        return function(el, type, handler) {
+          return el.addEventListener(type, handler, false)
+        }
+      } else if(window.attachEvent) {
+        return function(el, type, handler) {
+          var event = event || window.event
+          event.target = event.srcElement
+          return el.attachEvent('on' + type, handler.bind(el))
+        }
+      } else {
+        return function(el, type, handler) {
+          el['on' + type] = handler
+        } 
+      }
+    }())
+    log(addListener)
+
+    // 7.给String对象添加一个方法，传入一个string类型的参数，然后将string的每个字符间价格空格返回，例如：addSpace("hello world") // -> 'h e l l o  w o r l d'
+    if(!String.prototype.addSpace) {
+      String.prototype.addSpace = function(str) {
+        return str.split('').join(' ')
+      }
+    }
+    log(String.prototype.addSpace('hello world'))
   </script>
 </body>
 </html>
