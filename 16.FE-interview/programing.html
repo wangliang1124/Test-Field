@@ -583,7 +583,43 @@
     addImg(document.body, './img/tip-box.jpg')
 
     // 6、模拟一个HashTable类，包含有add、remove、contains、length方法；
-    
+    function HashTable() {
+      this.table = []
+    }
+    function keyFunc(key) {
+      var hash = 0
+      for (var i = 0; i < key.length; i++) {
+        hash += key.charCodeAt(i)
+      }
+      return hash % 37
+    }
+    HashTable.prototype.add = function (key, value) { 
+      // this.table.push(item)
+      // Array.prototype.push.apply(this.table, arguments)
+      var position = keyFunc(key)
+      log(position + '-' + value)
+      this.table[position] = value
+    }
+    HashTable.prototype.remove = function (key) {
+      // this.table.splice(key, 1)
+      this.table[keyFunc(key)] = undefined
+    }
+    HashTable.prototype.contains = function (item) {
+      return this.table.indexOf(item) >= 0
+    }
+    HashTable.prototype.length = function () {
+      return this.table.length
+    }
+    HashTable.prototype.print = function () {
+      console.log(this.table)
+    }
+    var newHash = new HashTable()
+    newHash.add('apple', 'apple')
+    newHash.add('banana', 'banana')
+    newHash.add('桃子', '桃子')
+    newHash.remove('apple')
+    log(newHash.contains('banana'))
+    newHash.print()
   </script>
 
 </body>
