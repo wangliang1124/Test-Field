@@ -3,6 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>编程题</title>
+  <style>
+    html,body{overflow:hidden;}
+    body,div,h2,p{margin:0;padding:0;}
+    body{color:#000;background:#fff;font:12px/2 Arial;}
+    p{padding:0 10px;margin-top:10px;}
+
+    #box{position:absolute;width:300px;height:150px;background:#333;border:2px solid #ccc;top:50%;left:50%;margin:-75px 0 0 -150px;}
+    #box h2{height:25px;cursor:move;background:#222;border-bottom:2px solid #ccc;text-align:right;padding:0 10px;line-height: 25px;}
+    #box h2 a{color:#fff;font:12px/25px Arial;text-decoration:none;}
+    #tips{ width:200px; border: 1px solid #000;}
+    .close {padding: 0 12px;font-size: 24px}
+  </style>
 </head>
 <body>
   <input type="text" id="id1">
@@ -14,7 +26,13 @@
     <li class="test test1">这是第二条</li>
     <li class="test test1">这是第三条</li>
   </ul>
-
+  <div id="box">
+      <h2><a href="javascript:;">点击回放拖动轨迹</a></h2>
+      <p><strong>Drag:</strong><span></span></p>
+      <p><strong>offsetTop:</strong><span></span></p>
+      <p><strong>offsetLeft:</strong><span></span></p>
+  </div>
+  <div id="tips"><h2>我知道了<span class="close">x</span></h2></div>
   <script>
     var log = console.log.bind(console)
     // 如何判断某变量是否为数组数据类型？
@@ -61,17 +79,17 @@
     }
 
     // 什么是Ajax和JSON，它们的优缺点。
-    var http = new XMLHttpRequest()
-    http.open('get', 'https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started', true)
-    // http.setRequestHeader('isFromMP', 'true')
-    http.onreadystatechange = function() {
-      if (http.readyState === 4) {
-        if (http.status >= 200 && http.status < 300 || http.status === 304) {
-          // console.log(http.responseText, http.responseType, http.responseURL)
-        }
-      }
-    }
-    http.send(null)
+    // var http = new XMLHttpRequest()
+    // http.open('get', 'https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started', true)
+    // // http.setRequestHeader('isFromMP', 'true')
+    // http.onreadystatechange = function() {
+    //   if (http.readyState === 4) {
+    //     if (http.status >= 200 && http.status < 300 || http.status === 304) {
+    //       // console.log(http.responseText, http.responseType, http.responseURL)
+    //     }
+    //   }
+    // }
+    // http.send(null)
     // ajax: 不刷新发送请求的的一种方式，用XMLHttpRequest发送异步请求，用javascript操纵数据和DOM
     // json: 轻量级数据交换格式，便于阅读和解析，支持复合数据类型
      
@@ -301,6 +319,7 @@
           return document.getElementsByTagName(selector)
       }
     }
+    var $ = querySelector
     log(querySelector('.test1'))
 
     var addListener = (function() {
@@ -329,6 +348,243 @@
       }
     }
     log(String.prototype.addSpace('hello world'))
+
+    // 9.在Javascript中什么是伪数组？如何将伪数组转化为标准数组？
+    // arguments, NodeList, { lenght: 1 }
+    // 假设接第八题题干，我们要给每个log方法添加一个"(app)"前缀，比如'hello world!' ->'(app)hello world!'。方法如下：
+    // var log2 = console.log.bind(console, '(app)')
+    var log2 =  function() {
+      var args = Array.prototype.slice.call(arguments)
+      args.unshift('(app)')
+      return console.log.apply(console, args)
+    }
+    log2('hello world')
+    // 简易bind polyfill
+    Function.prototype.bind = Function.prototype.bind || function(context) {
+      var self = this
+      return function() {
+        return self.apply(context, arguments)
+      }
+    }
+    // 11.原生JS的window.onload与Jquery的$(document).ready(function(){})有什么不同？如何用原生JS实现Jq的ready方法？
+    // onload只能一个， ready多个， onload所有资源加载完执行， ready dom加载完执行
+    var ready = (function() {
+      var funcs = []
+      var ready = false
+      var handler = function(event) {
+        if (ready) return
+        if (event.type === 'onreadystatechange' && document.readyState !== 'complete') return
+        for (var i = 0; i < funcs.length; i++) {
+          funcs[i].call(document)
+        }
+        ready = true
+        funcs.length = 0
+      }
+
+      if (document.addEventListener) {
+        document.addEventListener('DOMContentLoaded', handler, false)
+        document.addEventListener('readystatechange', handler, false)
+        window.addEventListener('load', handler, false)
+      } else if (document.attachEvent) {
+        document.attachEvent ('onreadystatechange', handler)
+        document.attachEvent ('onload', handler)
+      }
+      return function(fn) {
+        if(ready) {
+          fn.call(document)
+        } else {
+          funcs.push(fn)
+        }
+
+      }
+    })();
+    ready(function(){
+      log('................... complete!')
+    })
+
+    // 12.（设计题）想实现一个对页面某个节点的拖曳？如何做？（使用原生JS）
+    ready(function() {
+      var box = $('#box')[0]
+      var h2 = box.getElementsByTagName('h2')[0]
+      h2.onmousedown = function(e) {
+        var disX = e.clientX - box.offsetLeft
+        var disY = e.clientY - box.offsetTop
+        this.setCapture && this.setCapture()
+        document.onmousemove = function(e) {
+          log('move======')
+          var l = e.clientX - disX
+          var t = e.clientY - disY
+          log(l, t)
+          // 修正 l,t
+          var maxL = document.documentElement.clientWidth || document.body.clientWidth - box.offsetWidth
+          var maxT = document.documentElement.clientHeight || document.body.clientHeight - box.offsetHeight
+
+          l = l > 0 ? l : 0
+          l = l > maxL ? maxL : l
+          t = t > 0 ? t : 0
+          t = t > maxT ? maxT : t
+
+          box.style.marginLeft = box.style.marginTop = 0
+          box.style.left =  l + 'px'
+          box.style.top = t + 'px'
+        }
+        document.onmouseup = function() {
+          document.onmousemove = null
+          document.onmouseup = null
+          this.releaseCapture && this.releaseCapture()
+        }
+      }
+      h2.onmouseup = function() {
+        document.onmousemove = null
+        document.onmouseup = null
+        this.releaseCapture && this.releaseCapture()
+      }
+
+    })
+    // 13关闭tips提示
+    function setCookie(name, value, days) { //给cookie增加一个时间变量　
+        var date = new Date()
+        date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000); //设置过期时间为days天　
+        document.cookie = name + "=" + decodeURIComponent(value) + ";expires=" + date.toGMTString();
+    }
+     
+    function getCookie(name) {　　
+        var result = ''　
+        var myCookie = '' + document.cookie + ";"
+        var searchName = '' + name + " = "
+        var startOfCookie = myCookie.indexOf(searchName)
+        var endOfCookie
+        if (startOfCookie != -1) {　　　　
+            startOfcookie += searchName.length　　
+            endOfCookie = myCookie.indexOf(";", startOfCookie)　　
+            result = (myCookie.substring(startOfCookie, endOfCookie))
+        }　　
+        return result
+    }
+
+    ;(function() {
+      var tips = document.getElementById('tips')
+      var page = {
+        hideTip() {
+          tips.style.display = 'none'
+          setCookie('tipsHide', 'true', 365)
+        },
+        showTip() {
+          tips.style.display = 'block'
+        },
+        check() {
+          var tipsHide = getCookie('tipsShow')
+          return tipsHide === 'true'
+        },
+        init() {
+          if(!this.check()) {
+            this.showTip()
+            setCookie('tipsHide', 'true', 1)
+          }
+          var self = this
+          tips.onclick = function() {
+            self.hideTip()
+          }
+        }
+      }
+      page.init()
+    }());
+
+
+    //define
+    ;(function(window) {
+        function fn(str) {
+            this.str = str
+        }
+     
+        fn.prototype.format = function() {
+            var arg = arguments
+            return this.str.replace(/{(\d+)}/g, function(a, b) {
+                return arg[b] || ""
+            })
+        }
+        window.fn = fn
+    })(window)
+     
+    //use
+    ;(function() {
+        var t = new fn('<p><a href="{0}">{1}</a><span>{2}</span></p>')
+        console.log(t.format('http://www.alibaba.com', 'Alibaba', 'Welcome'))
+    })()
+
+    // 16.讲解原生Js实现ajax的原理。
+    function ajax(options) {
+      options = options || {}
+      options.type = (options.type || 'GET').toUpperCase()
+      options.dataType = options.dataType || 'json' 
+      var params = formatParams(options.data)
+      // 创建
+      var http = null
+      if (window.XMLHttpRequest) {
+        http = new XMLHttpRequest()
+      } else {
+        http = new ActiveXObject('Microsoft.XMLHTTP')
+      }
+      // 监听
+      http.onreadystatechange = function() {
+        if (http.readyState === 4){
+          if (http.status >= 200 && http.status < 300 || http.status === 304) {
+            options.success && options.success(http.responseText)
+          } else {
+            options.fail && options.fail(status)
+          }
+        }
+      }
+      // 发送
+      if(options.type === 'GET') {
+        http.open('GET', options.url + '?' + params, true)
+        http.send(null)
+      } else if (options.type === 'POST') {
+        http.open('POST', options.url, true)
+        http.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+        http.send(params)
+      }
+
+      function formatParams(data) {
+        var arr = []
+        for(var key in data) {
+          if(data.hasOwnProperty(key)) arr.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]))
+        }
+        arr.push(('v=' + Math.random()).replace('.', ''))
+        return arr.join('&')
+      }
+    }
+    ajax({
+      type: 'get',
+      url: 'https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started',
+      data: { name: 'super', age: 20 },
+      dataType: 'json',
+      success: function(res) {
+        // console.log(res)
+      },
+      fail: function(status) {
+        console.log('status:' + status)
+      }
+    })
+
+    // 4、实现预加载一张图片，加载完成后显示在网页中并设定其高度为50px，宽度为50px；
+    function addImg(el, src) {
+      var img = new Image()
+      // var img = document.createElement('image')
+      img.onload = function() {
+        // img.width = 350
+        // img.height = 150
+        img.style.width = '400px'
+        img.style.height = '200px'
+        el.appendChild(img)
+      }
+      img.src = src
+    }
+    addImg(document.body, './img/tip-box.jpg')
+
+    // 6、模拟一个HashTable类，包含有add、remove、contains、length方法；
+    
   </script>
+
 </body>
 </html>
