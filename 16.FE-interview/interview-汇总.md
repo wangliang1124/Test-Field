@@ -10,6 +10,9 @@
 ## 面试分享：一年经验初探阿里巴巴前端社招
 > https://github.com/jawil/blog/issues/22
 
+## 方正的前端面试知识点汇总
+> https://zhuanlan.zhihu.com/p/29012060
+
 ## 我遇到的前端面试题2017 
 > https://segmentfault.com/a/1190000011091907
 
@@ -148,3 +151,6 @@
 
 ## 37个JavaScript基本面试问题和解答 
 > https://www.zcfy.cc/article/37-essential-javascript-interview-questions-and-answers
+
+## 浏览器缓存知识小结及应用
+> https://www.cnblogs.com/lyzg/p/5125934.html

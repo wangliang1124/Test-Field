@@ -554,18 +554,18 @@
         return arr.join('&')
       }
     }
-    ajax({
-      type: 'get',
-      url: 'https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started',
-      data: { name: 'super', age: 20 },
-      dataType: 'json',
-      success: function(res) {
-        // console.log(res)
-      },
-      fail: function(status) {
-        console.log('status:' + status)
-      }
-    })
+    // ajax({
+    //   type: 'get',
+    //   url: 'https://developer.mozilla.org/en-US/docs/Web/Guide/AJAX/Getting_Started',
+    //   data: { name: 'super', age: 20 },
+    //   dataType: 'json',
+    //   success: function(res) {
+    //     // console.log(res)
+    //   },
+    //   fail: function(status) {
+    //     console.log('status:' + status)
+    //   }
+    // })
 
     // 4、实现预加载一张图片，加载完成后显示在网页中并设定其高度为50px，宽度为50px；
     function addImg(el, src) {
@@ -583,43 +583,71 @@
     addImg(document.body, './img/tip-box.jpg')
 
     // 6、模拟一个HashTable类，包含有add、remove、contains、length方法；
-    function HashTable() {
-      this.table = []
+    // function HashTable() {
+    //   this.table = []
+    // }
+    // function keyFunc(key) {
+    //   var hash = 0
+    //   for (var i = 0; i < key.length; i++) {
+    //     hash += key.charCodeAt(i)
+    //   }
+    //   return hash % 37
+    // }
+    // HashTable.prototype.add = function (key, value) { 
+    //   // this.table.push(item)
+    //   // Array.prototype.push.apply(this.table, arguments)
+    //   var position = keyFunc(key)
+    //   log(position + '-' + value)
+    //   this.table[position] = value
+    // }
+    // HashTable.prototype.remove = function (key) {
+    //   // this.table.splice(key, 1)
+    //   this.table[keyFunc(key)] = undefined
+    // }
+    // HashTable.prototype.contains = function (item) {
+    //   return this.table.indexOf(item) >= 0
+    // }
+    // HashTable.prototype.length = function () {
+    //   return this.table.length
+    // }
+    // HashTable.prototype.print = function () {
+    //   console.log(this.table)
+    // }
+    // var newHash = new HashTable()
+    // newHash.add('apple', 'apple')
+    // newHash.add('banana', 'banana')
+    // newHash.add('桃子', '桃子')
+    // newHash.remove('apple')
+    // log(newHash.contains('banana'))
+    // newHash.print()
+
+    // String.prototype.repeatify = String.prototype.repeatify || function(n) {
+    //   var str = ''
+    //   while(n){
+    //     str += this
+    //   }
+    //   return str
+    // }
+    // log('hello'.repeatify(5))
+
+
+    const task = []
+    for(var i = 0; i < 5; i++) {
+      ((i) => {
+        task.push(new Promise((resolve) => {
+          setTimeout(()=>{
+            console.log(new Date, i)
+            resolve()
+          },1000*i)
+        }))
+      })(i)
     }
-    function keyFunc(key) {
-      var hash = 0
-      for (var i = 0; i < key.length; i++) {
-        hash += key.charCodeAt(i)
-      }
-      return hash % 37
-    }
-    HashTable.prototype.add = function (key, value) { 
-      // this.table.push(item)
-      // Array.prototype.push.apply(this.table, arguments)
-      var position = keyFunc(key)
-      log(position + '-' + value)
-      this.table[position] = value
-    }
-    HashTable.prototype.remove = function (key) {
-      // this.table.splice(key, 1)
-      this.table[keyFunc(key)] = undefined
-    }
-    HashTable.prototype.contains = function (item) {
-      return this.table.indexOf(item) >= 0
-    }
-    HashTable.prototype.length = function () {
-      return this.table.length
-    }
-    HashTable.prototype.print = function () {
-      console.log(this.table)
-    }
-    var newHash = new HashTable()
-    newHash.add('apple', 'apple')
-    newHash.add('banana', 'banana')
-    newHash.add('桃子', '桃子')
-    newHash.remove('apple')
-    log(newHash.contains('banana'))
-    newHash.print()
+
+    Promise.all(task).then(() => {
+      setTimeout(() => {
+        console.log(new Date, i)
+      }, 1000)
+    })
   </script>
 
 </body>
