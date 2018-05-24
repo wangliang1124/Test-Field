@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>cookie</title>
+</head>
+<body>
+  <script>
+    var cookieUtil = {
+      get(name) {
+        var cookieName = encodeURIComponent(name) + '=',
+            cookieStart = document.cookie.indexOf(cookieName),
+            cookieValue = null
+
+        if (cookieStart >= 0) {
+          var cookeEnd = document.cookie.indexOf(';', cookieStart)
+          if (cookeEnd == -1) {
+            cookeEnd = document.cookie.length
+          }
+          cookieValue = decodeURIComponent(document.cookie.substring(cookieStart + cookieName.length, cookeEnd))
+        } 
+        return cookieValue
+      },
+      set(name, value, expires, path, domain, secure) {
+        var cookieText = encodeURIComponent(name) + '=' + encodeURIComponent(value)
+        if(expires instanceof Date) cookieText += '; expires=' +expires.toGMTString()
+        if(path) cookieText += ';path=' + path
+        if(domain) cookieText += ';domain=' + domain
+        if(secure) cookieText += ';secure'
+        document.cookie = cookieText
+        log(document.cookie)
+      },
+      remove(name, path, domain, secure) {
+        this.set(name, '', new Date(0) ,path, domain, secure)
+      },
+    }
+    var log = console.log.bind(console)
+    //设置cookie
+    cookieUtil.set("name", "Nicholas", new Date('2018-10-1'))
+    cookieUtil.set("book", "Professional JavaScript")
+    //读取cookie 的值
+    log(cookieUtil.get("name")) //"Nicholas"
+    log(cookieUtil.get("book")) //"Professional JavaScript"
+    //删除cookie
+    // cookieUtil.remove("name");
+    // cookieUtil.remove("book");
+  </script>
+</body>
+</html>

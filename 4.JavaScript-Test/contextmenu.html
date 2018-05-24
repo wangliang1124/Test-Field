@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>contextmenu</title>
+  <style>
+    #contextmenu{
+        width:180px;
+        height: 240px;
+        background-color:#f2f2f2;
+        position:absolute;
+        border:1px solid #BFBFBF;
+        box-shadow:2px 2px 3px #aaaaaa;
+    }
+
+    .show{
+        display:block;  
+    }
+
+    .hidden{
+        display:none;   
+    }
+  </style>
+</head>
+<body>
+  <script>
+    (function(){
+            var menu = document.createElement("div");
+            menu.id="contextmenu";
+            menu.className="hidden";
+            document.body.appendChild(menu);
+                
+            bindEvent(document , "contextmenu" , closeContextMenu);
+            bindEvent(document , "mouseup" , openNewContextMenu);
+            bindEvent(document , "mousedown" , closeNewContextMenu);
+                
+            function closeContextMenu(){
+                return false;
+            }   
+                
+            function openNewContextMenu( ev ){
+                ev = ev || window.event;
+                var btn = ev.button;
+                if( btn == 2){      
+                    menu.style.left = ev.clientX +"px";
+                    menu.style.top = ev.clientY +"px";
+                    menu.className = "show";
+                } 
+            }
+        
+            function closeNewContextMenu( ev ){
+                menu.className = "hidden";
+            }
+        
+            function bindEvent(elem , eventType , callback){
+                var ieType = ["on" + eventType ];
+                if( ieType in elem ){
+                    elem[ ieType ] = callback;
+                }else if("attachEvent" in elem){
+                    elem.attachEvent(ieType ,callback);
+                }else{
+                    elem.addEventListener(eventType ,callback , false);
+                }
+            }
+      })();
+
+
+  </script>
+</body>
+</html>

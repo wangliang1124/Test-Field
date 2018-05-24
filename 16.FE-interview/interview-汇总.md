@@ -154,3 +154,6 @@
 
 ## 浏览器缓存知识小结及应用
 > https://www.cnblogs.com/lyzg/p/5125934.html
+
+## 99%的人都理解错了HTTP中GET与POST的区别
+http://www.techweb.com.cn/network/system/2016-10-11/2407736.shtml

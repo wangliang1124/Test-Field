@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>drag</title>
+  <style>
+    html,body{overflow:hidden;height:100%}
+    body,div,h2,p{margin:0;padding:0;}
+    body{color:#000;background:#000;font:12px/2 Arial;}
+    p{padding:0 10px;margin-top:10px;}
+
+    #box{width:300px;height:150px;background:#333;border:2px solid #ccc;}
+    #box h2{height:25px;cursor:move;background:#222;border-bottom:2px solid #ccc;text-align:right;padding:0 10px;line-height: 25px;}
+    #box h2 a{color:#fff;font:12px/25px Arial;text-decoration:none;}
+    #tips{ width:200px; border: 1px solid #000;}
+    .close {padding: 0 12px;font-size: 24px}
+  </style>
+</head>
+<body>
+  <div id="box">
+      <h2><a href="javascript:;">点击回放拖动轨迹</a></h2>
+      <p><strong>Drag:</strong><span></span></p>
+      <p><strong>offsetTop:</strong><span></span></p>
+      <p><strong>offsetLeft:</strong><span></span></p>
+      <script>
+        ;(function(window) {
+          var dom = {
+            on: function(node, type, handler) {
+              if (document.addEventListener) {
+                node.addEventListener(type, handler, false)
+              } else if(document.attachEvent) {
+                node.attachEvent('on' + type, handler)
+              } else {
+                node['on' + type] = handler
+              }
+            },
+            getStyle: function(node, styleName) {
+              if (window.getComputedStyle) {
+                return parseInt(window.getComputedStyle(node, null)[styleName], 10)
+              } else if(node.currentStyle) {
+                return parseInt(node.currentStyle[styleName], 10)
+              }
+            },
+            setCSS: function(node, css) {
+              for (var key in css) {
+                node.style[key] = css[key]
+              }
+            }
+          }
+
+          window.drag = function(el) {
+            var log = console.log.bind(console)
+            var dragging = false
+            var mouseX, mouseY, elX, elY
+
+            var mousedownHandler = function(event) {
+              event = event || window.event
+              
+              dragging = true
+              el.style.position = 'relative'
+
+              mouseX = event.clientX
+              mouseY = event.clientY
+
+              // console.log(window.getComputedStyle(el, null).left)
+              // console.log(el.getBoundingClientRect())
+              // var rect = el.getBoundingClientRect()
+              elX = dom.getStyle(el, 'left')
+              elY = dom.getStyle(el, 'top')
+
+              var mousemoveHandler = function(event) {
+                event = event || window.event
+                if (dragging) {
+                  
+                  var l = event.clientX - mouseX + elX
+                  var t = event.clientY - mouseY + elY
+                  // 限定边框
+                  var maxL = (document.documentElement.clientWidth || document.body.clientWidth)- el.offsetWidth
+                  var maxT = (document.documentElement.clientHeight || document.body.clientHeight) - el.offsetHeight
+
+                  l = l > 0 ? l : 0
+                  l = l > maxL ? maxL : l
+                  t = t > 0 ? t : 0
+                  t = t > maxT ? maxT : t
+
+                  log(event.clientX - mouseX + elX, event.clientX - mouseX, elX, elY, l, t)
+
+                  dom.setCSS(el, {
+                    left: l + 'px',
+                    top: t+ 'px'
+                  })
+                }
+              }
+
+              dom.on(document, 'mousemove', mousemoveHandler)
+              dom.on(document, 'mouseup', function() {
+                dragging = false
+                // dom.off(document, 'mousemove', handler)
+                // dom.off(el, 'mousedown', mousedownHandler)
+              })
+            }
+
+            dom.on(el, 'mousedown', mousedownHandler)
+          }
+        })(window)
+
+        window.drag && window.drag(document.getElementById('box'))
+
+      </script>
+  </div>
+</body>
+</html>
