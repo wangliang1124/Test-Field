@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>编程题</title>
+  <style>
+    #target {
+        width: 200px;
+        height: 300px;
+        margin: 40px;
+        background-color: tomato;
+    }
+  </style>
+</head>
+<body>
+  <div id="target">我是内容</div>
+  <div>
+     <input type="button" id ="button1" value="1" />
+     <input type="button" id ="button2" value="2" />
+  </div>
+  <span id="remain"></span>
+  <script>
+    var log = console.log.bind(console)
+    // 请用原生js实现一个函数,给页面制定的任意一个元素添加一个透明遮罩(透明度可变,默认0.2),使这个区域点击无效,要求兼容IE8+及各主流浏览器,遮罩层效果如下图所示:
+    function addMask(el, opacity) {
+      opacity = opacity || 0.2
+      var style = window.getComputedStyle(el, null)
+      var rect = el.getBoundingClientRect()
+      var mr = parseInt(style.marginRight)
+      var ml = parseInt(style.marginLeft)
+      var mb = parseInt(style.marginBottom)
+      var mt = parseInt(style.marginTop)
+      // console.log(style, rect, el.offsetLeft)
+      var mask = document.createElement('div')
+      
+      mask.style.position = 'absolute' 
+
+      mask.style.left = el.offsetLeft - mr + 'px'
+      mask.style.top = el.offsetTop - mt + 'px'
+
+      mask.style.width = rect.width + mr + ml + 'px'
+      mask.style.height = rect.height + mt + mb + 'px'
+
+      mask.style.backgroundColor = '#000'
+      mask.style.zIndex = 1
+      mask.style.opacity = opacity
+
+      el.parentNode.appendChild(mask)
+
+    }
+    var target = document.getElementById('target')
+    addMask(target)
+
+    target.addEventListener('click', function () {
+        console.log('click')
+    }, false)
+
+    // 请用代码写出(今天是星期x)其中x表示当天是星期几,如果当天是星期一,输出应该是"今天是星期一"
+    var days = ['日','一','二','三','四','五','六'];
+    var date = new Date()
+    console.log('今天是星期' + days[date.getDay()]) 
+
+    // 下面这段代码想要循环延时输出结果0 1 2 3 4,请问输出结果是否正确,如果不正确,请说明为什么,并修改循环内的代码使其输出正确结果
+    // for (var i = 0; i < 5; ++i) {
+    //   setTimeout(function () {
+    //     console.log(i + ' ')
+    //   }, 100)
+    // }
+    // for (var i = 0; i < 5; ++i) { // 方法一
+    //   (function(i) {
+    //     setTimeout(function () {
+    //       console.log(i + ' ')
+    //     }, 1000)
+    //   })(i)
+    // }
+    // var output = function(i) {  // 方法二
+    //   setTimeout(function () {
+    //     console.log(i + ' ')
+    //   }, 1000)
+    // }
+    // for (var i = 0; i < 5; ++i) {
+    //   output(i)
+    // }
+
+    // 现有一个Page类,其原型对象上有许多以post开头的方法(如postMsg);另有一拦截函数chekc,只返回ture或false.请设计一个函数,该函数应批量改造原Page的postXXX方法,在保留其原有功能的同时,为每个postXXX方法增加拦截验证功能,当check返回true时继续执行原postXXX方法,返回false时不再执行原postXXX方法
+    function Page() {}
+
+    Page.prototype = {
+      constructor: Page,
+      postA: function (a) {
+        console.log('a:' + a)
+      },
+      postB: function (b) {
+        console.log('b:' + b)
+      },
+      postC: function (c) {
+        console.log('c:' + c)
+      },
+      check: function () {
+        return Math.random() > 0.5
+      }
+    }
+
+    var checkify = function(obj) {
+      for (var key in obj) {
+        if (key.indexOf('post') === 0 && typeof obj[key] === 'function') {
+          (function(key){
+            var fn = obj[key]
+            obj[key] = function() {
+              if (obj.check()) fn.apply(obj, arguments)
+            }
+          })(key)
+        }
+      }
+    }
+
+    checkify(Page.prototype)
+
+    var obj = new Page()
+    // log(obj)
+    obj.postA('checkfy')
+    obj.postB('checkfy')
+    obj.postC('checkfy')
+
+    // 编写javascript深度克隆函数deepClone
+    function deepClone(obj) {
+      var toString = Object.prototype.toString
+
+      // null, undefined, non-object, function
+      if (!obj || typeof obj !== 'object') {
+        return obj
+      }
+      // Node
+      if (obj.nodeType && 'cloneNode in obj') {
+        return obj.cloneNode(true)
+      }
+      // Date
+      if (toString.call(obj) === '[object Date]') {
+        return new Date(obj.getTime())
+      }
+      // RegExp
+      if (toString.call(obj) === '[object RegExp]') {
+        var flags = []
+        if (obj.global) flags.push('g')
+        if (obj.mutilline) flags.push('m')
+        if (obj.ingoreCase) flags.push('i')
+        return new RegExp(obj.source, flags.join(''))
+      }
+      var result = null
+      // Array
+      // log(toString.call(obj))
+      if (toString.call(obj) === '[object Array]') {
+        var length = obj.length
+        result = Array(length)
+        // for (var i = 0; i < length; i++) {
+        for (var i in obj) {
+          // log(i)
+          result[i] = deepClone(obj[i])
+        }
+      }
+      // log(toString.call(obj))
+      // Object
+      if (toString.call(obj) === '[object Object]') {
+        result = obj.constructor ? new obj.constructor : {}
+        // log(result)
+        for(var key in obj) {
+          result[key] = deepClone(obj[key])
+          // log(key)
+        }
+      }
+      return result
+    }
+
+    function A() {
+        this.a = a
+    }
+
+    var a = {
+        name: 'qiu',
+        birth: new Date(),
+        pattern: /qiu/gim,
+        container: document.body,
+        hobbys: ['book', new Date(), /aaa/gim, 111]
+    }
+
+    var c = new A()
+    var b = deepClone(c)
+    log(b)
+    var arr = Array(10, [1,true , 3])
+    log(arr, deepClone(arr))
+
+    // 补充代码,鼠标单击Button1后将Button1移动到Button2的后面
+    var btn1 = document.getElementById('button1')
+    var btn2 = document.getElementById('button2')
+
+    btn1.onclick = function() {
+      // btn1.parentNode.appendChild(btn1)
+      btn1.parentNode.insertBefore(btn2, btn1)
+    }
+
+    // 网页中实现一个计算当年还剩多少时间的倒数计时程序,要求网页上实时动态显示"××年还剩××天××时××分××秒"
+    function getRemainTime() {
+      var date = new Date()
+      var year = date.getFullYear()
+      var remain = new Date(year + 1, 0, 1).getTime() - date.getTime()
+      var text = `${year}年还剩`
+      text += Math.floor(remain/(24*60*60*1000)) + '天'
+      remain = remain % (24*60*60*1000)
+      text += Math.floor(remain/(60*60*1000)) + '时'
+      remain = remain % (60*60*1000)
+      text += Math.floor(remain/(60*1000)) + '分'
+      remain = remain % (60*1000)
+      text += Math.floor(remain/1000) + '秒'
+      return text
+    }
+    var remain = document.getElementById('remain')
+    setInterval(function() {
+      remain.innerHTML = getRemainTime()
+    }, 1000)
+
+    // 完成一个函数,接受数组作为参数,数组元素为整数或者数组,数组元素包含整数或数组,函数返回扁平化后的数组
+    var flatten = function(array) {
+      
+    }
+  </script>
+</body>
+</html>
