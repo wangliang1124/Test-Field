@@ -218,9 +218,91 @@
       remain.innerHTML = getRemainTime()
     }, 1000)
 
-    // 完成一个函数,接受数组作为参数,数组元素为整数或者数组,数组元素包含整数或数组,函数返回扁平化后的数组
+    // 完成一个函数,接受数组作为参数,数组元素为整数或者数组,数组元素包含整数或数组,函数返回扁平化后的数组 如：[1, [2, [ [3, 4], 5], 6]] => [1, 2, 3, 4, 5, 6]
     var flatten = function(array) {
-      
+      var result = []
+      for (var i = 0, length = array.length; i < length; i++) {
+        var value = array[i]
+        if (Array.isArray(value)) {
+          result = result.concat(flatten(value))
+        }else if(typeof value === 'number'){
+          result.push(value)
+        }
+      }
+      return result
+    }
+    log(flatten([1, [2, [ [3, 4], 5], 6]]))
+
+    // 如何判断一个对象是否为数组
+    var isArray = Array.isArray || function(obj) {
+      return Object.prototype.toString.call(obj) === '[object Array]'
+    }
+
+    log(isArray(Array.prototype))
+
+    // 请评价以下事件监听器代码并给出改进意见
+    if (window.addEventListener) {
+      var addListener = function (el, type, listener, useCapture) {
+        el.addEventListener(type, listener, useCapture);
+      };
+    }
+    else if (document.all) {
+      addListener = function (el, type, listener) {
+        el.attachEvent('on' + type, function () {
+          listener.apply(el);
+        });
+      };
+    }
+
+    var addListener = (function(){
+      if (window.addEventListener) {
+        return function(el, type, handler) {
+          el.addEventListener(type, handler, false)
+          return handler
+        }
+      } else if (window.attachEvent) {
+        return function(el, type, handler) {
+          handler = function() {
+            var event = window.event
+            event.target = event.srcElement
+            handler.call(el, event)
+          }
+          el.attachEvent('on' + type, handler)
+          return handler
+        }
+      }
+    }())
+
+    // 如何判断一个对象是否为函数
+    var isFunction = function(obj) {
+      if (typeof /./ !== 'function') {
+        return typeof obj === 'function'
+      }
+      return Object.prototype.toString.call(obj) === '[object Function]' 
+    }
+
+    log('isF:' + isFunction(() => {}))
+
+    // 编写一个函数接受url中query string为参数,返回解析后的Object,query string使用application/x-www-form-urlencoded编码
+    var q = function(query) {
+      var result = {}
+      query = decodeURIComponent(query).split('?')[1]
+      if (!query) return result
+      var pairs = query.split('&')
+      for (var i = 0, len = pairs.length; i < len; i++) {
+        var arr = pairs[i].split('=')
+        result[arr[0]] = arr[1] ? arr[1].replace(/\+/g, ' ') : ''
+      }
+      return result
+    }
+    log(q('https://www.google.com/search?abc'))
+    log(q('http%3A%2F%2Fitem.taobao.com%2Fitem.htm%3Fa%3D1%26b%3D2%26c%3D%26d%3Dxxx%26e'))
+
+    // 解析一个完整的url,返回Object包含域与window.location相同
+    var parseURL = function(url) {
+      var result = {}
+      var keys = ['herf', 'origin', 'protocol', 'host', 'hostname', 'port', 'pathname', 'search', 'hash']
+      var regExp = /(\w+):\/\//g
     }
   </script>
 </body>

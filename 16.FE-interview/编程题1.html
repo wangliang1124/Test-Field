@@ -325,13 +325,13 @@
     var addListener = (function() {
       if (window.addEventListener) {
         return function(el, type, handler) {
-          return el.addEventListener(type, handler, false)
+          el.addEventListener(type, handler, false)
         }
       } else if(window.attachEvent) {
         return function(el, type, handler) {
           var event = event || window.event
           event.target = event.srcElement
-          return el.attachEvent('on' + type, handler.bind(el))
+          el.attachEvent('on' + type, handler.bind(el))
         }
       } else {
         return function(el, type, handler) {
