@@ -301,9 +301,47 @@
     // 解析一个完整的url,返回Object包含域与window.location相同
     var parseURL = function(url) {
       var result = {}
-      var keys = ['herf', 'origin', 'protocol', 'host', 'hostname', 'port', 'pathname', 'search', 'hash']
-      var regExp = /(\w+):\/\//g
+      var keys = ['href', 'origin', 'protocol', 'host', 'hostname', 'port', 'pathname', 'search', 'hash'];
+      var regexp = /(((?:https?|ftp|file):)\/\/(([^:\/\?#]+)(:\d+)?))(\/[^?#]*)?(\?[^#]*)?(#.*)?/
+
+      var match = regexp.exec(url)
+      if (match) {
+        for (var i = keys.length - 1; i >= 0; i--) {
+          result[keys[i]] = match[i] ? match[i] : ''
+        }
+      }
+      return result
     }
+
+    log(parseURL('https://www.cnblogs.com:8080/speeding/p/5097790.html?xxx=9999#test'))
+
+    // 完成函数getViewportSize返回指定窗口的视口尺寸
+    var getViewportSize = function() {
+      var width, height
+      width = window.innerWidth || document.documentElement.clientWidth || documentElement.body.clientWidth
+      height = window.innerHeight || document.documentElement.clientHeight || documentElement.body.clientHeight
+      return {
+        width,
+        height
+      }
+    }
+    log(getViewportSize())
+
+    // 完成函数getScrollOffset返回窗口滚动条偏移量
+    var getScrollOffset = function() {
+      var offsetLeft, offsetTop
+      var isCSS1Compat = document.compatMode === 'CSS1Compat'
+      offsetLeft = window.pageXOffset || (isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft)
+      offsetTop = window.pageYOffset || (isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop)
+      return {
+        offsetLeft,
+        offsetTop
+      }
+    }
+    log(getScrollOffset())
+
+    // 现有一个字符串richText,是一段富文本,需要显示在页面上.有个要求,需要给其中只包含一个img元素的p标签增加一个叫pic的class.请编写代码实现.可以使用jQuery或KISSY.
+    
   </script>
 </body>
 </html>
