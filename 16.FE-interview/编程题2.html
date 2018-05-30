@@ -341,7 +341,64 @@
     log(getScrollOffset())
 
     // 现有一个字符串richText,是一段富文本,需要显示在页面上.有个要求,需要给其中只包含一个img元素的p标签增加一个叫pic的class.请编写代码实现.可以使用jQuery或KISSY.
-    
+    var richText = function(text) {
+      var div = document.createElement('div')
+      div.innerHTML = text
+      var p = div.getElementsByTagName('p')
+      for (var i = 0, l = p.length; i < l; i++) {
+        var img = p[i].getElementsByTagName('img')
+        if (img.length === 1) {
+          p[i].classList.add('pic')
+        }
+      }
+      return div.innerHTML
+    }
+    log(richText('<p><img></p>'))
+
+    // 请实现一个Event类,继承自此类的对象都会拥有两个方法on,off,once和trigger
+    var Event = function() {
+      if (!this instanceof Event) {
+        return new Event()
+      }
+      this._callbacks = {}
+    }
+    Event.prototype = {
+      constructor: Event,
+      on: function(type, handler) {
+        this._callbacks[type] = this._callbacks[type] || []
+        this._callbacks[type].push(handler)
+        return this
+      },
+      off: function(type, handler) {
+        var list = this._callbacks[type]
+        if (list.length) {
+          for (var i = list.length - 1; i >= 0; i--) {
+            if (list[i] === handler) {
+              list.splice(i, 1)
+            }
+          }
+        }
+        return this
+      },
+      trigger: function(type, data) {
+        var list = this._callbacks[type]
+        var len = list.length
+        if (len) {
+          for (var i = 0; i < len; i++) {
+            list[i].call(this, data)
+          }
+        }
+      },
+      once: function(type, handler) {
+        var self = this
+        var wrapper = function() {
+          handler.apply(self, arguments)
+          self.off(type, wrapper)
+        }
+        this.on(type, wrapper)
+        return this
+      }
+    }
   </script>
 </body>
-</html>
+</html> 
