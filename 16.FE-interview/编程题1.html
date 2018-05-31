@@ -490,7 +490,7 @@
       page.init()
     }());
 
-
+    // 以下函数的作用是?空白区域应该填写什么
     //define
     ;(function(window) {
         function fn(str) {
@@ -498,8 +498,8 @@
         }
      
         fn.prototype.format = function() {
-            var arg = arguments
-            return this.str.replace(/{(\d+)}/g, function(a, b) {
+            var arg = Array.prototype.slice.call(arguments, 0)
+            return this.str.replace(/{\s*(\d+)\s*}/g, function(a, b) {
                 return arg[b] || ""
             })
         }

@@ -19,6 +19,38 @@
      <input type="button" id ="button2" value="2" />
   </div>
   <span id="remain"></span>
+  <ul id="reverse">
+    <li>1</li>
+    <li>2</li>
+    <li>3</li>
+    <li>4</li>
+  </ul>
+  <form id="form1">
+      <select name="age">
+          <option value="aaa">aaa</option>
+          <option value="bbb" selected>bbb</option>
+      </select>
+      <select name="friends" multiple>
+          <option value="qiu" selected>qiu</option>
+          <option value="de">de</option>
+          <option value="qing" selected>qing</option>
+      </select>
+      <input name="name" value="qiudeqing">
+      <input type="password" name="password" value="11111">
+      <input type="hidden" name="salery" value="3333">
+      <textarea name="description">description</textarea>
+      <input type="checkbox" name="hobby" checked value="football">Football
+      <input type="checkbox" name="hobby" value="basketball">Basketball
+      <input type="radio" name="sex" checked value="Female">Female
+      <input type="radio" name="sex" value="Male">Male
+  </form>
+  <ul id="nav">
+      <li><a href="http://11111">111</a></li>
+      <li><a href="http://2222">222</a></li>
+      <li><a href="http://333">333</a></li>
+      <li><a href="http://444">444</a></li>
+  </ul>
+
   <script>
     var log = console.log.bind(console)
     // 请用原生js实现一个函数,给页面制定的任意一个元素添加一个透明遮罩(透明度可变,默认0.2),使这个区域点击无效,要求兼容IE8+及各主流浏览器,遮罩层效果如下图所示:
@@ -399,6 +431,260 @@
         return this
       }
     }
+
+    // 编写一个函数将列表子元素顺序反转
+    var reverse = document.getElementById('reverse')
+    var children = reverse.children,
+        len = children.length
+    log(reverse.children, children)
+    var frag = document.createDocumentFragment()
+    for (len = len - 1; len >= 0; len--) {
+      frag.appendChild(children[len])
+    }
+    reverse.appendChild(frag)
+
+    // 编写一个函数实现form的序列化(即将一个表单中的键值序列化为可提交的字符串)
+    var serializeForm = function(form) {
+      if (!form || form.nodeName.toUpperCase() !== 'FORM') return
+      var result = []
+      var field, type, name
+      for (var i = 0, len = form.length; i < len; i++) {
+        field = form.elements[i]
+        type = field.type
+        name = field.name
+        if(field.disable || !field.name) {
+          continue
+        }
+        switch (type) {
+          case 'text':
+          case 'password':
+          case 'hidden':
+          case 'textarea':
+            result.push(encodeURIComponent(name) + '=' + encodeURIComponent(field.value))
+            break
+          case 'radio':
+          case 'checkbox':
+            if (field.checked) {
+              result.push(encodeURIComponent(name) + '=' + encodeURIComponent(field.value))
+            }
+            break
+          case 'select-one':
+          case 'select-multiple':
+            var options = field.options, l = options.length
+            for (var j = 0; j < l; j++) {
+              var opt = options[j]
+              if (opt.selected) {
+                result.push(encodeURIComponent(name) + '=' + encodeURIComponent(opt.value || opt.text))
+              }
+            }
+            break
+          case 'file':
+
+          case 'submit':
+
+          default:
+            break
+        }
+      }
+      return result.join('&')
+    }
+    var form = document.getElementById('form1')
+    log(serializeForm(form))
+    // 使用原生javascript给下面列表中的li节点绑定点击事件,点击时创建一个Object对象,兼容IE和标准浏览器
+    var EventUtil = {
+      on: function(el, type, handler) {
+        if (window.addEventListener) {
+          el.addEventListener(type, handler, false)
+          return handler
+        } else if(window.attachEvent) {
+          var wrapper = function(event) {
+            handler.call(el, event)
+          }
+          el.attachEvent('on' + type, wrapper)
+          return wrapper
+        } else {
+          el['on' + type] = handler
+          return handler
+        }
+      },
+      off: function(el, type, handler) {
+        if (window.removeEventListener) {
+          el.removeEventListener(type, handler, false)
+        } else if(window.detachEvent) {
+          el.detachEvent('on' + type, handler)
+        } else {
+          el['on' + type] = false
+        }
+      },
+      prevent: function() {
+        if (window.preventDefault) {
+          window.preventDefault()
+        } else {
+          event.returnValue = false
+        }
+      },
+      stop: function(event) {
+        if (window.stopPropagation) {
+          event.stopPropagation()
+        } else {
+          event.cancelBubble = true
+        }
+      },
+      getEvent: function(event) {
+        return event || window.event
+      },
+      getTarget: function(event) {
+        return event.target || event.srcElement
+      }
+    }  
+    var DOMUtil = {
+      text: function(el) {
+        if ('textContent' in el) {
+          return el.textContent
+        } else {
+          return el.innerText
+        }
+      },
+      prop: function(el, propName) {
+        return el.getAttribute(propName)
+      }
+    }
+    var nav = document.getElementById('nav')
+    EventUtil.on(nav, 'click', function(event) {
+      EventUtil.prevent(event)
+      var event = EventUtil.getEvent(event)
+      var target = EventUtil.getTarget(event)
+      var children = this.children
+      var result = {}
+      for (var i = 0, len = children.length; i < len; i++) {
+        // if (target = children[i].firstChild) {
+        //     EventUtil.prevent(event)
+        //     // EventUtil.stop(event)
+        // }
+        if (target === children[i]) {
+          result['index'] = i + 1
+          result['name'] = DOMUtil.text(target)
+          result['link'] = DOMUtil.prop(target, 'href')
+        }
+      }
+      log(result)
+      return result
+    })
+
+    // 有一个大数组,var a = ['1', '2', '3', ...];a的长度是100,内容填充随机整数的字符串.请先构造此数组a,然后设计一个算法将其内容去重
+    var fillArray = function(input, start, end) {
+      start = start ? start : 1
+      end = end ? end : 100
+      if (end < start) {
+        end = start + 100
+      }
+      for (var i = 0; i < 100; i++) {
+        input.push('' + Math.floor(Math.random() * (end - start + 1) + start))
+      }
+      return input
+    }
+
+    var unique = function(arr) {
+      var result = []
+      var len = arr.length
+      for (let i = 0; i < len; i++) {
+        for (let j = i + 1; j < len; j++) {
+          if (arr[i] === arr[j]) {
+            j = ++i
+            break
+          }
+        }
+        result.push(arr[i])
+      }
+      return result
+    }
+
+    var unique = function(arr) {
+      // 实现一
+      // return arr.filter((item, index, arr) => {
+      //   return arr.indexOf(item) === index
+      // })
+      // 实现二
+      const result = []
+      arr.forEach((item) => {
+        if (result.indexOf(item) === -1) result.push(item)
+      })
+      return result
+    }
+
+    var unique = function(arr) {
+      const result = []
+      arr.sort(function(a, b) {
+        return a - b
+      })
+      for (let i = 0; i < arr.length; i++) {
+        // if (arr[i] !== arr[i + 1]) {
+        if (arr[i] !== result[result.length - 1]) {
+          result.push(arr[i])
+        }
+      }
+      return result
+    }
+
+    var unique = function(arr) {
+      const result = []
+      arr.forEach(item => {
+        if (!result.includes(item)) {
+          result.push(item)
+        }
+      })
+      return result
+    }
+    var unique = function(arr) {
+      arr.sort(function(a, b) {
+        return a - b
+      })
+      return arr.reduce((memo, current) => {
+        if (memo.length === 0 || memo[memo.length -1] !== current) {
+          memo.push(current)
+        }
+        return memo
+      }, [])
+    }
+
+    var unique = function(arr) {
+      const result = []
+      const hash = {}
+      for (let i = 0; i < arr.length; i++) {
+        var item = arr[i]
+        var key = typeof item + JSON.stringify(item)
+        if (!hash[key]) {
+          hash[key] = 1
+          result.push(item)
+        }
+      }
+      return result
+    }
+    // var unique = function(arr) {
+    //   // const tmp = new Map()
+    //   // return arr.filter(item => {
+    //   //   return !tmp.has(item) && tmp.set(item, 1)
+    //   // })
+    //   const result = []
+    //   const tmp = new Map()
+    //   for (let i = 0; i < arr.length; i++) {
+    //     if (!tmp.has(arr[i])) {
+    //       tmp.set(arr[i], 1)
+    //       result.push(arr[i])
+    //     }
+    //   }
+    //   return result
+    // }
+    // var unique = function(arr) {
+    //   const set = new Set(arr)
+    //   return Array.from(set) 
+    //   // return [...new Set(arr)]
+    // }
+    var input = []
+    fillArray(input, 1, 200)
+    log(input)
+    var result = unique(input)
+    log(result.length, result)
   </script>
 </body>
 </html> 
