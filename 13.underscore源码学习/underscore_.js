@@ -212,13 +212,13 @@
     }
     return false;
   }
-  
+  // 判断obj中是否包含某个值
   _.contains = _.includes = _.include = function(obj, item, fromIndex, guard) {
     if(!isArrayLike(obj)) obj = _.values(obj);
     if(typeof fromIndex  != 'number' || guard) fromIndex = 0;
     return _.indexOf(obj, item, fromIndex) >= 0;
   }
-
+  // 调用集合中每个value的method
   _.invoke = function(obj, method) {
     var args = slice.call(arguments, 2);
     var isFunc = _.isFunction(method);
@@ -227,19 +227,19 @@
       return func == null ? func : func.apply(value, args);
     });
   };
-
+  // 提取对象数组的某个key对应的值
   _.pluck = function(obj, key) {
     return _.map(obj, _.property(key));
   };
-
+  // 查找属性匹配attrs的值
   _.where = function(obj, attrs) {
     return _.filter(obj, _.matcher(attrs));
   };
-
+  // 返回匹配给定attrs的第一个值
   _.findWhere = function(obj, attrs) {
     return _.find(obj, _.matcher(attrs));
   }
-
+  // 返回最大值
   _.max = function(obj, iteratee, context) {
     var result = -Infinity, lastComputed = -Infinity,
         value, computed;
@@ -261,7 +261,7 @@
     }
     return result;
   };
-
+  // 返回最小值
   _.min = function(obj, iteratee, context) {
     var result = Infinity, lastComputed = Infinity,
         value, computed;
@@ -283,7 +283,7 @@
     }
     return result;
   }
-
+  // 乱序数组
   _.shuffle = function(obj) {
     var set = isArrayLike(obj) ? obj : _.values(obj);
     var length = set.length;
@@ -295,7 +295,7 @@
     }
     return shuffled;
   }
-  
+  // 返回一个随机样本，n是样本数量
   _.sample = function(obj, n, guard) {
     if (n == null || guard) {
       if(!isArrayLike(obj)) obj = _.values(obj);
@@ -303,7 +303,7 @@
     }
     return _.shuffle(obj).slice(0, Math.max(0, n))
   }
-
+  // 对集合按照给定方法排序
   _.sortBy = function(obj, iteratee, context) {
     iteratee = cb(iteratee, context);
     return _.pluck(_map(obj, function(value, index, list){
