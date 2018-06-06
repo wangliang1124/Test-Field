@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang='cn' manifest='cache.manifest'>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>离线缓存</title>
+</head>
+<body>
+    <h1>Manifest Test 1</h1>
+</body>
+<script type="text/javascript" src="js/cache.js"></script>
+<script type="text/javascript">
+var cache = window.applicationCache;
+console.log('test:' + test);  //cache.js定义的一个变量，初始值为10
+
+function load(url, callback){
+    var script = document.createElement('script');
+    script.src = url;
+    script.onload = function(){
+        callback && callback();
+    }
+    document.body.appendChild(script);
+}
+
+cache.addEventListener('updateready', function(){
+    console.log('更新完毕');
+    // cache.swapCache();
+    load('js/cache.js', function(){
+        console.log('test:' + test);    //test: 10
+    }); 
+    cache.update();   
+});
+
+// setTimeout(function(){
+//     cache.addEventListener('updateready', function(){
+//         console.log('更新完毕');
+//         //cache.swapCache();
+//         load('js/cache.js', function(){
+//             console.log('test:' + test);    //test: 10
+//         });    
+//     });
+//     cache.update();
+// }, 1000);
+</script>
+</html>
