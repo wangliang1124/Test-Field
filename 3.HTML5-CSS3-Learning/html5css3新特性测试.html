@@ -40,8 +40,8 @@
             <source src="video/mov_bbb.mp4">
         </video>
         <blockquote>this is quote</blockquote>
-        <form action="">
-            <input list="Country">
+        <form action="" autocomplete="on">
+            <input list="Country" placeholder="Country">
             <datalist id="Country">
                 <option value="India"></option>
                 <option value="Italy"></option>
@@ -51,15 +51,18 @@
                 <option value="China"></option>
             </datalist>
             <input type="color">
-            <input type="date">
-            <input type="email" name="email">
-            <input type="number">
-            <input type="search">
-            <input type="tel">
+            <input type="Datetime-local">
+            <input type="email" name="email" placeholder="email">
+            <input type="number" placeholder="number">
+            <input type="search" placeholder="search">
+            <input type="tel" placeholder="tel">
+            <input type="time">
             <input type="button" onclick="SomeHeavyFunction();" value="提交" id='worker'>
         </form>
         <canvas id="mycanvas" width="300" height="200" style="border:1px solid #000000;"></canvas>
-        <aside id="localStorage"></aside>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1">
+        <rect style="fill: rgb(0, 0, 255); stroke-width: 10px; stroke: rgb(0, 255, 0);" height="100" width="100"></rect>
+        <aside id="localStorage"> aside </aside>
         <fieldset>
             <legend>legend</legend>
             <form action="">表单</form>
@@ -71,7 +74,7 @@
         </blockquote>
         <q>引用</q>
         <progress value="60" max="100"></progress>
-        <meter value="0.6"></meter>
+        <meter value="0.8"></meter>
         <figure><img src="img/border.png" alt="">
             <figcaption>插图1.1</figcaption>
             <figcaption>picture</figcaption>
@@ -84,7 +87,8 @@
         <a href="http://ww.baidu.com"><img src="img/border.png" alt="" style="border: 0"><img src="img/border.png" alt="" style="border: 0">
         <img src="img/border.png" alt="" style="border: 0"></a>
         <textarea>
-            <h1>h1</h1></textarea>
+            <h1>h1</h1>
+        </textarea>
     </div>
     <footer>@ by Leon</footer>
     <script type="text/javascript">

@@ -108,7 +108,8 @@ h2 {
     color: rgb(7, 17, 27);
     /* writing-mode: vertical-rl; */
     -webkit-column-count: 10;
-    -webkit-column-rule: 1px dashed #ccc;
+    -webkit-column-gap:  40px;
+    -webkit-column-rule: 1px dashed  #ff00ff;
 }
 
 .column:first-letter {
@@ -145,7 +146,7 @@ h2 {
 }
 
 .animation:hover {
-    animation: myAnimation 3s ease-out infinite;
+    animation: myAnimation 3s ease .5s infinite;
 }
 
 @keyframes myAnimation {

@@ -156,10 +156,8 @@
 
 # CSS
 ## 1.介绍一下标准的CSS的盒子模型？低版本IE的盒子模型有什么不同的？
-* 标准盒子模型：宽度=内容的宽度（content）+ border + padding + margin
-* 低版本IE盒子模型：宽度=内容宽度（content+border+padding）+ margin
-
-> 盒模型 https://developer.mozilla.org/zh-CN/docs/Web/CSS/CSS_Box_Model/Introduction_to_the_CSS_box_model
+* 标准盒子模型：内容的宽度（content）+ border + padding + margin
+* 低版本IE盒子模型：内容宽度（content+border+padding）+ margin
 
 > 介绍一下标准的CSS的盒子模型？与IE的盒子模型有什么不同的？ https://github.com/ivanberry/CSS-Knowledge/issues/3
 
