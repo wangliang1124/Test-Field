@@ -36,6 +36,9 @@ const pageSlide = (function(){
       touchPoint.endY = e.targetTouches[0].clientY
     },
     touchEnd: function() {
+      if (touchPoint.endY === 0) {
+        return
+      }
       if(touchPoint.endY - touchPoint.startY < -60) {
         this.next()
       } else if (touchPoint.endY - touchPoint.startY > 60) {

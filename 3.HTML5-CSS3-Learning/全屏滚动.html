@@ -59,12 +59,12 @@
         if (!isScroll) {
             if (e.wheelDelta > 0) {
                 if (index === 0) { return }
-                index--
-                scrollTo(index)
+                // index--
+                scrollTo(--index)
             } else {
                 if (index === num - 1) { return }
-                index++
-                scrollTo(index)
+                // index++
+                scrollTo(++index)
             }
         }
     }
@@ -72,10 +72,11 @@
     function scrollTo(i) {
         isScroll = true
         main.style.top = -i * height + 'px'
+        // main.style.transform = 'translate3d(0,' + -i*height+ 'px'  + ', 0)'
         var timer = setTimeout(function() {
             isScroll = false
             clearTimeout(timer)
-        }, 1000)
+        }, 500)
     }
     </script>
 </body>
