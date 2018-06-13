@@ -69,9 +69,6 @@
 * 汤姆大叔的6道javascript编程题题解 http://www.cnblogs.com/zichi/p/4362292
 * 实现一个算法，寻找字符串中出现次数最少的、并且首次出现位置最前的字符。 https://segmentfault.com/q/1010000008703575
 
-## Vue
-* Vue2.0八——相关面试题整理 https://segmentfault.com/a/1190000012315822
-* 整理前端面试题(十一): Vue面试题合集  https://www.jianshu.com/p/e54a9a34a773
 
 ## 正则表达式
 * 正则表达式 https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Guide/Regular_Expressions
@@ -157,3 +154,17 @@
 
 ## 99%的人都理解错了HTTP中GET与POST的区别
 http://www.techweb.com.cn/network/system/2016-10-11/2407736.shtml
+
+# vue
+
+## 不好意思！耽误你的十分钟，让MVVM原理还给你
+> https://juejin.im/post/5abdd6f6f265da23793c4458
+
+## 面试题：你能写一个Vue的双向数据绑定吗？
+> https://segmentfault.com/a/1190000014274840
+
+## Vue2.0八——相关面试题整理 
+> https://segmentfault.com/a/1190000012315822
+
+## 整理前端面试题(十一): Vue面试题合集  
+> https://www.jianshu.com/p/e54a9a34a773
