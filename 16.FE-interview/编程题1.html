@@ -49,7 +49,7 @@
     id1.value = 'test'
 
     // 希望获取到页面中所有的checkbox怎么做？(不使用第三方框架)
-    console.log(document.querySelector('[type="checkbox"]').checked='checked')
+    console.log(document.querySelectorAll('[type="checkbox"]'))
     var input = document.getElementsByTagName('input')
     var length = input.length,
         result = [],
@@ -203,7 +203,7 @@
         return this.replace(/^\s+|\s+$/g, '')
       }
     }
-    var str = " \t\n test string ".trim()
+    var str = " \t\n test string \u2028".trim()
     log(str)
     // 26.Javascript中callee和caller的作用？如果一对兔子每月生一对兔子；一对新生兔，从第二个月起就开始生兔子；假定每对兔子都是一雌一雄，试问一对兔子，第n个月能繁殖成多少对兔子？
     var cache = {}
@@ -397,11 +397,13 @@
         }
 
       }
-    })();
+    })()
     ready(function(){
       log('................... complete!')
     })
-
+    ready(function(){
+      log('................... yessss!')
+    })
     // 12.（设计题）想实现一个对页面某个节点的拖曳？如何做？（使用原生JS）
     ready(function() {
       var box = $('#box')[0]
@@ -638,7 +640,7 @@
           setTimeout(()=>{
             console.log(new Date, i)
             resolve()
-          },1000*i)
+          }, 1000*i)
         }))
       })(i)
     }

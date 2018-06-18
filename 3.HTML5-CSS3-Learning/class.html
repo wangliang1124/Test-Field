@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>class</title>
+</head>
+
+<body>
+    <script>
+    // es5
+    // function Point(x, y) {
+    //     this.x = x;
+    //     this.y = y;
+    // }
+    // Point.prototype.toString = function() {
+    //     return this.x + this.y;
+    // }
+    //es6
+    class Point {
+        constructor(x, y) {
+            this.x = x
+            this.y = y
+        }
+        toString() {
+            return this.x + this.y;
+        }
+    }
+    console.log(typeof Point)
+    let point = new Point()
+    console.log(point)
+    </script>
+</body>
+
+</html>
