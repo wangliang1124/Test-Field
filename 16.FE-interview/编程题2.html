@@ -138,6 +138,7 @@
         if (key.indexOf('post') === 0 && typeof obj[key] === 'function') {
           (function(key){
             var fn = obj[key]
+            log(key)
             obj[key] = function() {
               if (obj.check()) fn.apply(obj, arguments)
             }
@@ -147,6 +148,7 @@
     }
 
     checkify(Page.prototype)
+    // log(Page.prototype)
 
     var obj = new Page()
     // log(obj)
@@ -163,7 +165,7 @@
         return obj
       }
       // Node
-      if (obj.nodeType && 'cloneNode in obj') {
+      if (obj.nodeType && 'cloneNode' in obj) {
         return obj.cloneNode(true)
       }
       // Date
@@ -246,6 +248,7 @@
       return text
     }
     var remain = document.getElementById('remain')
+    remain.innerHTML = getRemainTime()
     setInterval(function() {
       remain.innerHTML = getRemainTime()
     }, 1000)
@@ -397,6 +400,7 @@
     Event.prototype = {
       constructor: Event,
       on: function(type, handler) {
+        this._callbacks = this._callbacks || {}
         this._callbacks[type] = this._callbacks[type] || []
         this._callbacks[type].push(handler)
         return this
@@ -551,7 +555,7 @@
     }
     var nav = document.getElementById('nav')
     EventUtil.on(nav, 'click', function(event) {
-      EventUtil.prevent(event)
+      EventUtil.prevent()
       var event = EventUtil.getEvent(event)
       var target = EventUtil.getTarget(event)
       var children = this.children
@@ -564,7 +568,7 @@
         if (target === children[i]) {
           result['index'] = i + 1
           result['name'] = DOMUtil.text(target)
-          result['link'] = DOMUtil.prop(target, 'href')
+          result['link'] = DOMUtil.prop(target.getElementsByTagName('a')[0], 'href')
         }
       }
       log(result)
