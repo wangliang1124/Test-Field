@@ -322,7 +322,7 @@
       return left.index - right.index;
     }), 'value');
   };
-
+  // 生成一个分组函数，遍历obj的key、处理key，传入behavior，形成分组
   var group = function(behavior) {
     return function(obj, iteratee, context) {
       var result = {};
@@ -333,15 +333,15 @@
       })
     }
   }
-
+  // 类似excel的分类汇总，根据iteratee后的key分类
   _.groupBy = group(function(result, value, key) {
     if(_.has(result, key)) result[key].push(value); else result[key] = [value];
   })
-
+  // 类似groupBy，迭代每个obj中的value，放在一个{ key: value }对象中
   _.indexBy = group(function(result, value, key) {
     result[key] = value;
   })
-
+  // 统计根据key查找到value的数量
   _.countBy = group(function(result, value, key) {
     if(_.has(result, key))result[key]++;else result[key] = 1;
   })
@@ -349,15 +349,15 @@
   _.toArray = function(obj) {
     if(!obj) return [];
     if(_.isArray(obj)) return slice.call(obj)
-    if(isArrayLike(obj)) return _.map(obj, _.identity);
+    if(isArrayLike(obj)) return _.map(obj, _.identity); // 遍历obj，直接return value，形成一个新数组
     return _.values(obj);
   };
-
+  // 类数组或对象的length
   _.size = function(obj) {
     if(obj == null) return 0;
     return isArrayLike(obj) ? obj.length : _.keys(obj).length;
   };
-
+  // 由predicate做判断分成两组
   _.partition = function(obj, predicate, context) {
     predicate = cb(predicate, context)
     var pass = [], fail = [];
@@ -368,24 +368,24 @@
   };
 
   // Array Functions
-
+  // 取得数组的前n个元素
   _.first = _.head = _.take = function(array, n, guard) {
     if (array == null) return void 0;
     if (n == null || guard) return array[0];
-    return _.initial(array, array.length - 1)
+    return _.initial(array, array.length - n)
   }
 
-  // return everything but the last entry of the array.
+  // 去掉后n个，返回前面length-n个
   _.initial = function(array, n, guard) {
     return slice.call(array, 0, Math.max(0, array.length - (n == null || guard ? 1 : n)));
   }
-
+  // 取得数组后n个元素
   _.last = function(array, n, guard) {
     if (array == null) return void 0;
     if (n == null || guard) return array[array.length -1];
     return _.rest(array, Math.max(0, array.length - n));
   }
-
+  // 丢掉数组前n个元素，取得后length-n个
   _.rest = _.tail = _.drop = function(array, n, guard) {
     return slice.call(array,  n == null || grard ? 1 : n)
   }

@@ -56,11 +56,14 @@
 	* Lodash 源码中的那些迷人的细节 https://zhuanlan.zhihu.com/p/32823459
 	* javascript 总结（常用工具类的封装） https://segmentfault.com/a/1190000013041329
 
++ 2018.6
 	* vue源码学习系列：
 		* Vue.js 源码学习笔记 http://jiongks.name/blog/vue-code-review/
 		* 梁少峰的个人博客 https://github.com/youngwind/blog
 		* Vue2.1.7源码学习 http://hcysun.me/2017/03/03/Vue%E6%BA%90%E7%A0%81%E5%AD%A6%E4%B9%A0/
 		* Vue.js 源码解析  https://github.com/answershuto/learnVue
+		* vue 2.2.6源码分析 https://github.com/liutao/vue2.0-source
+		* vue-analysis https://github.com/Ma63d/vue-analysis	
 
 	Flex学习： 
 	 A Complete Guide to Flexbox  https://css-tricks.com/snippets/css/a-guide-to-flexbox/
