@@ -389,11 +389,11 @@
   _.rest = _.tail = _.drop = function(array, n, guard) {
     return slice.call(array,  n == null || grard ? 1 : n)
   }
-
+  // 去掉数组的falsy值
   _.compact = function(array) {
     return _.filter(array, _.identity);
   }
-
+  // 数组扁平化
   var flatten = function(input, shallow, strict, startIndex) {
     var output = [], idx = 0;
     for (var i = startIndex || 0, length = getLength(input); i < length; i++) {
@@ -411,6 +411,7 @@
     }
     return output;
   }
+  // 
   _.flatten = function(array, shallow) {
     return flatten(array, shallow, false);
   };
