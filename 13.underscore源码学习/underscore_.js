@@ -592,15 +592,17 @@
   }
 
   // Function Functions
-
+  // _.bind内部方法, 用于绑定函数执行时的this值
   var executeBound = function (sourceFunc, boundFunc, context, callingContext, args) {
+    // 调用者不是boundFunc的实例则直接绑定
     if (!(callingContext instanceof boundFunc)) return sourceFunc.apply(context, args);
+    // 如果直接new绑定的函数，会忽略要绑定的对象，而是返回一个sourceFunc的实例
     var self = baseCreate(sourceFunc.prototype);
     var result = sourceFunc.apply(self, args);
     if (_.isObject(result)) return result;
     return self;
   }
-
+  // 绑定func执行的this值
   _.bind = function (func, context) {
     if (nativeBind && func.bind === nativeBind) return nativeBind.apply(func, slice.call(arguments, 1));
     if (!_.isFunction(func)) throw new TypeError('Bind must be called on a function');
@@ -610,7 +612,7 @@
     }
     return bound;
   }
-
+  // 偏函数，预填充参数的绑定函数
   _.partial = function (func) {
     var boundArgs = slice.call(arguments, 1);
     var bound = function () {
@@ -625,10 +627,9 @@
     }
     return bound;
   }
-
+  // 绑定对象里的方法的this为这个对象
   _.bindAll = function (obj) {
-    var i, length = arguments.length,
-      key;
+    var i, length = arguments.length, key;
     if (length <= 1) throw new Error('bindAll must be passed function names');
     for (i = 1; i < length; i++) {
       key = arguments[i];
@@ -636,7 +637,7 @@
     }
     return obj;
   };
-
+  // 缓存执行结果，如果有缓存，直接返回缓存的结果，避免再次执行函数
   _.memoize = function (func, hasher) {
     var memoize = function (key) {
       var cache = memoize.cache;
