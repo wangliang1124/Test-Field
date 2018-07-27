@@ -1,0 +1,14 @@
+{
+    "name": "@souche-ui/som-selector-item",
+    "version": "3.5.1",
+    "description": "som-selector-item",
+    "main": "./lib/index.js",
+    "repository": "http://git.souche.com/souche-ui/som-ui/tree/master/packages/som-selector-item",
+    "author": "souchefe",
+    "license": "MIT",
+    "files": [
+        "src",
+        "lib",
+        "index.js"
+    ]
+}

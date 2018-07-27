@@ -1,0 +1,32 @@
+:root {
+    --color-primary: #ff4040;
+    --selector-color-primary: #FF571A;
+    --selector-list-item-color: #1A1A1A;
+    --size-base: 14px;
+
+    /* Colors*/
+    --color-primary: #ffdc00;
+    --color-success: #1DBF6E;
+    --color-warning: #F90;
+    --color-info: #4DA6FF;
+    --color-danger: #FF4040;
+    --color-link: #007FFF;
+    --color-button-text: #1A1A1A;
+    --color-button-border: #e2e2e2;
+    --color-white: #FFFFFF;
+
+
+
+    /* Button */
+    --button-default-text-color: var(--color-button-text);
+    --button-default-border-color: var(--color-button-border);
+    --button-primary-background-color: var(--color-primary);
+    --button-hover-fill-color: var(--color-primary);
+
+    /* Image Viewer */
+
+    /* --image-viewer-- */
+
+    
+
+}
