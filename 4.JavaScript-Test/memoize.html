@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>memoize</title>
+    <script src="https://cdn.bootcss.com/lodash.js/4.17.10/lodash.js"></script>
+</head>
+<body>
+    <script>
+        function getData() {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve(1)
+                }, 1000)
+            })
+        }
+        const test = _.memoize(() => {
+            getData().then((res) => {
+                // console.log(res)
+               return res
+            })
+            // console.log(result)
+            // return result
+        })
+        console.log(test()) // 结论： 无法memo异步获取的数据
+        console.log('sss' + test())
+    </script>
+</body>
+</html>
