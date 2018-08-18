@@ -36,34 +36,39 @@
         })
     },
 ```
-### 缺陷一
+### 缺陷
 * `this.carList = this.cacheList[this.sellerName]`，这样的写法隐藏隐患，因为carList，cacheList，sellerName随时可能在请求的过程中被修改。比如：由tab a快速切换到 tab b 的时候，tab a 正好请求回数据，这时候实际上执行的是 `this.carList = this.cacheList['b'] || []`，而这时候缓存中其实肯定是没有b的，所以必然为空数组。
-
-### 改进一
-```javascript
-     async getCarList(sellerName, searchForm, options) {
-        // ... 省略部分非关键代码
-        if (!sellerName) return
-        const cache = this.cacheList[sellerName]
-        if (cache && !!cache.length) {
-            this.carList = cache
-            return
-        }
-        // promise化异步请求过程
-        const result = await new Promise((resolve, reject) => {
-            wx.request({/* 省略 */})
-        })
-        this.cacheList[sellerName] = result.carInfoList
-        this.carList = this.cacheList[sellerName]
-    },
-```
-### 缺陷二
 * 快速切换tab（还没有缓存）的时候，每次点击都会请求一次数据，造成多次无用请求。
 
-### 改进二
+### 改进
 ```javascript
-    
+    getCarList(sellerName, searchForm, options) {
+        /* ... 省略部分非关键代码  */
+        // 处理promise的方法
+        const process = async (promise) => {
+            const result = await promise
+            if (result.sellerName === this.sellerName) { // 根据当前tab的sellerName和结果中的sellerName是否一致决定items的数据
+                this.items = result.data
+            }
+        }
+        this.items = [] // 清空一下，防止装着别的数据
+        // 第一次请求缓存里没有promise
+        const cache = this.cacheList[sellerName]
+        if (cache) {
+            process(cache[sellerName])
+            return false
+        }
+        // promise化小程序异步请求过程，这一步可以进一步封装...
+       const p = new Promise((resolve, reject) => {
+            wx.request({
+                resolve({sellerName, data: data.data.carInfoList}) // 返回sellerName作为一个凭证
+            })
+        })
+        this.cacheList[sellerName] = p // 把promise保持在缓存里，之后如果promise已经resolve就不用等待了
+        process(p)
+    },
 ```
 
-## 更广义的解决方案
+## 更通用的解决方案
+* 待续
 
