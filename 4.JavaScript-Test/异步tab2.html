@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>tab</title>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/vue/2.1.3/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.10/lodash.min.js"></script>
+    <style>
+        .tab {
+            width: 375px;
+            height: 36px;
+            display: flex;
+            text-align: center;
+            background-color: #ccc;
+        }
+        .tab span {
+            flex: 1
+        }
+        .cur {
+            background-color: #00f;
+        }
+        /*ul li{
+            flex: 1
+        }*/
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div class="tab">
+            <span @click="onClick(1)" :class="{cur: type === 1}">tab1</span>
+            <span @click="onClick(2)" :class="{cur: type === 2}">tab2</span>
+        </div>
+        
+        <ul>
+            <li v-for="item in items" v-show="!loading">{{item.name}}</li>
+            <div v-show="loading">loading...</div>
+        </ul>
+
+    </div>
+    <script>
+        const cache = {}
+        let debounced = null
+        const vm = new Vue({
+			el:"#app",
+            data: {
+                items: [],
+                type: 1,
+                loading: true
+            },
+            created() {
+                // debounced = debounce(this.getList)
+            },
+            async mounted() {
+                debounced = debounce(this.getList)
+                const result = await debounced(1)
+                this.items = result.data
+                this.loading = false
+            },
+            methods: {
+                async onClick(type) {
+                    this.type = type
+                    // this.getList(type)
+                    // const debounced = debounce(this.getList, 0, true, 'timer' + type)
+                    // debounced(type).then((res) => {
+                    //     this.items = res
+                    // })
+                    this.items = []
+                    this.loading = true
+                    const result = await debounced(type)
+                    if(result.type === this.type){ 
+                        this.items = result.data
+                        this.loading = false
+                    }
+                    console.log(this.items)
+                },
+                getList(type) {
+                    // this.loading = true
+                    const promise = new Promise((resolve, reject) => {
+                        console.log('promise==============' + type)
+                        setTimeout(()=> {
+                            const arr = [
+                                {name: type + '-test1'},
+                                {name: type + '-test2'},
+                                {name: type + '-test3'},
+                            ]
+                            resolve({type, data: arr})
+                        }, 3000)
+                    })
+                    return promise
+                    // cache[type] = promise
+                    // this.getList(type)
+                },
+            }
+        })
+
+        function debounce(func) {
+          var cache = {}
+
+          return async function(type) {
+            context = this;
+            args = arguments;
+            console.log(cache)
+            if (cache[type]) return cache[type]
+            // result = func.apply(context, args);
+            return cache[type] = func.apply(context, args);
+            // return result;
+          };
+        };
+    </script>
+</body>
+</html>

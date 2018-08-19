@@ -61,6 +61,7 @@
         // promise化小程序异步请求过程，这一步可以进一步封装...
        const p = new Promise((resolve, reject) => {
             wx.request({
+                /* 省略部分代码 */
                 resolve({sellerName, data: data.data.carInfoList}) // 返回sellerName作为一个凭证
             })
         })
@@ -69,6 +70,48 @@
     },
 ```
 
-## 更通用的解决方案
-* 待续
+## 进一步解耦
+* 上面的代码虽然已经可以正常用了，但其实代码与业务逻辑耦合性很高，能否进一步解耦？请看代码。
 
+```javascript
+    // 业务页面
+    async onClick(sellerName) { /// 这里是相应点击事件的业务逻辑
+        this.sellerName = sellerName
+        this.items = []
+        this.loading = true
+        const result = await memoizedReqest(sellerName)
+        if(result.name === this.sellerName){ 
+            this.items = result.data
+            this.loading = false
+        }
+    },
+```
+
+```javascript
+    // utils.js
+    request(options) {
+       return new Promise((resolve, reject) => {
+            wx.request({
+                /* 省略部分代码 */
+                resolve({name, data: res}) 
+            })
+        })
+    }
+    memoize(func) {
+        var cache = {}
+          return function(name) {
+            context = this;
+            args = arguments;
+            if (cache[name]) return cache[name]
+            return cache[name] = func.apply(context, args);
+          };
+    }
+    export default memoizedReqest = memoize(request)
+```
+## 总结
+
+异步请求的应该场景还是挺多的，比如类似百度的搜索框的自动联想、树形目录、分页、新闻列表等等都可能用到异步请求，因此我认为这篇总结对类似情境有一定的参考意义，也希望对看到这篇文章的人有所帮助。
+
+当然我知道的我的方法必定是不完美的，一定存在更优雅、更具有普遍适用性的方案，不过限于本人的见识目前只能做到这样了，我在今后的工作中也将继续探索更好的解决办法。
+  
+通过这个简单的小项目，我发现要做到完美并不容易，需要对框架、业务、JS语言的特性有很深的理解才行。当然办法总部困难多，只要动脑筋多思考总会有更好的办法的。
