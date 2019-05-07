@@ -38,9 +38,19 @@
         <audio controls>
             <source src="audio/Gettysburg Address.mp3" type="audio/mpeg"> Your browser doesn't support audio feature.
         </audio>
+
+        <div class="cricleplay"   v-on:click="audio" status="stop" no="1">
+            <div class="small"></div>
+            <div class="middle stopanimate"></div>
+            <div class="large stopanimate"></div>
+        </div>
+
         <video width="450" height="340" controls>
             <source src="video/mov_bbb.mp4">
         </video>
+
+
+
         <blockquote>this is quote</blockquote>
         <form action="" autocomplete="on">
             <input list="Country" placeholder="Country">
