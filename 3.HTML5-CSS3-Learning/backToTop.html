@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>BackToTop</title>
+    <style>
+        html {
+            height: 5000px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="backToTop" style="position:fixed;bottom:40px;right:20px;display: none;cursor: pointer;">返回顶部</div>
+
+    <script>
+
+        if (!window.requestAnimationFrame) {
+            requestAnimationFrame = function (fn) {
+                setTimeout(fn, 17)
+            };
+        }
+
+        if (!window.cancelAnimationFrame) {
+            window.cancelAnimationFrame = function (id) {
+                clearTimeout(id)
+            }
+        }
+        const topEl = document.getElementById('backToTop')
+        window.addEventListener('scroll', function () {
+            const winScrollTop = getWinScrollTop()
+            if (winScrollTop > 200) {
+                topEl.style.display = 'block'
+            } else {
+                topEl.style.display = 'none'
+            }
+        })
+
+        //使用定时器，将scrollTop的值每次减少，直到减少到0，则动画完毕
+        document.getElementById('backToTop').onclick = function () {
+            let timer = null
+            timer = requestAnimationFrame(function fn() {
+                const backToTop = getWinScrollTop()
+                if (backToTop > 0) {
+                    document.body.scrollTop = document.documentElement.scrollTop = backToTop - 100
+                    timer = requestAnimationFrame(fn)
+                } else {
+                    cancelAnimationFrame(timer)
+                }
+            })
+        }
+        function getWinScrollTop() {
+            return window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop
+        }
+    </script>
+</body>
+
+</html>
