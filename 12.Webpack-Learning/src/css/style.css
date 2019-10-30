@@ -4,13 +4,14 @@
 	
 }
 body{
-	background: yellow;
+	background: white;
 	color: blue;
-	font-size: 24px;
+    font-size: 24px;
+    height: 100%;
 }
 #main{
-	width: 600px;
-	height:300px;
+	width: 60%;
+	height: 400px;
 	border:1px solid black;
 	display:flex;
 	margin: 50px auto;
