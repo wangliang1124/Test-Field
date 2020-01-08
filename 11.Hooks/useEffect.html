@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>useEffect</title>
+    </head>
+
+    <body>
+        <h2>useEffect</h2>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+        <script type="text/babel">
+            const { useState, useEffect } = React;
+
+            class Counter1 extends React.Component {
+                state = { number: 0 };
+                add = () => {
+                    this.setState({ number: this.state.number + 1 });
+                };
+                componentDidMount() {
+                    this.changeTitle();
+                }
+                componentDidUpdate() {
+                    this.changeTitle();
+                }
+                changeTitle = () => {
+                    document.title = `你已经点击了${this.state.number}次`;
+                };
+                render() {
+                    return (
+                        <>
+                            <p>{this.state.number}</p>
+                            <button onClick={this.add}>+</button>
+                        </>
+                    );
+                }
+            }
+
+            function Counter2() {
+                const [number, setNumber] = useState(0);
+                // useEffect里面的这个函数会在第一次渲染之后和更新完成后执行
+                // 相当于 componentDidMount 和 componentDidUpdate:
+                useEffect(() => {
+                    document.title = `你点击了${number}次`;
+                });
+                return (
+                    <>
+                        <p>{number}</p>
+                        <button onClick={() => setNumber(number + 1)}>+</button>
+                    </>
+                );
+            }
+
+            function Counter3() {
+                let [number, setNumber] = useState(0);
+                let [text, setText] = useState("");
+                // 相当于componentDidMount 和 componentDidUpdate
+                useEffect(() => {
+                    console.log("开启一个新的定时器");
+                    let $timer = setInterval(() => {
+                        setNumber(number => number + 1);
+                    }, 1000);
+                    // useEffect 如果返回一个函数的话，该函数会在组件卸载和更新时调用
+                    // useEffect 在执行副作用函数之前，会先调用上一次返回的函数
+                    // 如果要清除副作用，要么返回一个清除副作用的函数
+                    return () => {
+                        console.log("destroy effect");
+                        clearInterval($timer);
+                    };
+                });
+                // }, []); //要么在这里传入一个空的依赖项数组，这样就不会去重复执行
+                return (
+                    <>
+                        <input value={text} onChange={event => setText(event.target.value)} />
+                        <p>{number}</p>
+                        <button>+</button>
+                    </>
+                );
+            }
+
+            function Counter() {
+                let [number, setNumber] = useState(0);
+                let [text, setText] = useState("");
+                // 相当于componentDidMount 和 componentDidUpdate
+                useEffect(() => {
+                    console.log("useEffect");
+                    let $timer = setInterval(() => {
+                        setNumber(number => number + 1);
+                    }, 1000);
+                }, []); // 数组表示 effect 依赖的变量，只有当这个变量发生改变之后才会重新执行 efffect 函数
+                return (
+                    <>
+                        <input value={text} onChange={event => setText(event.target.value)} />
+                        <p>{number}</p>
+                        <button>+</button>
+                    </>
+                );
+            }
+
+            ReactDOM.render(<Counter />, document.getElementById("root"));
+
+            /* 7.5 使用多个 Effect 实现关注点分离 */
+            // 类组件版
+            class FriendStatusWithCounter extends React.Component {
+                constructor(props) {
+                    super(props);
+                    this.state = { count: 0, isOnline: null };
+                    this.handleStatusChange = this.handleStatusChange.bind(this);
+                }
+
+                componentDidMount() {
+                    document.title = `You clicked ${this.state.count} times`;
+                    ChatAPI.subscribeToFriendStatus(this.props.friend.id, this.handleStatusChange);
+                }
+
+                componentDidUpdate() {
+                    document.title = `You clicked ${this.state.count} times`;
+                }
+
+                componentWillUnmount() {
+                    ChatAPI.unsubscribeFromFriendStatus(this.props.friend.id, this.handleStatusChange);
+                }
+
+                handleStatusChange(status) {
+                    this.setState({
+                        isOnline: status.isOnline,
+                    });
+                }
+                // ...
+            }
+
+            // Hooks 版
+            function FriendStatusWithCounterHooks(props) {
+                const [count, setCount] = useState(0);
+                useEffect(() => {
+                    document.title = `You clicked ${count} times`;
+                });
+
+                const [isOnline, setIsOnline] = useState(null);
+                useEffect(() => {
+                    function handleStatusChange(status) {
+                        setIsOnline(status.isOnline);
+                    }
+
+                    ChatAPI.subscribeToFriendStatus(props.friend.id, handleStatusChange);
+                    return () => {
+                        ChatAPI.unsubscribeFromFriendStatus(props.friend.id, handleStatusChange);
+                    };
+                });
+                // ...
+            }
+        </script>
+    </body>
+</html>

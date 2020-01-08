@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>useReducer</title>
+    </head>
+
+    <body>
+        <h2>useReducer</h2>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+        <script type="text/babel">
+            const { useReducer } = React;
+
+            const initialState = 0;
+            function reducer(state, action) {
+                switch (action.type) {
+                    case "increment":
+                        return { number: state.number + 1 };
+                    case "decrement":
+                        return { number: state.number - 1 };
+                    default:
+                        throw new Error();
+                }
+            }
+            function init(initialState) {
+                return { number: initialState };
+            }
+            function Counter() {
+                const [state, dispatch] = useReducer(reducer, initialState, init);
+                return (
+                    <>
+                        Count: {state.number}
+                        <button onClick={() => dispatch({ type: "increment" })}>+</button>
+                        <button onClick={() => dispatch({ type: "decrement" })}>-</button>
+                    </>
+                );
+            }
+
+            const rootElement = document.getElementById("root");
+            ReactDOM.render(<Counter />, rootElement);
+        </script>
+    </body>
+</html>

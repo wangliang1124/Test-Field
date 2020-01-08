@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>useRef</title>
+    </head>
+
+    <body>
+        <h2>useRef</h2>
+        <ul>
+            <li>
+                useRef 返回的 ref 对象在组件的整个生命周期内保持不变，也就是说每次重新渲染函数组件时，返回的ref
+                对象都是同一个（使用 React.createRef ，每次重新渲染组件都会重新创建 ref）
+            </li>
+            <li></li>
+        </ul>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+        <script type="text/babel">
+            const { useState, useEffect, useRef } = React;
+
+            function Parent() {
+                let [number, setNumber] = useState(0);
+                return (
+                    <>
+                        <Child />
+                        <button onClick={() => setNumber({ number: number + 1 })}>+</button>
+                    </>
+                );
+            }
+
+            let input;
+            function Child() {
+                const inputRef = useRef();
+                console.log("input===inputRef", input === inputRef);
+                input = inputRef;
+                function getFocus() {
+                    inputRef.current.focus();
+                }
+                return (
+                    <>
+                        <input type="text" ref={inputRef} />
+                        <button onClick={getFocus}>获得焦点</button>
+                    </>
+                );
+            }
+
+            function Child(props, ref) {
+                return <input type="text" ref={ref} />;
+            }
+            Child = React.forwardRef(Child);
+            function Parent() {
+                let [number, setNumber] = useState(0);
+                // 在使用类组件的时候，创建 ref 返回一个对象，该对象的 current 属性值为空
+                // 只有当它被赋给某个元素的 ref 属性时，才会有值
+                // 所以父组件（类组件）创建一个 ref 对象，然后传递给子组件（类组件），子组件内部有元素使用了
+                // 那么父组件就可以操作子组件中的某个元素
+                // 但是函数组件无法接收 ref 属性 <Child ref={xxx} /> 这样是不行的
+                // 所以就需要用到 forwardRef 进行转发
+                const inputRef = useRef(); //{current:''}
+                function getFocus() {
+                    inputRef.current.value = "focus";
+                    inputRef.current.focus();
+                }
+                return (
+                    <>
+                        <Child ref={inputRef} />
+                        <button onClick={() => setNumber({ number: number + 1 })}>+</button>
+                        <button onClick={getFocus}>获得焦点</button>
+                    </>
+                );
+            }
+
+            ReactDOM.render(<Parent />, document.getElementById("root"));
+        </script>
+    </body>
+</html>

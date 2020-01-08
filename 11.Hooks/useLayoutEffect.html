@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>useLayoutEffect</title>
+    </head>
+
+    <body>
+        <h2>useLayoutEffect</h2>
+        <ul>
+            <li><strong>useEffect 在全部渲染完毕后才会执行</strong></li>
+            <li><strong>useLayoutEffect 会在 浏览器 layout 之后，painting 之前执行</strong></li>
+            <li>其函数签名与 useEffect 相同，但它会在所有的 DOM 变更之后<strong>同步</strong>调用 effect</li>
+            <li><strong>可以使用它来读取 DOM 布局并同步触发重渲染</strong></li>
+            <li>在浏览器执行绘制之前 useLayoutEffect 内部的更新计划将被<strong>同步</strong>刷新</li>
+            <li><strong>尽可能使用标准的 useEffect 以避免阻塞视图更新</strong></li>
+        </ul>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+        <script type="text/babel">
+            const { useState, useEffect, useLayoutEffect } = React;
+
+            function LayoutEffect() {
+                const [color, setColor] = useState("red");
+                useLayoutEffect(() => {
+                    alert(color);
+                });
+                useEffect(() => {
+                    console.log("color", color);
+                });
+                return (
+                    <>
+                        <div id="myDiv" style={{ background: color }}>
+                            颜色
+                        </div>
+                        <button onClick={() => setColor("red")}>红</button>
+                        <button onClick={() => setColor("yellow")}>黄</button>
+                        <button onClick={() => setColor("blue")}>蓝</button>
+                    </>
+                );
+            }
+
+            ReactDOM.render(<LayoutEffect />, document.getElementById("root"));
+        </script>
+    </body>
+</html>

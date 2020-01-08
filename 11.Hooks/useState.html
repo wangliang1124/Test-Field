@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Hooks useState</title>
+    </head>
+
+    <body>
+        <h2>useState</h2>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+        <script type="text/babel">
+            const { useState, memo, useMemo, useCallback } = React;
+
+            function Child1(porps) {
+                console.log(porps);
+                const { num, handleClick } = porps;
+                return (
+                    <div
+                        onClick={() => {
+                            handleClick(num + 1);
+                        }}
+                    >
+                        child {num}
+                    </div>
+                );
+            }
+
+            function Child2(porps) {
+                // console.log(porps);
+                const { text, handleClick } = porps;
+                return (
+                    <div>
+                        child2 {text}
+                        <Grandson text={text} handleClick={handleClick} />
+                    </div>
+                );
+            }
+
+            function Grandson(porps) {
+                console.log(porps);
+                const { text, handleClick } = porps;
+                return (
+                    <div
+                        onClick={() => {
+                            handleClick(text + 1);
+                        }}
+                    >
+                        grandson
+                    </div>
+                );
+            }
+
+            function Parent() {
+                let [num, setNum] = useState(0);
+                let [text, setText] = useState(1);
+
+                return (
+                    <div>
+                        <Child1 num={num} handleClick={setNum} />
+                        <Child2 text={text} handleClick={setText} />
+                        <Counter />
+                        <Counter2 />
+                        <Counter5 number={1} />
+                        <Counter6 />
+                        <Counter7 />
+                    </div>
+                );
+            }
+
+            function Counter() {
+                let [number, setNumber] = useState(0);
+                function lazy() {
+                    setTimeout(() => {
+                        // setNumber(number+1);
+                        // 这样每次执行时都会去获取一遍 state，而不是使用点击触发时的那个 state
+                        setNumber(number => number + 1);
+                    }, 3000);
+                }
+                return (
+                    <>
+                        <p>{number}</p>
+                        <button onClick={() => setNumber(number + 1)}>+</button>
+                        <button onClick={lazy}>lazy</button>
+                    </>
+                );
+            }
+
+            function Counter2() {
+                let [number, setNumber] = useState(0);
+                function alertNumber() {
+                    setTimeout(() => {
+                        // alert 只能获取到点击按钮时的那个状态
+                        alert(number);
+                    }, 3000);
+                }
+                return (
+                    <>
+                        <p>{number}</p>
+                        <button onClick={() => setNumber(number + 1)}>+</button>
+                        <button onClick={alertNumber}>alertNumber</button>
+                    </>
+                );
+            }
+
+            function Counter5(props) {
+                console.log("Counter5 render");
+                // 这个函数只在初始渲染时执行一次，后续更新状态重新渲染组件时，该函数就不会再被调用
+                function getInitState() {
+                    return { number: props.number };
+                }
+                let [counter, setCounter] = useState(getInitState);
+                return (
+                    <>
+                        <p>{counter.number}</p>
+                        <button onClick={() => setCounter({ number: counter.number + 1 })}>+</button>
+                        <button onClick={() => setCounter(counter)}>setCounter</button>
+                    </>
+                );
+            }
+
+            function SubCounter({ onClick, data }) {
+                console.log("SubCounter render");
+                return <button onClick={onClick}>{data.number}</button>;
+            }
+            SubCounter = memo(SubCounter);
+
+            function Counter6() {
+                console.log("Counter render");
+                const [name, setName] = useState("计数器");
+                const [number, setNumber] = useState(0);
+                const data = { number };
+                const addClick = () => {
+                    setNumber(number + 1);
+                };
+                return (
+                    <>
+                        <input type="text" value={name} onChange={e => setName(e.target.value)} />
+                        <SubCounter data={data} onClick={addClick} />
+                    </>
+                );
+            }
+
+            // 更深入的优化
+            function SubCounter2({ onClick, data }) {
+                console.log("SubCounter render");
+                return <button onClick={onClick}>{data.number}</button>;
+            }
+            SubCounter2 = memo(SubCounter2);
+
+            let oldData, oldAddClick;
+            function Counter7() {
+                console.log("Counter render");
+                const [name, setName] = useState("计数器");
+                const [number, setNumber] = useState(0);
+                // 父组件更新时，这里的变量和函数每次都会重新创建，那么子组件接受到的属性每次都会认为是新的
+                // 所以子组件也会随之更新，这时候可以用到 useMemo
+                // 有没有后面的依赖项数组很重要，否则还是会重新渲染
+                // 如果后面的依赖项数组没有值的话，即使父组件的 number 值改变了，子组件也不会去更新
+                //const data = useMemo(()=>({number}),[]);
+                const data = useMemo(() => ({ number }), [number]);
+                console.log("data===oldData ", data === oldData);
+                oldData = data;
+
+                // 有没有后面的依赖项数组很重要，否则还是会重新渲染
+                const addClick = useCallback(() => {
+                    setNumber(number + 1);
+                }, [number]);
+                // const addClick = () => {
+                //     setNumber(number + 1);
+                // };
+                console.log("addClick===oldAddClick ", addClick === oldAddClick);
+                oldAddClick = addClick;
+
+                return (
+                    <>
+                        <input type="text" value={name} onChange={e => setName(e.target.value)} />
+                        <SubCounter2 data={data} onClick={addClick} />
+                    </>
+                );
+            }
+
+            const rootElement = document.getElementById("root");
+            ReactDOM.render(<Parent />, rootElement);
+        </script>
+    </body>
+</html>

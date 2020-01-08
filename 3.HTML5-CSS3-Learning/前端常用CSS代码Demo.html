@@ -1,0 +1,511 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>前端常用CSS代码Demo</title>
+    <meta name="keywords" content="css,前端,公众号,前端常用CSS代码Demo" />
+    <meta name="description" content="故事胶片,前端分享,公众号：小夭同学,前端常用CSS代码Demo" />
+    <meta content="telephone=no" name="format-detection">
+    <meta content="black" name="apple-mobile-web-app-status-bar-style">
+    <meta name="viewport" content="width=750,minimum-scale=0.2,maximum-scale=2,user-scalable=no" />
+    <link rel="icon" type="image/x-icon" href="images/icon.ico" />
+    <link rel="stylesheet" href="https://web.lieme.cn/common/css/base.css">
+    <link rel="stylesheet" href="css/cssdemo.css">
+</head>
+<body>
+   <div class="index clearfix">
+      <div class="title">前端常用的CSS代码</div>
+      <div class="list">
+         <h3>1、垂直居中对齐</h3>
+         <div class="cont class">
+            <div class="item mt50 relative">
+               <span class="absolute vc">
+                  垂直居中对齐
+               </span>
+            </div>
+            <pre>
+               .vc {
+                  position: absolute;
+                  top: 50%;
+                  left: 50%;
+                  transform: translate(-50%, -50%);
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>2、不同a标签链接使用不同样式</h3>
+         <div class="cont class">
+            <div class="item mt50 link">
+               <a href="http://toc.lieme.cn">超链接</a>
+               <a href="mailto:pianjiao@gmail.com">打开邮箱</a>
+               <a href="a.pdf">打开文件</a>
+            </div>
+            <pre>
+               a[href^="http://"]{
+                  color: blue;
+               }
+               a[href^="mailto:"]{
+                  color: red;
+               }
+               a[href$=".pdf"]{
+                  color:pink;
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>3、图像灰度</h3>
+         <div class="cont class">
+            <div class="item mt50 itemimg">
+               <img src="http://blogimg.lieme.cn/FsaWonzTLc3IJVZgYDrjHdVEj3HR" alt="">
+            </div>
+            <pre>
+               img {
+                  filter: gray; 
+                  -webkit-filter: grayscale(1);
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>4、背景动画渐变</h3>
+         <div class="cont class">
+            <div class="item mt50 bganimation">
+               <div class="bg">
+                  背景动画渐变
+               </div>
+            </div>
+            <pre>
+               bg {
+                  background-image: linear-gradient(#5187c4, #1c2f45);
+                  background-size: auto 200%;
+                  background-position: 0 100%;
+                  transition: background-position 0.5s;
+               }    
+               bg:hover {
+                  background-position: 0 0;
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>5、长文本自动换行</h3>
+         <div class="cont class">
+            <div class="item mt50">
+               <div class="pre">
+                  长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行
+               </div>
+            </div>
+            <pre>
+               .pre {
+                  white-space: pre-line;
+                  word-wrap: break-word;
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>6、模糊文本</h3>
+         <div class="cont class">
+            <div class="item mt50">
+               <div class="vagueText">
+                  长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行长文本自动换行
+               </div>
+            </div>
+            <pre>
+               .vagueText {
+                  filter: blur(1px);
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>7、用CSS动画实现省略号动画</h3>
+         <div class="cont class">
+            <div class="item mt50">
+               <div class="point">
+                  用CSS动画实现省略号动画
+               </div>
+            </div>
+            <pre>
+               .point:after {
+                  overflow: hidden;
+                  display: inline-block;
+                  vertical-align: bottom;
+                  animation: ellipsis 2s infinite;
+                  content: "\2026";
+               }
+               @keyframes ellipsis {
+                  from {
+                        width: 2px;
+                  }
+                  to {
+                        width: 15px;
+                  }
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>8、元素透明</h3>
+         <div class="cont class">
+            <div class="item mt50">
+               <div class="opacity">
+                  用CSS动画实现省略号动画
+               </div>
+            </div>
+            <pre>
+               .opacity {
+                  filter: alpha(opacity=50); 
+                  -khtml-opacity: 0.5; 
+                  -moz-opacity: 0.5;   
+                  opacity: 0.5;     
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>9、CSS引用样式</h3>
+         <div class="cont class">
+            <div class="item mt50">
+               <div class="blockquote">
+                  CSS引用样式
+               </div>
+            </div>
+            <pre>
+               .blockquote {
+                  background: #f9f9f9;
+                  border-left: 10px solid #ccc;
+                  margin: 1.5em 10px;
+                  padding: .5em 10px;
+                  quotes: "\201C""\201D""\2018""\2019";
+               }
+               .blockquote:before {
+                  color: #ccc;
+                  content: open-quote;
+                  font-size: 4em;
+                  line-height: .1em;
+                  margin-right: .25em;
+                  vertical-align: -.4em;
+               }
+               .blockquote p {
+                  display: inline;
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>10、个性圆角</h3>
+         <div class="cont class">
+            <div class="item mt50">
+               <div class="borderRadius"></div>
+            </div>
+            <pre>
+               .borderRadius {
+                  border-radius: 4px 3px 6px 10px;
+               }
+               .borderRadius {
+                  border-top-left-radius: 4px;
+                  border-top-right-radius: 3px;
+                  border-bottom-right-radius: 6px;
+                  border-bottom-left-radius: 10px;
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>11、图片边框偏光</h3>
+         <div class="cont class">
+            <div class="item mt50 polaroid">
+               <img src="http://blogimg.lieme.cn/FsaWonzTLc3IJVZgYDrjHdVEj3HR" alt="">
+            </div>
+            <pre>
+               .polaroid {
+                  background:#000; 
+                  border:solid #fff;
+                  border-width:6px 6px 20px 6px;
+                  box-shadow:1px 1px 5px #333; 
+                  -webkit-box-shadow:1px 1px 5px #333;
+                  -moz-box-shadow:1px 1px 5px #333;
+                  height:200px; 
+                  width:200px;  
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>12、锚链接伪类</h3>
+         <div class="cont class">
+            <div class="item mt50 a">
+               <a href="javascirpt:;">链接</a>
+            </div>
+            <pre>
+               a:link { color: blue; }
+               a:visited { color: purple; }
+               a:hover { color: red; }
+               a:active { color: yellow; }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>13、CSS3渐变模板</h3>
+         <div class="cont class">
+            <div class="item mt50 center">
+               <div class="tep">CSS3渐变模板</div>
+            </div>
+            <pre>
+               .tep {
+                  background-image: linear-gradient( #83b842, #1c8a9f);
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>14、内盒阴影</h3>
+         <div class="cont class">
+            <div class="item mt50 center">
+               <div class="inbox"></div>
+            </div>
+            <pre>
+               .box { 
+                  box-shadow: inset 2px 0 4px #000;
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>15、外盒阴影</h3>
+         <div class="cont class">
+            <div class="item mt50 center">
+               <div class="outbox"></div>
+            </div>
+            <pre>
+               .outbox { 
+                  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.52);
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>16、CSS3列文本</h3>
+         <div class="cont class">
+            <div class="item mt50">
+               <div class="columnsText">CSS3列文本CSS3列文本CSS3列文本CSS3列文本</div>
+            </div>
+            <pre>
+               .columnsText {
+                  text-align: justify;
+                  -webkit-column-count: 3;
+                  -webkit-column-gap: 12px;
+                  -webkit-column-rule: 1px solid #c4c8cc;
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>17、input输入效果</h3>
+         <div class="cont class">
+            <div class="item mt50 input">
+               <input type="text"/>
+            </div>
+            <pre>
+               input[type=text] {
+                  transition: all 0.30s ease-in-out;
+                  outline: none;
+                  padding: 3px 0px 3px 3px;
+                  margin: 5px 1px 3px 0px;
+                  border: 1px solid #ddd;
+               }
+               input[type=text]:focus {
+                  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
+                  padding: 3px 0px 3px 3px;
+                  margin: 5px 1px 3px 0px;
+                  border: 1px solid rgba(81, 203, 238, 1);
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>18、CSS3方格图案</h3>
+         <div class="cont class">
+            <div class="item mt50">
+               <div class="fg"></div>
+            </div>
+            <pre>
+               .fg {
+                  background-color: white;
+                  background-image: linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black), 
+                  linear-gradient(45deg, black 25%, transparent 25%, transparent 75%, black 75%, black);
+                  background-size: 100px 100px;
+                  background-position: 0 0, 50px 50px;
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>19、CSS3圆点图案</h3>
+         <div class="cont class">
+            <div class="item mt50">
+               <div class="round"></div>
+            </div>
+            <pre>
+               .round {
+                  background: radial-gradient(circle, white 10%, transparent 10%),
+                  radial-gradient(circle, white 10%, black 10%) 50px 50px;
+                  background-size: 100px 100px;
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>20、CSS3特色横幅显示</h3>
+         <div class="cont class">
+            <div class="item mt50">
+               <div class="featureBanner"></div>
+            </div>
+            <pre>
+               .featureBanner {
+                  position: relative;
+                  margin: 20px
+               }
+               .featureBanner:before {
+                  content: "Featured";
+                  position: absolute;
+                  top: 5px;
+                  left: -8px;
+                  padding-right: 10px;
+                  color: #232323;
+                  font-weight: bold;
+                  height: 0px;
+                  border: 15px solid #ffa200;
+                  border-right-color: transparent;
+                  line-height: 0px;
+                  box-shadow: -0px 5px 5px -5px #000;
+                  z-index: 1;
+               }
+               .featureBanner:after {
+                  content: "";
+                  position: absolute;
+                  top: 35px;
+                  left: -8px;
+                  border: 4px solid #89540c;
+                  border-left-color: transparent;
+                  border-bottom-color: transparent;
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>20、限制单行文本超出显示省略号</h3>
+         <div class="cont class">
+            <div class="item mt50">
+               <div class="textEllipsis">限制单行文本超出显示省略号限制单行文本超出显示省略号限制单行文本超出显示省略号限制单行文本超出显示省略号限制单行文本超出显示省略号</div>
+            </div>
+            <pre>
+               .textEllipsis{
+                  width: 65px;
+                  height: 30px;
+                  line-height: 30px;
+                  overflow: hidden;
+                  text-overflow: ellipsis;
+                  white-space: nowrap;
+                  font-size: 14px;
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>21、限制多行文本超出省略号</h3>
+         <div class="cont class">
+            <div class="item mt50">
+               <div class="moreText">限制多行文本超出省略号限制多行文本超出省略号限制多行文本超出省略号限制多行文本超出省略号限制多行文本超出省略号</div>
+            </div>
+            <pre>
+               .moreText{
+                  overflow : hidden;
+                  text-overflow: ellipsis;
+                  display: -webkit-box;
+                  -webkit-line-clamp: 2;
+                  -webkit-box-orient: vertical;
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>22、自适应文本框自动换行，限宽不限高</h3>
+         <div class="cont class">
+            <div class="item mt50">
+               <div class="lineText">自适应文本框自动换行，限宽不限高自适应文本框自动换行，限宽不限高自适应文本框自动换行，限宽不限高自适应文本框自动换行，限宽不限高自适应文本框自动换行，限宽不限高自适应文本框自动换行，限宽不限高</div>
+            </div>
+            <pre>
+               .lineText{
+                  display: inline-block;
+                  min-height: 15px;
+                  max-width: 78%;
+                  padding: 12px 10px;
+                  text-align: left;
+                  font-family: Microsoft YaHei;
+                  word-wrap: break-word;
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>23、CSS三角形绘制</h3>
+         <div class="cont class">
+            <div class="item mt50">
+               <div class="sj sj-left"></div>
+               <div class="sj sj-top"></div>
+               <div class="sj sj-right"></div>
+               <div class="sj sj-bottom"></div>
+            </div>
+            <pre>
+               sj {
+                  width: 0; 
+                  height: 0;
+                  border-width: 100px;
+                  border-style: solid;
+               }
+               
+               .sj-left {
+                  border-color: transparent pink transparent transparent;
+               }
+               
+               .sj-right {
+                  border-color: transparent transparent transparent pink;
+               }
+               
+               .sj-top {
+                  border-color: transparent transparent pink transparent;
+               }
+               
+               .sj-bottom {
+                  border-color: pink transparent transparent transparent;
+               }
+            </pre>
+         </div>
+      </div>
+      <div class="list">
+         <h3>24、CSS实现网格背景</h3>
+         <div class="cont class">
+            <div class="item mt50">
+               <div class="grid"></div>
+            </div>
+            <pre>
+               .grid{
+                  background:#ccc;
+                  background-image: linear-gradient(white 0px,transparent 0),
+                  linear-gradient(90deg, white 0px,transparent 0),
+                  linear-gradient(hsla(0,0%,100%,.3) 1px,transparent 0),
+                  linear-gradient(90deg,hsla(0,0%,100%,.3) 1px,transparent 0);
+                  background-size:75px 75px,75px 75px,15px 15px,15px 15px;
+               }
+            </pre>
+         </div>
+      </div>
+   </div>
+</body>
+</html>

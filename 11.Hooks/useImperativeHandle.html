@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>useImperativeHandle</title>
+    </head>
+
+    <body>
+        <h2>useImperativeHandle</h2>
+        <ul>
+            <li>
+                <code>useImperativeHandle</code>可以让你在使用 ref
+                时，自定义暴露给父组件的实例值，不能让父组件想干嘛就干嘛
+            </li>
+            <li>
+                <strong
+                    >在大多数情况下，应当避免使用 ref 这样的命令式代码。useImperativeHandle 应当与 forwardRef
+                    一起使用</strong
+                >
+            </li>
+            <li><strong>父组件可以使用操作子组件中的多个 ref</strong></li>
+        </ul>
+        <div id="root"></div>
+
+        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+        <script type="text/babel">
+            const { useState, useEffect, createRef, useRef, forwardRef, useImperativeHandle } = React;
+
+            function ForwardChild(props, parentRef) {
+                // 子组件内部自己创建 ref
+                let focusRef = useRef();
+                let inputRef = useRef();
+                useImperativeHandle(parentRef, () => {
+                    // 这个函数会返回一个对象
+                    // 该对象会作为父组件 current 属性的值
+                    // 通过这种方式，父组件可以使用操作子组件中的多个 ref
+                    return {
+                        focusRef,
+                        inputRef,
+                        name: "计数器",
+                        focus() {
+                            focusRef.current.focus();
+                        },
+                        changeText(text) {
+                            inputRef.current.value = text;
+                        },
+                        addNumber() {
+                            focusRef.current.value = focusRef.current.value + 1;
+                        },
+                        reset() {
+                            inputRef.current.value = "";
+                            focusRef.current.value = "";
+                            focusRef.current.blur();
+                        },
+                    };
+                });
+
+                return (
+                    <>
+                        <input ref={focusRef} />
+                        <input ref={inputRef} />
+                    </>
+                );
+            }
+
+            ForwardChild = forwardRef(ForwardChild);
+
+            function Parent() {
+                const parentRef = useRef(); //{current:''}
+                function getFocus() {
+                    console.log(parentRef.current);
+                    parentRef.current.focus();
+                    // 因为子组件中没有定义这个属性，实现了保护，所以这里的代码无效
+                    parentRef.current.addNumber(666);
+                    parentRef.current.changeText("<script>alert(1)<\/script>");
+                }
+                return (
+                    <>
+                        <ForwardChild ref={parentRef} />
+                        <button onClick={getFocus}>获得焦点</button>
+                        <button
+                            onClick={() => {
+                                parentRef.current.reset();
+                            }}
+                        >
+                            reset
+                        </button>
+                    </>
+                );
+            }
+
+            ReactDOM.render(<Parent />, document.getElementById("root"));
+        </script>
+    </body>
+</html>

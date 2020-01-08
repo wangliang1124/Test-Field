@@ -1,0 +1,11 @@
+{
+    "editor.formatOnSave": true,
+    "git.ignoreLimitWarning": true,
+    "[javascriptreact]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascript]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "prettier.printWidth": 120 // package.json 中的设置优先级比这里高
+}
