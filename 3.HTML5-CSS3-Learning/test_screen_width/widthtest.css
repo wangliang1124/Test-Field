@@ -1,0 +1,38 @@
+html,body {
+	margin: 0;
+	padding: 0;
+}
+
+html {
+
+}
+
+body {
+	background: #ffffff url(raster.gif) no-repeat;
+
+}
+
+#writeroot {
+	margin: 10px 0;
+	padding: 10px 0;
+}
+
+.query {
+	display: none;
+}
+
+li {
+	margin-bottom: 10px;
+}
+
+p span {
+	display: block;
+	border: 1px solid red;
+	width: 50%;
+}
+
+div#measurement p {
+	width: 100px;
+	float: left;
+	outline: 1px solid red;
+}
