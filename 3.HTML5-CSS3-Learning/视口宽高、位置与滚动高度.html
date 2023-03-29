@@ -1,120 +1,169 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>视口宽高、位置与滚动高度</title>
-    <style>
-    * {
-        padding: 0;
-        margin: 0;
-    }
+    <head>
+        <meta charset="UTF-8" />
+        <title>视口宽高、位置与滚动高度</title>
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
 
-    .wrapper {
-        padding: 100px;
-    }
+            .wrapper {
+                padding: 0 100px;
+                overflow: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper" style="height: 2000px">
+            <div id="writeroot" style="padding: 20px 0; line-height: 1.5"></div>
+            <div>offsetWidth = clientWidth + scrollbarWidth + borderWidth</div>
+            <div
+                id="content-wrapper"
+                style="
+                    width: 800px;
+                    height: 500px;
+                    padding: 20px;
+                    border-style: dashed;
+                    border-width: 10px;
+                    border-color: #ccc;
+                    overflow: scroll;
+                "
+            >
+                <div id="content">
+                    <p>
+                        The CSS box model is rather complicated, particularly when it comes to scrolling content. While
+                        the browser uses the values from your CSS to draw boxes, determining all the dimensions using JS
+                        is not straight-forward if you only have the CSS.
+                    </p>
 
-    .inline-1 {
-        /* width: 250px; */
-        border: 1px dashed #00f;
-        /* text-align: center; */
-        line-height: 30px;
-        font-size: 20px
-    }
+                    <p>
+                        That's why each element has six DOM properties for your convenience: <code>offsetWidth</code>,
+                        <code>offsetHeight</code>, <code>clientWidth</code>, <code>clientHeight</code>,
+                        <code>scrollWidth</code> and <code>scrollHeight</code>. These are read-only attributes
+                        representing the current visual layout, and all of them are <em>integers</em> (thus possibly
+                        subject to rounding errors).
+                    </p>
 
-    .text1 {
-        border: 2px solid red
-    }
+                    <p>Let's go through them in detail:</p>
 
-    .inline-2 {
-        margin: 24px 0;
-        border: 1px dashed #00f;
-        margin-top: 20px;
-        font-size: 0;
-        /* 为了图片 */
-        height: 120px;
-        /* 非必须 */
-        line-height: 120px;
-        /* 必须 */
-    }
+                    <ul>
+                        <li>
+                            <code>offsetWidth</code>, <code>offsetHeight</code>: The size of the visual box incuding all
+                            borders. Can be calculated by adding <code>width</code>/<code>height</code> and paddings and
+                            borders, if the element has <code>display: block</code>
+                        </li>
+                        <li>
+                            <code>clientWidth</code>, <code>clientHeight</code>: The visual portion of the box content,
+                            not including borders or scroll bars , but includes padding . Can not be calculated directly
+                            from CSS, depends on the system's scroll bar size.
+                        </li>
+                        <li>
+                            <code>scrollWidth</code>, <code>scrollHeight</code>: The size of all of the box's content,
+                            including the parts that are currently hidden outside the scrolling area. Can not be
+                            calculated directly from CSS, depends on the content.
+                        </li>
+                    </ul>
 
-    .inline-2 .text {
-        display: inline-block;
-        /* 转换成inline-block*/
-        /* max-width: calc(100% -0.25em); */
-        line-height: 1.5;
-        /* 必须设置，否则继承line-height: 200px; */
-        vertical-align: middle;
-        font-size: 16px;
-        background-color: #ccc;
-    }
+                    <p><img src="https://i.stack.imgur.com/5AAyW.png" alt="CSS2 Box Model" /></p>
 
-    .inline-2::after {
-        content: '';
-        width: 0px;
-        font-size: 0;
-        /* vertical-align: middle; */
-        margin-left: -0.25em;
-        /* To offset spacing. May vary by font */
-    }
+                    <hr />
 
-    .inline-2 .img {
-        margin-left: 10px;
-        vertical-align: middle
-    }
+                    <p>
+                        Since <code>offsetWidth</code> takes the scroll bar width into account, we can use it to
+                        calculate the scroll bar width via the formula
+                    </p>
 
-    .inline-3 {
-        margin: 36px 0;
-        border: 1px dashed #00f;
-        line-height: 500px;
-        font-size: 0px;
-    }
+                    <pre
+                        class="lang-html s-code-block"
+                    ><code class="hljs language-xml">scrollbarWidth = offsetWidth - clientWidth - getComputedStyle().borderLeftWidth - getComputedStyle().borderRightWidth
+                    </code></pre>
 
-    .inline-3 img {
-        display: inline-block;
-        vertical-align: middle;
-    }
+                    <p>
+                        Unfortunately, we may get rounding errors, since <code>offsetWidth</code> and
+                        <code>clientWidth</code> are always integers, while the actual sizes may be fractional with zoom
+                        levels other than 1.
+                    </p>
 
-    .inline-3::after {
-        content: '';
-        width: 0;
-        font-size: 0;
-    }
-    </style>
-</head>
-<body>
-    <div class="wrapper">
-        <div class="inline-1">
-            <span class="text1" style="">1. inline单行文字水平垂直居中，设置line-height</span>
+                    <p>Note that this</p>
+
+                    <pre
+                        class="lang-html s-code-block"
+                    ><code class="hljs language-xml">scrollbarWidth = getComputedStyle().width + getComputedStyle().paddingLeft + getComputedStyle().paddingRight - clientWidth
+                    </code></pre>
+
+                    <p>
+                        does <strong>not</strong> work reliably in Chrome, since Chrome returns <code>width</code> with
+                        scrollbar already substracted. (Also, Chrome renders paddingBottom to the bottom of the scroll
+                        content, while other browsers don't)
+                    </p>
+                </div>
+            </div>
         </div>
-        <p class="inline-2">
-            <span class="text">2.多行文字水平垂直居中。<br>3. 固定高度图片水平垂直居中</span>
-            <img src="./img/grayscale.jpg" width="100" height="100" class="img">
-            <!-- <i>&nbsp;</i> -->
-        </p>
-        <h2>4. 高度不固定图片垂直居中</h2>
-        <a href="http://www.zhangxinxu.com/wordpress/2009/08/%E5%A4%A7%E5%B0%8F%E4%B8%8D%E5%9B%BA%E5%AE%9A%E7%9A%84%E5%9B%BE%E7%89%87%E3%80%81%E5%A4%9A%E8%A1%8C%E6%96%87%E5%AD%97%E7%9A%84%E6%B0%B4%E5%B9%B3%E5%9E%82%E7%9B%B4%E5%B1%85%E4%B8%AD/" target="_blank">大小不固定的图片、多行文字的水平垂直居中</a>
-        <div class="inline-3">
-            <img src="./img/grayscale.jpg">x
-            <!-- <i>&nbsp;</i> -->
-        </div>
-    </div>
+        <script>
+            window.addEventListener("load", function () {
+                var text1 = document.querySelector("#content-wrapper");
+                console.log(text1.getClientRects());
+                console.log(text1.getBoundingClientRect());
+
+                var supportPageOffset = window.pageXOffset !== "undefined";
+                var isCSS1Compat = document.compatMode === "CSS1Compat";
+
+                var x = supportPageOffset
+                    ? window.pageXOffset
+                    : isCSS1Compat
+                    ? document.documentElement.scrollLeft
+                    : document.body.scrollLeft;
+                var y = supportPageOffset
+                    ? window.pageYOffset
+                    : isCSS1Compat
+                    ? document.documentElement.scrollTop
+                    : document.body.scrollTop;
+                var z = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft;
+                console.log(x, y, z);
+            });
+        </script>
+    </body>
     <script>
-    window.addEventListener('load', function() {
-        var text1 = document.querySelector('.text1')
-        console.log(text1.getClientRects())
-        console.log(text1.getBoundingClientRect())
+        var strings = "";
+        strings += "screen.width/height = " + screen.width + " / " + screen.height;
+        strings += "<br>";
+        strings +=
+            "documentElement.offsetWidth/offsetHeight = " +
+            document.documentElement.offsetWidth +
+            " / " +
+            document.documentElement.offsetHeight;
+        strings += "<br>";
+        strings +=
+            "documentElement.client = " +
+            document.documentElement.clientWidth +
+            " / " +
+            document.documentElement.clientHeight;
+        strings += "<br>";
+        strings += "window.innerWidth/Height = " + window.innerWidth + " / " + window.innerHeight;
+        strings += "<br>";
+        strings += "window.innerHeight = " + window.innerHeight;
+        strings += "<br>";
 
-        var supportPageOffset = window.pageXOffset !== 'undefined'
-        var isCSS1Compat = document.compatMode === 'CSS1Compat'
+        var wrapper = document.getElementById("content-wrapper");
+        strings += " wrapper.clientWidth/clientHeight = " + wrapper.clientWidth + " / " + wrapper.clientHeight;
+        strings += "<br>";
+        strings += " wrapper.offsetWidth/offsetHeight = " + wrapper.offsetWidth + " / " + wrapper.offsetHeight;
+        strings += "<br>";
+        strings += " wrapper.scrollWidth/scrollHeight = " + wrapper.scrollWidth + " / " + wrapper.scrollHeight;
+        strings += "<br>";
 
-        var x = supportPageOffset ? window.pageXOffset : isCSS1Compat ? document.documentElement.scrollLeft : document.body.scrollLeft
-        var y = supportPageOffset ? window.pageYOffset : isCSS1Compat ? document.documentElement.scrollTop : document.body.scrollTop
-        var z = window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft
-        console.log(x, y, z)
-    })
+        var content = document.getElementById("content");
+        strings += " content.clientWidth/clientHeight = " + content.clientWidth + " / " + content.clientHeight;
+        strings += "<br>";
+        strings += " content.offsetWidth/offsetHeight = " + content.offsetWidth + " / " + content.offsetHeight;
+        strings += "<br>";
+        strings += " content.scrollWidth/scrollHeight = " + content.scrollWidth + " / " + content.scrollHeight;
+        strings += "<br>";
+
+        var writeroot = document.getElementById("writeroot");
+
+        writeroot.innerHTML = strings;
     </script>
-</body>
-<script type="text/javascript" src="js/worker.js"></script>
-<div id="test"></div>
-
 </html>
