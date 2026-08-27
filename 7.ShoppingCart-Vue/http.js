@@ -7,6 +7,11 @@ var mine=require('./mine').types;//
 var path=require('path');
 
 var server = http.createServer(function (request, response) {
+    if (path.normalize(decodeURI(request.url)) !== decodeURI(request.url)) {
+        response.statusCode = 403;
+        response.end();
+        return;
+    }
     var pathname = url.parse(request.url).pathname;
     var realPath = path.join("ShoppingCart-Vue", pathname);    //这里设置自己的文件名称;
 
